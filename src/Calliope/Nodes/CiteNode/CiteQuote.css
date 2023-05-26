@@ -1,0 +1,19 @@
+figure {
+  color: #65676b !important;
+  background-color: #f9f9f9;
+  border-left-color: #ced0d4;
+  border-left-width: 4px;
+  border-left-style: solid;
+  padding-left: 16px;
+}
+
+figcaption a,
+figcaption a:visited {
+  color: #3366cc;
+  text-decoration: none;
+}
+
+blockquote {
+  background-color: #f9f9f9;
+  clear: both;
+}

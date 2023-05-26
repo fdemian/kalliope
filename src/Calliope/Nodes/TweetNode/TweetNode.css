@@ -1,0 +1,13 @@
+@media screen and (min-width: 768px) {
+  .tweet-node {
+    display: inline-block;
+    width: 550px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tweet-node {
+    display: inline-block;
+    width: 100%;
+  }
+}

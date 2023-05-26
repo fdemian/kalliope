@@ -8,8 +8,15 @@ import URLToolbar from './URLToolbar';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 
+type CalliopeContainerType = {
+  focus: () => {};
+  clear: () => {};
+  getContent: () => String;
+  executeCommand: (name: string, props: any) => void;
+};
+
 export const EditorComposer = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<null | CalliopeContainerType>(null);
   const [editorState, setEditorState] = useState(null);
   const [formats, setFormats] = useState<CalliopeFormatTypes>({});
   const [suggestions, setSuggestions] = useState(initialMentions);
@@ -25,44 +32,44 @@ export const EditorComposer = () => {
   const toggleVideoToolbar = () => setVideoToolbar(false);
   const toggleImageToolbar = () => setImageToolbar(false);
 
-  const onSearchChange = (match) => {
+  const onSearchChange = (match: string) => {
     if(match) {
       const newSuggestions = initialMentions.filter(p => p.name.includes(match));
       setSuggestions(newSuggestions);
     }
   }
 
-  const blockFormatChangeFn = (val) => {
+  const blockFormatChangeFn = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand(val);
   }
 
-  const codeLanguageChange = (val) => {
+  const codeLanguageChange = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CODE_LANGUAGE_CHANGE", val);
   }
 
-  const fontFamilyChangeFn = (val) => {
+  const fontFamilyChangeFn = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT", val);
   }
 
-  const fontSizeChange = (val) => {
+  const fontSizeChange = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT_SIZE", val);
   }
 
-  const fontColorSelect = (val) => {
+  const fontColorSelect = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT_COLOR", val.hex);
   }
 
-  const bgColorSelect = (val) => {
+  const bgColorSelect = (val: string) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT_BG_COLOR", val.hex);
@@ -165,7 +172,7 @@ export const EditorComposer = () => {
         console.clear();
         console.log(mentionName);
       },
-      entryComponent: ({option: {avatar, name, link}}) => (
+      entryComponent: () => (
        <>
         <img
           src="https://playground.lexical.dev/assets/user.a5e15c54.svg"

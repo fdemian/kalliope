@@ -1,6 +1,7 @@
 import type { LexicalCommand } from 'lexical';
 
-export type DispatcherType = (command: LexicalCommand, payload?: any) => boolean;
+type DispatcherFn = () => {};
+export type DispatcherType = (command: LexicalCommand<String | DispatcherFn>, payload?: any) => boolean;
 
 export type EditorRefType = {
   focus: () => void;
@@ -26,17 +27,17 @@ type SourceLinkTypes = {
 
 export type EditorCommand = {
   name: string;
-  command: string;
+  command: string | (() => {});
   directCommand: boolean;
 };
 
 export type EditorCommands = EditorCommand[];
 
-type MentionItem = {
+export type MentionItem = {
   id: number;
   name: string;
   link: string;
-  avatar?: string;
+  avatar?: string | null;
 };
 
 type CalliopeConfigProps = {

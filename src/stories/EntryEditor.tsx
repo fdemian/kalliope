@@ -54,9 +54,9 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       handleDroppedFile: (file:any) => {}
     },
     twitterConfig: {
-      loadingComponent: ({tweetId}: {tweetId: string}) => (
+      loadingComponent: ( {tweetId} : {tweetId: string}) => (
       <p>
-        Loading tweet...
+        Loading tweet...{tweetId}
       </p>
       )
     },
@@ -76,7 +76,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
         console.clear();
         console.log(mention);
       },
-      entryComponent: ({avatar, name, link}:EntryComponentProps) => (
+      entryComponent: ({ name }:EntryComponentProps) => (
        <>
         &nbsp; <strong>{name}</strong>
        </>

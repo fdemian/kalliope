@@ -1,9 +1,9 @@
-import React, {
+import {
   useRef,
   useState,
   useEffect,
   useCallback,
-  useImperativeHandle,
+  useImperativeHandle
 } from 'react';
 import { CAN_USE_DOM } from './shared/canUseDOM';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
@@ -34,6 +34,8 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   isStrikethrough: false,
   isSubscript: false,
   isSuperscript: false,
+  isSpoiler: false,
+  isKeyboard: false,
   isCode: false,
   canUndo: false,
   canRedo: false,

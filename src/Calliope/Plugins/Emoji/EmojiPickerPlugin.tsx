@@ -61,7 +61,7 @@ export default function EmojiPickerPlugin() {
     () =>
       emojis != null
         ? emojis.map(
-            ({ hexcode, label, emoji, tags }) =>
+            ({ label, emoji, tags }) =>
               new EmojiOption(label, emoji, {
                 keywords: [...(tags ?? []), label],
               })

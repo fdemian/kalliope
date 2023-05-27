@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { CalliopeFormatTypes } from '../Calliope/CalliopeEditorTypes';
+import { CalliopeFormatTypes, MentionItem } from '../Calliope/CalliopeEditorTypes';
 import Editor from '../Calliope/CalliopeEditor.tsx';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
@@ -15,18 +15,30 @@ type CalliopeContainerType = {
   executeCommand: (name: string, props: any) => void;
 };
 
+type SourceLinkProps = {
+  sourceLink: string;
+}
+
+type LoadingTweetProps = {
+  tweetId: string;
+}
+
+type AvatarEntryComponent = {
+  name: string;
+}
+
 export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
-  const [editorState, setEditorState] = useState(null);
+  const [editorState, setEditorState] = useState<String>(null);
   const [formats, setFormats] = useState<CalliopeFormatTypes>({});
   const [suggestions, setSuggestions] = useState(initialMentions);
-  const [isSpeechToText, setIsSpeechToText] = useState(false);
+  const [isSpeechToText, setIsSpeechToText] = useState<boolean | null>(false);
 
   // TOOLBARS
-  const [isTweetToolbar, setTweetToolbar] = useState(false);
-  const [isVideoToolbar, setVideoToolbar] = useState(false);
-  const [isImageToolbar, setImageToolbar] = useState(false);
-  const [url, setUrl] = useState(null);
+  const [isTweetToolbar, setTweetToolbar] = useState<boolean | null>(false);
+  const [isVideoToolbar, setVideoToolbar] = useState<boolean | null>(false);
+  const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
+  const [url, setUrl] = useState<string | null>(null);
 
   const toggleTweetToolbar = () => setTweetToolbar(false);
   const toggleVideoToolbar = () => setVideoToolbar(false);
@@ -63,22 +75,22 @@ export const EditorComposer = () => {
     containerRef.current.executeCommand("CHANGE_FONT_SIZE", val);
   }
 
-  const fontColorSelect = (val: string) => {
+  const fontColorSelect = (val: { hex: string}) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT_COLOR", val.hex);
   }
 
-  const bgColorSelect = (val: string) => {
+  const bgColorSelect = (val: { hex: string}) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("CHANGE_FONT_BG_COLOR", val.hex);
   }
 
   const insertTweet = () => {
-    if(!containerRef.current || url === null)
+    if(!containerRef.current || url === null || url === undefined)
       return;
-    const tweetId = url.split('status/')?.[1]?.split('?')?.[0];
+    const tweetId = url?.split('status/')?.[1]?.split('?')?.[0];
     containerRef.current.executeCommand("INSERT_TWEET", tweetId);
     setUrl(null);
     setTweetToolbar(false);
@@ -127,7 +139,7 @@ export const EditorComposer = () => {
     initialState: undefined,
     readOnly: false,
     autoFocus: false,
-    onError: (error) => {
+    onError: (error: Error) => {
       throw error;
     },
     plugins:[],
@@ -136,7 +148,7 @@ export const EditorComposer = () => {
       defaultCaptionText: "Enter image caption..."
     },
     twitterConfig: {
-      loadingComponent: ({ tweetId }) => (
+      loadingComponent: ({ tweetId }: LoadingTweetProps) => (
       <p>
         Loading tweet...(ID={tweetId})
       </p>
@@ -146,14 +158,13 @@ export const EditorComposer = () => {
       open: true
     },
     dragAndDropImage: {
-      handleDroppedFile: (file) => {
-        console.log(":::::>");
+      handleDroppedFile: (file: File) => {
+        console.log("Dropped file");
         console.log(file);
-        console.log(":::::>");
       }
     },
     citation: {
-      sourceLinkComponent: ({ sourceLink }) => (
+      sourceLinkComponent: ({ sourceLink }: SourceLinkProps) => (
       <>
         <a href={sourceLink}>[source]</a>
       </>
@@ -164,15 +175,15 @@ export const EditorComposer = () => {
     },
     mentions: {
       onSearchChange: onSearchChange,
-      onAddMention: (mention) => {
+      onAddMention: (mention: MentionItem) => {
         console.clear();
         console.log(mention);
       },
-      onRemoveMention: (mentionName) => {
+      onRemoveMention: (mentionName: string) => {
         console.clear();
         console.log(mentionName);
       },
-      entryComponent: () => (
+      entryComponent: ({name}: AvatarEntryComponent) => (
        <>
         <img
           src="https://playground.lexical.dev/assets/user.a5e15c54.svg"
@@ -460,12 +471,18 @@ export const EditorComposer = () => {
 
   return(
   <>
-    <button onClick={() => containerRef.current.clear()}>Clear</button>
-    <button onClick={() => setEditorState(containerRef.current.getContent())}>Content</button>
+    <button
+      onClick={() => containerRef.current?.clear()}>
+      Clear
+    </button>
+    <button
+      onClick={() => setEditorState(containerRef.current?.getContent())}>
+      Content
+    </button>
     {BUTTON_ELEMENTS.map(elem => (
       <button
         key={elem.text}
-        onClick={() => containerRef.current.executeCommand(elem.command, elem.props)}>
+        onClick={() => containerRef.current?.executeCommand(elem.command, elem.props)}>
         {elem.text} { elem.isActive ? "(X)" : ""}
       </button>
       ))}

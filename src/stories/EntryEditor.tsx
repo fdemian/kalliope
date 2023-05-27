@@ -51,7 +51,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       emojiData: emojiData
     },
     dragAndDropImage: {
-      handleDroppedFile: (file:any) => {}
+      handleDroppedFile: (file:any) => console.log(file)
     },
     twitterConfig: {
       loadingComponent: ( {tweetId} : {tweetId: string}) => (

@@ -1,6 +1,11 @@
-import React from 'react';
+type URLToolbarTypes = {
+  setUrl: (e: string) => {};
+  insertFn: () => {};
+  cancelFn: () => {};
+  text: string;
+};
 
-const URLToolbar = ({ setUrl, insertFn, cancelFn, text }) => {
+const URLToolbar = ({ setUrl, insertFn, cancelFn, text }: URLToolbarTypes) => {
   return (
     <div>
       <input type="text" onChange={(e) => setUrl(e.target.value)} />

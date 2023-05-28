@@ -57,6 +57,14 @@ export class MentionNode extends DecoratorNode {
     return false;
   }
 
+  canInsertTextBefore(): boolean {
+   return false;
+  }
+
+  canInsertTextAfter(): boolean {
+   return false;
+  }
+
   decorate(): JSX.Element {
     return (
       <a href={this.__link} className="user-mention">

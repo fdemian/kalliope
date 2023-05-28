@@ -58,10 +58,10 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
     const selection = $getSelection();
 
     //
-    let fontSize = '15px';
-    let fontColor = '#000';
-    let bgColor = '#fff';
-    let fontFamily = 'Arial';
+    let fontSize:string = '15px';
+    let fontColor:string = '#000';
+    let bgColor:string = '#fff';
+    let fontFamily:string = 'Arial';
 
     try {
       fontSize = $getSelectionStyleValueForProperty(selection, 'font-size', '15px');
@@ -94,7 +94,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
 
           if ($isCodeNode(element)) {
             const language = element.getLanguage();
-            codeLanguage = language ? CODE_LANGUAGE_MAP[language] || language : '';
+            codeLanguage = language ? CODE_LANGUAGE_MAP[language] : '';
           }
         }
       }
@@ -133,7 +133,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
   useEffect(() => {
     editor.registerCommand<boolean>(
       SELECTION_CHANGE_COMMAND,
-      (_payload, newEditor) => {
+      (_payload) => {
         const _formats = getEditorFormats();
         setFormats(_formats);
         setInternalFormat(_formats);

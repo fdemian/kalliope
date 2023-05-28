@@ -71,9 +71,9 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
       }
     };
 
-    window.addEventListener('resize', updateViewPortWidth);
     updateViewPortWidth();
-
+    window.addEventListener('resize', updateViewPortWidth);
+    
     return () => {
       window.removeEventListener('resize', updateViewPortWidth);
     };

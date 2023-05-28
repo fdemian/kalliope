@@ -5,6 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+
+import type {
+  DEPRECATED_GridCellNode,
+  ElementNode,
+  LexicalEditor,
+} from 'lexical';
+
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import useLexicalEditable from '@lexical/react/useLexicalEditable';
 import {
@@ -25,18 +32,23 @@ import {
   TableCellNode,
 } from '@lexical/table';
 import {
+  $createParagraphNode,
   $getRoot,
   $getSelection,
+  $isElementNode,
+  $isParagraphNode,
   $isRangeSelection,
+  $isTextNode,
   DEPRECATED_$getNodeTriplet,
   DEPRECATED_$isGridCellNode,
   DEPRECATED_$isGridSelection,
   GridSelection,
 } from 'lexical';
-import * as React from 'react';
 import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import invariant from '../utils/invariant';
+//import useModal from '../../hooks/useModal';
+//import ColorPicker from '../../ui/ColorPicker';
 
 function computeSelectionCount(selection: GridSelection): {
   columns: number;
@@ -105,6 +117,44 @@ function $canUnmerge(): boolean {
   return cell.__colSpan > 1 || cell.__rowSpan > 1;
 }
 
+function $cellContainsEmptyParagraph(cell: DEPRECATED_GridCellNode): boolean {
+  if (cell.getChildrenSize() !== 1) {
+    return false;
+  }
+  const firstChild = cell.getFirstChildOrThrow();
+  if (!$isParagraphNode(firstChild) || !firstChild.isEmpty()) {
+    return false;
+  }
+  return true;
+}
+
+function $selectLastDescendant(node: ElementNode): void {
+  const lastDescendant = node.getLastDescendant();
+  if ($isTextNode(lastDescendant)) {
+    lastDescendant.select();
+  } else if ($isElementNode(lastDescendant)) {
+    lastDescendant.selectEnd();
+  } else if (lastDescendant !== null) {
+    lastDescendant.selectNext();
+  }
+}
+
+function currentCellBackgroundColor(editor: LexicalEditor): null | string {
+  return editor.getEditorState().read(() => {
+    const selection = $getSelection();
+    if (
+      $isRangeSelection(selection) ||
+      DEPRECATED_$isGridSelection(selection)
+    ) {
+      const [cell] = DEPRECATED_$getNodeTriplet(selection.anchor);
+      if ($isTableCellNode(cell)) {
+        return cell.getBackgroundColor();
+      }
+    }
+    return null;
+  });
+}
+
 type TableCellActionMenuProps = Readonly<{
   contextRef: {current: null | HTMLElement};
   onClose: () => void;
@@ -118,7 +168,7 @@ function TableActionMenu({
   tableCellNode: _tableCellNode,
   setIsMenuOpen,
   contextRef,
-  cellMerge,
+  cellMerge
 }: TableCellActionMenuProps) {
   const [editor] = useLexicalComposerContext();
   const dropDownRef = useRef<HTMLDivElement | null>(null);
@@ -164,21 +214,37 @@ function TableActionMenu({
   useEffect(() => {
     const menuButtonElement = contextRef.current;
     const dropDownElement = dropDownRef.current;
+    const rootElement = editor.getRootElement();
 
-    if (menuButtonElement != null && dropDownElement != null) {
+    if (
+      menuButtonElement != null &&
+      dropDownElement != null &&
+      rootElement != null
+    ) {
+      const rootEleRect = rootElement.getBoundingClientRect();
       const menuButtonRect = menuButtonElement.getBoundingClientRect();
-
       dropDownElement.style.opacity = '1';
+      const dropDownElementRect = dropDownElement.getBoundingClientRect();
+      const margin = 5;
+      let leftPosition = menuButtonRect.right + margin;
+      if (
+        leftPosition + dropDownElementRect.width > window.innerWidth ||
+        leftPosition + dropDownElementRect.width > rootEleRect.right
+      ) {
+        const position =
+          menuButtonRect.left - dropDownElementRect.width - margin;
+        leftPosition = (position < 0 ? margin : position) + window.pageXOffset;
+      }
+      dropDownElement.style.left = `${leftPosition + window.pageXOffset}px`;
 
-      dropDownElement.style.left = `${
-        menuButtonRect.left + menuButtonRect.width + window.pageXOffset + 5
-      }px`;
-
-      dropDownElement.style.top = `${
-        menuButtonRect.top + window.pageYOffset
-      }px`;
+      let topPosition = menuButtonRect.top;
+      if (topPosition + dropDownElementRect.height > window.innerHeight) {
+        const position = menuButtonRect.bottom - dropDownElementRect.height;
+        topPosition = (position < 0 ? margin : position) + window.pageYOffset;
+      }
+      dropDownElement.style.top = `${topPosition + +window.pageYOffset}px`;
     }
-  }, [contextRef, dropDownRef]);
+  }, [contextRef, dropDownRef, editor]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -229,24 +295,35 @@ function TableActionMenu({
       if (DEPRECATED_$isGridSelection(selection)) {
         const {columns, rows} = computeSelectionCount(selection);
         const nodes = selection.getNodes();
-        let isFirstCell = true;
+        let firstCell: null | DEPRECATED_GridCellNode = null;
         for (let i = 0; i < nodes.length; i++) {
           const node = nodes[i];
           if (DEPRECATED_$isGridCellNode(node)) {
-            if (isFirstCell) {
+            if (firstCell === null) {
               node.setColSpan(columns).setRowSpan(rows);
-              // TODO copy other editors' cell selection behavior
-              const lastDescendant = node.getLastDescendant();
-              invariant(
-                lastDescendant !== null,
-                'Unexpected empty lastDescendant on the resulting merged cell',
-              );
-              lastDescendant.select();
-              isFirstCell = false;
-            } else {
-              nodes[i].remove();
+              firstCell = node;
+              const isEmpty = $cellContainsEmptyParagraph(node);
+              let firstChild;
+              if (
+                isEmpty &&
+                $isParagraphNode((firstChild = node.getFirstChild()))
+              ) {
+                firstChild.remove();
+              }
+            } else if (DEPRECATED_$isGridCellNode(firstCell)) {
+              const isEmpty = $cellContainsEmptyParagraph(node);
+              if (!isEmpty) {
+                firstCell.append(...node.getChildren());
+              }
+              node.remove();
             }
           }
+        }
+        if (firstCell !== null) {
+          if (firstCell.getChildrenSize() === 0) {
+            firstCell.append($createParagraphNode());
+          }
+          $selectLastDescendant(firstCell);
         }
         onClose();
       }
@@ -401,12 +478,8 @@ function TableActionMenu({
       onClick={(e) => {
         e.stopPropagation();
       }}>
-      {mergeCellButton !== null && (
-        <>
-          {mergeCellButton}
-          <hr />
-        </>
-      )}
+      {mergeCellButton}
+      <hr />
       <button
         className="item"
         onClick={() => insertTableRowAtSelection(false)}

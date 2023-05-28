@@ -12,13 +12,11 @@ import {
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
-import * as React from 'react';
 import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import Button from './Button';
 import Modal from './Modal';
-
 
 export type ExcalidrawElementFragment = {
   isDeleted?: boolean;
@@ -211,6 +209,12 @@ export default function ExcalidrawModal({
     setFiles(fls);
   };
 
+  // This is a hacky work-around for Excalidraw + Vite.
+  // In DEV, Vite pulls this in fine, in prod it doesn't. It seems
+  // like a module resolution issue with ESM vs CJS?
+  const _Excalidraw =
+    Excalidraw.$$typeof != null ? Excalidraw : Excalidraw.default;
+
   return createPortal(
     <div className="ExcalidrawModal__overlay" role="dialog">
       <div
@@ -219,7 +223,7 @@ export default function ExcalidrawModal({
         tabIndex={-1}>
         <div className="ExcalidrawModal__row">
           {discardModalOpen && <ShowDiscardDialog />}
-          <Excalidraw
+          <_Excalidraw
             onChange={onChange}
             ref={excaliDrawSceneRef}
             initialData={{

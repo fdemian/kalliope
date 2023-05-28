@@ -211,10 +211,7 @@ export class TweetNode extends DecoratorBlockNode {
       />
     );
   }
-
-  isInline(): false {
-    return false;
-  }
+  
 }
 
 export function $createTweetNode(tweetID: string): TweetNode {

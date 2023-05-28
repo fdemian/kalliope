@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import Editor from '../Calliope/CalliopeEditor';
 import {initialMentions} from './mentionsData';
 import emojiData from 'emojibase-data/en/data.json';
+import type { MentionItem } from '../Calliope/CalliopeEditorTypes';
 
 type EntryEditorProps = {
   readOnly: boolean,
@@ -13,12 +14,6 @@ type EntryComponentProps = {
   avatar:string,
   name:string,
   link:string
-};
-
-type MentionComponentProps = {
-  avatar:string,
-  name:string,
-  link:string | null
 };
 
 export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats }: EntryEditorProps) => {
@@ -72,7 +67,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
     },
     mentions: {
       onSearchChange: onSearchChange,
-      onAddMention: (mention:MentionComponentProps) => {
+      onAddMention: (mention:MentionItem) => {
         console.clear();
         console.log(mention);
       },

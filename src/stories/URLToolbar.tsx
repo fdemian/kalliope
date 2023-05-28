@@ -1,7 +1,9 @@
+import type { SetStateAction, Dispatch, MouseEventHandler } from 'react';
+
 type URLToolbarTypes = {
-  setUrl: (e: string) => {};
-  insertFn: () => {};
-  cancelFn: () => {};
+  setUrl: Dispatch<SetStateAction<string | null>>;
+  insertFn: MouseEventHandler<HTMLButtonElement> | undefined;
+  cancelFn: MouseEventHandler<HTMLButtonElement> | undefined;
   text: string;
 };
 

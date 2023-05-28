@@ -15,12 +15,6 @@ export type EntryProps = {
   link: string;
 };
 
-type MentionObj = {
-  avatar: string;
-  name: string;
-  link: string;
-};
-
 type SourceLinkTypes = {
   sourceLink: string;
 };
@@ -42,7 +36,7 @@ export type MentionItem = {
 
 type CalliopeConfigProps = {
   placeholderText: string;
-  initialState: string;
+  initialState: string | undefined;
   readOnly: boolean;
   autoFocus: boolean;
   onError: (error: any) => void;
@@ -53,7 +47,7 @@ type CalliopeConfigProps = {
   };
   mentions: {
     onSearchChange: (match: any) => void;
-    onAddMention: (mention: MentionObj) => void;
+    onAddMention: (mention: MentionItem) => void;
     entryComponent: (entryProps: EntryProps) => void;
     mentionsData: MentionItem[];
   };

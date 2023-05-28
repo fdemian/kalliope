@@ -11,8 +11,7 @@
 // in flow itself, so we can't name it anything else.
 export default function invariant(
   cond?: boolean,
-  message?: string,
-  ...args: string[]
+  message?: string
 ): asserts cond {
   if (cond) {
     return;
@@ -20,6 +19,7 @@ export default function invariant(
 
   throw new Error(
     'Internal Lexical error: invariant() is meant to be replaced at compile ' +
-      'time. There is no runtime version.'
+      'time. There is no runtime version. Error: ' +
+      message,
   );
 }

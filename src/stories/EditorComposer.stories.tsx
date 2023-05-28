@@ -1,17 +1,19 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import type { Meta } from '@storybook/react';
 import { CalliopeFormatTypes, MentionItem } from '../Calliope/CalliopeEditorTypes';
 import Editor from '../Calliope/CalliopeEditor.tsx';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
+import type { MouseEventHandler } from 'react';
+//import type { SetStateAction, Dispatch, MouseEventHandler } from 'react';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 
 type CalliopeContainerType = {
   focus: () => {};
   clear: () => {};
-  getContent: () => String;
+  getContent: () => string;
   executeCommand: (name: string, props: any) => void;
 };
 
@@ -27,10 +29,34 @@ type AvatarEntryComponent = {
   name: string;
 }
 
+
+const initialFormatTypes = {
+  blockType: 'normal',
+  selectedElementKey: null,
+  isLink: false,
+  isBold: false,
+  isSpoiler: false,
+  isKeyboard: false,
+  isItalic: false,
+  isUnderline: false,
+  isStrikethrough: false,
+  isSubscript: false,
+  isSuperscript: false,
+  isCode: false,
+  canUndo: false,
+  canRedo: false,
+  isRTL: false,
+  codeLanguage: '',
+  fontSize: '',
+  fontColor: '',
+  bgColor: '',
+  fontFamily: ''
+};
+
 export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
-  const [editorState, setEditorState] = useState<String>(null);
-  const [formats, setFormats] = useState<CalliopeFormatTypes>({});
+  const [editorState, setEditorState] = useState<string | null>(null);
+  const [formats, setFormats] = useState<CalliopeFormatTypes>(initialFormatTypes);
   const [suggestions, setSuggestions] = useState(initialMentions);
   const [isSpeechToText, setIsSpeechToText] = useState<boolean | null>(false);
 
@@ -54,7 +80,7 @@ export const EditorComposer = () => {
   const blockFormatChangeFn = (val: string) => {
     if(!containerRef.current)
       return;
-    containerRef.current.executeCommand(val);
+    containerRef.current.executeCommand(val, null);
   }
 
   const codeLanguageChange = (val: string) => {
@@ -460,8 +486,8 @@ export const EditorComposer = () => {
     'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
 
   let text = "";
-  let insertFn = null;
-  let cancelFn = null;
+  let insertFn: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
+  let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
   const altToolbar = isTweetToolbar || isVideoToolbar || isImageToolbar;
   if(altToolbar){
     text = isTweetToolbar ? "Insert Tweet" : (isVideoToolbar ? "Insert Video" :  "Insert image");
@@ -469,14 +495,20 @@ export const EditorComposer = () => {
     cancelFn = isTweetToolbar ? toggleTweetToolbar : (isVideoToolbar ? toggleVideoToolbar :  toggleImageToolbar);
   }
 
+  const clearClickFn = () => containerRef.current?.clear();
+  const getContentClickFn = () => {
+    const content = containerRef.current?.getContent();
+    setEditorState(content === undefined ? null : content);
+  }
+
   return(
   <>
     <button
-      onClick={() => containerRef.current?.clear()}>
+      onClick={clearClickFn}>
       Clear
     </button>
     <button
-      onClick={() => setEditorState(containerRef.current?.getContent())}>
+      onClick={getContentClickFn}>
       Content
     </button>
     {BUTTON_ELEMENTS.map(elem => (
@@ -490,7 +522,14 @@ export const EditorComposer = () => {
     {INSERT_BUTTONS.map(elem => (
       <button
         key={elem.text}
-        onClick={() => elem.directCommand ? containerRef.current.executeCommand(elem.command, elem.props): elem.command()} >
+        onClick={
+        () => {
+          elem.directCommand ?
+          containerRef.current?.executeCommand(
+            (typeof elem.command === 'string' ?
+            elem.command : ''), elem.props) :
+          (typeof elem.command === 'function'  ? elem.command() : console.log("ERROR"))
+        }}>
         {elem.text}
       </button>
       ))}
@@ -512,7 +551,9 @@ export const EditorComposer = () => {
           <select
             name="code-format"
             id="code-format-select"
-            value={CODE_LANGUAGE_OPTIONS.find(p => p.value === formats.codeLanguage).value}
+            value={
+              CODE_LANGUAGE_OPTIONS.find(p => p.value === formats.codeLanguage)?.value
+            }
             onChange={(e) => codeLanguageChange(e.target.value)}
           >
             {CODE_LANGUAGE_OPTIONS.map(cl => (

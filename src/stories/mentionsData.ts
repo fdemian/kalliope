@@ -1,14 +1,5 @@
 import { type MentionItem } from '../Calliope/CalliopeEditorTypes';
 
-/*
-type MentionObj = {
-  id: number,
-  name: string,
-  link: string,
-  avatar: string | null
-};
-*/
-
 export const initialMentions:MentionItem[] = [
  {
    id: 1,

@@ -1,4 +1,4 @@
-import { QueryMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
+import { MenuTextMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 
 const PUNCTUATION = '\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%\'"~=<>_:;';
 const NAME = '\\b[A-Z][^\\s' + PUNCTUATION + ']';
@@ -61,7 +61,7 @@ const AtSignMentionsRegexAliasRegex = new RegExp(
 export function checkForAtSignMentions(
   text: string,
   minMatchLength: number
-): QueryMatch | null {
+): MenuTextMatch | null {
   let match = AtSignMentionsRegex.exec(text);
 
   if (match === null) {
@@ -84,7 +84,7 @@ export function checkForAtSignMentions(
   return null;
 }
 
-export function getPossibleQueryMatch(text: string): QueryMatch | null {
+export function getPossibleQueryMatch(text: string): MenuTextMatch | null {
   const match = checkForAtSignMentions(text, 1);
   return match;
 }

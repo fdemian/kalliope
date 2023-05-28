@@ -1,4 +1,3 @@
-import * as React from 'react';
 import MentionTypeaheadOption from './MentionTypeaheadOption';
 
 const DefaultListItem = ({ option }) => {

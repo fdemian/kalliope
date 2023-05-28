@@ -11,7 +11,6 @@ import { LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuP
 import { MentionNode, $createMentionNode } from '../../Nodes/MentionNode/MentionNode';
 import { MentionsTypeaheadMenuItem } from './MentionsTypeaheadMenuItem';
 import MentionTypeaheadOption from './MentionTypeaheadOption';
-import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';

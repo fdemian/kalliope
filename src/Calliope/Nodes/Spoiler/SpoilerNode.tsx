@@ -41,9 +41,7 @@ export class SpoilerNode extends DecoratorNode<JSX.Element> {
 
   exportJSON() {
     return {
-      text: this.__text,
-      type: 'spoiler-inline',
-      version: 1,
+      text: this.__text
     };
   }
 

@@ -22,9 +22,7 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
 
   exportJSON() {
     return {
-      text: this.__text,
-      type: 'kbdnode',
-      version: 1,
+      text: this.__text
     };
   }
 

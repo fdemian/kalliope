@@ -63,9 +63,7 @@ export class VideoNode extends DecoratorBlockNode<JSX.Element> {
 
   exportJSON() {
     return {
-      videoURL: this.__url,
-      type: 'video',
-      version: 1,
+      videoURL: this.__url
     };
   }
 

@@ -17,13 +17,7 @@ import {
   Spread,
 } from 'lexical';
 
-type SerializedCollapsibleContentNode = Spread<
-  {
-    type: 'collapsible-content';
-    version: 1;
-  },
-  SerializedElementNode
->;
+type SerializedCollapsibleContentNode = SerializedElementNode;
 
 export function convertCollapsibleContentElement(
   domNode: HTMLElement
@@ -85,9 +79,7 @@ export class CollapsibleContentNode extends ElementNode {
 
   exportJSON(): SerializedCollapsibleContentNode {
     return {
-      ...super.exportJSON(),
-      type: 'collapsible-content',
-      version: 1,
+      ...super.exportJSON()
     };
   }
 }

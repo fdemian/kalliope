@@ -58,8 +58,6 @@ export type SerializedImageNode = Spread<
     showCaption: boolean;
     src: string;
     width?: number;
-    type: 'image';
-    version: 1;
   },
   SerializedLexicalNode
 >;
@@ -160,8 +158,6 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       maxWidth: this.__maxWidth,
       showCaption: this.__showCaption,
       src: this.getSrc(),
-      type: 'image',
-      version: 1,
       width: this.__width === 'inherit' ? 0 : this.__width,
     };
   }

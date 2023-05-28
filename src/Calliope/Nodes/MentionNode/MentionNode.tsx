@@ -15,8 +15,6 @@ export type SerializedMentionNode = Spread<
   {
     mention: string;
     link: string;
-    type: 'mention';
-    version: 1;
   },
   SerializedLexicalNode
 >;
@@ -37,9 +35,7 @@ export class MentionNode extends DecoratorNode {
   exportJSON(): SerializedMentionNode {
     return {
       name: this.__mentionName,
-      link: this.__link,
-      type: 'mention',
-      version: 1,
+      link: this.__link
     };
   }
 

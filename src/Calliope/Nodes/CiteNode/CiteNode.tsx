@@ -19,8 +19,6 @@ export type SerializedCiteNode = Spread<
     authorAvatar: string;
     sourceContent: string;
     sourceLink: string;
-    type: 'cite-node';
-    version: 1;
   },
   SerializedDecoratorBlockNode
 >;
@@ -114,9 +112,7 @@ export class CiteNode extends DecoratorBlockNode {
       authorLink: this.__authorLink,
       authorAvatar: serializedAvatar,
       sourceContent: this.citeEditor.toJSON(),
-      sourceLink: this.__sourceLink,
-      type: 'cite-node',
-      version: 1,
+      sourceLink: this.__sourceLink
     };
   }
 

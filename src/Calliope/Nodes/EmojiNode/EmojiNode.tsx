@@ -7,8 +7,6 @@ import EmojiImage from './EmojiImage';
 export type SerializedEmojiNode = Spread<
   {
     emoji: string;
-    type: 'emoji';
-    version: 1;
   },
   SerializedLexicalNode
 >;

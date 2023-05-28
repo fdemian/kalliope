@@ -22,8 +22,6 @@ import {
 type SerializedCollapsibleContainerNode = Spread<
   {
     open: boolean;
-    type: 'collapsible-container';
-    version: 1;
   },
   SerializedElementNode
 >;
@@ -105,9 +103,7 @@ export class CollapsibleContainerNode extends ElementNode {
   exportJSON(): SerializedCollapsibleContainerNode {
     return {
       ...super.exportJSON(),
-      open: this.__open,
-      type: 'collapsible-container',
-      version: 1,
+      open: this.__open
     };
   }
 

@@ -1,7 +1,7 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
-import type { LexicalEditor } from '@lexical';
+import type { LexicalEditor } from 'lexical';
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
@@ -108,7 +108,6 @@ function EditorPlugins({
       <CitePlugin />
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
-      <ListMaxIndentLevelPlugin />
       <MentionsPlugin config={config.mentions} />
       <EditorRefPlugin setEditorRef={setEditorRef} />
     </>

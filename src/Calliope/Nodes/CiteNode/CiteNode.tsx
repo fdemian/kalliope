@@ -1,4 +1,3 @@
-import React from 'react';
 import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
 import { createEditor } from 'lexical';
 import CiteQuote from './CiteQuote';

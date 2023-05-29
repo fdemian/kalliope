@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { CalliopeContext } from '../../context';
 import CiteTextEditor from './CiteTextEditor';

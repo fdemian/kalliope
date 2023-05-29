@@ -1,6 +1,6 @@
-import { TypeaheadOption } from '@lexical/react/LexicalTypeaheadMenuPlugin';
+import { MenuOption } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 
-class MentionTypeaheadOption extends TypeaheadOption {
+class MentionTypeaheadOption extends MenuOption {
   name: string;
   link: string;
   avatar: string;

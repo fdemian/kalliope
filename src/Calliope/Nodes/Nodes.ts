@@ -14,7 +14,7 @@ import { MarkNode } from '@lexical/mark';
 import { OverflowNode } from '@lexical/overflow';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
-import { CodeHighlightNode, CodeNode, CodeTabNode } from '@lexical/code';
+import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { EmojiNode } from './EmojiNode/EmojiNode';
 import { MentionNode } from './MentionNode/MentionNode';
 import { KeyboardNode } from './Keyboard/Keyboard';
@@ -43,7 +43,6 @@ const Nodes: Array<Klass<LexicalNode>> = [
   QuoteNode,
   CodeHighlightNode,
   CodeNode,
-  CodeTabNode,
   HorizontalRuleNode,
   ImageNode,
   TweetNode,

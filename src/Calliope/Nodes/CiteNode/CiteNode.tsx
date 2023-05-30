@@ -29,7 +29,7 @@ type Author = {
 };
 
 type Source = {
-  content: string;
+  content: string | LexicalEditor;
   link: string;
 };
 
@@ -46,16 +46,18 @@ export class CiteNode extends DecoratorBlockNode {
   }
 
   static clone(node: CiteNode): CiteNode {
-    const author = {
+    const author: Author = {
       name: node.__authorName,
       link: node.__authorLink,
       avatar: node.__authorAvatar,
     };
-    const source = {
+    const source: Source = {
       content: node.__sourceContent,
       link: node.__sourceLink,
     };
+
     return new CiteNode(author, source, node.__key);
+
   }
 
   constructor(author: Author, source: Source, key?: NodeKey) {

@@ -37,8 +37,9 @@ import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
 import { EditorCommands } from '../CalliopeEditorTypes';
+import type { LexicalEditor } from 'lexical';
 
-const onCodeLanguageSelect = (editor, internalFormat, value) => {
+const onCodeLanguageSelect = (editor: LexicalEditor, internalFormat:any , value: string) => {
   editor.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -59,7 +60,7 @@ const onCodeLanguageSelect = (editor, internalFormat, value) => {
   });
 };
 
-const formatParagraph = (editor, internalFormat) => {
+const formatParagraph = (editor: LexicalEditor, internalFormat: any) => {
   if (internalFormat.blockType !== 'paragraph') {
     editor.update(() => {
       const selection = $getSelection();
@@ -70,7 +71,7 @@ const formatParagraph = (editor, internalFormat) => {
   }
 };
 
-const formatHeading = (editor, internalFormat, headingSize) => {
+const formatHeading = (editor: LexicalEditor, internalFormat: any, headingSize: string) => {
   if (internalFormat.blockType !== headingSize) {
     editor.update(() => {
       const selection = $getSelection();
@@ -81,7 +82,7 @@ const formatHeading = (editor, internalFormat, headingSize) => {
   }
 };
 
-const formatBulletList = (editor, internalFormat) => {
+const formatBulletList = (editor: LexicalEditor, internalFormat: any) => {
   if (internalFormat.blockType !== 'bullet') {
     editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
   } else {
@@ -89,7 +90,7 @@ const formatBulletList = (editor, internalFormat) => {
   }
 };
 
-const formatCheckList = (editor, internalFormat) => {
+const formatCheckList = (editor: LexicalEditor, internalFormat: any) => {
   if (internalFormat.blockType !== 'check') {
     editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
   } else {
@@ -97,7 +98,7 @@ const formatCheckList = (editor, internalFormat) => {
   }
 };
 
-const formatNumberedList = (editor, internalFormat) => {
+const formatNumberedList = (editor: LexicalEditor, internalFormat: any) => {
   if (internalFormat.blockType !== 'number') {
     editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
   } else {
@@ -105,7 +106,7 @@ const formatNumberedList = (editor, internalFormat) => {
   }
 };
 
-const formatQuote = (editor, internalFormat) => {
+const formatQuote = (editor: LexicalEditor, internalFormat:any) => {
   if (internalFormat.blockType !== 'quote') {
     editor.update(() => {
       const selection = $getSelection();
@@ -116,7 +117,7 @@ const formatQuote = (editor, internalFormat) => {
   }
 };
 
-const formatCode = (editor, internalFormat) => {
+const formatCode = (editor: LexicalEditor, internalFormat: any) => {
   if (internalFormat.blockType !== 'code') {
     editor.update(() => {
       let selection = $getSelection();
@@ -136,7 +137,7 @@ const formatCode = (editor, internalFormat) => {
   }
 };
 
-const applyStyleText = (styles, editor) => {
+const applyStyleText = (styles:any, editor: LexicalEditor) => {
   editor.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -145,19 +146,19 @@ const applyStyleText = (styles, editor) => {
   });
 };
 
-const selectFontFamily = (editor, _, family) => {
+const selectFontFamily = (editor:LexicalEditor, _, family:string) => {
   return applyStyleText({ 'font-family': family }, editor);
 };
 
-const selectFontSize = (editor, _, fontSize) => {
+const selectFontSize = (editor: LexicalEditor, _, fontSize: string) => {
   return applyStyleText({ 'font-size': fontSize }, editor);
 };
 
-const selectFontColor = (editor, _, color) => {
+const selectFontColor = (editor: LexicalEditor, _, color: string) => {
   return applyStyleText({ color: color }, editor);
 };
 
-const selectBGColor = (editor, _, bgColor) => {
+const selectBGColor = (editor: LexicalEditor, _, bgColor: string) => {
   return applyStyleText({ 'background-color': bgColor }, editor);
 };
 
@@ -230,17 +231,17 @@ const EDITOR_COMMANDS: EditorCommands = [
   },
   {
     name: 'H1',
-    command: (editor, formats) => formatHeading(editor, formats, 'h1'),
+    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h1'),
     directCommand: false,
   },
   {
     name: 'H2',
-    command: (editor, formats) => formatHeading(editor, formats, 'h2'),
+    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h2'),
     directCommand: false,
   },
   {
     name: 'H3',
-    command: (editor, formats) => formatHeading(editor, formats, 'h3'),
+    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h3'),
     directCommand: false,
   },
   {
@@ -315,7 +316,7 @@ const EDITOR_COMMANDS: EditorCommands = [
   },
   {
     name: 'CODE_LANGUAGE_CHANGE',
-    command: (editor, formats, val) => onCodeLanguageSelect(editor, formats, val),
+    command: (editor: LexicalEditor, formats:any, val: string) => onCodeLanguageSelect(editor, formats, val),
     directCommand: false,
   },
   {

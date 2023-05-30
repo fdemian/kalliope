@@ -4,8 +4,16 @@ import { CalliopeContext } from '../../context';
 import CiteTextEditor from './CiteTextEditor';
 import './CiteQuote.css';
 
-const DefaultSourceComp = ({ sourceLink }) => <a href={sourceLink}>{sourceLink}</a>;
-const DefaultAuthorComp = ({ author }) => {
+type SourceCompProps = {
+  sourceLink: string
+};
+
+type AuthorCompProps = {
+  author: string
+};
+
+const DefaultSourceComp = ({ sourceLink }: SourceCompProps) => <a href={sourceLink}>{sourceLink}</a>;
+const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
   return <a href={author.link}>{author.name}</a>;
 };
 

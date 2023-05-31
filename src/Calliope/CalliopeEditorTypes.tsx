@@ -55,7 +55,7 @@ type CalliopeConfigProps = {
 
 export type CalliopeEditorProps = {
   config: CalliopeConfigProps;
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.MutableRefObject<CalliopeContainerType | null>;
   setFormats: (formats: any) => void;
 };
 

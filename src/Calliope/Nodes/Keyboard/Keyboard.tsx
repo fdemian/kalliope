@@ -35,9 +35,8 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
     return document.createElement('span');
   }
 
-  updateDOM(prevNode) {
-    // If the inline property changes, replace the element
-    return this.__text !== prevNode.__text;
+  updateDOM(): true {
+    return true;
   }
 
   setText(text) {

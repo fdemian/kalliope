@@ -15,6 +15,7 @@ import {
 } from 'lexical';
 import { $createKeyboardNode } from '../Nodes/Keyboard/Keyboard';
 import { useEffect } from 'react';
+import type { LexicalCommand } from 'lexical';
 
 export const INSERT_KEYBOARD_COMMAND: LexicalCommand<{ text: string }> = createCommand();
 

@@ -7,7 +7,7 @@ import {
   SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
 
-const isArgString = (arg: any): boolean => {
+const isArgString = (arg: any): arg is string => {
   return typeof arg === 'string' || arg instanceof String;
 };
 
@@ -34,33 +34,33 @@ type Source = {
 };
 
 export class CiteNode extends DecoratorBlockNode {
-  __id: string;
-  __authorName: string;
-  __authorLink: string;
-  __authorAvatar?: string;
-  __sourceContent: string | LexicalEditor;
-  __sourceLink: string;
+  __id: string = '';
 
-  static getType(): string {
-    return 'cite-node';
-  }
+   __authorName: string;
+   __authorLink: string;
+   __authorAvatar?: string;
+   __sourceContent: string | LexicalEditor;
+   __sourceLink: string;
 
-  static clone(node: CiteNode): CiteNode {
-    const author: Author = {
-      name: node.__authorName,
-      link: node.__authorLink,
-      avatar: node.__authorAvatar,
-    };
-    const source: Source = {
-      content: node.__sourceContent,
-      link: node.__sourceLink,
-    };
+   static clone(node: CiteNode): CiteNode {
+     const author: Author = {
+       name: node.__authorName,
+       link: node.__authorLink,
+       avatar: node.__authorAvatar,
+     };
+     const source: Source = {
+       content: node.__sourceContent,
+       link: node.__sourceLink,
+     };
 
-    return new CiteNode(author, source, node.__key);
+     return new CiteNode(author, source, node.__key);
+   }
 
-  }
+   static getType(): string {
+     return 'cite-node';
+   }
 
-  constructor(author: Author, source: Source, key?: NodeKey) {
+   constructor(author: Author, source: Source, key?: NodeKey) {
     super(key);
 
     // Initialization.
@@ -77,14 +77,29 @@ export class CiteNode extends DecoratorBlockNode {
         stateToParse = source.content;
       } else {
         stateToParse = JSON.stringify(
-          source.content.editorState !== undefined
-            ? source.content.editorState
+          (source.content as LexicalEditor)._editorState !== undefined
+            ? (source.content as LexicalEditor)._editorState
             : source.content
         );
       }
       const editorState = this.citeEditor.parseEditorState(stateToParse);
       this.citeEditor.setEditorState(editorState);
     }
+  }
+
+  static exportJSON(): SerializedCiteNode {
+    const serializedAvatar =
+      this.__authorAvatar !== null && this.__authorAvatar !== undefined
+        ? this.__authorAvatar
+        : '';
+
+    return {
+      authorName: this.__authorName,
+      authorLink: this.__authorLink,
+      authorAvatar: serializedAvatar,
+      sourceContent: this.citeEditor.toJSON(),
+      sourceLink: this.__sourceLink
+    };
   }
 
   static importJSON(serializedNode: SerializedCiteNode): CiteNode {
@@ -100,21 +115,6 @@ export class CiteNode extends DecoratorBlockNode {
 
     const node = $createCiteNode(author, source);
     return node;
-  }
-
-  exportJSON(): SerializedCiteNode {
-    const serializedAvatar =
-      this.__authorAvatar !== null && this.__authorAvatar !== undefined
-        ? this.__authorAvatar
-        : '';
-
-    return {
-      authorName: this.__authorName,
-      authorLink: this.__authorLink,
-      authorAvatar: serializedAvatar,
-      sourceContent: this.citeEditor.toJSON(),
-      sourceLink: this.__sourceLink
-    };
   }
 
   createDOM(): HTMLElement {

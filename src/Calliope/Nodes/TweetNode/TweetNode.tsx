@@ -24,7 +24,6 @@ import {
   DecoratorBlockNode,
   SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
-import * as React from 'react';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import './TweetNode.css';
 

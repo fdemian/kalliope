@@ -65,7 +65,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
   useEffect(() => {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
-      (payload) => {
+      () => {
         const selection = $getSelection();
         const isGridSelection = DEPRECATED_$isGridSelection(selection);
 

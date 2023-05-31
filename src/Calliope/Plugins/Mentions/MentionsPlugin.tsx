@@ -11,7 +11,7 @@ import { LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuP
 import { MentionNode, $createMentionNode } from '../../Nodes/MentionNode/MentionNode';
 import { MentionsTypeaheadMenuItem } from './MentionsTypeaheadMenuItem';
 import MentionTypeaheadOption from './MentionTypeaheadOption';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';
 
@@ -90,7 +90,7 @@ export default function NewMentionsPlugin({ config }): JSX.Element | null {
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
       ) =>
         anchorElementRef.current && config.mentionsData.length
-          ? ReactDOM.createPortal(
+          ? createPortal(
               <div className="typeahead-popover mentions-menu">
                 <ul>
                   {config.mentionsData.map((option, i: number) => (

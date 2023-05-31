@@ -1,4 +1,3 @@
-import React from 'react';
 import { shortnameToUnicode } from 'emoji-toolkit';
 
 const EmojiNode = ({ emoji }: string) => {

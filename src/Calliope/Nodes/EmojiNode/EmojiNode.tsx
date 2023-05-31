@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
 import type { EditorConfig, NodeKey, SerializedLexicalNode, Spread } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';

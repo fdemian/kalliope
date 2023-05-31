@@ -9,6 +9,7 @@ import {
   CAN_UNDO_COMMAND,
 } from 'lexical';
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
+import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 
 import { $getNearestNodeOfType } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
@@ -20,6 +21,12 @@ import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
 } from '@lexical/selection';
+
+type SetFormatPluginProps = {
+  internalFormat: CalliopeFormatTypes,
+  setInternalFormat: (formats: CalliopeFormatTypes) => void;
+  setFormats: (formats: CalliopeFormatTypes) => void;
+}
 
 const CODE_LANGUAGE_MAP = {
   javascript: 'js',
@@ -45,7 +52,7 @@ function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   }
 }
 
-const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
+const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetFormatPluginProps) => {
   const [editor] = useLexicalComposerContext();
 
   const getEditorFormats = useCallback(() => {

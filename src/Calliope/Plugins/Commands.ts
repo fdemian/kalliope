@@ -38,8 +38,9 @@ import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
 import { EditorCommands } from '../CalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
+import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 
-const onCodeLanguageSelect = (editor: LexicalEditor, internalFormat:any , value: string) => {
+const onCodeLanguageSelect = (editor: LexicalEditor, internalFormat:CalliopeFormatTypes , value: string) => {
   editor.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -60,7 +61,7 @@ const onCodeLanguageSelect = (editor: LexicalEditor, internalFormat:any , value:
   });
 };
 
-const formatParagraph = (editor: LexicalEditor, internalFormat: any) => {
+const formatParagraph = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'paragraph') {
     editor.update(() => {
       const selection = $getSelection();
@@ -71,7 +72,7 @@ const formatParagraph = (editor: LexicalEditor, internalFormat: any) => {
   }
 };
 
-const formatHeading = (editor: LexicalEditor, internalFormat: any, headingSize: string) => {
+const formatHeading = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes, headingSize: string) => {
   if (internalFormat.blockType !== headingSize) {
     editor.update(() => {
       const selection = $getSelection();
@@ -82,7 +83,7 @@ const formatHeading = (editor: LexicalEditor, internalFormat: any, headingSize: 
   }
 };
 
-const formatBulletList = (editor: LexicalEditor, internalFormat: any) => {
+const formatBulletList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'bullet') {
     editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
   } else {
@@ -90,7 +91,7 @@ const formatBulletList = (editor: LexicalEditor, internalFormat: any) => {
   }
 };
 
-const formatCheckList = (editor: LexicalEditor, internalFormat: any) => {
+const formatCheckList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'check') {
     editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
   } else {
@@ -98,7 +99,7 @@ const formatCheckList = (editor: LexicalEditor, internalFormat: any) => {
   }
 };
 
-const formatNumberedList = (editor: LexicalEditor, internalFormat: any) => {
+const formatNumberedList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'number') {
     editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
   } else {
@@ -106,7 +107,7 @@ const formatNumberedList = (editor: LexicalEditor, internalFormat: any) => {
   }
 };
 
-const formatQuote = (editor: LexicalEditor, internalFormat:any) => {
+const formatQuote = (editor: LexicalEditor, internalFormat:CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'quote') {
     editor.update(() => {
       const selection = $getSelection();
@@ -117,7 +118,7 @@ const formatQuote = (editor: LexicalEditor, internalFormat:any) => {
   }
 };
 
-const formatCode = (editor: LexicalEditor, internalFormat: any) => {
+const formatCode = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'code') {
     editor.update(() => {
       let selection = $getSelection();

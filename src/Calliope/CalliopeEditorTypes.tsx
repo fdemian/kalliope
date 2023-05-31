@@ -21,7 +21,7 @@ type SourceLinkTypes = {
 
 export type EditorCommand = {
   name: string;
-  command: LexicalCommand<String | DispatcherFn>;
+  command: LexicalCommand<String | DispatcherFn> | ((editor: LexicalEditor, _: any, family: string) => void);
   directCommand: boolean;
 };
 

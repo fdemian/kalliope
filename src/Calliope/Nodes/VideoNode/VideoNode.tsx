@@ -11,7 +11,6 @@ import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import ReactPlayer from 'react-player';
-import * as React from 'react';
 import './VideoNode.css';
 
 type VideoProps = ReadOnly<{

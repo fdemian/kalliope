@@ -31,8 +31,8 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
 
   const config = {
     placeholderText: 'Ingrese texto...',
-    initialState: initialState,
-    readOnly: readOnly,
+    initialState,
+    readOnly,
     autoFocus: false,
     onError: (error:any) => {
       throw error;
@@ -43,7 +43,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       defaultCaptionText: "Enter image caption..."
     },
     emojiConfig: {
-      emojiData: emojiData
+      emojiData
     },
     dragAndDropImage: {
       handleDroppedFile: (file:any) => console.log(file)
@@ -66,7 +66,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       )
     },
     mentions: {
-      onSearchChange: onSearchChange,
+      onSearchChange,
       onAddMention: (mention:MentionItem) => {
         console.clear();
         console.log(mention);

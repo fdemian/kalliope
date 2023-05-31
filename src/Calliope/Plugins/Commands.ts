@@ -155,7 +155,7 @@ const selectFontSize = (editor: LexicalEditor, _, fontSize: string) => {
 };
 
 const selectFontColor = (editor: LexicalEditor, _, color: string) => {
-  return applyStyleText({ color: color }, editor);
+  return applyStyleText({ color }, editor);
 };
 
 const selectBGColor = (editor: LexicalEditor, _, bgColor: string) => {

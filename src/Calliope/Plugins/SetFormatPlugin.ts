@@ -109,10 +109,10 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
       // Update text format
       _formats = {
         ...internalFormat,
-        isLink: isLink,
-        blockType: blockType,
-        selectedElementKey: selectedElementKey,
-        codeLanguage: codeLanguage,
+        isLink,
+        blockType,
+        selectedElementKey,
+        codeLanguage,
         isBold: selection.hasFormat('bold'),
         isItalic: selection.hasFormat('italic'),
         isUnderline: selection.hasFormat('underline'),
@@ -121,10 +121,10 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }) => {
         isSuperscript: selection.hasFormat('superscript'),
         isCode: selection.hasFormat('code'),
         isRTL: $isParentElementRTL(selection),
-        fontSize: fontSize,
-        fontColor: fontColor,
-        bgColor: bgColor,
-        fontFamily: fontFamily,
+        fontSize,
+        fontColor,
+        bgColor,
+        fontFamily,
       };
     }
     return _formats;

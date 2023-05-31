@@ -47,8 +47,8 @@ import {
 import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import invariant from '../utils/invariant';
-//import useModal from '../../hooks/useModal';
-//import ColorPicker from '../../ui/ColorPicker';
+// import useModal from '../../hooks/useModal';
+// import ColorPicker from '../../ui/ColorPicker';
 
 function computeSelectionCount(selection: GridSelection): {
   columns: number;
@@ -65,7 +65,7 @@ function computeSelectionCount(selection: GridSelection): {
 // of selecting merged cells and non-merged)
 function isGridSelectionRectangular(selection: GridSelection): boolean {
   const nodes = selection.getNodes();
-  const currentRows: Array<number> = [];
+  const currentRows: number[] = [];
   let currentRow = null;
   let expectedColumns = null;
   let currentColumns = 0;

@@ -163,7 +163,7 @@ export default function ExcalidrawModal({
       // delete node if the scene is clear
       onDelete();
     } else {
-      //Otherwise, show confirmation dialog before closing
+      // Otherwise, show confirmation dialog before closing
       setDiscardModalOpen(true);
     }
   };

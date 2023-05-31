@@ -73,7 +73,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
 
     updateViewPortWidth();
     window.addEventListener('resize', updateViewPortWidth);
-    
+
     return () => {
       window.removeEventListener('resize', updateViewPortWidth);
     };
@@ -135,15 +135,15 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
     ...config,
     nodes: EditorNodes,
     plugins: EditorPlugins,
-    onEditorChange: onEditorChange,
+    onEditorChange,
   };
 
   useImperativeHandle(containerRef, () => {
     return {
-      focus: focus,
-      clear: clear,
-      getContent: getContent,
-      executeCommand: executeCommand,
+      focus,
+      clear,
+      getContent,
+      executeCommand,
     };
   });
 

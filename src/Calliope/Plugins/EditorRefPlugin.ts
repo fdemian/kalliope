@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-//import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const EditorRefPlugin = ({ setEditorRef }) => {
   const [editor] = useLexicalComposerContext();

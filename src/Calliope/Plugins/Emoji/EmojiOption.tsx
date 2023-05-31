@@ -3,13 +3,13 @@ import { MenuOption } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 class EmojiOption extends MenuOption {
   title: string;
   emoji: string;
-  keywords: Array<string>;
+  keywords: string[];
 
   constructor(
     title: string,
     emoji: string,
     options: {
-      keywords?: Array<string>;
+      keywords?: string[];
     }
   ) {
     super(title);

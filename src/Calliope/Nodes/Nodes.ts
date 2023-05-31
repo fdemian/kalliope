@@ -29,7 +29,7 @@ import { CollapsibleContainerNode } from '../Plugins/CollapsiblePlugin/Collapsib
 import { CollapsibleContentNode } from '../Plugins/CollapsiblePlugin/CollapsibleContentNode';
 import { CollapsibleTitleNode } from '../Plugins/CollapsiblePlugin/CollapsibleTitleNode';
 
-const Nodes: Array<Klass<LexicalNode>> = [
+const Nodes: Klass<LexicalNode>[] = [
   ListNode,
   ListItemNode,
   AutoLinkNode,

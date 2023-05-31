@@ -43,7 +43,7 @@ export default function DragDropPaste(): null {
         const filesIterator = files[Symbol.iterator]();
         // Batch all node insertions together to prevent asynchronous behavior causing unnecessary
         // DOM renders and redundant history entries
-        const insertQueue: Array<() => void> = [];
+        const insertQueue: (() => void)[] = [];
         const handleNextFile = () => {
           const { value: file, done } = filesIterator.next();
           if (done) {

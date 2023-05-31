@@ -211,7 +211,7 @@ export class TweetNode extends DecoratorBlockNode {
       />
     );
   }
-  
+
 }
 
 export function $createTweetNode(tweetID: string): TweetNode {

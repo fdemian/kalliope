@@ -26,12 +26,12 @@ const MAX_EMOJI_SUGGESTION_COUNT = 5;
 export default function EmojiPickerPlugin() {
   const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
-  const [emojis, setEmojis] = useState<Array<Any>>([]);
-  const [initialData, setInitialData] = useState<Array<Any>>([]);
+  const [emojis, setEmojis] = useState<Any[]>([]);
+  const [initialData, setInitialData] = useState<Any[]>([]);
   const calliopeConfig = useContext(CalliopeContext);
   const { emojiConfig } = calliopeConfig;
 
-  let emojiData = emojiConfig.emojiData ?? defaultData;
+  const emojiData = emojiConfig.emojiData ?? defaultData;
 
   useEffect(() => {
     if (!editor.hasNodes([EmojiNode])) {
@@ -74,7 +74,7 @@ export default function EmojiPickerPlugin() {
     minLength: 0,
   });
 
-  const options: Array<EmojiOption> = useMemo(() => {
+  const options: EmojiOption[] = useMemo(() => {
     return emojiOptions
       .filter((option: EmojiOption) => {
         return queryString != null

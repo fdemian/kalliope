@@ -6,7 +6,6 @@ import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
 import type { MouseEventHandler } from 'react';
-//import type { SetStateAction, Dispatch, MouseEventHandler } from 'react';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 
@@ -200,7 +199,7 @@ export const EditorComposer = () => {
       locale: 'es'
     },
     mentions: {
-      onSearchChange: onSearchChange,
+      onSearchChange,
       onAddMention: (mention: MentionItem) => {
         console.clear();
         console.log(mention);
@@ -486,8 +485,8 @@ export const EditorComposer = () => {
     'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
 
   let text = "";
-  let insertFn: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
-  let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
+  let insertFn: MouseEventHandler<HTMLButtonElement> | undefined;
+  let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined;
   const altToolbar = isTweetToolbar || isVideoToolbar || isImageToolbar;
   if(altToolbar){
     text = isTweetToolbar ? "Insert Tweet" : (isVideoToolbar ? "Insert Video" :  "Insert image");

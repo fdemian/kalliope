@@ -101,7 +101,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
 
   return (
     <LexicalTypeaheadMenuPlugin<MentionTypeaheadOption>
-      onQueryChange={() => {}}
+      onQueryChange={() => console.log(query)}
       onSelectOption={onSelectOption}
       triggerFn={checkForMentionMatch}
       options={options}

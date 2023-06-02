@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Spoiler.css';
 
 const Spoiler = ({ text }: string) => {

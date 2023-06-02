@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
 import type { EditorConfig, NodeKey } from 'lexical';
 import { DecoratorNode } from 'lexical';
 import Spoiler from './Spoiler';

@@ -7,7 +7,12 @@
  * @flow strict
  */
 /* eslint-disable no-use-before-define */
-import type { ElementFormatType, LexicalNode, NodeKey } from 'lexical';
+import type {
+  ElementFormatType,
+  SerializedLexicalNode,
+  LexicalNode,
+  NodeKey
+} from 'lexical';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import ReactPlayer from 'react-player';
@@ -18,6 +23,16 @@ type VideoProps = ReadOnly<{
   nodeKey: NodeKey;
   videoURL: string;
 }>;
+
+
+export type SerializedVideoNode = Spread<
+  {
+    videoURL: string;
+    type: 'video';
+    version: 1;
+  },
+  SerializedLexicalNode
+>;
 
 function VideoComponent({ format, nodeKey, videoURL, className }: VideoProps) {
   return (
@@ -55,12 +70,12 @@ export class VideoNode extends DecoratorBlockNode<JSX.Element> {
     return false;
   }
 
-  static importJSON(serializedNode) {
+  static importJSON(serializedNode: SerializedVideoNode) {
     const node = $createVideoNode(serializedNode.videoURL);
     return node;
   }
 
-  exportJSON() {
+  exportJSON(): SerializedVideoNode {
     return {
       videoURL: this.__url,
       type: 'video',

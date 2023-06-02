@@ -6,10 +6,8 @@
  *
  */
 import {useCallback, useState} from 'react';
-import Button from '../ui/Button';
 import KatexRenderer from './KatexRenderer';
 import './KatexEquationAlterer.css';
-
 
 type Props = {
   initialEquation?: string;
@@ -64,9 +62,6 @@ export default function KatexEquationAlterer({
           inline={false}
           onDoubleClick={() => null}
         />
-      </div>
-      <div className="KatexEquationAlterer_dialogActions">
-        <Button onClick={onClick}>Confirm</Button>
       </div>
     </>
   );

@@ -5,12 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
-import './Modal.css';
-
-import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import './Modal.css';
 
 function PortalImpl({
   onClose,

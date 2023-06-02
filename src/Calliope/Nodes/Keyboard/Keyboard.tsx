@@ -1,8 +1,17 @@
 /* eslint-disable no-use-before-define */
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import type { LexicalNode, NodeKey } from 'lexical';
-import { DecoratorNode } from 'lexical';
+import { DecoratorNode, SerializedLexicalNode, Spread } from 'lexical';
 import './Keyboard.css';
+
+export type SerializedKeyboardNode = Spread<
+  {
+    text: string;
+    type: 'keyboard';
+    version: 1;
+  },
+  SerializedLexicalNode
+>;
 
 export class KeyboardNode extends DecoratorNode<ReactNode> {
   __text: string;
@@ -15,12 +24,12 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
     return new KeyboardNode(node.__text, node.__key);
   }
 
-  static importJSON(serializedNode) {
+  static importJSON(serializedNode: SerializedKeyboardNode) {
     const node = $createKeyboardNode(serializedNode.text);
     return node;
   }
 
-  exportJSON() {
+  exportJSON(): SerializedKeyboardNode {
     return {
       text: this.__text
     };

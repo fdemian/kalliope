@@ -94,6 +94,7 @@ export class CiteNode extends DecoratorBlockNode {
         : '';
 
     return {
+      ...super.exportJSON(),
       authorName: this.__authorName,
       authorLink: this.__authorLink,
       authorAvatar: serializedAvatar,
@@ -146,7 +147,7 @@ export class CiteNode extends DecoratorBlockNode {
   }
 }
 
-export function $createCiteNode(author, source): CiteNode {
+export function $createCiteNode(author: Author, source: Source): CiteNode {
   return new CiteNode(author, source);
 }
 

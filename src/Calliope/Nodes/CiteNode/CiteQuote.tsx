@@ -16,7 +16,7 @@ type AuthorCompProps = {
 type CiteQuoteProps = {
   authorName: string;
   authorLink: string;
-  sourceContent: string;
+  sourceContent: string | LexicalEditor;
   sourceLink: string;
   citeEditor: LexicalEditor;
 };

@@ -32,7 +32,6 @@ import {
   KEY_ESCAPE_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import * as React from 'react';
 import { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ImageResizer from './ImageResizer';
 import { $isImageNode } from './ImageNode';

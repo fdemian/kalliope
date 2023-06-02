@@ -80,7 +80,7 @@ export class EquationNode extends DecoratorNode<JSX.Element> {
       equation: this.getEquation(),
       inline: this.__inline,
       type: 'equation',
-      version: 1,
+      version: 1
     };
   }
 

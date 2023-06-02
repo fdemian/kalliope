@@ -87,7 +87,7 @@ export class CiteNode extends DecoratorBlockNode {
     }
   }
 
-  static exportJSON(): SerializedCiteNode {
+  exportJSON(): SerializedCiteNode {
     const serializedAvatar =
       this.__authorAvatar !== null && this.__authorAvatar !== undefined
         ? this.__authorAvatar
@@ -98,7 +98,9 @@ export class CiteNode extends DecoratorBlockNode {
       authorLink: this.__authorLink,
       authorAvatar: serializedAvatar,
       sourceContent: this.citeEditor.toJSON(),
-      sourceLink: this.__sourceLink
+      sourceLink: this.__sourceLink,
+      type: 'cite-node',
+      version: 1
     };
   }
 

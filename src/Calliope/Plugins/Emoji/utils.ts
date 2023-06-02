@@ -1,6 +1,11 @@
 //import emojiData from 'emojibase-data/en/data.json';
 
-const priorityList = [
+type Emoji = {
+  label: string;
+  tags: string[];
+}
+
+const priorityList: string = [
   '1F44D', // thumbs up
   '1F604', // smile
   '2764', // heart
@@ -9,7 +14,7 @@ const priorityList = [
 ];
 
 // (String, String) -> boolean
-const emojiMatch = (emoji, query) => {
+const emojiMatch = (emoji: Emoji, query: string) => {
   return (
     emoji.label.toLowerCase().includes(query.toLowerCase()) ||
     (emoji.tags && emoji.tags.includes(query))

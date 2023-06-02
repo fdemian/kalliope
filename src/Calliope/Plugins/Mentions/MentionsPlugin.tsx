@@ -14,11 +14,31 @@ import MentionTypeaheadOption from './MentionTypeaheadOption';
 import { createPortal } from 'react-dom';
 import { useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';
+import { MentionItem } from '../../../Calliope/CalliopeEditorTypes';
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
-export default function NewMentionsPlugin({ config }): JSX.Element | null {
+type AvatarEntryComponent = {
+  name: string;
+}
+
+type MentionFnProps = {
+  name: string;
+  link: string;
+}
+
+type MentionPluginProps = {
+  config: {
+    onAddMention: (arg: MentionFnProps) => void;
+    onRemoveMention: (arg: MentionFnProps) => void;
+    mentionsData: MentionItem[];
+    onSearchChange: (match: string) => void;
+    entryComponent: (arg: AvatarEntryComponent) => JSX.Element;
+  }
+}
+
+export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

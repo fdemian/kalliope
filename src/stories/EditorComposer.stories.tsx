@@ -25,9 +25,8 @@ type LoadingTweetProps = {
 }
 
 type AvatarEntryComponent = {
-  name: string;
+  option: MentionItem;
 }
-
 
 const initialFormatTypes = {
   blockType: 'normal',
@@ -208,10 +207,10 @@ export const EditorComposer = () => {
         console.clear();
         console.log(mentionName);
       },
-      entryComponent: ({name}: AvatarEntryComponent) => (
+      entryComponent: ({option: { name }}: AvatarEntryComponent) => (
        <>
         <img
-          src="https://playground.lexical.dev/assets/user.a5e15c54.svg"
+          src="https://testing-library.com/img/octopus-64x64.png"
           width="20"
           height="20"
           alt="User avatar placeholder"

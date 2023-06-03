@@ -137,6 +137,23 @@ export default function ExcalidrawModal({
   const save = () => {
     if (elements.filter((el) => !el.isDeleted).length > 0) {
       const appState = excaliDrawSceneRef?.current?.getAppState();
+
+      if(appState === undefined || appState === null) {
+        return({
+            exportBackground: false,
+            exportScale: false,
+            exportWithDarkMode: false,
+            isBindingEnabled: false,
+            isLoading: true,
+            name: false,
+            theme: false,
+            viewBackgroundColor: false,
+            viewModeEnabled: false,
+            zenModeEnabled: false,
+            zoom: false,
+         })
+      }
+
       // We only need a subset of the state
       const partialState: Partial<AppState> = {
         exportBackground: appState.exportBackground,

@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import type { EditorConfig, NodeKey, SerializedLexicalNode, Spread } from 'lexical';
+import type { EditorConfig, NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';
 
@@ -10,7 +10,7 @@ export type SerializedEmojiNode = Spread<
   SerializedLexicalNode
 >;
 
-export class EmojiNode extends DecoratorNode {
+export class EmojiNode extends DecoratorNode<JSX.Element> {
   __emoji: string;
 
   static getType() {
@@ -57,6 +57,6 @@ export function $createEmojiNode(emoji) {
   return $applyNodeReplacement(emojiNode);
 }
 
-export function $isEmojiNode(node) {
+export function $isEmojiNode(node: LexicalNode) {
   return node instanceof EmojiNode;
 }

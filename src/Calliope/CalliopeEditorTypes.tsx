@@ -1,4 +1,4 @@
-import type { LexicalCommand } from 'lexical';
+import type { LexicalCommand, LexicalEditor } from 'lexical';
 
 type DispatcherFn = () => {};
 export type DispatcherType = (command: LexicalCommand<String | DispatcherFn>, payload?: any) => boolean;
@@ -51,6 +51,13 @@ type CalliopeConfigProps = {
     entryComponent: (entryProps: EntryProps) => void;
     mentionsData: MentionItem[];
   };
+};
+
+type CalliopeContainerType = {
+  focus: () => {};
+  clear: () => {};
+  getContent: () => string;
+  executeCommand: (name: string, props: any) => void;
 };
 
 export type CalliopeEditorProps = {

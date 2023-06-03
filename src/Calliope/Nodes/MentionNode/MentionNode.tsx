@@ -19,7 +19,7 @@ export type SerializedMentionNode = Spread<
   SerializedLexicalNode
 >;
 
-export class MentionNode extends DecoratorNode {
+export class MentionNode extends DecoratorNode<JSX.Element> {
   __mentionName: string;
   __link: string;
 
@@ -28,13 +28,13 @@ export class MentionNode extends DecoratorNode {
   }
 
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
-    const node = $createMentionNode(serializedNode.name, serializedNode.link);
+    const node = $createMentionNode(serializedNode.mention, serializedNode.link);
     return node;
   }
 
   exportJSON(): SerializedMentionNode {
     return {
-      name: this.__mentionName,
+      mention: this.__mentionName,
       link: this.__link
     };
   }

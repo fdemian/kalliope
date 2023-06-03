@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import './Spoiler.css';
 
-const Spoiler = ({ text }: string) => {
+type SpoilerProps = {
+  text: string;
+}
+
+const Spoiler = ({ text }: SpoilerProps) => {
   const [textStatus, setTextStatus] = useState('Concealed');
   const cssClass = `Spoiler ${textStatus}`;
 

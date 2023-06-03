@@ -11,14 +11,17 @@ import type {
   ElementFormatType,
   SerializedLexicalNode,
   LexicalNode,
-  NodeKey
+  LexicalEditor,
+  EditorConfig,
+  NodeKey,
+  Spread
 } from 'lexical';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
 
-type VideoProps = ReadOnly<{
+type VideoProps = Readonly<{
   format: ElementFormatType;
   nodeKey: NodeKey;
   videoURL: string;
@@ -50,7 +53,7 @@ function VideoComponent({ format, nodeKey, videoURL, className }: VideoProps) {
   );
 }
 
-export class VideoNode extends DecoratorBlockNode<JSX.Element> {
+export class VideoNode extends DecoratorBlockNode {
   __url: string;
 
   static getType(): string {

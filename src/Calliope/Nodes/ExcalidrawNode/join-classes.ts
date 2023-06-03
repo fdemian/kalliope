@@ -6,6 +6,6 @@
  *
  */
 
-export default function joinClasses(...args) {
+export default function joinClasses(...args: string[]) {
   return args.filter(Boolean).join(' ');
 }

@@ -31,7 +31,9 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
 
   exportJSON(): SerializedKeyboardNode {
     return {
-      text: this.__text
+      text: this.__text,
+      type: 'keyboard',
+      version: 1
     };
   }
 
@@ -46,11 +48,6 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
 
   updateDOM(): true {
     return true;
-  }
-
-  setText(text) {
-    const writable = this.getWritable();
-    writable.__text = text;
   }
 
   decorate(): JSX.Element {

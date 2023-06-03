@@ -10,7 +10,10 @@ type SourceCompProps = {
 };
 
 type AuthorCompProps = {
-  author: string
+  author: {
+    link: string;
+    name: string;
+  }
 };
 
 type CiteQuoteProps = {

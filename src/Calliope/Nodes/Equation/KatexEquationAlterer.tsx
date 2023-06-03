@@ -20,11 +20,7 @@ export default function KatexEquationAlterer({
 }: Props): JSX.Element {
   const [equation, setEquation] = useState<string>(initialEquation);
   const [inline, setInline] = useState<boolean>(true);
-
-  const onClick = useCallback(() => {
-    onConfirm(equation, inline);
-  }, [onConfirm, equation, inline]);
-
+  
   const onCheckboxChange = useCallback(() => {
     setInline(!inline);
   }, [setInline, inline]);

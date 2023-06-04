@@ -11,7 +11,6 @@ import {
   useBasicTypeaheadTriggerMatch,
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { $getSelection, $isRangeSelection, TextNode } from 'lexical';
-import * as React from 'react';
 import { useCallback, useEffect, useContext, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import EmojiMenuItem from './EmojiMenuItem';
@@ -29,9 +28,15 @@ export default function EmojiPickerPlugin() {
   const [emojis, setEmojis] = useState<Any[]>([]);
   const [initialData, setInitialData] = useState<Any[]>([]);
   const calliopeConfig = useContext(CalliopeContext);
-  const { emojiConfig } = calliopeConfig;
 
-  const emojiData = emojiConfig.emojiData ?? defaultData;
+  let emojiData = defaultData;
+
+  if(calliopeConfig !== null) {
+    const { config } = calliopeConfig;
+    if(config.emojiConfig && config.emojiConfig.emojiData) {
+      emojiData = calliopeConfig.config.emojiConfig.emojiData;
+    }
+  }
 
   useEffect(() => {
     if (!editor.hasNodes([EmojiNode])) {

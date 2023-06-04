@@ -11,16 +11,14 @@ import './KatexEquationAlterer.css';
 
 type Props = {
   initialEquation?: string;
-  onConfirm: (equation: string, inline: boolean) => void;
 };
 
 export default function KatexEquationAlterer({
-  onConfirm,
   initialEquation = '',
 }: Props): JSX.Element {
   const [equation, setEquation] = useState<string>(initialEquation);
   const [inline, setInline] = useState<boolean>(true);
-  
+
   const onCheckboxChange = useCallback(() => {
     setInline(!inline);
   }, [setInline, inline]);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function EmojiMenuItem({
   index,
   isSelected,

@@ -9,6 +9,7 @@
 import type { LexicalEditor } from 'lexical';
 import * as React from 'react';
 import { useRef } from 'react';
+import { CalliopeConfigProps } from '../../CalliopeEditorTypes';
 import './ImageNode.css';
 
 function clamp(value: number, min: number, max: number) {
@@ -34,7 +35,7 @@ export default function ImageResizer({
   showCaption,
   setShowCaption,
   captionsEnabled,
-  imageConfig,
+  config,
 }: {
   editor: LexicalEditor;
   buttonRef: { current: null | HTMLButtonElement };
@@ -45,7 +46,7 @@ export default function ImageResizer({
   setShowCaption: (show: boolean) => void;
   showCaption: boolean;
   captionsEnabled: boolean;
-  imageConfig: any;
+  config: CalliopeConfigProps;
 }): JSX.Element {
   const controlWrapperRef = useRef<HTMLDivElement>(null);
   const userSelect = useRef({
@@ -85,8 +86,10 @@ export default function ImageResizer({
       ? editorRootElement.getBoundingClientRect().height - 20
       : 100;
 
-  const imgConfig = imageConfig ?? {};
-  const ADD_CAPTION_TEXT = imgConfig.addCaptionText ?? DEFAULT_CAPTION_TEXT;
+  let ADD_CAPTION_TEXT = DEFAULT_CAPTION_TEXT;
+  if(config !== null && config.imageConfig) {
+    ADD_CAPTION_TEXT = config.imageConfig.addCaptionText;
+  }
 
   const minWidth = 100;
   const minHeight = 100;

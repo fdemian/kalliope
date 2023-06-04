@@ -5,7 +5,7 @@ type Emoji = {
   tags: string[];
 }
 
-const priorityList: string = [
+const priorityList: string[] = [
   '1F44D', // thumbs up
   '1F604', // smile
   '2764', // heart

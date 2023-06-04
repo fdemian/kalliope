@@ -6,28 +6,27 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import Placeholder from './Placeholder';
-
+import { CalliopeConfigProps } from '../../CalliopeEditorTypes';
 const DEFAULT_CAPTION_ENTER = 'Enter a caption';
 
-type ImageConfigProps = {
-  addCaptionText: string;
-  defaultCaptionText: string;
-};
-
 type PlainTextEditorProps = {
-   imageConfig: ImageConfigProps;
-   caption: LexicalEditor | string;
-   readOnly: boolean;
+  config: CalliopeConfigProps;
+  caption: LexicalEditor | string;
+  readOnly: boolean;
 }
 
-const PlainTextEditor = ({ imageConfig, caption, readOnly }: PlainTextEditorProps) => {
+const PlainTextEditor = ({ config, caption, readOnly }: PlainTextEditorProps) => {
   useEffect(() => {
     if((typeof caption !== 'string') && caption.setEditable){
       caption.setEditable(!readOnly);
     }
   }, [readOnly, caption]);
 
-  const CAPTION_ENTER_TEXT = imageConfig.defaultCaptionText ?? DEFAULT_CAPTION_ENTER;
+  let CAPTION_ENTER_TEXT = DEFAULT_CAPTION_ENTER;
+
+  if(config !== null && config.imageConfig) {
+    CAPTION_ENTER_TEXT = config.imageConfig.defaultCaptionText;
+  }
   const initialEdior: LexicalEditor = (typeof caption !== 'string') ? caption : createEditor();
 
   return (

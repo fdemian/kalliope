@@ -107,11 +107,12 @@ function TweetComponent({
     }
   }, [createTweet, onError, tweetID]);
 
+  let LoadingComponent = <p>Loading (ID=${tweetID})</p>;
   const calliopeConfig = useContext(CalliopeContext);
-  const { twitterConfig } = calliopeConfig;
-  const LoadingComponent = twitterConfig.loadingComponent ?? (
-    <p>Loading (ID=${tweetID})</p>
-  );
+  const { config } = calliopeConfig;
+  if(config !== null && config.twitterConfig) {
+    LoadingComponent = config.twitterConfig.loadingComponent;
+  }
 
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>

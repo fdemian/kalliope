@@ -100,7 +100,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
 
   const focus = () => {
     if (!editorRef) return;
-    return editorRef.focus();
+    editorRef.focus();
   };
 
   const getContent = () => {
@@ -132,7 +132,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
   );
 
   const pluginConfig = {
-    ...config,
+    config,
     nodes: EditorNodes,
     plugins: EditorPlugins,
     onEditorChange,

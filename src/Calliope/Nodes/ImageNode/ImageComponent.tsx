@@ -281,7 +281,7 @@ export default function ImageComponent({
   const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
   const isFocused = isSelected || isResizing;
   const calliopeConfig = useContext(CalliopeContext);
-  const { imageConfig } = calliopeConfig;
+  const { config } = calliopeConfig;
 
   return (
     <Suspense fallback={null}>
@@ -304,7 +304,7 @@ export default function ImageComponent({
         {showCaption && (
           <div className="image-caption-container">
             <PlainTextEditor
-              imageConfig={imageConfig}
+              config={config}
               caption={caption}
               readOnly={!editor.isEditable()}
             />
@@ -321,6 +321,7 @@ export default function ImageComponent({
             onResizeStart={onResizeStart}
             onResizeEnd={onResizeEnd}
             captionsEnabled={captionsEnabled}
+            config={config}
           />
         )}
       </>

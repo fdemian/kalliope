@@ -37,14 +37,14 @@ const ExcalidrawPlugin = lazy(() => import('./ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
 
-type PluginComponentProps = {
+export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
   internalFormat: CalliopeFormatTypes;
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
-  editorRef: any;
   isSmallWidthViewport: boolean;
   setEditorRef: (editor: LexicalEditor) => void;
   onEditorChange: (editorState: any) => {};
+  floatingAnchorElem: HTMLDivElement | null;
   config: any;
   readOnly: boolean;
 };
@@ -53,7 +53,6 @@ function EditorPlugins({
   setFormats,
   internalFormat,
   setInternalFormat,
-  editorRef,
   setEditorRef,
   onEditorChange,
   config,

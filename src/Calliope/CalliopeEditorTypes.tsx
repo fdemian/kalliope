@@ -15,8 +15,15 @@ export type EntryProps = {
   link: string;
 };
 
-type SourceLinkTypes = {
-  sourceLink: string;
+type SourceCompProps = {
+  sourceLink: string
+};
+
+type AuthorCompProps = {
+  author: {
+    link: string;
+    name: string;
+  }
 };
 
 export type EditorCommand = {
@@ -34,16 +41,19 @@ export type MentionItem = {
   avatar?: string | null;
 };
 
-type CalliopeConfigProps = {
+export type CalliopeConfigProps = {
   placeholderText: string;
   initialState: string | undefined;
   readOnly: boolean;
   autoFocus: boolean;
   onError: (error: any) => void;
   plugins: any;
-  emojiConfig: any;
+  emojiConfig: {
+    emojiData: any
+  };
   citation: {
-    sourceLinkComponent: React.VFC<SourceLinkTypes>;
+    sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;
+    authorComponent: ({ author }: AuthorCompProps) => JSX.Element;
   };
   mentions: {
     onSearchChange: (match: any) => void;

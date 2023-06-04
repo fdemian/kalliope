@@ -31,13 +31,19 @@ const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
 
 const CiteQuote = ({ authorName, authorLink, sourceContent, sourceLink, citeEditor }: CiteQuoteProps) => {
   const calliopeConfig = useContext(CalliopeContext);
-  const { citation } = calliopeConfig;
   const [editor] = useLexicalComposerContext();
-  const { sourceLinkComponent, authorComponent } = citation;
-  const SourceComp = sourceLinkComponent;
-  const AuthorComp = authorComponent;
-  const SourceLinkComp = SourceComp ? SourceComp : DefaultSourceComp;
-  const AuthorComponent = AuthorComp ? AuthorComp : DefaultAuthorComp;
+
+  let SourceLinkComp = DefaultSourceComp;
+  let AuthorComponent = DefaultAuthorComp;
+
+  if(calliopeConfig !== null && calliopeConfig.config){
+    const { citation } = calliopeConfig.config;
+    if(citation !== null){
+      const { sourceLinkComponent, authorComponent } = citation;
+      SourceLinkComp = sourceLinkComponent;
+      AuthorComponent = authorComponent;
+    }
+  }
 
   const author = {
     name: authorName,

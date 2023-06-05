@@ -30,9 +30,9 @@ export default function Button({
       disabled={disabled}
       className={joinClasses(
         'Button__root',
-        disabled && 'Button__disabled',
-        small && 'Button__small',
-        className
+        disabled ? 'Button__disabled' : '',
+        small ? 'Button__small' : '',
+        className ? className : ''
       )}
       onClick={onClick}
       title={title}

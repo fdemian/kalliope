@@ -16,6 +16,13 @@ type EntryComponentProps = {
   link:string
 };
 
+type AuthorCompProps = {
+  author: {
+    link: string;
+    name: string;
+  }
+};
+
 export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats }: EntryEditorProps) => {
 
   const containerRef = useRef(null);
@@ -63,6 +70,9 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       <>
         <a href={sourceLink}>[source]</a>
       </>
+      ),
+      authorComponent: ({ author }: AuthorCompProps) => (
+        <a href={author.link}>{author.name}</a>
       )
     },
     mentions: {

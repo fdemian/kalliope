@@ -8,8 +8,7 @@
 
 import type {
   DEPRECATED_GridCellNode,
-  ElementNode,
-  LexicalEditor,
+  ElementNode
 } from 'lexical';
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
@@ -137,22 +136,6 @@ function $selectLastDescendant(node: ElementNode): void {
   } else if (lastDescendant !== null) {
     lastDescendant.selectNext();
   }
-}
-
-function currentCellBackgroundColor(editor: LexicalEditor): null | string {
-  return editor.getEditorState().read(() => {
-    const selection = $getSelection();
-    if (
-      $isRangeSelection(selection) ||
-      DEPRECATED_$isGridSelection(selection)
-    ) {
-      const [cell] = DEPRECATED_$getNodeTriplet(selection.anchor);
-      if ($isTableCellNode(cell)) {
-        return cell.getBackgroundColor();
-      }
-    }
-    return null;
-  });
 }
 
 type TableCellActionMenuProps = Readonly<{

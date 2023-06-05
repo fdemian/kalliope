@@ -193,6 +193,9 @@ export const EditorComposer = () => {
         <a href={sourceLink}>[source]</a>
       </>
       ),
+      authorComponent: ({ author }: AuthorCompProps) => (
+        <a href={author.link}>{author.name}</a>
+      )
     },
     emojiConfig: {
       locale: 'es'

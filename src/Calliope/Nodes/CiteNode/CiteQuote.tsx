@@ -19,7 +19,6 @@ type AuthorCompProps = {
 type CiteQuoteProps = {
   authorName: string;
   authorLink: string;
-  sourceContent: string | LexicalEditor;
   sourceLink: string;
   citeEditor: LexicalEditor;
 };
@@ -29,7 +28,7 @@ const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
   return <a href={author.link}>{author.name}</a>;
 };
 
-const CiteQuote = ({ authorName, authorLink, sourceContent, sourceLink, citeEditor }: CiteQuoteProps) => {
+const CiteQuote = ({ authorName, authorLink, sourceLink, citeEditor }: CiteQuoteProps) => {
   const calliopeConfig = useContext(CalliopeContext);
   const [editor] = useLexicalComposerContext();
 
@@ -37,8 +36,9 @@ const CiteQuote = ({ authorName, authorLink, sourceContent, sourceLink, citeEdit
   let AuthorComponent = DefaultAuthorComp;
 
   if(calliopeConfig !== null && calliopeConfig.config){
-    const { citation } = calliopeConfig.config;
-    if(citation !== null){
+    if(calliopeConfig.config.citation !== null){
+      const { citation } = calliopeConfig.config;
+      console.log(citation);
       const { sourceLinkComponent, authorComponent } = citation;
       SourceLinkComp = sourceLinkComponent;
       AuthorComponent = authorComponent;
@@ -61,9 +61,7 @@ const CiteQuote = ({ authorName, authorLink, sourceContent, sourceLink, citeEdit
       </figcaption>
       <blockquote>
         <CiteTextEditor
-          config={calliopeConfig}
           citeEditor={citeEditor}
-          content={sourceContent}
           readOnly={!editor.isEditable()}
         />
       </blockquote>

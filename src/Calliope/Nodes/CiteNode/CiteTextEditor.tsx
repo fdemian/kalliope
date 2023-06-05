@@ -6,12 +6,11 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 type CiteEditorProps = {
-  config: any;
   citeEditor: LexicalEditor;
   readOnly: boolean;
 }
 
-const CiteTextEditor = ({ config, citeEditor, readOnly }:CiteEditorProps) => {
+const CiteTextEditor = ({ citeEditor, readOnly }:CiteEditorProps) => {
   useEffect(() => {
     citeEditor.setEditable(!readOnly);
   }, [readOnly, citeEditor]);

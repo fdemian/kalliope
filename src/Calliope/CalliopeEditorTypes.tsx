@@ -55,6 +55,10 @@ export type CalliopeConfigProps = {
     sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;
     authorComponent: ({ author }: AuthorCompProps) => JSX.Element;
   };
+  imageConfig: {
+    addCaptionText: string,
+    defaultCaptionText: string
+  },
   mentions: {
     onSearchChange: (match: any) => void;
     onAddMention: (mention: MentionItem) => void;

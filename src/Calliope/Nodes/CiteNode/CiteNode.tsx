@@ -62,7 +62,6 @@ export class CiteNode extends DecoratorBlockNode {
 
    constructor(author: Author, source: Source, key?: NodeKey) {
     super(key);
-
     // Initialization.
     this.citeEditor = createEditor();
     this.__authorName = author.name;
@@ -70,6 +69,8 @@ export class CiteNode extends DecoratorBlockNode {
     this.__authorAvatar = author.avatar;
     this.__sourceLink = source.link;
     this.__sourceContent = source.content;
+
+    console.log("=========>x");
 
     if (source.content !== null) {
       let stateToParse;
@@ -138,7 +139,6 @@ export class CiteNode extends DecoratorBlockNode {
         <CiteQuote
           authorName={this.__authorName}
           authorLink={this.__authorLink}
-          sourceContent={this.__sourceContent}
           sourceLink={this.__sourceLink}
           citeEditor={this.citeEditor}
         />

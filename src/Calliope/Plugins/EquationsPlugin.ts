@@ -16,7 +16,7 @@ import {
 } from 'lexical';
 import { useEffect } from 'react';
 
-import { $createEquationNode, EquationNode } from '../Nodes/Equation/EquationNode.tsx';
+import { $createEquationNode, EquationNode } from '../Nodes/Equation/EquationNode';
 
 type CommandPayload = {
   equation: string;

@@ -23,7 +23,7 @@ import DragDropPastePlugin from './DragDropPastePlugin/index';
 const EquationsPlugin = lazy(() => import('./EquationsPlugin'));
 const EditorRefPlugin = lazy(() => import('./EditorRefPlugin'));
 const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
-const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin.tsx'));
+const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
 const KeyboardPlugin = lazy(() => import('./KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./SpoilerPlugin'));

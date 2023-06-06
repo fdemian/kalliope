@@ -17,7 +17,7 @@ import {
 } from 'lexical';
 import { useEffect } from 'react';
 
-import { $createCiteNode, CiteNode } from '../Nodes/CiteNode/CiteNode.tsx';
+import { $createCiteNode, CiteNode } from '../Nodes/CiteNode/CiteNode';
 
 export const INSERT_CITE_QUOTE: LexicalCommand<string> = createCommand();
 

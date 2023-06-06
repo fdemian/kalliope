@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import type { Meta } from '@storybook/react';
 import { CalliopeFormatTypes, MentionItem } from '../Calliope/CalliopeEditorTypes';
-import Editor from '../Calliope/CalliopeEditor.tsx';
+import Editor from '../Calliope/CalliopeEditor';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';

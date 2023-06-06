@@ -51,6 +51,13 @@ const initialFormatTypes = {
   fontFamily: ''
 };
 
+type AuthorCompProps = {
+  author: {
+    link: string;
+    name: string;
+  }
+};
+
 export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
   const [editorState, setEditorState] = useState<string | null>(null);

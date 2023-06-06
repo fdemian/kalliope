@@ -38,6 +38,8 @@ type MentionPluginProps = {
   }
 }
 
+const onQueryChange = (query: string) => {};
+
 export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
@@ -101,7 +103,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
 
   return (
     <LexicalTypeaheadMenuPlugin<MentionTypeaheadOption>
-      onQueryChange={() => console.log(query)}
+      onQueryChange={onQueryChange}
       onSelectOption={onSelectOption}
       triggerFn={checkForMentionMatch}
       options={options}

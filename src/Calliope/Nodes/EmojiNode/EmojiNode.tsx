@@ -39,7 +39,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
     this.__emoji = emoji;
   }
 
-  createDOM(config: EditorConfig): HTMLElement {
+  createDOM(): HTMLElement {
     return document.createElement('span');
   }
 

@@ -14,13 +14,12 @@ import {
   ElementNode,
   LexicalNode,
   SerializedElementNode,
-  Spread,
 } from 'lexical';
 
 type SerializedCollapsibleContentNode = SerializedElementNode;
 
 export function convertCollapsibleContentElement(
-  domNode: HTMLElement
+  domNode: HTMLElement,
 ): DOMConversionOutput | null {
   const node = $createCollapsibleContentNode();
   return {
@@ -64,11 +63,11 @@ export class CollapsibleContentNode extends ElementNode {
   exportDOM(): DOMExportOutput {
     const element = document.createElement('div');
     element.setAttribute('data-lexical-collapsible-content', 'true');
-    return { element };
+    return {element};
   }
 
   static importJSON(
-    serializedNode: SerializedCollapsibleContentNode
+    serializedNode: SerializedCollapsibleContentNode,
   ): CollapsibleContentNode {
     return $createCollapsibleContentNode();
   }
@@ -79,7 +78,9 @@ export class CollapsibleContentNode extends ElementNode {
 
   exportJSON(): SerializedCollapsibleContentNode {
     return {
-      ...super.exportJSON()
+      ...super.exportJSON(),
+      type: 'collapsible-content',
+      version: 1,
     };
   }
 }
@@ -89,7 +90,7 @@ export function $createCollapsibleContentNode(): CollapsibleContentNode {
 }
 
 export function $isCollapsibleContentNode(
-  node: LexicalNode | null | undefined
+  node: LexicalNode | null | undefined,
 ): node is CollapsibleContentNode {
   return node instanceof CollapsibleContentNode;
 }

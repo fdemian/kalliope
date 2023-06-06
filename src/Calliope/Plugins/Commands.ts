@@ -23,7 +23,7 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
-import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
+import { $createHeadingNode, $createQuoteNode, HeadingTagType } from '@lexical/rich-text';
 import { TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import { INSERT_KEYBOARD_COMMAND } from './KeyboardPlugin';
@@ -40,7 +40,7 @@ import { EditorCommands } from '../CalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 
-const onCodeLanguageSelect = (editor: LexicalEditor, internalFormat:CalliopeFormatTypes , value: string) => {
+const onCodeLanguageSelect = (editor: LexicalEditor, value: string) => {
   editor.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -72,7 +72,7 @@ const formatParagraph = (editor: LexicalEditor, internalFormat: CalliopeFormatTy
   }
 };
 
-const formatHeading = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes, headingSize: string) => {
+const formatHeading = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes, headingSize: HeadingTagType) => {
   if (internalFormat.blockType !== headingSize) {
     editor.update(() => {
       const selection = $getSelection();
@@ -317,7 +317,7 @@ const EDITOR_COMMANDS: EditorCommands = [
   },
   {
     name: 'CODE_LANGUAGE_CHANGE',
-    command: (editor: LexicalEditor, formats:any, val: string) => onCodeLanguageSelect(editor, formats, val),
+    command: (editor: LexicalEditor, formats:any, val: string) => onCodeLanguageSelect(editor, val),
     directCommand: false,
   },
   {

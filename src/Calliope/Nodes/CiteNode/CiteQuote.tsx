@@ -38,7 +38,6 @@ const CiteQuote = ({ authorName, authorLink, sourceLink, citeEditor }: CiteQuote
   if(calliopeConfig !== null && calliopeConfig.config){
     if(calliopeConfig.config.citation !== null){
       const { citation } = calliopeConfig.config;
-      console.log(citation);
       const { sourceLinkComponent, authorComponent } = citation;
       SourceLinkComp = sourceLinkComponent;
       AuthorComponent = authorComponent;

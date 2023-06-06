@@ -59,6 +59,9 @@ export type CalliopeConfigProps = {
     addCaptionText: string,
     defaultCaptionText: string
   },
+  dragAndDropImage: {
+    handleDroppedFile: (file: File) => void
+  },
   mentions: {
     onSearchChange: (match: any) => void;
     onAddMention: (mention: MentionItem) => void;

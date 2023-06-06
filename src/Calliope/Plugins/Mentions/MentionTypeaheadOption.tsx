@@ -1,6 +1,6 @@
 import { MenuOption } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 
-class MentionTypeaheadOption extends MenuOption {
+export class MentionTypeaheadOption extends MenuOption {
   name: string;
   link: string;
   avatar: string;

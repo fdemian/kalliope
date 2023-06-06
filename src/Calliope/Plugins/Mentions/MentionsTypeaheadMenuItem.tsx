@@ -4,21 +4,23 @@ const DefaultListItem = ({ option }) => {
   return <span className="text">{option.name}</span>;
 };
 
-export function MentionsTypeaheadMenuItem({
-  index,
-  isSelected,
-  onClick,
-  onMouseEnter,
-  option,
-  entryComponent,
-}: {
+type MentionsTypeAheadProps = {
   index: number;
   isSelected: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
   option: MentionTypeaheadOption;
   entryComponent: any;
-}) {
+};
+
+export const MentionsTypeaheadMenuItem = ({
+  index,
+  isSelected,
+  onClick,
+  onMouseEnter,
+  option,
+  entryComponent
+}: MentionsTypeAheadProps) => {
   let className = 'item';
   if (isSelected) {
     className += ' selected';
@@ -30,11 +32,11 @@ export function MentionsTypeaheadMenuItem({
     <li
       id={'typeahead-item-' + index}
       role="option"
+      ref={option.setRefElement}
       aria-selected={isSelected}
       key={'typeahead-item-' + index}
       tabIndex={-1}
       className={className}
-      ref={option}
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >

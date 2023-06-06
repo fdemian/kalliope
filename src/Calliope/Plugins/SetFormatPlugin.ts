@@ -8,7 +8,7 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
 } from 'lexical';
-import type { TextNode, ElementNode, RangeSelection } from 'lexical';
+import type { TextNode, ElementNode, RangeSelection, GridSelection, NodeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 
 import { $getNearestNodeOfType } from '@lexical/utils';
@@ -28,13 +28,14 @@ type SetFormatPluginProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
 }
 
-const CODE_LANGUAGE_MAP = {
+const CODE_LANGUAGE_MAP: { [key: string]: string } = {
   javascript: 'js',
   md: 'markdown',
   plaintext: 'plain',
   python: 'py',
-  text: 'plain',
+  text: 'plain'
 };
+
 
 function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   const anchor = selection.anchor;
@@ -62,7 +63,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
     let codeLanguage = '';
 
     let _formats = { ...internalFormat };
-    const selection = $getSelection();
+    const selection: RangeSelection | NodeSelection | GridSelection | null = $getSelection();
 
     //
     let fontSize:string = '15px';

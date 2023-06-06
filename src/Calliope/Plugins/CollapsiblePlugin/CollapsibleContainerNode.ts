@@ -103,7 +103,9 @@ export class CollapsibleContainerNode extends ElementNode {
   exportJSON(): SerializedCollapsibleContainerNode {
     return {
       ...super.exportJSON(),
-      open: this.__open
+      open: this.__open,
+      type: 'collapsible-container',
+      version: 1,
     };
   }
 

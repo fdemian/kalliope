@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { $getNodeByKey } from 'lexical';
+import { $getNodeByKey, NodeKey } from 'lexical';
+import type { TextNode } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { MentionNode, $createMentionNode } from '../../Nodes/MentionNode/MentionNode';
@@ -14,7 +15,6 @@ import MentionTypeaheadOption from './MentionTypeaheadOption';
 import { createPortal } from 'react-dom';
 import { useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';
-import { MentionItem } from '../../../Calliope/CalliopeEditorTypes';
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
@@ -32,19 +32,17 @@ type MentionPluginProps = {
   config: {
     onAddMention: (arg: MentionFnProps) => void;
     onRemoveMention: (arg: MentionFnProps) => void;
-    mentionsData: MentionItem[];
+    mentionsData: MentionTypeaheadOption[];
     onSearchChange: (match: string) => void;
     entryComponent: (arg: AvatarEntryComponent) => JSX.Element;
   }
 }
 
-const onQueryChange = (query: string) => {};
-
 export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
-    const mentionNodeList = new Map<NodeKey, TableSelection>();
+    const mentionNodeList = new Map<NodeKey, MentionNode>();
 
     if (!editor.hasNodes([MentionNode])) {
       throw new Error('MentionsPlugin: MentionNode not registered on editor');
@@ -103,7 +101,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
 
   return (
     <LexicalTypeaheadMenuPlugin<MentionTypeaheadOption>
-      onQueryChange={onQueryChange}
+      onQueryChange={() => {}}
       onSelectOption={onSelectOption}
       triggerFn={checkForMentionMatch}
       options={options}
@@ -127,7 +125,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
                       onMouseEnter={() => {
                         setHighlightedIndex(i);
                       }}
-                      key={option.key}
+                      key={option.id}
                       option={option}
                     />
                   ))}

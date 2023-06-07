@@ -1,8 +1,8 @@
 //import emojiData from 'emojibase-data/en/data.json';
 
-type Emoji = {
+export type Emoji = {
   label: string;
-  tags: string[];
+  tags?: string[];
 }
 
 const priorityList: string[] = [

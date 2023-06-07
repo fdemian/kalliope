@@ -16,7 +16,7 @@ import * as ReactDOM from 'react-dom';
 import EmojiMenuItem from './EmojiMenuItem';
 import EmojiOption from './EmojiOption';
 import { $createEmojiNode, EmojiNode } from '../../Nodes/EmojiNode/EmojiNode';
-import { priorityList, emojiMatch } from './utils';
+import { priorityList, emojiMatch, Emoji } from './utils';
 import { CalliopeContext } from '../../context';
 import defaultData from 'emojibase-data/en/data.json';
 
@@ -25,8 +25,8 @@ const MAX_EMOJI_SUGGESTION_COUNT = 5;
 export default function EmojiPickerPlugin() {
   const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
-  const [emojis, setEmojis] = useState<Any[]>([]);
-  const [initialData, setInitialData] = useState<Any[]>([]);
+  const [emojis, setEmojis] = useState<Emoji[]>([]);
+  const [initialData, setInitialData] = useState<Emoji[]>([]);
   const calliopeConfig = useContext(CalliopeContext);
 
   let emojiData = defaultData;

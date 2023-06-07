@@ -9,11 +9,9 @@ export type EditorRefType = {
   dispatchCommand: DispatcherType;
 };
 
-export type EntryProps = {
-  avatar: string;
-  name: string;
-  link: string;
-};
+type AvatarEntryComponent = {
+  option: MentionItem;
+}
 
 type SourceCompProps = {
   sourceLink: string
@@ -26,9 +24,12 @@ type AuthorCompProps = {
   }
 };
 
+type DirectCommand = LexicalCommand<String | DispatcherFn>;
+type IndirectCommand = ((editor: LexicalEditor, _: any, family: string) => void);
+
 export type EditorCommand = {
   name: string;
-  command: LexicalCommand<String | DispatcherFn> | ((editor: LexicalEditor, _: any, family: string) => void);
+  command: DirectCommand | IndirectCommand;
   directCommand: boolean;
 };
 
@@ -65,7 +66,7 @@ export type CalliopeConfigProps = {
   mentions: {
     onSearchChange: (match: any) => void;
     onAddMention: (mention: MentionItem) => void;
-    entryComponent: (entryProps: EntryProps) => void;
+    entryComponent: (entryProps: AvatarEntryComponent) => void;
     mentionsData: MentionItem[];
   };
 };

@@ -8,7 +8,7 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
 } from 'lexical';
-import type { TextNode, ElementNode, RangeSelection, GridSelection, NodeSelection } from 'lexical';
+import type { TextNode, ElementNode, RangeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 
 import { $getNearestNodeOfType } from '@lexical/utils';
@@ -63,7 +63,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
     let codeLanguage = '';
 
     let _formats = { ...internalFormat };
-    const selection: RangeSelection | NodeSelection | GridSelection | null = $getSelection();
+    const selection = $getSelection();
 
     //
     let fontSize:string = '15px';

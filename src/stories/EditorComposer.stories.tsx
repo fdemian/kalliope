@@ -205,7 +205,7 @@ export const EditorComposer = () => {
       )
     },
     emojiConfig: {
-      locale: 'es'
+      emojiData: null
     },
     mentions: {
       onSearchChange,

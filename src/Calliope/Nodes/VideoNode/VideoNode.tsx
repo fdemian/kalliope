@@ -27,6 +27,15 @@ type VideoProps = Readonly<{
   videoURL: string;
 }>;
 
+type VideoPropsNode = {
+  format: ElementFormatType;
+  nodeKey: NodeKey;
+  videoURL: string;
+  className: {
+    base: string;
+    focus: string;
+  }
+}
 
 export type SerializedVideoNode = Spread<
   {
@@ -37,9 +46,13 @@ export type SerializedVideoNode = Spread<
   SerializedLexicalNode
 >;
 
-function VideoComponent({ format, nodeKey, videoURL, className }: VideoProps) {
+function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode) {
   return (
-    <BlockWithAlignableContents format={format} nodeKey={nodeKey} className={className}>
+    <BlockWithAlignableContents
+      format={format}
+      nodeKey={nodeKey}
+      className={className}
+    >
       <div className="player-wrapper">
         <ReactPlayer
           className="react-player"

@@ -47,7 +47,7 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   fontFamily: 'Arial',
 };
 
-const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps) => {
+const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.Element => {
   const [internalFormat, setInternalFormat] =
     useState<CalliopeFormatTypes>(INITIAL_FORMATS);
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false);

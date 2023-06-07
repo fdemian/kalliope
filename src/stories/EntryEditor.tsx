@@ -10,11 +10,9 @@ type EntryEditorProps = {
   setFormats: (formats:any) => void
 };
 
-type EntryComponentProps = {
-  avatar:string,
-  name:string,
-  link:string
-};
+type AvatarEntryComponent = {
+  option: MentionItem;
+}
 
 type AuthorCompProps = {
   author: {
@@ -81,9 +79,15 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
         console.clear();
         console.log(mention);
       },
-      entryComponent: ({ name }:EntryComponentProps) => (
+      entryComponent: ({option: { name }}: AvatarEntryComponent) => (
        <>
-        &nbsp; <strong>{name}</strong>
+        <img
+          src="https://testing-library.com/img/octopus-64x64.png"
+          width="20"
+          height="20"
+          alt="User avatar placeholder"
+          />
+          &nbsp; &nbsp; <strong>{name}</strong>
        </>
       ),
       mentionsData: suggestions

@@ -6,7 +6,7 @@
  *
  */
 import './Button.css';
-import joinClasses from './join-classes.ts';
+import joinClasses from './join-classes';
 
 export default function Button({
   'data-test-id': dataTestId,

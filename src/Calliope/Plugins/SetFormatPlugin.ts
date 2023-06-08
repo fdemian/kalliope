@@ -71,16 +71,17 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
     let bgColor:string = '#fff';
     let fontFamily:string = 'Arial';
 
-    try {
-      fontSize = $getSelectionStyleValueForProperty(selection, 'font-size', '15px');
-      fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000');
-      bgColor = $getSelectionStyleValueForProperty(selection, 'background-color', '#fff');
-      fontFamily = $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial');
-    } catch {
-      console.log('[ERROR] - $getSelectionStyleValueForProperty');
-    }
-
     if ($isRangeSelection(selection)) {
+
+      try {
+        fontSize = $getSelectionStyleValueForProperty(selection, 'font-size', '15px');
+        fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000');
+        bgColor = $getSelectionStyleValueForProperty(selection, 'background-color', '#fff');
+        fontFamily = $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial');
+      } catch {
+        console.log('[ERROR] - $getSelectionStyleValueForProperty');
+      }
+
       const anchorNode = selection.anchor.getNode();
       const element =
         anchorNode.getKey() === 'root'

@@ -113,7 +113,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
           ? createPortal(
               <div className="typeahead-popover mentions-menu">
                 <ul>
-                  {config.mentionsData.map((option, i: number) => (
+                  {config.mentionsData.map((option:MentionTypeaheadOption, i: number) => (
                     <MentionsTypeaheadMenuItem
                       entryComponent={config.entryComponent}
                       index={i}
@@ -125,7 +125,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
                       onMouseEnter={() => {
                         setHighlightedIndex(i);
                       }}
-                      key={option.id}
+                      key={option.link}
                       option={option}
                     />
                   ))}

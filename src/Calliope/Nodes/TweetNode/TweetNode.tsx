@@ -35,12 +35,16 @@ type TweetComponentProps = Readonly<{
     focus: string;
   }>;
   format: ElementFormatType | null;
-  loadingComponent?: JSX.Element | string;
   nodeKey: NodeKey;
   onError?: (error: string) => void;
   onLoad?: () => void;
-  tweetID: string;
+  tweetId: string;
 }>;
+
+type LoadingTweetProps = {
+  tweetId: string;
+};
+type LoadingTweetElementProps = ({ tweetId }: LoadingTweetProps) => JSX.Element;
 
 function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | null {
   const id = domNode.getAttribute('data-lexical-tweet-id');
@@ -59,7 +63,7 @@ function TweetComponent({
   nodeKey,
   onError,
   onLoad,
-  tweetID,
+  tweetId,
 }: TweetComponentProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -69,7 +73,7 @@ function TweetComponent({
   const createTweet = useCallback(async () => {
     try {
       // @ts-expect-error Twitter is attached to the window.
-      await window.twttr.widgets.createTweet(tweetID, containerRef.current);
+      await window.twttr.widgets.createTweet(tweetId, containerRef.current);
 
       setIsTweetLoading(false);
       isTwitterScriptLoading = false;
@@ -82,10 +86,10 @@ function TweetComponent({
         onError(String(error));
       }
     }
-  }, [onError, onLoad, tweetID]);
+  }, [onError, onLoad, tweetId]);
 
   useEffect(() => {
-    if (tweetID !== previousTweetIDRef.current) {
+    if (tweetId !== previousTweetIDRef.current) {
       setIsTweetLoading(true);
 
       if (isTwitterScriptLoading) {
@@ -102,12 +106,12 @@ function TweetComponent({
       }
 
       if (previousTweetIDRef) {
-        previousTweetIDRef.current = tweetID;
+        previousTweetIDRef.current = tweetId;
       }
     }
-  }, [createTweet, onError, tweetID]);
+  }, [createTweet, onError, tweetId]);
 
-  let LoadingComponent = <p>Loading (ID=${tweetID})</p>;
+  let LoadingComponent: LoadingTweetElementProps = ({tweetId}) => <p>Loading (ID=${tweetId})</p>;
   const calliopeConfig = useContext(CalliopeContext);
   const { config } = calliopeConfig;
   if(config !== null && config.twitterConfig) {
@@ -116,7 +120,7 @@ function TweetComponent({
 
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
-      {isTweetLoading ? <LoadingComponent tweetId={tweetID} /> : null}
+      {isTweetLoading ? <LoadingComponent tweetId={tweetId} /> : null}
       <div className="tweet-node" ref={containerRef} />
     </BlockWithAlignableContents>
   );
@@ -195,6 +199,7 @@ export class TweetNode extends DecoratorBlockNode {
     return `https://twitter.com/i/web/status/${this.__id}`;
   }
 
+  // @ts-ignore
   decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
@@ -207,15 +212,15 @@ export class TweetNode extends DecoratorBlockNode {
         className={className}
         format={this.__format}
         nodeKey={this.getKey()}
-        tweetID={this.__id}
+        tweetId={this.__id}
       />
     );
   }
 
 }
 
-export function $createTweetNode(tweetID: string): TweetNode {
-  return new TweetNode(tweetID);
+export function $createTweetNode(tweetId: string): TweetNode {
+  return new TweetNode(tweetId);
 }
 
 export function $isTweetNode(

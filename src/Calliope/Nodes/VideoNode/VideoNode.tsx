@@ -21,12 +21,6 @@ import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
 
-type VideoProps = Readonly<{
-  format: ElementFormatType;
-  nodeKey: NodeKey;
-  videoURL: string;
-}>;
-
 type VideoPropsNode = {
   format: ElementFormatType;
   nodeKey: NodeKey;
@@ -40,6 +34,7 @@ type VideoPropsNode = {
 export type SerializedVideoNode = Spread<
   {
     videoURL: string;
+    format: ElementFormatType;
     type: 'video';
     version: 1;
   },
@@ -94,11 +89,13 @@ export class VideoNode extends DecoratorBlockNode {
   exportJSON(): SerializedVideoNode {
     return {
       videoURL: this.__url,
+      format: this.__format,
       type: 'video',
       version: 1
     };
   }
 
+  // @ts-ignore
   decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {

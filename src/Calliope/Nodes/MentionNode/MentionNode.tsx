@@ -7,7 +7,7 @@
  * @flow strict
  */
 /* eslint-disable no-use-before-define */
-import type { SerializedLexicalNode, Spread } from 'lexical';
+import type { SerializedLexicalNode, NodeKey, LexicalNode, Spread } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import './MentionNode.css';
 
@@ -15,6 +15,8 @@ export type SerializedMentionNode = Spread<
   {
     mention: string;
     link: string;
+    type: string;
+    version: number;
   },
   SerializedLexicalNode
 >;
@@ -34,6 +36,7 @@ export class MentionNode extends DecoratorNode<JSX.Element> {
 
   exportJSON(): SerializedMentionNode {
     return {
+      ...super.exportJSON(),
       mention: this.__mentionName,
       link: this.__link
     };

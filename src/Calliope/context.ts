@@ -6,7 +6,7 @@ type CalliopeContextType = {
   config: CalliopeConfigProps;
   nodes: Klass<LexicalNode>[];
   plugins: JSX.Element;
-  onEditorChange: (editorState: any) => {};
+  onEditorChange: (editorState: any) => void;
 };
 
 export const CalliopeContext = createContext<CalliopeContextType | null>(null);

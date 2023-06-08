@@ -14,11 +14,11 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import EditorNodes from './Nodes/Nodes';
 import EditorPlugins from './Plugins/Plugins';
 import EDITOR_COMMANDS from './Plugins/Commands';
-import {
+import type {
   CalliopeEditorProps,
   CalliopeFormatTypes,
   EditorRefType,
-  EditorCommand,
+  EditorCommand
 } from './CalliopeEditorTypes';
 import { CalliopeContext } from './context';
 import theme from './editorTheme';
@@ -148,42 +148,42 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
   });
 
   return (
-    <CalliopeContext.Provider value={pluginConfig}>
-      <div className="editor-shell">
-        <div
-          className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
-          ref={containerRef}
-        >
-          <LexicalComposer initialConfig={initialConfig}>
-            <RichTextPlugin
-              contentEditable={
-                <div className="editor-scroller">
-                  <div className="editor" ref={onRef}>
-                    <ContentEditable
-                      className={`editor-content-editable-root editor-${
-                        config.readOnly ? 'readonly' : 'editable'
-                      }`}
-                    />
-                  </div>
+  <CalliopeContext.Provider
+    value={pluginConfig}
+  >
+    <div className="editor-shell">
+      <div
+        className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
+        ref={containerRef}
+      >
+        <LexicalComposer initialConfig={initialConfig}>
+          <RichTextPlugin
+            contentEditable={
+              <div className="editor-scroller">
+                <div className="editor" ref={onRef}>
+                  <ContentEditable
+                    className={`editor-content-editable-root editor-${
+                      config.readOnly ? 'readonly' : 'editable'
+                    }`}
+                  />
                 </div>
-              }
-              placeholder={
-                <div className="editor-placeholder">{config.placeholderText}</div>
-              }
-              initialEditorState={config.initialState}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <EditorPlugins
-              readOnly={config.readOnly}
-              setFormats={setFormats}
-              isSmallWidthViewport={isSmallWidthViewport}
-              internalFormat={internalFormat}
-              setInternalFormat={setInternalFormat}
-              setEditorRef={setEditorRef}
-              editorRef={editorRef}
-              onEditorChange={onEditorChange}
-              floatingAnchorElem={floatingAnchorElem}
-              config={config}
+              </div>
+            }
+            placeholder={
+              <div className="editor-placeholder">{config.placeholderText}</div>
+            }
+            initialEditorState={config.initialState}              ErrorBoundary={LexicalErrorBoundary}
+          />
+          <EditorPlugins
+            readOnly={config.readOnly}
+            setFormats={setFormats}
+            isSmallWidthViewport={isSmallWidthViewport}
+            internalFormat={internalFormat}
+            setInternalFormat={setInternalFormat}
+            setEditorRef={setEditorRef}
+            editorRef={editorRef}
+            onEditorChange={onEditorChange}
+            floatingAnchorElem={floatingAnchorElem}              config={config}
             />
           </LexicalComposer>
         </div>

@@ -13,6 +13,10 @@ type AvatarEntryComponent = {
   option: MentionItem;
 }
 
+type LoadingTweetProps = {
+  tweetId: string;
+}
+
 type SourceCompProps = {
   sourceLink: string
 };
@@ -24,8 +28,8 @@ type AuthorCompProps = {
   }
 };
 
-type DirectCommand = LexicalCommand<String | DispatcherFn>;
-type IndirectCommand = ((editor: LexicalEditor, _: any, family: string) => void);
+export type DirectCommand = LexicalCommand<String | DispatcherFn>;
+export type IndirectCommand = ((editor: LexicalEditor, _: any, family: string) => void);
 
 export type EditorCommand = {
   name: string;
@@ -52,6 +56,9 @@ export type CalliopeConfigProps = {
   emojiConfig: {
     emojiData: any
   };
+  twitterConfig: {
+    loadingComponent: ({ tweetId }: LoadingTweetProps) => JSX.Element;
+  };
   citation: {
     sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;
     authorComponent: ({ author }: AuthorCompProps) => JSX.Element;
@@ -59,10 +66,10 @@ export type CalliopeConfigProps = {
   imageConfig: {
     addCaptionText: string,
     defaultCaptionText: string
-  },
+  };
   dragAndDropImage: {
     handleDroppedFile: (file: File) => void
-  },
+  };
   mentions: {
     onSearchChange: (match: any) => void;
     onAddMention: (mention: MentionItem) => void;
@@ -72,8 +79,8 @@ export type CalliopeConfigProps = {
 };
 
 type CalliopeContainerType = {
-  focus: () => {};
-  clear: () => {};
+  focus: () => void;
+  clear: () => void;
   getContent: () => string;
   executeCommand: (name: string, props: any) => void;
 };

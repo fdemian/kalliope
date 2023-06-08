@@ -1,3 +1,5 @@
+import EmojiOption from './EmojiOption';
+
 function EmojiMenuItem({
   index,
   isSelected,

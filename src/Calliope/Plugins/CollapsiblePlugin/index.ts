@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 import './Collapsible.css';
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
@@ -188,7 +187,7 @@ export default function CollapsiblePlugin(): null {
             return false;
           }
 
-          const container = topLevelElement.getPreviousSibling<LexicalNode>();
+          const container = topLevelElement.getPreviousSibling();
           if (!$isCollapsibleContainerNode(container) || container.getOpen()) {
             return false;
           }

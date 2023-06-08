@@ -317,6 +317,7 @@ const EDITOR_COMMANDS: EditorCommands = [
   },
   {
     name: 'CODE_LANGUAGE_CHANGE',
+    // @ts-ignore
     command: (editor: LexicalEditor, formats:any, val: string) => onCodeLanguageSelect(editor, val),
     directCommand: false,
   },

@@ -17,7 +17,7 @@ import type {
   Spread
 } from 'lexical';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
-import { DecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
+import { DecoratorNode } from 'lexical';
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
 
@@ -61,7 +61,7 @@ function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode
   );
 }
 
-export class VideoNode extends DecoratorBlockNode {
+export class VideoNode extends DecoratorNode<JSX.Element> {
   __url: string;
 
   static getType(): string {
@@ -93,6 +93,11 @@ export class VideoNode extends DecoratorBlockNode {
       type: 'video',
       version: 1
     };
+  }
+
+  createDOM(): HTMLElement {
+    const span = document.createElement('span');
+    return span;
   }
 
   // @ts-ignore

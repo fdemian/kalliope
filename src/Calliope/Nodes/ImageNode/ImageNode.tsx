@@ -58,6 +58,8 @@ export type SerializedImageNode = Spread<
     showCaption: boolean;
     src: string;
     width?: number;
+    type: string;
+    version: number;
   },
   SerializedLexicalNode
 >;
@@ -121,7 +123,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   static importDOM(): DOMConversionMap | null {
     return {
-      img: (node: Node) => ({
+      img: () => ({
         conversion: convertImageElement,
         priority: 0,
       }),
@@ -159,6 +161,8 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       showCaption: this.__showCaption,
       src: this.getSrc(),
       width: this.__width === 'inherit' ? 0 : this.__width,
+      type: "image-node",
+      version: 1
     };
   }
 

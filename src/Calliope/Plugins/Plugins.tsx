@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
-import type { LexicalEditor } from 'lexical';
+import type { LexicalEditor, EditorState } from 'lexical';
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
@@ -43,7 +43,7 @@ export type PluginComponentProps = {
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
   isSmallWidthViewport: boolean;
   setEditorRef: (editor: LexicalEditor) => void;
-  onEditorChange: (editorState: any) => {};
+  onEditorChange: (editorState: EditorState) => void;
   floatingAnchorElem: HTMLDivElement | null;
   config: any;
   readOnly: boolean;

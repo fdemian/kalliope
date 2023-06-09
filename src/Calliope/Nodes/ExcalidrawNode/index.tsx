@@ -29,8 +29,8 @@ const ExcalidrawComponent = React.lazy(
 export type SerializedExcalidrawNode = Spread<
   {
     data: string;
-    type: 'excalidraw';
-    version: 1;
+    type: string;
+    version: number;
   },
   SerializedLexicalNode
 >;
@@ -64,7 +64,9 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
 
   exportJSON(): SerializedExcalidrawNode {
     return {
-      data: this.__data
+      data: this.__data,
+      type: "excalidraw",
+      version: 1
     };
   }
 
@@ -120,7 +122,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     self.__data = data;
   }
 
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(): JSX.Element {
     return (
       <Suspense fallback={null}>
         <ExcalidrawComponent nodeKey={this.getKey()} data={this.__data} />

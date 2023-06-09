@@ -2,6 +2,7 @@
 
 export type Emoji = {
   label: string;
+  emoji: string;
   tags?: string[];
 }
 

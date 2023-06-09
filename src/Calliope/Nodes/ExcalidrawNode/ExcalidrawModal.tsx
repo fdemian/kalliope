@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+// @ts-nocheck 
 import './ExcalidrawModal.css';
 import {Excalidraw} from '@excalidraw/excalidraw';
 import {

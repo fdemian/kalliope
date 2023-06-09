@@ -16,13 +16,7 @@ import {
   createCommand,
 } from 'lexical';
 import { useEffect } from 'react';
-
 import { $createCiteNode, CiteNode } from '../Nodes/CiteNode/CiteNode';
-
-type CitePayload = {
-  author: any;
-  source: any;
-}
 
 export const INSERT_CITE_QUOTE: LexicalCommand<string> = createCommand();
 
@@ -36,7 +30,7 @@ export default function CitePlugin(): JSX.Element {
 
     return editor.registerCommand(
       INSERT_CITE_QUOTE,
-      (payload: CitePayload) => {
+      (payload: any) => {
         const selection = $getSelection();
         if ($isRangeSelection(selection)) {
           const citeNode = $createCiteNode(payload.author, payload.source);

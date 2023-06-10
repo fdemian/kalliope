@@ -29,7 +29,7 @@ type AuthorCompProps = {
 };
 
 export type DirectCommand = LexicalCommand<String | DispatcherFn>;
-export type IndirectCommand = ((editor: LexicalEditor, _: any, family: string) => void);
+export type IndirectCommand = ((editor: LexicalEditor, _: any, else: string) => void);
 
 export type EditorCommand = {
   name: string;
@@ -78,7 +78,7 @@ export type CalliopeConfigProps = {
   };
 };
 
-type CalliopeContainerType = {
+type CalliopeContainerType = HTMLDivElement & {
   focus: () => void;
   clear: () => void;
   getContent: () => string;

@@ -152,7 +152,6 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     <div className="editor-shell">
       <div
         className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
-        ref={containerRef}
       >
         <LexicalComposer initialConfig={initialConfig}>
           <RichTextPlugin

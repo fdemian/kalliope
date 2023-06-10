@@ -119,7 +119,11 @@ function TweetComponent({
   }
 
   return (
-    <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
+    <BlockWithAlignableContents
+      className={className}
+      format={format}
+      nodeKey={nodeKey}
+    >
       {isTweetLoading ? <LoadingComponent tweetId={tweetId} /> : null}
       <div className="tweet-node" ref={containerRef} />
     </BlockWithAlignableContents>

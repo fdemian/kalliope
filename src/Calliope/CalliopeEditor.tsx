@@ -148,9 +148,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
   });
 
   return (
-  <CalliopeContext.Provider
-    value={pluginConfig}
-  >
+  <CalliopeContext.Provider value={pluginConfig}>
     <div className="editor-shell">
       <div
         className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
@@ -172,7 +170,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
             placeholder={
               <div className="editor-placeholder">{config.placeholderText}</div>
             }
-            initialEditorState={config.initialState}              ErrorBoundary={LexicalErrorBoundary}
+            ErrorBoundary={LexicalErrorBoundary}
           />
           <EditorPlugins
             readOnly={config.readOnly}

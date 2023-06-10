@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
 import { createEditor } from 'lexical';
 import CiteQuote from './CiteQuote';
@@ -69,8 +70,6 @@ export class CiteNode extends DecoratorBlockNode {
     this.__authorAvatar = author.avatar;
     this.__sourceLink = source.link;
     this.__sourceContent = source.content;
-
-    console.log("=========>x");
 
     if (source.content !== null) {
       let stateToParse;

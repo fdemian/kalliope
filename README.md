@@ -48,7 +48,7 @@ It does not contain a graphical interface beyond that of the editor itself, and 
 
 ## Import the editor
 
-`import { CalliopeEditor } from 'kalliope';`
+`import CalliopeEditor from 'kalliope';`
 
 # Usage
 

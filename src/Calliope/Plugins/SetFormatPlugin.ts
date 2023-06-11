@@ -10,23 +10,13 @@ import {
   CAN_UNDO_COMMAND,
   KEY_MODIFIER_COMMAND
 } from 'lexical';
-/*
-import {
-  $createCodeNode,
-  $isCodeNode,
-  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
-  CODE_LANGUAGE_MAP,
-  getLanguageFriendlyName,
-} from '@lexical/code';
-*/
-
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
 import {sanitizeUrl} from '../utils/url';
 import { $getNearestNodeOfType } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
-import { $isCodeNode } from '@lexical/code';
-import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+import { $isCodeNode, CODE_LANGUAGE_MAP } from '@lexical/code';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
   $isAtNodeEnd,
@@ -39,15 +29,6 @@ type SetFormatPluginProps = {
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
   setFormats: (formats: CalliopeFormatTypes) => void;
 }
-
-const CODE_LANGUAGE_MAP: { [key: string]: string } = {
-  javascript: 'js',
-  md: 'markdown',
-  plaintext: 'plain',
-  python: 'py',
-  text: 'plain'
-};
-
 
 function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   const anchor = selection.anchor;
@@ -114,8 +95,8 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
           blockType = type;
 
           if ($isCodeNode(element)) {
-            const language = element.getLanguage();
-            codeLanguage = language ? CODE_LANGUAGE_MAP[language] : '';
+            const language = element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+            codeLanguage = language ? CODE_LANGUAGE_MAP[language] || language : '';
           }
         }
       }

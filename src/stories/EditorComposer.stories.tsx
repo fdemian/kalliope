@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import type { Meta } from '@storybook/react';
 import { CalliopeFormatTypes, MentionItem } from '../Calliope/CalliopeEditorTypes';
-import Editor from '../Calliope/CalliopeEditor';
+import Editor, { getCodeLanguageOptions } from '../Calliope/index';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
@@ -471,25 +471,9 @@ export const EditorComposer = () => {
   ];
 
   const CODE_LANGUAGE_OPTIONS = [
-    {value:'', name:'- Select language -'},
-    {value:'c', name:'C'},
-    {value: 'cpp', name: 'C++' },
-    {value:'clike', name:'C-like'},
-    {value:'css', name:'CSS'},
-    {value:'html', name:'HTML'},
-    {value:'js', name:'JavaScript'},
-    {value:'markdown', name:'Markdown'},
-    {value:'objc', name:'Objective-C'},
-    {value:'plain', name:'Plain Text'},
-    {value:'py', name:'Python'},
-    { value: 'java', name: 'Java' },
-    {value:'rust', name:'Rust'},
-    {value:'sql', name:'SQL'},
-    {value:'swift', name:'Swift'},
-    {value:'xml',  name:'XML'},
-    {value: 'ts', name: 'Typescript'}
+    ['', '- Select language -'],
+    ...getCodeLanguageOptions()
   ];
-
   const SUPPORT_SPEECH_RECOGNITION =
     'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
 
@@ -559,13 +543,11 @@ export const EditorComposer = () => {
           <select
             name="code-format"
             id="code-format-select"
-            value={
-              CODE_LANGUAGE_OPTIONS.find(p => p.value === formats.codeLanguage)?.value
-            }
+            value={formats.codeLanguage}
             onChange={(e) => codeLanguageChange(e.target.value)}
           >
-            {CODE_LANGUAGE_OPTIONS.map(cl => (
-             <option key={cl.value} value={cl.value}>{cl.name}</option>
+            {CODE_LANGUAGE_OPTIONS.map(([value, name]) => (
+             <option key={value} value={value}>{name}</option>
             ))}
           </select>
         </>

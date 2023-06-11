@@ -1,5 +1,7 @@
 # Kalliope
 
+<img src="https://github.com/fdemian/kalliope/blob/main/Kalliope.png" alt="Kalliope" />
+
 An extensible WYSWYG editor based on [Lexical](https://lexical.dev/).
 
 # What is Kalliope?

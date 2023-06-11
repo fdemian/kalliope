@@ -1,6 +1,6 @@
 {
   "name": "kalliope",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "private": false,
   "version": "0.0.4",
   "type": "module",

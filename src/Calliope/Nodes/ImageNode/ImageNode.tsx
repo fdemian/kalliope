@@ -161,7 +161,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       showCaption: this.__showCaption,
       src: this.getSrc(),
       width: this.__width === 'inherit' ? 0 : this.__width,
-      type: "image-node",
+      type: "image",
       version: 1
     };
   }

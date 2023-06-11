@@ -16,7 +16,7 @@ export class SpoilerNode extends DecoratorNode<JSX.Element> {
   __text: string;
 
   static getType():string {
-    return 'spoiler-inline';
+    return 'spoiler';
   }
 
   static clone(node: SpoilerNode): SpoilerNode {

@@ -1,8 +1,19 @@
 {
   "name": "kalliope",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/kalliope.umd.cjs",
+  "module": "./dist/kalliope.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kalliope.js",
+      "require": "./dist/kalliope.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build-dev": "tsc && vite build",

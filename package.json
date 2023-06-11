@@ -1,11 +1,12 @@
 {
-  "name": "calliope-editor-vite",
-  "private": true,
-  "version": "0.0.0",
+  "name": "kalliope",
+  "private": false,
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build-dev": "tsc && vite build",
+    "build": "tsc && vite build --config vite.prod.config.js",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",

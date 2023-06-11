@@ -4,17 +4,29 @@ import {
   $getSelection,
   $isRangeSelection,
   COMMAND_PRIORITY_CRITICAL,
+  COMMAND_PRIORITY_NORMAL,
   SELECTION_CHANGE_COMMAND,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  KEY_MODIFIER_COMMAND
 } from 'lexical';
+/*
+import {
+  $createCodeNode,
+  $isCodeNode,
+  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+  CODE_LANGUAGE_MAP,
+  getLanguageFriendlyName,
+} from '@lexical/code';
+*/
+
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
-
+import {sanitizeUrl} from '../utils/url';
 import { $getNearestNodeOfType } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isCodeNode } from '@lexical/code';
-import { $isLinkNode } from '@lexical/link';
+import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
   $isAtNodeEnd,
@@ -162,6 +174,23 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
       },
       COMMAND_PRIORITY_CRITICAL
     );
+
+    editor.registerCommand(
+    KEY_MODIFIER_COMMAND,
+    (payload) => {
+      const event: KeyboardEvent = payload;
+      const {code, ctrlKey, metaKey} = event;
+      if (code === 'KeyK' && (ctrlKey || metaKey)) {
+        event.preventDefault();
+        editor.dispatchCommand(
+          TOGGLE_LINK_COMMAND,
+          sanitizeUrl('https://'),
+        );
+      }
+      return false;
+    },
+    COMMAND_PRIORITY_NORMAL,
+  );
 
     editor.registerCommand<boolean>(
       CAN_REDO_COMMAND,

@@ -39,6 +39,7 @@ const VideoPlugin = lazy(() => import('./VideoPlugin'));
 const ExcalidrawPlugin = lazy(() => import('./ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
+const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
@@ -105,6 +106,7 @@ function EditorPlugins({
       <SpoilerPlugin />
       <ClickableLinkPlugin />
       <CollapsiblePlugin />
+      <MarkdownShortcutPlugin />
       <TwitterPlugin />
       <ExcalidrawPlugin />
       <VideoPlugin />

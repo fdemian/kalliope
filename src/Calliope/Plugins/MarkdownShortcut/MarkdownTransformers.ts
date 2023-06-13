@@ -34,7 +34,6 @@ import {
   TableRowNode,
 } from '@lexical/table';
 import {
-  $createTextNode,
   $isParagraphNode,
   $isTextNode,
   LexicalNode,

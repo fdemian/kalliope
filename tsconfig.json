@@ -4,6 +4,9 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "outDir": "dist",
+    "declaration": true,
+
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -12,6 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vite/client"],
 
     /* Linting */
     "strict": false,

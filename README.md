@@ -44,7 +44,7 @@ It does not contain a graphical interface beyond that of the editor itself, and 
 
 ## Install the yarn pacakge.
 
-`yarn add calliope-editor`
+`yarn add kalliope`
 
 ## Import the editor
 

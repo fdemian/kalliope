@@ -83,7 +83,10 @@ export class CiteNode extends DecoratorBlockNode {
         );
       }
       const editorState = this.citeEditor.parseEditorState(stateToParse);
-      this.citeEditor.setEditorState(editorState);
+
+      if (!editorState.isEmpty()) {
+        this.citeEditor.setEditorState(editorState);
+      }
     }
   }
 

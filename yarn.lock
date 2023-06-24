@@ -3743,14 +3743,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.13":
-  version: 18.2.13
-  resolution: "@types/react@npm:18.2.13"
+"@types/react@npm:18.2.14":
+  version: 18.2.14
+  resolution: "@types/react@npm:18.2.14"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: f7c15f19c164a29262993ea2aae2085fa38cddd9b8359fd8fefabfced91010b515a3abe2042b2b7f2f86e6b38a25b191415aa9313a9027175e3a000883c858cc
+  checksum: a6a5e8cc78f486b9020d1ad009aa6c56943c68c7c6376e0f8399e9cbcd950b7b8f5d73f00200f5379f5e58d31d57d8aed24357f301d8e86108cd438ce6c8b3dd
   languageName: node
   linkType: hard
 
@@ -7792,7 +7792,7 @@ __metadata:
     "@types/katex": ^0.16.0
     "@types/lodash-es": ^4.17.7
     "@types/prettier": ^2.7.3
-    "@types/react": 18.2.13
+    "@types/react": 18.2.14
     "@types/react-color": ^3.0.6
     "@types/react-dom": 18.2.6
     "@typescript-eslint/eslint-plugin": 5.60.0
@@ -7806,7 +7806,7 @@ __metadata:
     eslint-plugin-react-refresh: 0.4.1
     eslint-plugin-storybook: ^0.6.12
     jest-canvas-mock: ^2.5.1
-    katex: ^0.16.7
+    katex: ^0.16.8
     lexical: 0.11.1
     prop-types: ^15.8.1
     react: ^18.2.0
@@ -7823,14 +7823,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"katex@npm:^0.16.7":
-  version: 0.16.7
-  resolution: "katex@npm:0.16.7"
+"katex@npm:^0.16.8":
+  version: 0.16.8
+  resolution: "katex@npm:0.16.8"
   dependencies:
     commander: ^8.3.0
   bin:
     katex: cli.js
-  checksum: 6c3f61e28820ecba074a149d17be6d731d8a950cdd7826851e16f2b0f3627c4119acd8c6e4fb86950063c4e99a6e478720ea6cca3dc82e59bbca81001ee00b70
+  checksum: 4e75b4786101cc5eca0404bb814b2985bec506846f9015e9bf00207a3af14215e341ee62b6e7af2455a1032f8244e47a754642f250eea43d7b8007146ac01fae
   languageName: node
   linkType: hard
 

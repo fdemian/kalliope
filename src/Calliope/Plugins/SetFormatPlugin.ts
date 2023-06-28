@@ -144,18 +144,6 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
       COMMAND_PRIORITY_CRITICAL
     );
 
-    editor.registerCommand<boolean>(
-      CAN_UNDO_COMMAND,
-      (payload) => {
-        setInternalFormat({
-          ...internalFormat,
-          canUndo: payload,
-        });
-        return false;
-      },
-      COMMAND_PRIORITY_CRITICAL
-    );
-
     editor.registerCommand(
     KEY_MODIFIER_COMMAND,
     (payload) => {
@@ -173,28 +161,40 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
     COMMAND_PRIORITY_NORMAL,
   );
 
-    editor.registerCommand<boolean>(
-      CAN_REDO_COMMAND,
-      (payload) => {
-        setInternalFormat({
-          ...internalFormat,
-          canRedo: payload,
-        });
-        return false;
-      },
-      COMMAND_PRIORITY_CRITICAL
-    );
-
-    editor.registerUpdateListener(({ editorState }) => {
-      editorState.read(() => {
-        const _formats = getEditorFormats();
-        setFormats(_formats);
-        setInternalFormat(_formats);
+  editor.registerCommand<boolean>(
+    CAN_UNDO_COMMAND,
+    (payload) => {
+      setInternalFormat({
+        ...internalFormat,
+        canUndo: payload,
       });
+      return false;
+    },
+    COMMAND_PRIORITY_CRITICAL
+  );
+
+  editor.registerCommand<boolean>(
+    CAN_REDO_COMMAND,
+    (payload) => {
+      setInternalFormat({
+        ...internalFormat,
+        canRedo: payload,
+      });
+      return false;
+    },
+    COMMAND_PRIORITY_CRITICAL
+  );
+
+  editor.registerUpdateListener(({ editorState }) => {
+    editorState.read(() => {
+      const _formats = getEditorFormats();
+      setFormats(_formats);
+      setInternalFormat(_formats);
     });
+  });
   }, [editor, internalFormat, getEditorFormats, setFormats, setInternalFormat]);
 
   return null;
-};
+}
 
 export default SetFormatPlugin;

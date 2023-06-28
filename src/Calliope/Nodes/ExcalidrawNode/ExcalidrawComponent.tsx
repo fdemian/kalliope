@@ -20,16 +20,16 @@ import {
  KEY_BACKSPACE_COMMAND,
  KEY_DELETE_COMMAND,
 } from 'lexical';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import ImageResizer from './ImageResizer';
 import { $isExcalidrawNode } from './index';
 import ExcalidrawImage from './ExcalidrawImage';
 import ExcalidrawModal from './ExcalidrawModal';
-
+import { CalliopeContext } from '../../context';
 
 export default function ExcalidrawComponent({
   nodeKey,
-  data,
+  data
 }: {
   data: string;
   nodeKey: NodeKey;
@@ -44,6 +44,12 @@ export default function ExcalidrawComponent({
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey);
   const [isResizing, setIsResizing] = useState<boolean>(false);
+
+  const calliopeConfig = useContext(CalliopeContext);
+  const { config } = calliopeConfig;
+  const { excalidrawConfig } = config;
+  const customModal = excalidrawConfig ? excalidrawConfig.modal : null;
+  const CustomExcalidrawModal = customModal ? customModal : ExcalidrawModal;
 
   const onDelete = useCallback(
     (event: KeyboardEvent) => {
@@ -167,6 +173,7 @@ export default function ExcalidrawComponent({
   return (
     <>
       <ExcalidrawModal
+        modalComponent={CustomExcalidrawModal}
         initialElements={elements}
         initialFiles={files}
         initialAppState={appState}

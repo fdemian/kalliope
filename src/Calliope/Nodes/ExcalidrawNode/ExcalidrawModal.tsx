@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// @ts-nocheck 
+// @ts-nocheck
 import './ExcalidrawModal.css';
 import {Excalidraw} from '@excalidraw/excalidraw';
 import {
@@ -16,14 +16,16 @@ import {
 import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
-import Button from './Button';
-import Modal from './Modal';
+import Button from '../../../stories/Modal/Button';
 
 export type ExcalidrawElementFragment = {
   isDeleted?: boolean;
 };
 
 type Props = {
+
+  modalComponent: () => {};
+
   closeOnClickOutside?: boolean;
   /**
    * The initial set of elements to draw into the scene
@@ -65,6 +67,7 @@ type Props = {
  * which can be used to export an editable image
  */
 export default function ExcalidrawModal({
+  modalComponent,
   closeOnClickOutside = false,
   onSave,
   initialElements,
@@ -74,6 +77,8 @@ export default function ExcalidrawModal({
   onDelete,
   onClose,
 }: Props): ReactPortal | null {
+
+  const Modal = modalComponent;
   const excaliDrawModelRef = useRef<HTMLDivElement | null>(null);
   const excaliDrawSceneRef = useRef<ExcalidrawImperativeAPI>(null);
   const [discardModalOpen, setDiscardModalOpen] = useState(false);

@@ -47,6 +47,9 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       addCaptionText: "Add caption",
       defaultCaptionText: "Enter image caption..."
     },
+    excalidrawConfig: {
+      modal: null
+    },
     emojiConfig: {
       emojiData
     },

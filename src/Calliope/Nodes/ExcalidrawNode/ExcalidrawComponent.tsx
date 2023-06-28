@@ -48,9 +48,8 @@ export default function ExcalidrawComponent({
   const calliopeConfig = useContext(CalliopeContext);
   const { config } = calliopeConfig;
   const { excalidrawConfig } = config;
-  const customModal = excalidrawConfig ? excalidrawConfig.modal : null;
-  const CustomExcalidrawModal = customModal ? customModal : ExcalidrawModal;
-
+  const CustomExcalidrawModal = excalidrawConfig ? excalidrawConfig.modal : null;
+  
   const onDelete = useCallback(
     (event: KeyboardEvent) => {
       if (isSelected && $isNodeSelection($getSelection())) {

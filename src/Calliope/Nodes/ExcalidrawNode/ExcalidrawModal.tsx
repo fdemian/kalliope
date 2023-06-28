@@ -20,9 +20,7 @@ export type ExcalidrawElementFragment = {
 };
 
 type Props = {
-
-  modalComponent: () => {};
-
+  modalComponent: (props: ExcalidrawModalProps) => JSX.Element;
   closeOnClickOutside?: boolean;
   /**
    * The initial set of elements to draw into the scene

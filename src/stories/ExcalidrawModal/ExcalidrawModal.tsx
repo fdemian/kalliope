@@ -15,8 +15,9 @@ import {
   useRef,
   useState
 } from 'react';
+import ExcalidrawModalProps from '../../Calliope/CalliopeEditorTypes';
 
-const ExcalidrawModal = (props) => {
+const ExcalidrawModal = (props: ExcalidrawModalProps) => {
   const {
     excalidrawComponent,
     excaliDrawSceneRef,

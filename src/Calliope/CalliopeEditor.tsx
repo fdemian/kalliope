@@ -181,7 +181,8 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
             setEditorRef={setEditorRef}
             editorRef={editorRef}
             onEditorChange={onEditorChange}
-            floatingAnchorElem={floatingAnchorElem}              config={config}
+            floatingAnchorElem={floatingAnchorElem}
+            config={config}
             />
           </LexicalComposer>
         </div>

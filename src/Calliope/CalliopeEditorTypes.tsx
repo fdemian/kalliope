@@ -1,4 +1,9 @@
 import type { LexicalCommand, LexicalEditor } from 'lexical';
+import {
+  AppState,
+  BinaryFiles,
+  ExcalidrawImperativeAPI,
+} from '@excalidraw/excalidraw/types/types';
 
 type DispatcherFn = () => {};
 export type DispatcherType = (command: LexicalCommand<String | DispatcherFn>, payload?: any) => boolean;
@@ -18,7 +23,52 @@ type LoadingTweetProps = {
 }
 
 type SourceCompProps = {
-  sourceLink: string
+  sourceLink: string;
+};
+
+type ExcalidrawElementFragment = {
+  isDeleted?: boolean;
+};
+
+type ExcalidrawModalProps = {
+  excalidrawComponent: JSX.Element;
+  excaliDrawSceneRef: ExcalidrawImperativeAPI;
+  discard: () => void;
+  save: () => void;
+  onChange: () => void;
+  closeOnClickOutside?: boolean;
+  /**
+   * The initial set of elements to draw into the scene
+   */
+  initialElements: ReadonlyArray<ExcalidrawElementFragment>;
+  /**
+   * The initial set of elements to draw into the scene
+   */
+  initialAppState: AppState;
+  /**
+   * The initial set of elements to draw into the scene
+   */
+  initialFiles: BinaryFiles;
+  /**
+   * Controls the visibility of the modal
+   */
+  isShown?: boolean;
+  /**
+   * Callback when closing and discarding the new changes
+   */
+  onClose: () => void;
+  /**
+   * Completely remove Excalidraw component
+   */
+  onDelete: () => void;
+  /**
+   * Callback when the save button is clicked
+   */
+  onSave: (
+    elements: ReadonlyArray<ExcalidrawElementFragment>,
+    appState: Partial<AppState>,
+    files: BinaryFiles,
+  ) => void;
 };
 
 type AuthorCompProps = {
@@ -60,7 +110,7 @@ export type CalliopeConfigProps = {
     loadingComponent: ({ tweetId }: LoadingTweetProps) => JSX.Element;
   };
   excalidrawConfig: {
-    modal: () => JSX.Element;
+    modal: (props: ExcalidrawModalProps) => JSX.Element;
   };
   citation: {
     sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;

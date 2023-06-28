@@ -387,6 +387,14 @@ Accesible using the `containerRef` ref.
 
 # Valid code languages
 
+A list of valid code languages is exported from the editor. To obtain the list do
+
+```
+import { getCodeLanguageOptions } from 'kalliope';
+
+const CODE_LANGUAGES = getCodeLanguageOptions();
+```
+
 The following code languages are accepted by the highlighter. The value column indicates the value passed as the parameter of the `CHANGE_CODE_LANGUAGE` command.
 
 <table class="table table-bordered table-striped">

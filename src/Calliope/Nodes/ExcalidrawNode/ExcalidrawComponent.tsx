@@ -24,7 +24,7 @@ import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'rea
 import ImageResizer from './ImageResizer';
 import { $isExcalidrawNode } from './index';
 import ExcalidrawImage from './ExcalidrawImage';
-import ExcalidrawModal from './ExcalidrawModal';
+import ExcalidrawModalContainer from './ExcalidrawModal';
 import { CalliopeContext } from '../../context';
 
 export default function ExcalidrawComponent({
@@ -172,7 +172,7 @@ export default function ExcalidrawComponent({
 
   return (
     <>
-      <ExcalidrawModal
+      <ExcalidrawModalContainer
         modalComponent={CustomExcalidrawModal}
         initialElements={elements}
         initialFiles={files}

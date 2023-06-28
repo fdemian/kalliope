@@ -6,8 +6,7 @@
  *
  */
 // @ts-nocheck
-import './ExcalidrawModal.css';
-import {Excalidraw} from '@excalidraw/excalidraw';
+import { Excalidraw } from '@excalidraw/excalidraw';
 import {
   AppState,
   BinaryFiles,
@@ -15,8 +14,6 @@ import {
 } from '@excalidraw/excalidraw/types/types';
 import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
-
-import Button from '../../../stories/Modal/Button';
 
 export type ExcalidrawElementFragment = {
   isDeleted?: boolean;
@@ -78,10 +75,9 @@ export default function ExcalidrawModal({
   onClose,
 }: Props): ReactPortal | null {
 
-  const Modal = modalComponent;
+  const ExternalExcalidrawModal = modalComponent;
   const excaliDrawModelRef = useRef<HTMLDivElement | null>(null);
   const excaliDrawSceneRef = useRef<ExcalidrawImperativeAPI>(null);
-  const [discardModalOpen, setDiscardModalOpen] = useState(false);
   const [elements, setElements] =
     useState<ReadonlyArray<ExcalidrawElementFragment>>(initialElements);
   const [files, setFiles] = useState<BinaryFiles>(initialFiles);
@@ -143,7 +139,6 @@ export default function ExcalidrawModal({
   const save = () => {
     if (elements.filter((el) => !el.isDeleted).length > 0) {
       const appState = excaliDrawSceneRef?.current?.getAppState();
-
       if(appState === undefined || appState === null) {
         return({
             exportBackground: false,
@@ -183,41 +178,13 @@ export default function ExcalidrawModal({
 
   const discard = () => {
     if (elements.filter((el) => !el.isDeleted).length === 0) {
-      // delete node if the scene is clear
+      // Delete node if the scene is clear
       onDelete();
     } else {
-      // Otherwise, show confirmation dialog before closing
-      setDiscardModalOpen(true);
+      // Otherwise close the modal.
+      onClose();
     }
   };
-
-  function ShowDiscardDialog(): JSX.Element {
-    return (
-      <Modal
-        title="Discard"
-        onClose={() => {
-          setDiscardModalOpen(false);
-        }}
-        closeOnClickOutside={false}>
-        Are you sure you want to discard the changes?
-        <div className="ExcalidrawModal__discardModal">
-          <Button
-            onClick={() => {
-              setDiscardModalOpen(false);
-              onClose();
-            }}>
-            Discard
-          </Button>{' '}
-          <Button
-            onClick={() => {
-              setDiscardModalOpen(false);
-            }}>
-            Cancel
-          </Button>
-        </div>
-      </Modal>
-    );
-  }
 
   if (isShown === false) {
     return null;
@@ -235,37 +202,22 @@ export default function ExcalidrawModal({
   // This is a hacky work-around for Excalidraw + Vite.
   // In DEV, Vite pulls this in fine, in prod it doesn't. It seems
   // like a module resolution issue with ESM vs CJS?
-  const _Excalidraw =
+  const excalidrawComponent =
     Excalidraw.$$typeof != null ? Excalidraw : Excalidraw.default;
 
-  return createPortal(
-    <div className="ExcalidrawModal__overlay" role="dialog">
-      <div
-        className="ExcalidrawModal__modal"
-        ref={excaliDrawModelRef}
-        tabIndex={-1}>
-        <div className="ExcalidrawModal__row">
-          {discardModalOpen && <ShowDiscardDialog />}
-          <_Excalidraw
-            onChange={onChange}
-            ref={excaliDrawSceneRef}
-            initialData={{
-              appState: initialAppState || {isLoading: false},
-              elements: initialElements,
-              files: initialFiles,
-            }}
-          />
-          <div className="ExcalidrawModal__actions">
-            <button className="action-button" onClick={discard}>
-              Discard
-            </button>
-            <button className="action-button" onClick={save}>
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>,
-    document.body,
+  return (
+  <ExternalExcalidrawModal
+    excaliDrawSceneRef={excaliDrawSceneRef}
+    excalidrawComponent={excalidrawComponent}
+    discard={discard}
+    save={save}
+    onDelete={onDelete}
+    onChange={onChange}
+    closeOnClickOutside={closeOnClickOutside}
+    initialElements={initialElements}
+    initialAppState={initialAppState}
+    initialFiles={initialFiles}
+    isShown={isShown}
+  />
   );
 }

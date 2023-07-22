@@ -49,7 +49,7 @@ export default function ExcalidrawComponent({
   const { config } = calliopeConfig;
   const { excalidrawConfig } = config;
   const CustomExcalidrawModal = excalidrawConfig ? excalidrawConfig.modal : null;
-  
+
   const onDelete = useCallback(
     (event: KeyboardEvent) => {
       if (isSelected && $isNodeSelection($getSelection())) {
@@ -163,6 +163,10 @@ export default function ExcalidrawComponent({
     }, 200);
   };
 
+  const openModal = useCallback(() => {
+    setModalOpen(true);
+  }, []);
+
   const {
     elements = [],
     files = {},
@@ -197,6 +201,15 @@ export default function ExcalidrawComponent({
             files={files}
             appState={appState}
           />
+          {isSelected && (
+            <div
+                className="image-edit-button"
+                role="button"
+                tabIndex={0}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={openModal}
+            />
+          )}
           {(isSelected || isResizing) && (
             <ImageResizer
               buttonRef={captionButtonRef}

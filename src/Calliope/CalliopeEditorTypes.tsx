@@ -1,12 +1,12 @@
-import type { LexicalCommand, LexicalEditor } from 'lexical';
+import type { NodeKey, LexicalCommand, LexicalEditor } from 'lexical';
 import {
   AppState,
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 
-type DispatcherFn = () => {};
-export type DispatcherType = (command: LexicalCommand<String | DispatcherFn>, payload?: any) => boolean;
+type DispatcherFn = () => void;
+export type DispatcherType = (command: LexicalCommand<string | DispatcherFn>, payload?: any) => boolean;
 
 export type EditorRefType = {
   focus: () => void;
@@ -96,6 +96,11 @@ export type MentionItem = {
   avatar?: string | null;
 };
 
+export type ShowModalProps = {
+  activeEditor: LexicalEditor;
+  nodeKey: NodeKey;
+};
+
 export type CalliopeConfigProps = {
   placeholderText: string;
   initialState: string | undefined;
@@ -121,7 +126,7 @@ export type CalliopeConfigProps = {
     defaultCaptionText: string
   };
   inlineImage: {
-    showModal: () => void;
+    showModal: (showModalProps:ShowModalProps) => void;
   };
   dragAndDropImage: {
     handleDroppedFile: (file: File) => void

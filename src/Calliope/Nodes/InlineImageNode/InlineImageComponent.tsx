@@ -275,7 +275,7 @@ export default function InlineImageComponent({
 
     const showModalProps = {
         activeEditor: editor,
-        nodeKey: nodeKey
+        nodeKey
     };
 
     return (

@@ -3,6 +3,7 @@ import Editor from '../Calliope/CalliopeEditor';
 import {initialMentions} from './mentionsData';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Calliope/CalliopeEditorTypes';
+import {ShowModalProps} from "../Calliope/CalliopeEditorTypes";
 
 type EntryEditorProps = {
   readOnly: boolean,
@@ -46,6 +47,9 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
     imageConfig: {
       addCaptionText: "Add caption",
       defaultCaptionText: "Enter image caption..."
+    },
+    inlineImage: {
+      showModal: (showModalProps: ShowModalProps) => console.log(showModalProps)
     },
     excalidrawConfig: {
       modal: null

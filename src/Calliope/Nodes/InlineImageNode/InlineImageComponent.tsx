@@ -279,7 +279,7 @@ export default function InlineImageComponent({
                     <button
                         className="image-edit-button"
                         ref={buttonRef}
-                        onClick={() => { showModal(); }}>
+                        onClick={showModal}>
                         Edit
                     </button>
                     <LazyImage
@@ -304,7 +304,7 @@ export default function InlineImageComponent({
                             <RichTextPlugin
                                 contentEditable={<ContentEditable className="InlineImageNode__contentEditable" />}
                                 placeholder={
-                                <div className="editor-placeholder">
+                                <div className="InlineImageNode__placeholder">
                                     Enter a caption...
                                 </div>
                                 }

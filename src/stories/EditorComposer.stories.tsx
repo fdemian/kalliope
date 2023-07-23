@@ -7,6 +7,7 @@ import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
 import { InsertInlineImageDialog } from './InlineImageModal/InlineImageUI';
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
+import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
@@ -73,8 +74,7 @@ export const EditorComposer = () => {
   const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
   const [url, setUrl] = useState<string | null>(null);
 
-  const [inlineImageModal, setInlineImageModal] = useState(false);
-  const toggleModalVisible = () => setInlineImageModal(!inlineImageModal);
+  const [inlineImageModal, showModal] = useModal();
 
   const toggleTweetToolbar = () => setTweetToolbar(false);
   const toggleVideoToolbar = () => setVideoToolbar(false);
@@ -148,7 +148,6 @@ export const EditorComposer = () => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("INSERT_IMAGE_INLINE", image);
-    toggleModalVisible();
   }
 
   const insertVideo = () => {
@@ -191,7 +190,12 @@ export const EditorComposer = () => {
       defaultCaptionText: "Enter image caption..."
     },
     inlineImage: {
-      showModal: toggleModalVisible
+      showModal: () => showModal('Insert inline image', (onClose) => (
+          <InsertInlineImageDialog
+              saveImage={insertInlineImage}
+              onClose={onClose}
+          />
+      ))
     },
     excalidrawConfig: {
       modal: ExcalidrawModal
@@ -440,7 +444,12 @@ export const EditorComposer = () => {
     },
     {
       text: "InlineImage",
-      command: () => toggleModalVisible(),
+      command: () => showModal('Insert inline image', (onClose) => (
+      <InsertInlineImageDialog
+          saveImage={insertInlineImage}
+          onClose={onClose}
+      />
+      )),
       props: null,
       directCommand: false
     },
@@ -665,12 +674,7 @@ export const EditorComposer = () => {
    <div>
      {editorState === null ? "<Nothing to render>" : JSON.stringify(editorState)}
    </div>
-    {inlineImageModal ?
-        <InsertInlineImageDialog
-            saveImage={(image) => insertInlineImage(image)}
-            onClose={() => toggleModalVisible()}
-        />  : null
-    }
+    {inlineImageModal}
   </>
   )
 }

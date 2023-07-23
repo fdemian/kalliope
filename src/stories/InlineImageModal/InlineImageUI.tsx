@@ -65,7 +65,7 @@ export function InsertInlineImageDialog({saveImage, onClose}: {
         onClose();
     };
 
-    return createPortal(
+    return(
         <>
             <div style={{marginBottom: '1em'}}>
                 <FileInput
@@ -114,7 +114,6 @@ export function InsertInlineImageDialog({saveImage, onClose}: {
                     Confirm
                 </Button>
             </DialogActions>
-        </>,
-        document.body,
+        </>
     );
 }

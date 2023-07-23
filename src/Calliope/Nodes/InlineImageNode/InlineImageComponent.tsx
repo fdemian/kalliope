@@ -272,6 +272,12 @@ export default function InlineImageComponent({
 
     const draggable = isSelected && $isNodeSelection(selection);
     const isFocused = isSelected;
+
+    const showModalProps = {
+        activeEditor: editor,
+        nodeKey: nodeKey
+    };
+
     return (
         <Suspense fallback={null}>
             <>
@@ -279,7 +285,7 @@ export default function InlineImageComponent({
                     <button
                         className="image-edit-button"
                         ref={buttonRef}
-                        onClick={showModal}>
+                        onClick={() => showModal(showModalProps)}>
                         Edit
                     </button>
                     <LazyImage

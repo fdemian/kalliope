@@ -6,6 +6,7 @@ import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
 import { InsertInlineImageDialog } from './InlineImageModal/InlineImageUI';
+import { UpdateInlineImageDialog } from "./InlineImageModal/InsertImageModal";
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
@@ -190,11 +191,8 @@ export const EditorComposer = () => {
       defaultCaptionText: "Enter image caption..."
     },
     inlineImage: {
-      showModal: () => showModal('Insert inline image', (onClose) => (
-          <InsertInlineImageDialog
-              saveImage={insertInlineImage}
-              onClose={onClose}
-          />
+      showModal: (modalProps) => showModal('Update inline image', (onClose) => (
+          <UpdateInlineImageDialog {...modalProps} onClose={onClose} />
       ))
     },
     excalidrawConfig: {

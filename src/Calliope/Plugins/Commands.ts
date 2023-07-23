@@ -36,6 +36,7 @@ import { INSERT_EXCALIDRAW_COMMAND } from './ExcalidrawPlugin';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
+import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagePlugin';
 import { EditorCommands } from '../CalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
@@ -284,6 +285,11 @@ const EDITOR_COMMANDS: EditorCommands = [
     name: 'INSERT_IMAGE',
     command: INSERT_IMAGE_COMMAND,
     directCommand: true,
+  },
+  {
+    name: 'INSERT_IMAGE_INLINE',
+    command: INSERT_INLINE_IMAGE_COMMAND,
+    directCommand: true
   },
   {
     name: 'INSERT_TWEET',

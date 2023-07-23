@@ -128,11 +128,10 @@ export default function ImageComponent({
         if ($isImageNode(node)) {
           node.remove();
         }
-        setSelected(false);
       }
       return false;
     },
-    [isSelected, nodeKey, setSelected]
+    [isSelected, nodeKey]
   );
 
   const onEnter = useCallback(

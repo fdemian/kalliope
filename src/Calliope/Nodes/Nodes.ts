@@ -23,7 +23,8 @@ import { ImageNode } from './ImageNode/ImageNode';
 import { TweetNode } from './TweetNode/TweetNode';
 import { EquationNode } from './Equation/EquationNode';
 import { VideoNode } from './VideoNode/VideoNode';
-import { ExcalidrawNode } from './ExcalidrawNode/index';
+import { ExcalidrawNode } from './ExcalidrawNode';
+import { InlineImageNode } from "./InlineImageNode/InlineImageNode";
 import { CiteNode } from './CiteNode/CiteNode';
 import { CollapsibleContainerNode } from '../Plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleContentNode } from '../Plugins/CollapsiblePlugin/CollapsibleContentNode';
@@ -53,6 +54,7 @@ const Nodes: Klass<LexicalNode>[] = [
   VideoNode,
   ExcalidrawNode,
   CiteNode,
+  InlineImageNode,
   CollapsibleContainerNode,
   CollapsibleContentNode,
   CollapsibleTitleNode,

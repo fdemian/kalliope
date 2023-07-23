@@ -9,11 +9,8 @@
 import './ExcalidrawModal.css';
 import {createPortal} from 'react-dom';
 import {
-  ReactPortal,
   useEffect,
-  useLayoutEffect,
   useRef,
-  useState
 } from 'react';
 import ExcalidrawModalProps from '../../Calliope/CalliopeEditorTypes';
 
@@ -28,8 +25,7 @@ const ExcalidrawModal = (props: ExcalidrawModalProps) => {
     closeOnClickOutside = false,
     initialElements,
     initialAppState,
-    initialFiles,
-    isShown = false,
+    initialFiles
   } = props;
 
   const excaliDrawModelRef = useRef<HTMLDivElement | null>(null);

@@ -5,14 +5,15 @@ import Editor, { getCodeLanguageOptions } from '../Calliope/index';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
-import Modal from './ExcalidrawModal/ExcalidrawModal';
+import { InsertInlineImageDialog } from './InlineImageModal/InlineImageUI';
+import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import type { MouseEventHandler } from 'react';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 
 type CalliopeContainerType = HTMLDivElement & {
-  focus: () => {};
-  clear: () => {};
+  focus: () => void;
+  clear: () => void;
   getContent: () => string;
   executeCommand: (name: string, props: any) => void;
 };
@@ -71,6 +72,9 @@ export const EditorComposer = () => {
   const [isVideoToolbar, setVideoToolbar] = useState<boolean | null>(false);
   const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
   const [url, setUrl] = useState<string | null>(null);
+
+  const [inlineImageModal, setInlineImageModal] = useState(false);
+  const toggleModalVisible = () => setInlineImageModal(!inlineImageModal);
 
   const toggleTweetToolbar = () => setTweetToolbar(false);
   const toggleVideoToolbar = () => setVideoToolbar(false);
@@ -140,6 +144,13 @@ export const EditorComposer = () => {
     setImageToolbar(false);
   }
 
+  const insertInlineImage = (image) => {
+    if(!containerRef.current)
+      return;
+    containerRef.current.executeCommand("INSERT_IMAGE_INLINE", image);
+    toggleModalVisible();
+  }
+
   const insertVideo = () => {
     if(!containerRef.current || url === null)
       return;
@@ -179,8 +190,11 @@ export const EditorComposer = () => {
       addCaptionText: "Add caption",
       defaultCaptionText: "Enter image caption..."
     },
+    inlineImage: {
+      showModal: toggleModalVisible
+    },
     excalidrawConfig: {
-      modal: Modal
+      modal: ExcalidrawModal
     },
     twitterConfig: {
       loadingComponent: ({ tweetId }: LoadingTweetProps) => (
@@ -425,6 +439,12 @@ export const EditorComposer = () => {
       directCommand: false
     },
     {
+      text: "InlineImage",
+      command: () => toggleModalVisible(),
+      props: null,
+      directCommand: false
+    },
+    {
       text: "Tweet",
       command: () => setTweetToolbar(true),
       props: null,
@@ -484,7 +504,7 @@ export const EditorComposer = () => {
   let text = "";
   let insertFn: MouseEventHandler<HTMLButtonElement> | undefined;
   let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined;
-  const altToolbar = isTweetToolbar || isVideoToolbar || isImageToolbar;
+  const altToolbar = isTweetToolbar || isVideoToolbar || isImageToolbar;
   if(altToolbar){
     text = isTweetToolbar ? "Insert Tweet" : (isVideoToolbar ? "Insert Video" :  "Insert image");
     insertFn = isTweetToolbar ? insertTweet : (isVideoToolbar ? insertVideo :  insertImage);
@@ -524,7 +544,7 @@ export const EditorComposer = () => {
           containerRef.current?.executeCommand(
             (typeof elem.command === 'string' ?
             elem.command : ''), elem.props) :
-          (typeof elem.command === 'function'  ? elem.command() : console.log("ERROR"))
+          (typeof elem.command === 'function'  ? elem.command() : alert("ERROR"))
         }}>
         {elem.text}
       </button>
@@ -645,6 +665,12 @@ export const EditorComposer = () => {
    <div>
      {editorState === null ? "<Nothing to render>" : JSON.stringify(editorState)}
    </div>
+    {inlineImageModal ?
+        <InsertInlineImageDialog
+            saveImage={(image) => insertInlineImage(image)}
+            onClose={() => toggleModalVisible()}
+        />  : null
+    }
   </>
   )
 }

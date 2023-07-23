@@ -40,6 +40,7 @@ const ExcalidrawPlugin = lazy(() => import('./ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
+const InlineImagePlugin = lazy(() => import('./InlineImagePlugin'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
@@ -91,6 +92,7 @@ function EditorPlugins({
       <TablePlugin />
       <TableCellResizer />
       <ImagesPlugin />
+      <InlineImagePlugin />
       {!readOnly && (
         <SetFormatPlugin
           internalFormat={internalFormat}

@@ -12,7 +12,6 @@ import { DialogActions } from '../UI/Dialog';
 import FileInput from '../UI/FileInput';
 import Select from '../UI/Select';
 import TextInput from '../UI/TextInput';
-import {createPortal} from 'react-dom';
 
 export function InsertInlineImageDialog({saveImage, onClose}: {
     saveImage: (payload:any) => void;

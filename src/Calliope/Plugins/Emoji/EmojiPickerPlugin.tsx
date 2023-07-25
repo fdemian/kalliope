@@ -43,9 +43,9 @@ export default function EmojiPickerPlugin() {
       throw new Error('EmojiPlugin: EmojiNode not registered on editor');
     }
 
-    const initialData = emojiData.filter((e) => priorityList.includes(e.hexcode));
-    setEmojis(initialData);
-    setInitialData(initialData);
+    const initialEmojiData = emojiData.filter((e) => priorityList.includes(e.hexcode));
+    setEmojis(initialEmojiData);
+    setInitialData(initialEmojiData);
   }, [editor, emojiData]);
 
   const onQueryChange = (query) => {

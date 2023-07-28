@@ -58,7 +58,7 @@
     "@storybook/react": "7.1.1",
     "@storybook/react-vite": "7.1.1",
     "@storybook/testing-library": "0.2.0",
-    "@types/katex": "^0.16.1",
+    "@types/katex": "^0.16.2",
     "@types/lodash-es": "^4.17.8",
     "@types/prettier": "^2.7.3",
     "@types/react": "18.2.17",

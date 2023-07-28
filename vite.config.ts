@@ -13,7 +13,7 @@ export default defineConfig({
   build: {
    exclude: '/src/stories/',
    lib: {
-      entry: resolve(__dirname, 'src/Calliope/index.ts'),
+      entry: resolve(__dirname, 'src/Kalliope/index.ts'),
       name: 'kalliope',
       fileName: 'kalliope'
    },

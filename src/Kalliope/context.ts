@@ -1,5 +1,5 @@
 import type { Klass, LexicalNode } from 'lexical';
-import { CalliopeConfigProps } from './CalliopeEditorTypes';
+import { CalliopeConfigProps } from './KalliopeEditorTypes';
 import { createContext } from 'react';
 import type { PluginComponentProps } from './Plugins/Plugins';
 

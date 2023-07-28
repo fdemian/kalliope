@@ -9,7 +9,7 @@
 import type { LexicalEditor } from 'lexical';
 import * as React from 'react';
 import { useRef } from 'react';
-import { CalliopeConfigProps } from '../../CalliopeEditorTypes';
+import { CalliopeConfigProps } from '../../KalliopeEditorTypes';
 import './ImageNode.css';
 
 function clamp(value: number, min: number, max: number) {

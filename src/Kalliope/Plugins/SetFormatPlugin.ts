@@ -11,7 +11,7 @@ import {
   KEY_MODIFIER_COMMAND
 } from 'lexical';
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
-import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
+import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 import {sanitizeUrl} from '../utils/url';
 import { $getNearestNodeOfType } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';

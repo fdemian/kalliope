@@ -1,5 +1,5 @@
 import {$getNodeByKey, LexicalEditor, NodeKey} from "lexical";
-import {InlineImageNode, Position} from "../../Calliope/Nodes/InlineImageNode/InlineImageNode";
+import {InlineImageNode, Position} from "../../Kalliope/Nodes/InlineImageNode/InlineImageNode";
 import {useState} from "react";
 import Button from '../UI/Button';
 import { DialogActions } from '../UI/Dialog';

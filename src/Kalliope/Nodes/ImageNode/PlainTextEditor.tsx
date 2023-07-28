@@ -6,7 +6,7 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import Placeholder from './Placeholder';
-import { CalliopeConfigProps } from '../../CalliopeEditorTypes';
+import { CalliopeConfigProps } from '../../KalliopeEditorTypes';
 const DEFAULT_CAPTION_ENTER = 'Enter a caption';
 
 type PlainTextEditorProps = {

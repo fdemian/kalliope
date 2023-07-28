@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import Editor from '../Calliope/CalliopeEditor';
+import Editor from '../Kalliope/KalliopeEditor';
 import {initialMentions} from './mentionsData';
 import emojiData from 'emojibase-data/en/data.json';
-import type { MentionItem } from '../Calliope/CalliopeEditorTypes';
-import {ShowModalProps} from "../Calliope/CalliopeEditorTypes";
+import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
+import {ShowModalProps} from "../Kalliope/KalliopeEditorTypes";
 
 type EntryEditorProps = {
   readOnly: boolean,

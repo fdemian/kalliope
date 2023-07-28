@@ -1,4 +1,4 @@
-import { type MentionItem } from '../Calliope/CalliopeEditorTypes';
+import { type MentionItem } from '../Kalliope/KalliopeEditorTypes';
 
 export const initialMentions:MentionItem[] = [
  {

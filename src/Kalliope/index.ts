@@ -1,11 +1,11 @@
 import { getCodeLanguageOptions } from './utils/codeUtils';
 import { $getNodeByKey } from "lexical";
 
-import CalliopeEditor from './CalliopeEditor';
+import Kalliope from './KalliopeEditor';
 
 export {
   getCodeLanguageOptions,
   $getNodeByKey
 };
 
-export default CalliopeEditor;
+export default Kalliope;

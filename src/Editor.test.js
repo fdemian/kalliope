@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import TestComponentMock from './Calliope/TestComponentMock';
+import TestComponentMock from './Kalliope/TestComponentMock';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';

@@ -37,9 +37,9 @@ import { INSERT_EXCALIDRAW_COMMAND } from './ExcalidrawPlugin';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
-import { EditorCommands } from '../CalliopeEditorTypes';
+import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
-import { CalliopeFormatTypes } from '../CalliopeEditorTypes';
+import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 
 const onCodeLanguageSelect = (editor: LexicalEditor, value: string) => {
   editor.update(() => {

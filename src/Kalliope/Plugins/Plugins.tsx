@@ -3,7 +3,7 @@ import { useSharedHistoryContext } from '../historyContext';
 import {
   CalliopeFormatTypes,
   EditorRefType
-} from '../CalliopeEditorTypes';
+} from '../KalliopeEditorTypes';
 import type { EditorState } from 'lexical';
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';

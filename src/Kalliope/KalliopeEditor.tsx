@@ -20,10 +20,10 @@ import type {
   CalliopeFormatTypes,
   EditorRefType,
   EditorCommand
-} from './CalliopeEditorTypes';
+} from './KalliopeEditorTypes';
 import { CalliopeContext } from './context';
 import theme from './editorTheme';
-import './CalliopeEditor.css';
+import './KalliopeEditor.css';
 
 const INITIAL_FORMATS: CalliopeFormatTypes = {
   blockType: 'paragraph',
@@ -81,7 +81,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
   }, [isSmallWidthViewport]);
 
   const initialConfig = {
-    namespace: 'Calliope',
+    namespace: 'Kalliope',
     nodes: EditorNodes,
     onError: config.onError,
     editable: !config.readOnly,

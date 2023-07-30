@@ -18,6 +18,6 @@ blockquote {
   clear: both;
 }
 
-em.calliope-text-italic {
+figure > blockquote > div > p, figure > blockquote > div > p > * {
   background-color: #f9f9f9 !important;
 }

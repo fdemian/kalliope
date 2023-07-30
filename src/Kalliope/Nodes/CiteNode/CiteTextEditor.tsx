@@ -17,16 +17,14 @@ const CiteTextEditor = ({ citeEditor, readOnly }:CiteEditorProps) => {
     citeEditor.setEditable(!readOnly);
   }, [readOnly, citeEditor]);
 
+
   const calliopeConfig = useContext(CalliopeContext);
   const {
     setFormats,
     isSmallWidthViewport,
     internalFormat,
     setInternalFormat,
-    setEditorRef,
-    editorRef,
     onEditorChange,
-    floatingAnchorElem,
     config
   } = calliopeConfig;
 
@@ -46,10 +44,10 @@ const CiteTextEditor = ({ citeEditor, readOnly }:CiteEditorProps) => {
          isSmallWidthViewport={isSmallWidthViewport}
          internalFormat={internalFormat}
          setInternalFormat={setInternalFormat}
-         setEditorRef={setEditorRef}
+         setEditorRef={() =>{}}
          onEditorChange={onEditorChange}
-         floatingAnchorElem={floatingAnchorElem}
-         editorRef={editorRef}
+         floatingAnchorElem={null}
+         editorRef={null}
          config={config}
      />
     </LexicalNestedComposer>

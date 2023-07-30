@@ -2,7 +2,6 @@ import type { Klass, LexicalNode } from 'lexical';
 import { CalliopeConfigProps } from './KalliopeEditorTypes';
 import { createContext } from 'react';
 import type { PluginComponentProps } from './Plugins/Plugins';
-import {EditorRefType} from "./KalliopeEditorTypes";
 
 type CalliopeContextType = {
   config: CalliopeConfigProps;
@@ -13,9 +12,6 @@ type CalliopeContextType = {
   isSmallWidthViewport: boolean;
   internalFormat: any;
   setInternalFormat: (formats: any) => void;
-  setEditorRef: (any) => void;
-  editorRef: EditorRefType;
-  floatingAnchorElem: HTMLDivElement | null;
 };
 
 export const CalliopeContext = createContext<CalliopeContextType | null>(null);

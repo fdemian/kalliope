@@ -164,10 +164,15 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
   editor.registerCommand<boolean>(
     CAN_UNDO_COMMAND,
     (payload) => {
+      const _formats = getEditorFormats();
       setInternalFormat({
-        ...internalFormat,
+        ..._formats,
         canUndo: payload,
       });
+      setFormats({
+        ..._formats,
+        canUndo: payload
+      })
       return false;
     },
     COMMAND_PRIORITY_CRITICAL
@@ -176,9 +181,18 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
   editor.registerCommand<boolean>(
     CAN_REDO_COMMAND,
     (payload) => {
+      const _formats = getEditorFormats();
       setInternalFormat({
-        ...internalFormat,
+        ..._formats,
         canRedo: payload,
+      });
+      setFormats({
+        ..._formats,
+        canRedo: payload
+      })
+      console.log({
+        ..._formats,
+        canRedo: payload
       });
       return false;
     },

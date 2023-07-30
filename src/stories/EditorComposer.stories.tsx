@@ -12,7 +12,6 @@ import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
-
 type CalliopeContainerType = HTMLDivElement & {
   focus: () => void;
   clear: () => void;
@@ -498,6 +497,18 @@ export const EditorComposer = () => {
         source: { content: QUOTE_STATE, link: 'https://en.wikipedia.org/wiki/Romeo_and_Juliet' }
       },
       directCommand: true
+    },
+    {
+      text: "UNDO",
+      command:"UNDO",
+      props: null,
+      directCommand: true
+    },
+    {
+      text: "REDO",
+      command:"REDO",
+      props: null,
+      directCommand: true
     }
   ];
 
@@ -556,6 +567,10 @@ export const EditorComposer = () => {
         {elem.text}
       </button>
       ))}
+    <br />
+    {formats.canUndo ? "[CAN UNDO]" : "[CAN'T UNDO]"}
+    <br />
+    {formats.canRedo ? "[CAN REDO]" : "[CAN'T REDO]"}
     <br />
     <div>
       { formats.blockType === "code" ? (

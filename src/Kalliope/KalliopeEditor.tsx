@@ -137,6 +137,13 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     nodes: EditorNodes,
     plugins: EditorPlugins,
     onEditorChange,
+    setFormats,
+    isSmallWidthViewport,
+    internalFormat,
+    setInternalFormat,
+    setEditorRef,
+    editorRef,
+    floatingAnchorElem
   };
 
   useImperativeHandle(containerRef, () => {
@@ -173,16 +180,16 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
             ErrorBoundary={LexicalErrorBoundary}
           />
           <EditorPlugins
-            readOnly={config.readOnly}
-            setFormats={setFormats}
-            isSmallWidthViewport={isSmallWidthViewport}
-            internalFormat={internalFormat}
-            setInternalFormat={setInternalFormat}
-            setEditorRef={setEditorRef}
-            editorRef={editorRef}
-            onEditorChange={onEditorChange}
-            floatingAnchorElem={floatingAnchorElem}
-            config={config}
+             readOnly={config.readOnly}
+             setFormats={setFormats}
+             isSmallWidthViewport={isSmallWidthViewport}
+             internalFormat={internalFormat}
+             setInternalFormat={setInternalFormat}
+             setEditorRef={setEditorRef}
+             editorRef={editorRef}
+             onEditorChange={onEditorChange}
+             floatingAnchorElem={null}
+             config={config}
             />
           </LexicalComposer>
         </div>

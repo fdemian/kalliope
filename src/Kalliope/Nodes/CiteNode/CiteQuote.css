@@ -17,3 +17,7 @@ blockquote {
   background-color: #f9f9f9;
   clear: both;
 }
+
+em.calliope-text-italic {
+  background-color: #f9f9f9 !important;
+}

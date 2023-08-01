@@ -1,6 +1,5 @@
 // @ts-nocheck
 import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
-import { createEditor } from 'lexical';
 import CiteQuote from './CiteQuote';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import {

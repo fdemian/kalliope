@@ -6,7 +6,7 @@
  *
  * @flow strict
  */
-/* eslint-disable no-use-before-define */
+ 
 import type { SerializedLexicalNode, NodeKey, LexicalNode, Spread } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import './MentionNode.css';

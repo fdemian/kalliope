@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+ 
 import type { NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';

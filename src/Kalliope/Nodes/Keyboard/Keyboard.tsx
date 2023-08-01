@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+ 
 import { ReactNode } from 'react';
 import type { LexicalNode, NodeKey } from 'lexical';
 import { DecoratorNode, SerializedLexicalNode, Spread } from 'lexical';

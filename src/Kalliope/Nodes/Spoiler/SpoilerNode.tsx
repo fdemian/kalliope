@@ -1,4 +1,4 @@
-/* eslint-disable no-use-before-define */
+ 
 import type { SerializedLexicalNode, NodeKey, Spread, LexicalNode } from 'lexical';
 import { DecoratorNode } from 'lexical';
 import Spoiler from './Spoiler';

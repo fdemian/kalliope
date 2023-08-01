@@ -78,7 +78,7 @@ type AuthorCompProps = {
   }
 };
 
-export type DirectCommand = LexicalCommand<String | DispatcherFn>;
+export type DirectCommand = LexicalCommand<string | DispatcherFn>;
 export type IndirectCommand = ((editor: LexicalEditor, _: any, _2: string) => void);
 
 export type EditorCommand = {

@@ -92,21 +92,7 @@ export class CiteNode extends DecoratorBlockNode {
             content: serializedNode.sourceContent,
             link: serializedNode.sourceLink,
         };
-
-
-        const node = $createCiteNode(author, source);
-        console.clear();
-        console.log(serializedNode);
-        console.log("LLLLLLL");
-        /*
-        const nestedEditor = node.__sourceContent;
-        const editorState = nestedEditor.parseEditorState(serializedNode.sourceContent);
-        if (!editorState.isEmpty()) {
-          nestedEditor.setEditorState(editorState);
-        }
-        */
-
-        return node;
+        return $createCiteNode(author, source);
     }
 
     createDOM(): HTMLElement {

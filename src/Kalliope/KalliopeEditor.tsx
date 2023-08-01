@@ -18,7 +18,6 @@ import EDITOR_COMMANDS from './Plugins/Commands';
 import type {
   CalliopeEditorProps,
   CalliopeFormatTypes,
-  EditorRefType,
   EditorCommand
 } from './KalliopeEditorTypes';
 import { CalliopeContext } from './context';
@@ -56,6 +55,9 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     null
   );
 
+  const editorRef = useRef(null);
+  const editorStateRef = useRef(null);
+
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
       setFloatingAnchorElem(_floatingAnchorElem);
@@ -80,7 +82,15 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     };
   }, [isSmallWidthViewport]);
 
-  const initialConfig = {
+  if(editorRef && editorRef.current) {
+    const isEditable = !config.readOnly;
+    if(editorRef.current.isEditable() !== isEditable){
+      editorRef.current.setEditable(!config.readOnly);
+    }
+    console.log();
+  }
+
+  const initialConfig= {
     namespace: 'Kalliope',
     nodes: EditorNodes,
     onError: config.onError,
@@ -89,28 +99,26 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     theme,
   };
 
-  const [editorRef, setEditorRef] = useState<EditorRefType | null>(null);
-  const editorStateRef = useRef();
 
   const clear = () => {
-    if (editorRef) {
-      editorRef.dispatchCommand(CLEAR_EDITOR_COMMAND);
-      editorRef.focus();
+    if (editorRef && editorRef.current) {
+      editorRef.current.dispatchCommand(CLEAR_EDITOR_COMMAND);
+      editorRef.current.focus();
     }
   };
 
   const focus = () => {
-    if (!editorRef) return;
-    editorRef.focus();
+    if (!editorRef || editorRef.current) return;
+    editorRef.current.focus();
   };
 
   const getContent = () => {
-    if (!editorRef) return;
+    if (!editorStateRef || !editorStateRef.current) return null;
     return editorStateRef.current;
   };
 
   const executeCommand = (name: string, props: any) => {
-    if (!editorRef) return;
+    if (!editorRef || !editorRef.current) return;
 
     const selectedCommand = EDITOR_COMMANDS.find((c: EditorCommand) => c.name === name);
 
@@ -119,7 +127,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     const COMMAND_TO_DISPATCH = selectedCommand.command;
 
     if (selectedCommand.directCommand) {
-      editorRef.dispatchCommand(COMMAND_TO_DISPATCH, props);
+      editorRef.current.dispatchCommand(COMMAND_TO_DISPATCH, props);
     } else {
       COMMAND_TO_DISPATCH(editorRef, internalFormat, props);
     }
@@ -141,7 +149,6 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     isSmallWidthViewport,
     internalFormat,
     setInternalFormat,
-    setEditorRef,
     editorRef,
     floatingAnchorElem
   };
@@ -185,8 +192,8 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
              isSmallWidthViewport={isSmallWidthViewport}
              internalFormat={internalFormat}
              setInternalFormat={setInternalFormat}
-             setEditorRef={setEditorRef}
              editorRef={editorRef}
+             isNestedPlugin={false}
              onEditorChange={onEditorChange}
              floatingAnchorElem={null}
              config={config}

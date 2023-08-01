@@ -1,10 +1,8 @@
 import { lazy } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
-import {
-  CalliopeFormatTypes,
-  EditorRefType
-} from '../KalliopeEditorTypes';
+import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 import type { EditorState } from 'lexical';
+import { EditorRefPlugin } from '@lexical/react/LexicalEditorRefPlugin';
 import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
@@ -24,7 +22,6 @@ import DragDropPastePlugin from './DragDropPastePlugin/index';
 
 //
 const EquationsPlugin = lazy(() => import('./EquationsPlugin'));
-const EditorRefPlugin = lazy(() => import('./EditorRefPlugin'));
 const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
@@ -47,8 +44,8 @@ export type PluginComponentProps = {
   internalFormat: CalliopeFormatTypes;
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
   isSmallWidthViewport: boolean;
-  editorRef: EditorRefType;
-  setEditorRef: (editor: EditorRefType) => void;
+  editorRef: any;
+  isNestedPlugin: boolean;
   onEditorChange: (editorState: EditorState) => void;
   floatingAnchorElem: HTMLDivElement | null;
   config: any;
@@ -59,12 +56,13 @@ function EditorPlugins({
   setFormats,
   internalFormat,
   setInternalFormat,
-  setEditorRef,
   onEditorChange,
+  editorRef,
   config,
   readOnly,
   floatingAnchorElem,
   isSmallWidthViewport,
+  isNestedPlugin
 }: PluginComponentProps): JSX.Element {
   const { historyState } = useSharedHistoryContext();
 
@@ -116,8 +114,8 @@ function EditorPlugins({
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       <MentionsPlugin config={config.mentions} />
-      <EditorRefPlugin setEditorRef={setEditorRef} />
-    </>
+      {!isNestedPlugin &&  <EditorRefPlugin editorRef={editorRef} />}
+  </>
   );
 }
 

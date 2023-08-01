@@ -20,7 +20,7 @@ type CiteQuoteProps = {
   authorName: string;
   authorLink: string;
   sourceLink: string;
-  citeEditor: LexicalEditor;
+  content: string;
 };
 
 const DefaultSourceComp = ({ sourceLink }: SourceCompProps) => <a href={sourceLink}>{sourceLink}</a>;
@@ -28,7 +28,7 @@ const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
   return <a href={author.link}>{author.name}</a>;
 };
 
-const CiteQuote = ({ authorName, authorLink, sourceLink, citeEditor }: CiteQuoteProps) => {
+const CiteQuote = ({ authorName, authorLink, sourceLink, content }: CiteQuoteProps) => {
   const calliopeConfig = useContext(CalliopeContext);
   const [editor] = useLexicalComposerContext();
 
@@ -50,21 +50,21 @@ const CiteQuote = ({ authorName, authorLink, sourceLink, citeEditor }: CiteQuote
   };
 
   return (
-    <figure>
-      <figcaption>
-        <AuthorComponent author={author} />
-        <cite>
-          &nbsp;
-          <SourceLinkComp sourceLink={sourceLink} />
-        </cite>
-      </figcaption>
-      <blockquote>
-        <CiteTextEditor
-          citeEditor={citeEditor}
-          readOnly={!editor.isEditable()}
-        />
-      </blockquote>
-    </figure>
+      <figure>
+        <figcaption>
+          <AuthorComponent author={author} />
+          <cite>
+            &nbsp;
+            <SourceLinkComp sourceLink={sourceLink} />
+          </cite>
+        </figcaption>
+        <blockquote>
+          <CiteTextEditor
+              content={content}
+              readOnly={!editor.isEditable()}
+          />
+        </blockquote>
+      </figure>
   );
 };
 

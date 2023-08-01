@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import type { LexicalEditor } from 'lexical';
 import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer';
 import KalliopeEditorTheme from '../../editorTheme';
@@ -16,14 +16,6 @@ type CiteEditorProps = {
 }
 
 const CiteTextEditor = ({ content, readOnly }:CiteEditorProps) => {
-
-  /*
-  useEffect(() => {
-    if((typeof citeEditor !== 'string') && citeEditor.setEditable){
-      citeEditor.setEditable(!readOnly);
-    }
-  }, [readOnly, citeEditor]);
-  */
 
   const calliopeConfig = useContext(CalliopeContext);
   const {

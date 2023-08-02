@@ -3,12 +3,12 @@ import Editor from '../Kalliope/KalliopeEditor';
 import {initialMentions} from './mentionsData';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
-import {ShowModalProps} from "../Kalliope/KalliopeEditorTypes";
+import {CalliopeFormatTypes, ShowModalProps} from "../Kalliope/KalliopeEditorTypes";
 
 type EntryEditorProps = {
   readOnly: boolean,
   initialState: string,
-  setFormats: (formats:any) => void
+  setFormats: (formats: CalliopeFormatTypes) => void
 };
 
 type AvatarEntryComponent = {
@@ -22,12 +22,16 @@ type AuthorCompProps = {
   }
 };
 
+type MatchType = {
+  matchingString: string;
+}
+
 export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats }: EntryEditorProps) => {
 
   const containerRef = useRef(null);
   const [suggestions, setSuggestions] = useState(initialMentions);
 
-  const onSearchChange = (match:any) => {
+  const onSearchChange = (match:MatchType) => {
     if(match && match.matchingString) {
       const stringMatch = match.matchingString;
       const newSuggestions = initialMentions.filter(p => p.name.includes(stringMatch));
@@ -40,7 +44,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
     initialState,
     readOnly,
     autoFocus: false,
-    onError: (error:any) => {
+    onError: (error: Error) => {
       throw error;
     },
     plugins:[],
@@ -58,7 +62,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       emojiData
     },
     dragAndDropImage: {
-      handleDroppedFile: (file:any) => console.log(file)
+      handleDroppedFile: (file:File) => console.log(file)
     },
     twitterConfig: {
       loadingComponent: ( {tweetId} : {tweetId: string}) => (

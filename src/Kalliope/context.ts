@@ -1,17 +1,18 @@
 import type { Klass, LexicalNode } from 'lexical';
-import { CalliopeConfigProps } from './KalliopeEditorTypes';
+import {CalliopeConfigProps, CalliopeFormatTypes} from './KalliopeEditorTypes';
 import { createContext } from 'react';
 import type { PluginComponentProps } from './Plugins/Plugins';
+import type {EditorState} from "lexical";
 
 type CalliopeContextType = {
   config: CalliopeConfigProps;
   nodes: Klass<LexicalNode>[];
   plugins: (props: PluginComponentProps) => JSX.Element;
-  onEditorChange: (editorState: any) => void;
-  setFormats: (formats: any) => void;
+  onEditorChange: (editorState: EditorState) => void;
+  setFormats: (formats: CalliopeFormatTypes) => void
   isSmallWidthViewport: boolean;
-  internalFormat: any;
-  setInternalFormat: (formats: any) => void;
+  internalFormat: CalliopeFormatTypes;
+  setInternalFormat: (formats: CalliopeFormatTypes) => void;
 };
 
 export const CalliopeContext = createContext<CalliopeContextType | null>(null);

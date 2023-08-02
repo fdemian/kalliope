@@ -135,7 +135,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
   useEffect(() => {
     editor.registerCommand<boolean>(
       SELECTION_CHANGE_COMMAND,
-      (_payload) => {
+      () => {
         const _formats = getEditorFormats();
         setFormats(_formats);
         setInternalFormat(_formats);

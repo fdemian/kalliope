@@ -6,7 +6,6 @@ import {
 } from '@excalidraw/excalidraw/types/types';
 
 type DispatcherFn = () => void;
-export type DispatcherType = (command: LexicalCommand<string | DispatcherFn>, payload?: any) => boolean;
 
 type AvatarEntryComponent = {
   option: MentionItem;
@@ -104,8 +103,8 @@ export type CalliopeConfigProps = {
   initialState: string | undefined;
   readOnly: boolean;
   autoFocus: boolean;
-  onError: (error: any) => void;
-  plugins: any;
+  onError: (error: Error) => void;
+  plugins: string[];
   emojiConfig: {
     emojiData: any
   };
@@ -130,7 +129,7 @@ export type CalliopeConfigProps = {
     handleDroppedFile: (file: File) => void
   };
   mentions: {
-    onSearchChange: (match: any) => void;
+    onSearchChange: (match: string) => void;
     onAddMention: (mention: MentionItem) => void;
     entryComponent: (entryProps: AvatarEntryComponent) => void;
     mentionsData: MentionItem[];
@@ -147,7 +146,7 @@ type CalliopeContainerType = HTMLDivElement & {
 export type CalliopeEditorProps = {
   config: CalliopeConfigProps;
   containerRef: React.MutableRefObject<CalliopeContainerType | null>;
-  setFormats: (formats: any) => void;
+  setFormats: (formats: CalliopeFormatTypes) => void;
 };
 
 export type CalliopeFormatTypes = {

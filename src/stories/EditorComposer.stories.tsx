@@ -344,7 +344,7 @@ export const EditorComposer = () => {
       }
   ];
 
-  const blockFormatMap: {[index: string]:any} = {
+  const blockFormatMap: {[index: string]:string} = {
     h1: "H1",
     h2: "H2",
     h3: "H3",

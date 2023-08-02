@@ -168,7 +168,7 @@ const selectFontColor = (editor: LexicalEditorRef, _, color: string) => {
   return applyStyleText({ color }, editor);
 };
 
-// @ts-ignore 
+// @ts-ignore
 const selectBGColor = (editor: LexicalEditorRef, _, bgColor: string) => {
   return applyStyleText({ 'background-color': bgColor }, editor);
 };

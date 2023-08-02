@@ -10,7 +10,7 @@ import type { TextNode } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { LexicalTypeaheadMenuPlugin } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { MentionNode, $createMentionNode } from '../../Nodes/MentionNode/MentionNode';
-import { MentionsTypeaheadMenuItem } from './MentionsTypeaheadMenuItem';
+import { MentionsTypeaheadMenuItem, EntryComponentType } from './MentionsTypeaheadMenuItem';
 import MentionTypeaheadOption from './MentionTypeaheadOption';
 import { createPortal } from 'react-dom';
 import { useCallback, useEffect } from 'react';
@@ -18,10 +18,6 @@ import { getPossibleQueryMatch } from './utils';
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
-
-type AvatarEntryComponent = {
-  name: string;
-}
 
 type MentionFnProps = {
   name: string;
@@ -34,7 +30,7 @@ type MentionPluginProps = {
     onRemoveMention: (arg: MentionFnProps) => void;
     mentionsData: MentionTypeaheadOption[];
     onSearchChange: (match: string) => void;
-    entryComponent: (arg: AvatarEntryComponent) => JSX.Element;
+    entryComponent: EntryComponentType;
   }
 }
 
@@ -53,12 +49,14 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
         if (mutation === 'created') {
           editor.update(() => {
             const mentionNode = $getNodeByKey<MentionNode>(nodeKey);
-            mentionNodeList.set(nodeKey, mentionNode);
-            if (config.onAddMention) {
-              config.onAddMention({
-                name: mentionNode.__mentionName,
-                link: mentionNode.__link,
-              });
+            if(mentionNode != null){
+              mentionNodeList.set(nodeKey, mentionNode);
+              if (config.onAddMention) {
+                config.onAddMention({
+                  name: mentionNode.__mentionName,
+                  link: mentionNode.__link,
+                });
+              }
             }
           });
         } else if (mutation === 'destroyed') {

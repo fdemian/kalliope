@@ -6,7 +6,7 @@ type ListItemParams = {
   }
 };
 
-type EntryComponentType = (param: ListItemParams) => JSX.Element;
+export type EntryComponentType = (param: ListItemParams) => JSX.Element;
 
 const DefaultListItem = ({ option }: ListItemParams) => {
   return <span className="text">{option.name}</span>;

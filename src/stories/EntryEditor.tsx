@@ -3,6 +3,7 @@ import Editor from '../Kalliope/KalliopeEditor';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
 import {CalliopeFormatTypes, ShowModalProps} from "../Kalliope/KalliopeEditorTypes";
+import ExcalidrawModal from "./ExcalidrawModal/ExcalidrawModal";
 
 type EntryEditorProps = {
   readOnly: boolean,
@@ -41,7 +42,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       showModal: (showModalProps: ShowModalProps) => console.log(showModalProps)
     },
     excalidrawConfig: {
-      modal: null
+      modal: ExcalidrawModal
     },
     emojiConfig: {
       emojiData
@@ -70,7 +71,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       )
     },
     mentions: {
-      onSearchChange: null,
+      onSearchChange: (match: string) => console.log(match),
       onAddMention: (mention:MentionItem) => {
         console.clear();
         console.log(mention);

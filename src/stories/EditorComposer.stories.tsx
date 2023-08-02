@@ -65,7 +65,6 @@ type AuthorCompProps = {
 type InlineImageModalProps = {
   activeEditor: LexicalEditor;
   nodeKey: string;
-  onClose: () => void;
 };
 
 type InlineImageProps = {

@@ -41,8 +41,12 @@ import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 
-const onCodeLanguageSelect = (editor: LexicalEditor, value: string) => {
-  editor.update(() => {
+type LexicalEditorRef = {
+  current: LexicalEditor;
+};
+
+const onCodeLanguageSelect = (editor: LexicalEditorRef, value: string) => {
+  editor.current.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
@@ -62,9 +66,9 @@ const onCodeLanguageSelect = (editor: LexicalEditor, value: string) => {
   });
 };
 
-const formatParagraph = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
+const formatParagraph = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'paragraph') {
-    editor.update(() => {
+    editor.current.update(() => {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         $setBlocksType(selection, () => $createParagraphNode());
@@ -73,9 +77,9 @@ const formatParagraph = (editor: LexicalEditor, internalFormat: CalliopeFormatTy
   }
 };
 
-const formatHeading = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes, headingSize: HeadingTagType) => {
+const formatHeading = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes, headingSize: HeadingTagType) => {
   if (internalFormat.blockType !== headingSize) {
-    editor.update(() => {
+    editor.current.update(() => {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         $setBlocksType(selection, () => $createHeadingNode(headingSize));
@@ -84,33 +88,33 @@ const formatHeading = (editor: LexicalEditor, internalFormat: CalliopeFormatType
   }
 };
 
-const formatBulletList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
+const formatBulletList = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'bullet') {
-    editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
   } else {
-    editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
   }
 };
 
-const formatCheckList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
+const formatCheckList = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'check') {
-    editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
   } else {
-    editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
   }
 };
 
-const formatNumberedList = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
+const formatNumberedList = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'number') {
-    editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
   } else {
-    editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    editor.current.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
   }
 };
 
-const formatQuote = (editor: LexicalEditor, internalFormat:CalliopeFormatTypes) => {
+const formatQuote = (editor: LexicalEditorRef, internalFormat:CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'quote') {
-    editor.update(() => {
+    editor.current.update(() => {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         $setBlocksType(selection, () => $createQuoteNode());
@@ -119,9 +123,9 @@ const formatQuote = (editor: LexicalEditor, internalFormat:CalliopeFormatTypes) 
   }
 };
 
-const formatCode = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) => {
+const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatTypes) => {
   if (internalFormat.blockType !== 'code') {
-    editor.update(() => {
+    editor.current.update(() => {
       let selection = $getSelection();
 
       if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
@@ -139,8 +143,8 @@ const formatCode = (editor: LexicalEditor, internalFormat: CalliopeFormatTypes) 
   }
 };
 
-const applyStyleText = (styles:any, editor: LexicalEditor) => {
-  editor.update(() => {
+const applyStyleText = (styles:any, editor: any) => {
+  editor.current.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       $patchStyleText(selection, styles);

@@ -1,12 +1,12 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
+/*
+**
+* Copyright (c) Meta Platforms, Inc. and affiliates.
+*
+* This source code is licensed under the MIT license found in the
+* LICENSE file in the root directory of this source tree.
+*
+*/
 import './index.css';
-
 import {$isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$findMatchingParent, mergeRegister} from '@lexical/utils';
@@ -31,12 +31,7 @@ import {getSelectedNode} from '../../utils/getSelectedNode';
 import {setFloatingElemPositionForLinkEditor} from './setFloatingElemPositionForLinkEditor';
 import {sanitizeUrl} from './utils';
 
-function FloatingLinkEditor({
-  editor,
-  isLink,
-  setIsLink,
-  anchorElem,
-}: {
+function FloatingLinkEditor({editor, isLink, setIsLink, anchorElem }: {
   editor: LexicalEditor;
   isLink: boolean;
   setIsLink: Dispatch<boolean>;
@@ -48,7 +43,7 @@ function FloatingLinkEditor({
   const [editedLinkUrl, setEditedLinkUrl] = useState('');
   const [isEditMode, setEditMode] = useState(false);
   const [lastSelection, setLastSelection] = useState<
-    RangeSelection | GridSelection | NodeSelection | null
+      RangeSelection | GridSelection | NodeSelection | null
   >(null);
 
   const updateLinkEditor = useCallback(() => {
@@ -75,14 +70,14 @@ function FloatingLinkEditor({
     const rootElement = editor.getRootElement();
 
     if (
-      selection !== null &&
-      nativeSelection !== null &&
-      rootElement !== null &&
-      rootElement.contains(nativeSelection.anchorNode) &&
-      editor.isEditable()
+        selection !== null &&
+        nativeSelection !== null &&
+        rootElement !== null &&
+        rootElement.contains(nativeSelection.anchorNode) &&
+        editor.isEditable()
     ) {
       const domRect: DOMRect | undefined =
-        nativeSelection.focusNode?.parentElement?.getBoundingClientRect();
+          nativeSelection.focusNode?.parentElement?.getBoundingClientRect();
       if (domRect) {
         domRect.y += 40;
         setFloatingElemPositionForLinkEditor(domRect, editorElem, anchorElem);
@@ -126,31 +121,31 @@ function FloatingLinkEditor({
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
-        editorState.read(() => {
-          updateLinkEditor();
-        });
-      }),
+        editor.registerUpdateListener(({editorState}) => {
+          editorState.read(() => {
+            updateLinkEditor();
+          });
+        }),
 
-      editor.registerCommand(
-        SELECTION_CHANGE_COMMAND,
-        () => {
-          updateLinkEditor();
-          return true;
-        },
-        COMMAND_PRIORITY_LOW,
-      ),
-      editor.registerCommand(
-        KEY_ESCAPE_COMMAND,
-        () => {
-          if (isLink) {
-            setIsLink(false);
-            return true;
-          }
-          return false;
-        },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        editor.registerCommand(
+            SELECTION_CHANGE_COMMAND,
+            () => {
+              updateLinkEditor();
+              return true;
+            },
+            COMMAND_PRIORITY_LOW,
+        ),
+        editor.registerCommand(
+            KEY_ESCAPE_COMMAND,
+            () => {
+              if (isLink) {
+                setIsLink(false);
+                return true;
+              }
+              return false;
+            },
+            COMMAND_PRIORITY_HIGH,
+        ),
     );
   }, [editor, updateLinkEditor, setIsLink, isLink]);
 
@@ -167,7 +162,7 @@ function FloatingLinkEditor({
   }, [isEditMode]);
 
   const monitorInputInteraction = (
-    event: React.KeyboardEvent<HTMLInputElement>,
+      event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -188,73 +183,76 @@ function FloatingLinkEditor({
   };
 
   return (
-    <div ref={editorRef} className="link-editor">
-      {!isLink ? null : isEditMode ? (
-        <>
-          <input
-            ref={inputRef}
-            className="link-input"
-            value={editedLinkUrl}
-            onChange={(event) => {
-              setEditedLinkUrl(event.target.value);
-            }}
-            onKeyDown={(event) => {
-              monitorInputInteraction(event);
-            }}
-          />
-          <div>
-            <div
-              className="link-cancel"
-              role="button"
-              tabIndex={0}
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => {
-                setEditMode(false);
-              }}
-            />
+      <div ref={editorRef} className="link-editor">
+        {!isLink ? null : isEditMode ? (
+            <>
+              <input
+                  ref={inputRef}
+                  className="link-input"
+                  value={editedLinkUrl}
+                  onChange={(event) => {
+                    setEditedLinkUrl(event.target.value);
+                  }}
+                  onKeyDown={(event) => {
+                    monitorInputInteraction(event);
+                  }}
+              />
+              <div>
+                <div
+                    className="link-cancel"
+                    role="button"
+                    tabIndex={0}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => {
+                      setEditMode(false);
+                    }}
+                />
 
-            <div
-              className="link-confirm"
-              role="button"
-              tabIndex={0}
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={handleLinkSubmission}
-            />
-          </div>
-        </>
-      ) : (
-        <div className="link-view">
-          <a href={linkUrl} target="_blank" rel="noopener noreferrer">
-            {linkUrl}
-          </a>
-          <div
-            className="link-edit"
-            role="button"
-            tabIndex={0}
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={() => {
-              setEditedLinkUrl(linkUrl);
-              setEditMode(true);
-            }}
-          />
-          <div
-            className="link-trash"
-            role="button"
-            tabIndex={0}
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={() => {
-              editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
-            }}
-          />
-        </div>
-      )}
-    </div>
+                <div
+                    className="link-confirm"
+                    role="button"
+                    tabIndex={0}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={handleLinkSubmission}
+                />
+              </div>
+            </>
+        ) : (
+            <div className="link-view">
+              <a
+                  href={sanitizeUrl(linkUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                {linkUrl}
+              </a>
+              <div
+                  className="link-edit"
+                  role="button"
+                  tabIndex={0}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => {
+                    setEditedLinkUrl(linkUrl);
+                    setEditMode(true);
+                  }}
+              />
+              <div
+                  className="link-trash"
+                  role="button"
+                  tabIndex={0}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => {
+                    editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+                  }}
+              />
+            </div>
+        )}
+      </div>
   );
 }
 
 function useFloatingLinkEditorToolbar(
-  editor: LexicalEditor,
-  anchorElem: HTMLElement,
+    editor: LexicalEditor,
+    anchorElem: HTMLElement,
 ): JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLink, setIsLink] = useState(false);
@@ -277,37 +275,35 @@ function useFloatingLinkEditorToolbar(
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
-        editorState.read(() => {
-          updateToolbar();
-        });
-      }),
-      editor.registerCommand(
-        SELECTION_CHANGE_COMMAND,
-        (_payload, newEditor) => {
-          updateToolbar();
-          setActiveEditor(newEditor);
-          return false;
-        },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+        editor.registerUpdateListener(({editorState}) => {
+          editorState.read(() => {
+            updateToolbar();
+          });
+        }),
+        editor.registerCommand(
+            SELECTION_CHANGE_COMMAND,
+            (_payload, newEditor) => {
+              updateToolbar();
+              setActiveEditor(newEditor);
+              return false;
+            },
+            COMMAND_PRIORITY_CRITICAL,
+        ),
     );
   }, [editor, updateToolbar]);
 
   return createPortal(
-    <FloatingLinkEditor
-      editor={activeEditor}
-      isLink={isLink}
-      anchorElem={anchorElem}
-      setIsLink={setIsLink}
-    />,
-    anchorElem,
+      <FloatingLinkEditor
+          editor={activeEditor}
+          isLink={isLink}
+          anchorElem={anchorElem}
+          setIsLink={setIsLink}
+      />,
+      anchorElem,
   );
 }
 
-export default function FloatingLinkEditorPlugin({
-  anchorElem = document.body,
-}: {
+export default function FloatingLinkEditorPlugin({anchorElem = document.body }: {
   anchorElem?: HTMLElement;
 }): JSX.Element | null {
   const [editor] = useLexicalComposerContext();

@@ -68,14 +68,18 @@ function EditorPlugins({
 
   return (
     <>
-      {floatingAnchorElem && !isSmallWidthViewport && (
+      {
+          !isNestedPlugin &&
+          floatingAnchorElem && !isSmallWidthViewport && (
         <>
           <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
           <TableCellActionMenuPlugin anchorElem={floatingAnchorElem} cellMerge={true} />
           <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         </>
       )}
-      {floatingAnchorElem && <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} /> }
+      {   !isNestedPlugin &&
+          floatingAnchorElem && <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} />
+      }
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       {config.autoFocus && <AutoFocusPlugin />}
@@ -114,7 +118,7 @@ function EditorPlugins({
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       <MentionsPlugin config={config.mentions} />
-      {!isNestedPlugin &&  <EditorRefPlugin editorRef={editorRef} />}
+      {!isNestedPlugin && <EditorRefPlugin editorRef={editorRef} />}
   </>
   );
 }

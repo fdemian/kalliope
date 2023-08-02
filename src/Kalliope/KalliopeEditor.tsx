@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { CAN_USE_DOM } from './shared/canUseDOM';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import { CLEAR_EDITOR_COMMAND } from 'lexical';
+import {CLEAR_EDITOR_COMMAND, EditorState} from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -134,7 +134,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
   };
 
   const onEditorChange = useCallback(
-    (editorState: any) => {
+    (editorState: EditorState) => {
       editorStateRef.current = editorState;
     },
     [editorStateRef]

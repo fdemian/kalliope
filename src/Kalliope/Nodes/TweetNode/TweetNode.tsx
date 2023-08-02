@@ -196,10 +196,7 @@ export class TweetNode extends DecoratorBlockNode {
     return this.__id;
   }
 
-  getTextContent(
-    _includeInert?: boolean | undefined,
-    _includeDirectionless?: false | undefined
-  ): string {
+  getTextContent(): string {
     return `https://twitter.com/i/web/status/${this.__id}`;
   }
 

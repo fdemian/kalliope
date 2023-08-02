@@ -10,7 +10,7 @@ type MentionsTypeAheadProps = {
   onClick: () => void;
   onMouseEnter: () => void;
   option: MentionTypeaheadOption;
-  entryComponent: any;
+  entryComponent: JSX.Element;
 };
 
 export const MentionsTypeaheadMenuItem = ({

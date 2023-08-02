@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Editor from '../Kalliope/KalliopeEditor';
-import {initialMentions} from './mentionsData';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
 import {CalliopeFormatTypes, ShowModalProps} from "../Kalliope/KalliopeEditorTypes";
@@ -22,23 +21,9 @@ type AuthorCompProps = {
   }
 };
 
-type MatchType = {
-  matchingString: string;
-}
-
 export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats }: EntryEditorProps) => {
 
   const containerRef = useRef(null);
-  const [suggestions, setSuggestions] = useState(initialMentions);
-
-  const onSearchChange = (match:MatchType) => {
-    if(match && match.matchingString) {
-      const stringMatch = match.matchingString;
-      const newSuggestions = initialMentions.filter(p => p.name.includes(stringMatch));
-      setSuggestions(newSuggestions);
-    }
-  }
-
   const config = {
     placeholderText: 'Ingrese texto...',
     initialState,
@@ -85,7 +70,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       )
     },
     mentions: {
-      onSearchChange,
+      onSearchChange: null,
       onAddMention: (mention:MentionItem) => {
         console.clear();
         console.log(mention);
@@ -101,7 +86,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
           &nbsp; &nbsp; <strong>{name}</strong>
        </>
       ),
-      mentionsData: suggestions
+      mentionsData: []
     }
   };
 

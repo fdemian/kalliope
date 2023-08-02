@@ -8,12 +8,6 @@ import {
 type DispatcherFn = () => void;
 export type DispatcherType = (command: LexicalCommand<string | DispatcherFn>, payload?: any) => boolean;
 
-export type EditorRefType = {
-  focus: () => void;
-  clear: () => void;
-  dispatchCommand: DispatcherType;
-};
-
 type AvatarEntryComponent = {
   option: MentionItem;
 }
@@ -78,8 +72,12 @@ type AuthorCompProps = {
   }
 };
 
+type LexicalEditorRef = {
+  current: LexicalEditor;
+};
+
 export type DirectCommand = LexicalCommand<string | DispatcherFn>;
-export type IndirectCommand = ((editor: LexicalEditor, _: any, _2: string) => void);
+export type IndirectCommand = ((editor: LexicalEditorRef, _: any, _2: string) => void);
 
 export type EditorCommand = {
   name: string;
@@ -93,7 +91,7 @@ export type MentionItem = {
   id: number;
   name: string;
   link: string;
-  avatar?: string | null;
+  avatar?: string | null;
 };
 
 export type ShowModalProps = {

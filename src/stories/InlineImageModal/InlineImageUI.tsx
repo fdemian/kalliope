@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// @ts-nocheck
 import {useEffect, useRef, useState} from "react";
 import Button from '../UI/Button';
 import { DialogActions } from '../UI/Dialog';
@@ -13,8 +12,15 @@ import FileInput from '../UI/FileInput';
 import Select from '../UI/Select';
 import TextInput from '../UI/TextInput';
 
+type ImagePayloadType = {
+  altText: string;
+  position: string;
+  showCaption: boolean;
+  src: string;
+};
+
 export function InsertInlineImageDialog({saveImage, onClose}: {
-    saveImage: (payload:any) => void;
+    saveImage: (payload: ImagePayloadType) => void;
     onClose: () => void;
 }): JSX.Element {
     const hasModifier = useRef(false);

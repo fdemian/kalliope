@@ -143,7 +143,7 @@ const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatType
   }
 };
 
-const applyStyleText = (styles:any, editor: any) => {
+const applyStyleText = (styles: Record<string, string>, editor: LexicalEditorRef) => {
   editor.current.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -152,19 +152,19 @@ const applyStyleText = (styles:any, editor: any) => {
   });
 };
 
-const selectFontFamily = (editor:LexicalEditor, _, family:string) => {
+const selectFontFamily = (editor:LexicalEditorRef, _, family:string) => {
   return applyStyleText({ 'font-family': family }, editor);
 };
 
-const selectFontSize = (editor: LexicalEditor, _, fontSize: string) => {
+const selectFontSize = (editor: LexicalEditorRef, _, fontSize: string) => {
   return applyStyleText({ 'font-size': fontSize }, editor);
 };
 
-const selectFontColor = (editor: LexicalEditor, _, color: string) => {
+const selectFontColor = (editor: LexicalEditorRef, _, color: string) => {
   return applyStyleText({ color }, editor);
 };
 
-const selectBGColor = (editor: LexicalEditor, _, bgColor: string) => {
+const selectBGColor = (editor: LexicalEditorRef, _, bgColor: string) => {
   return applyStyleText({ 'background-color': bgColor }, editor);
 };
 
@@ -237,17 +237,17 @@ const EDITOR_COMMANDS: EditorCommands = [
   },
   {
     name: 'H1',
-    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h1'),
+    command: (editor: LexicalEditorRef, formats: CalliopeFormatTypes) => formatHeading(editor, formats, 'h1'),
     directCommand: false,
   },
   {
     name: 'H2',
-    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h2'),
+    command: (editor: LexicalEditorRef, formats: CalliopeFormatTypes) => formatHeading(editor, formats, 'h2'),
     directCommand: false,
   },
   {
     name: 'H3',
-    command: (editor: LexicalEditor, formats: any) => formatHeading(editor, formats, 'h3'),
+    command: (editor: LexicalEditorRef, formats: CalliopeFormatTypes) => formatHeading(editor, formats, 'h3'),
     directCommand: false,
   },
   {

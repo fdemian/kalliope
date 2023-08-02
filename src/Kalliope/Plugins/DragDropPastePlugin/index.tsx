@@ -34,7 +34,7 @@ export default function DragDropPaste(): null {
   const [editor] = useLexicalComposerContext();
   const calliopeConfig = useContext(CalliopeContext);
 
-  let handleDroppedFile = (p) => console.log(p);
+  let handleDroppedFile = (p: File) => console.log(p);
 
   if(calliopeConfig !== null) {
     const { config } = calliopeConfig;

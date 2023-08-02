@@ -26,6 +26,9 @@ import { $isExcalidrawNode } from './index';
 import ExcalidrawImage from './ExcalidrawImage';
 import ExcalidrawModalContainer from './ExcalidrawModal';
 import { CalliopeContext } from '../../context';
+import { ExcalidrawModalProps } from '../../KalliopeEditorTypes';
+
+export type ExcalidrawModalType = ((props:ExcalidrawModalProps) => JSX.Element) | null;
 
 export default function ExcalidrawComponent({
   nodeKey,
@@ -33,7 +36,7 @@ export default function ExcalidrawComponent({
 }: {
   data: string;
   nodeKey: NodeKey;
-}): JSX.Element {
+}): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   const [isModalOpen, setModalOpen] = useState<boolean>(
     data === '[]' && editor.isEditable(),
@@ -46,9 +49,13 @@ export default function ExcalidrawComponent({
   const [isResizing, setIsResizing] = useState<boolean>(false);
 
   const calliopeConfig = useContext(CalliopeContext);
+
+  if(!calliopeConfig)
+      return null;
+
   const { config } = calliopeConfig;
   const { excalidrawConfig } = config;
-  const CustomExcalidrawModal = excalidrawConfig ? excalidrawConfig.modal : null;
+  const CustomExcalidrawModal: ExcalidrawModalType = excalidrawConfig ? excalidrawConfig.modal : null;
 
   const onDelete = useCallback(
     (event: KeyboardEvent) => {

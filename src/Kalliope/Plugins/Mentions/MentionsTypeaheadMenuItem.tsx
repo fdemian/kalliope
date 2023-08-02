@@ -1,6 +1,14 @@
 import MentionTypeaheadOption from './MentionTypeaheadOption';
 
-const DefaultListItem = ({ option }) => {
+type ListItemParams = {
+  option: {
+    name: string;
+  }
+};
+
+type EntryComponentType = (param: ListItemParams) => JSX.Element;
+
+const DefaultListItem = ({ option }: ListItemParams) => {
   return <span className="text">{option.name}</span>;
 };
 
@@ -10,7 +18,7 @@ type MentionsTypeAheadProps = {
   onClick: () => void;
   onMouseEnter: () => void;
   option: MentionTypeaheadOption;
-  entryComponent: JSX.Element;
+  entryComponent: EntryComponentType;
 };
 
 export const MentionsTypeaheadMenuItem = ({
@@ -26,7 +34,7 @@ export const MentionsTypeaheadMenuItem = ({
     className += ' selected';
   }
 
-  const EntryComponent = entryComponent ?? DefaultListItem;
+  const EntryComponent: EntryComponentType = entryComponent ?? DefaultListItem;
 
   return (
     <li

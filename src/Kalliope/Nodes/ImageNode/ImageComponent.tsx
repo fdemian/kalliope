@@ -108,7 +108,7 @@ export default function ImageComponent({
   src: string;
   width: 'inherit' | number;
   captionsEnabled: boolean;
-}): JSX.Element {
+}): JSX.Element | null {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
@@ -280,6 +280,10 @@ export default function ImageComponent({
   const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
   const isFocused = isSelected || isResizing;
   const calliopeConfig = useContext(CalliopeContext);
+
+  if(!calliopeConfig)
+      return null;
+
   const { config } = calliopeConfig;
 
   return (

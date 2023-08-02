@@ -152,18 +152,23 @@ const applyStyleText = (styles: Record<string, string>, editor: LexicalEditorRef
   });
 };
 
+
+// @ts-ignore
 const selectFontFamily = (editor:LexicalEditorRef, _, family:string) => {
   return applyStyleText({ 'font-family': family }, editor);
 };
 
+// @ts-ignore
 const selectFontSize = (editor: LexicalEditorRef, _, fontSize: string) => {
   return applyStyleText({ 'font-size': fontSize }, editor);
 };
 
+// @ts-ignore
 const selectFontColor = (editor: LexicalEditorRef, _, color: string) => {
   return applyStyleText({ color }, editor);
 };
 
+// @ts-ignore 
 const selectBGColor = (editor: LexicalEditorRef, _, bgColor: string) => {
   return applyStyleText({ 'background-color': bgColor }, editor);
 };

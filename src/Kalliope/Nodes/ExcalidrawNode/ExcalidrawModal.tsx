@@ -13,13 +13,14 @@ import {
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 
 export type ExcalidrawElementFragment = {
   isDeleted?: boolean;
 };
 
 type Props = {
-  modalComponent: (props) => JSX.Element;
+  modalComponent: (props:ExcalidrawModalProps) => JSX.Element | null;
   closeOnClickOutside?: boolean;
   /**
    * The initial set of elements to draw into the scene

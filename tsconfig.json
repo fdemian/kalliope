@@ -18,7 +18,7 @@
     "types": ["vite/client"],
 
     /* Linting */
-    "strict": false,
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true

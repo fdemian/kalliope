@@ -38,7 +38,7 @@ const getDOMSelection = (): Selection | null =>
   CAN_USE_DOM ? window.getSelection() : null;
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand();
-export default function ImagesPlugin(): JSX.Element {
+export default function ImagesPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -150,6 +150,10 @@ function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
     const range = getDragSelection(event);
     node.remove();
     const domSelection = getDOMSelection();
+
+    if(!domSelection || !range)
+      throw Error("Dom selection is null");
+
     domSelection.removeAllRanges();
     domSelection.addRange(range);
     const rangeSelection = $createRangeSelection();
@@ -201,9 +205,13 @@ function canDropImage(event: DragEvent): boolean {
   );
 }
 
-function getDragSelection(event: DragEvent): Range {
+function getDragSelection(event: DragEvent): Range | null {
   let range;
   const domSelection = getSelection();
+
+  if(!domSelection)
+    throw Error("Dom selection is null");
+
   if (document.caretRangeFromPoint) {
     range = document.caretRangeFromPoint(event.clientX, event.clientY);
   } else if (event.rangeParent) {

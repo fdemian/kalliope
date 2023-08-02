@@ -1,4 +1,3 @@
- 
 import type { NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';
@@ -32,7 +31,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  static clone(node) {
+  static clone(node: EmojiNode) {
     return new EmojiNode(node.__emoji, node.__key);
   }
 
@@ -45,7 +44,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
     return document.createElement('span');
   }
 
-  updateDOM(prevNode) {
+  updateDOM(prevNode: EmojiNode) {
     return this.__emoji !== prevNode.__emoji;
   }
 
@@ -54,7 +53,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
   }
 }
 
-export function $createEmojiNode(emoji): EmojiNode {
+export function $createEmojiNode(emoji: string): EmojiNode {
   const emojiNode = new EmojiNode(emoji);
   return $applyNodeReplacement(emojiNode);
 }

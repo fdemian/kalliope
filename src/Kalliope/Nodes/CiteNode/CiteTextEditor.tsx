@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import type { LexicalEditor } from 'lexical';
+import type { LexicalEditor, SerializedEditorState } from 'lexical';
 import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer';
 import KalliopeEditorTheme from '../../editorTheme';
-import { CalliopeContext } from '../../context';
+import { CalliopeContext, CalliopeContextType } from '../../context';
 import Plugins from "../../Plugins/Plugins";
 import Nodes from "../Nodes";
 import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
@@ -11,13 +11,17 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import {createEditor} from "lexical";
 
 type CiteEditorProps = {
-  content?: string;
+  content: string | SerializedEditorState;
   readOnly: boolean;
 }
 
 const CiteTextEditor = ({ content, readOnly }:CiteEditorProps) => {
 
-  const calliopeConfig = useContext(CalliopeContext);
+  const calliopeConfig: CalliopeContextType | null = useContext(CalliopeContext);
+
+  if(!calliopeConfig)
+    return null;
+
   const {
     setFormats,
     isSmallWidthViewport,

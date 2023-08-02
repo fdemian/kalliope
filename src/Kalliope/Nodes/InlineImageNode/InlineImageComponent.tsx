@@ -111,7 +111,7 @@ export default function InlineImageComponent({
     src: string;
     width: 'inherit' | number;
     position: Position;
-}): JSX.Element {
+}): JSX.Element | null {
     const imageRef = useRef<null | HTMLImageElement>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isSelected, setSelected, clearSelection] =
@@ -123,6 +123,10 @@ export default function InlineImageComponent({
     const activeEditorRef = useRef<LexicalEditor | null>(null);
 
     const calliopeConfig = useContext(CalliopeContext);
+
+    if(!calliopeConfig)
+        return null;
+
     const { inlineImage } = calliopeConfig.config;
     const { showModal } = inlineImage;
 

@@ -23,7 +23,7 @@ type ExcalidrawElementFragment = {
   isDeleted?: boolean;
 };
 
-type ExcalidrawModalProps = {
+export type ExcalidrawModalProps = {
   excalidrawComponent: JSX.Element;
   excaliDrawSceneRef: ExcalidrawImperativeAPI;
   discard: () => void;

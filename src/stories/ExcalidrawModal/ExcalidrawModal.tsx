@@ -12,7 +12,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import ExcalidrawModalProps from '../../Kalliope/KalliopeEditorTypes';
+import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 
 const ExcalidrawModal = (props: ExcalidrawModalProps) => {
   const {

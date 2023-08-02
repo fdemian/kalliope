@@ -20,7 +20,7 @@ import { $createCiteNode, CiteNode } from '../Nodes/CiteNode/CiteNode';
 
 export const INSERT_CITE_QUOTE: LexicalCommand<string> = createCommand();
 
-export default function CitePlugin(): JSX.Element {
+export default function CitePlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -41,5 +41,6 @@ export default function CitePlugin(): JSX.Element {
       COMMAND_PRIORITY_EDITOR
     );
   }, [editor]);
+
   return null;
 }

@@ -113,6 +113,10 @@ function TweetComponent({
 
   let LoadingComponent: LoadingTweetElementProps = ({tweetId}) => <p>Loading (ID=${tweetId})</p>;
   const calliopeConfig = useContext(CalliopeContext);
+
+  if(!calliopeConfig)
+    return null;
+  
   const { config } = calliopeConfig;
   if(config !== null && config.twitterConfig) {
     LoadingComponent = config.twitterConfig.loadingComponent;

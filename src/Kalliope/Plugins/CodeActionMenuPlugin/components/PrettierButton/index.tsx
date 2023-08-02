@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *

@@ -10,6 +10,7 @@ import { UpdateInlineImageDialog } from "./InlineImageModal/InsertImageModal";
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
+import {LexicalEditor} from "lexical";
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 type CalliopeContainerType = HTMLDivElement & {
@@ -59,6 +60,19 @@ type AuthorCompProps = {
     link: string;
     name: string;
   }
+};
+
+type InlineImageModalProps = {
+  activeEditor: LexicalEditor;
+  nodeKey: string;
+  onClose: () => void;
+};
+
+type InlineImageProps = {
+  altText: string;
+  position: string;
+  showCaption: boolean;
+  src: string;
 };
 
 export const EditorComposer = () => {
@@ -144,7 +158,7 @@ export const EditorComposer = () => {
     setImageToolbar(false);
   }
 
-  const insertInlineImage = (image) => {
+  const insertInlineImage = (image: InlineImageProps) => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("INSERT_IMAGE_INLINE", image);
@@ -180,7 +194,7 @@ export const EditorComposer = () => {
       defaultCaptionText: "Enter image caption..."
     },
     inlineImage: {
-      showModal: (modalProps) => showModal('Update inline image', (onClose) => (
+      showModal: (modalProps:InlineImageModalProps) => showModal('Update inline image', (onClose) => (
           <UpdateInlineImageDialog {...modalProps} onClose={onClose} />
       ))
     },

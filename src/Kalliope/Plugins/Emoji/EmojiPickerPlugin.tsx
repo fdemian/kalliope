@@ -48,7 +48,7 @@ export default function EmojiPickerPlugin() {
     setInitialData(initialEmojiData);
   }, [editor, emojiData]);
 
-  const onQueryChange = (query) => {
+  const onQueryChange = (query: string | null) => {
     let _emojis = initialData;
     if (query && query.length !== 0) {
       const filteredData = emojiData.filter((e) => emojiMatch(e, query));

@@ -38,8 +38,8 @@ const CiteQuote = ({ authorName, authorLink, sourceLink, content }: CiteQuotePro
     if(calliopeConfig.config.citation !== null){
       const { citation } = calliopeConfig.config;
       const { sourceLinkComponent, authorComponent } = citation;
-      SourceLinkComp = sourceLinkComponent ? sourceLinkComponent : DefaultSourceComp;
-      AuthorComponent = authorComponent ? authorComponent : DefaultAuthorComp;
+      SourceLinkComp = (sourceLinkComponent !== null && sourceLinkComponent !== undefined) ? sourceLinkComponent : DefaultSourceComp;
+      AuthorComponent =  (authorComponent !== null && authorComponent !== undefined) ? authorComponent : DefaultAuthorComp;
     }
   }
 

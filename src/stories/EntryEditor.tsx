@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useRef } from 'react';
 import Editor from '../Kalliope/KalliopeEditor';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
@@ -6,9 +6,11 @@ import {CalliopeFormatTypes, ShowModalProps} from "../Kalliope/KalliopeEditorTyp
 import ExcalidrawModal from "./ExcalidrawModal/ExcalidrawModal";
 
 type EntryEditorProps = {
-  readOnly: boolean,
-  initialState: string,
-  setFormats: (formats: CalliopeFormatTypes) => void
+  readOnly: boolean;
+  initialState: string;
+  setFormats: (formats: CalliopeFormatTypes) => void;
+  setCanUndo: (payload:boolean) => void;
+  setCanRedo: (payload:boolean) => void;
 };
 
 type AvatarEntryComponent = {
@@ -22,7 +24,7 @@ type AuthorCompProps = {
   }
 };
 
-export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats }: EntryEditorProps) => {
+export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats, setCanUndo, setCanRedo}: EntryEditorProps) => {
 
   const containerRef = useRef(null);
   const config = {
@@ -100,6 +102,8 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
       <Editor
         containerRef={containerRef}
         setFormats={setFormats}
+        setCanUndo={setCanUndo}
+        setCanRedo={setCanRedo}
         config={config}
       />
     </div>

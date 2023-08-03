@@ -78,6 +78,8 @@ export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
   const [editorState, setEditorState] = useState<string | null>(null);
   const [formats, setFormats] = useState<CalliopeFormatTypes>(initialFormatTypes);
+  const [canUndo, setCanUndo] = useState<boolean | null>(false);
+  const [canRedo, setCanRedo] = useState<boolean | null>(false);
   const [suggestions, setSuggestions] = useState(initialMentions);
   const [isSpeechToText, setIsSpeechToText] = useState<boolean | null>(false);
 
@@ -571,9 +573,9 @@ export const EditorComposer = () => {
       </button>
       ))}
     <br />
-    {formats.canUndo ? "[CAN UNDO]" : "[CAN'T UNDO]"}
+    {canUndo ? "[CAN UNDO]" : "[CAN'T UNDO]"}
     <br />
-    {formats.canRedo ? "[CAN REDO]" : "[CAN'T REDO]"}
+    {canRedo ? "[CAN REDO]" : "[CAN'T REDO]"}
     <br />
     <div>
       { formats.blockType === "code" ? (
@@ -667,6 +669,8 @@ export const EditorComposer = () => {
     <Editor
       containerRef={containerRef}
       setFormats={setFormats}
+      setCanUndo={setCanUndo}
+      setCanRedo={setCanRedo}
       config={config}
     />
     <br />

@@ -24,6 +24,8 @@ const CiteTextEditor = ({ content, readOnly }:CiteEditorProps) => {
 
   const {
     setFormats,
+    setCanUndo,
+    setCanRedo,
     isSmallWidthViewport,
     internalFormat,
     setInternalFormat,
@@ -55,6 +57,8 @@ return (
   <Plugins
      readOnly={readOnly}
      setFormats={setFormats}
+     setCanUndo={setCanUndo}
+     setCanRedo={setCanRedo}
      isSmallWidthViewport={isSmallWidthViewport}
      internalFormat={internalFormat}
      setInternalFormat={setInternalFormat}

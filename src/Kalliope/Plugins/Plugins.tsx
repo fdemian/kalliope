@@ -41,6 +41,8 @@ const InlineImagePlugin = lazy(() => import('./InlineImagePlugin'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
+  setCanUndo: (payload: boolean) => void;
+  setCanRedo: (payload: boolean) => void;
   internalFormat: CalliopeFormatTypes;
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
   isSmallWidthViewport: boolean;
@@ -54,6 +56,8 @@ export type PluginComponentProps = {
 
 function EditorPlugins({
   setFormats,
+  setCanUndo,
+  setCanRedo,
   internalFormat,
   setInternalFormat,
   onEditorChange,
@@ -100,6 +104,8 @@ function EditorPlugins({
           internalFormat={internalFormat}
           setInternalFormat={setInternalFormat}
           setFormats={setFormats}
+          setCanUndo={setCanUndo}
+          setCanRedo={setCanRedo}
         />
       )}
       <OnChangePlugin onChange={onEditorChange} />

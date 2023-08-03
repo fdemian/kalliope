@@ -147,6 +147,8 @@ export type CalliopeEditorProps = {
   config: CalliopeConfigProps;
   containerRef: React.MutableRefObject<CalliopeContainerType | null>;
   setFormats: (formats: CalliopeFormatTypes) => void;
+  setCanUndo: (payload: boolean) => void;
+  setCanRedo: (payload: boolean) => void;
 };
 
 export type CalliopeFormatTypes = {

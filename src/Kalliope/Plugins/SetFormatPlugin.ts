@@ -28,6 +28,8 @@ type SetFormatPluginProps = {
   internalFormat: CalliopeFormatTypes,
   setInternalFormat: (formats: CalliopeFormatTypes) => void;
   setFormats: (formats: CalliopeFormatTypes) => void;
+  setCanUndo: (payload: boolean) => void;
+  setCanRedo: (payload: boolean) => void;
 }
 
 function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
@@ -46,7 +48,7 @@ function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   }
 }
 
-const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetFormatPluginProps) => {
+const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCanUndo, setCanRedo }: SetFormatPluginProps) => {
   const [editor] = useLexicalComposerContext();
 
   const getEditorFormats = useCallback(() => {
@@ -164,15 +166,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
   editor.registerCommand<boolean>(
     CAN_UNDO_COMMAND,
     (payload) => {
-      const _formats = getEditorFormats();
-      setInternalFormat({
-        ..._formats,
-        canUndo: payload,
-      });
-      setFormats({
-        ..._formats,
-        canUndo: payload
-      })
+      setCanUndo(payload);
       return false;
     },
     COMMAND_PRIORITY_CRITICAL
@@ -181,19 +175,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats }: SetF
   editor.registerCommand<boolean>(
     CAN_REDO_COMMAND,
     (payload) => {
-      const _formats = getEditorFormats();
-      setInternalFormat({
-        ..._formats,
-        canRedo: payload,
-      });
-      setFormats({
-        ..._formats,
-        canRedo: payload
-      })
-      console.log({
-        ..._formats,
-        canRedo: payload
-      });
+      setCanRedo(payload);
       return false;
     },
     COMMAND_PRIORITY_CRITICAL

@@ -47,7 +47,7 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   fontFamily: 'Arial',
 };
 
-const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.Element => {
+const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: CalliopeEditorProps): JSX.Element => {
   const [internalFormat, setInternalFormat] =
     useState<CalliopeFormatTypes>(INITIAL_FORMATS);
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false);
@@ -96,7 +96,7 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
     onError: config.onError,
     editable: !config.readOnly,
     editorState: config.initialState,
-    theme,
+    theme
   };
 
 
@@ -189,6 +189,8 @@ const Editor = ({ config, containerRef, setFormats }: CalliopeEditorProps): JSX.
           <EditorPlugins
              readOnly={config.readOnly}
              setFormats={setFormats}
+             setCanUndo={setCanUndo}
+             setCanRedo={setCanRedo}
              isSmallWidthViewport={isSmallWidthViewport}
              internalFormat={internalFormat}
              setInternalFormat={setInternalFormat}

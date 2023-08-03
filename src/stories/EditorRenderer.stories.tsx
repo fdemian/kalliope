@@ -6,7 +6,9 @@ const INITIAL_STATE = '{"root":{"children":[{"children":[{"detail":0,"format":0,
 const args = {
  initialState: INITIAL_STATE,
  readOnly: true,
- setFormats: () => {}
+ setFormats: () => {},
+ setCanUndo: () => {},
+ setCanRedo: () => {}
 };
 
 export const EditorReadOnly = () => <EntryEditor {...args} />;

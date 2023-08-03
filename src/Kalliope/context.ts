@@ -10,6 +10,8 @@ export type CalliopeContextType = {
   plugins: (props: PluginComponentProps) => JSX.Element;
   onEditorChange: (editorState: EditorState) => void;
   setFormats: (formats: CalliopeFormatTypes) => void;
+  setCanUndo: (payload: boolean) => void;
+  setCanRedo: (payload: boolean) => void;
   isSmallWidthViewport: boolean;
   internalFormat: CalliopeFormatTypes;
   setInternalFormat: (formats: CalliopeFormatTypes) => void;

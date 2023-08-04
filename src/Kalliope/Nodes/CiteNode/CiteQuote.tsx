@@ -3,7 +3,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { CalliopeContext } from '../../context';
 import CiteTextEditor from './CiteTextEditor';
 import './CiteQuote.css';
-import {LexicalEditor} from "lexical";
+import {LexicalEditor, SerializedEditorState} from "lexical";
 
 type SourceCompProps = {
   sourceLink: string
@@ -20,7 +20,7 @@ type CiteQuoteProps = {
   authorName: string;
   authorLink: string;
   sourceLink: string;
-  content: string;
+  content: string | SerializedEditorState;
   initialEditor: LexicalEditor;
 };
 

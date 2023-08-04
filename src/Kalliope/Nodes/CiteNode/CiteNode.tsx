@@ -6,14 +6,14 @@ import {
     DecoratorBlockNode,
     SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
-import {createEditor} from "lexical";
+import {createEditor, SerializedEditorState} from "lexical";
 
 export type SerializedCiteNode = Spread<
     {
         authorName: string;
         authorLink: string;
         authorAvatar: string;
-        sourceContent: string;
+        sourceContent: string | object;
         sourceLink: string;
     },
     SerializedDecoratorBlockNode
@@ -26,7 +26,7 @@ type Author = {
 };
 
 type Source = {
-    content?: LexicalEditor;
+    content?: string | SerializedEditorState;
     link: string;
 };
 
@@ -77,7 +77,7 @@ export class CiteNode extends DecoratorBlockNode {
             authorName: this.__authorName,
             authorLink: this.__authorLink,
             authorAvatar: serializedAvatar,
-            sourceContent: this.__initialEditor.toJSON(),
+            sourceContent: JSON.stringify(this.__initialEditor.toJSON()),
             sourceLink: this.__sourceLink,
             type: 'cite-node',
             version: 1
@@ -85,16 +85,22 @@ export class CiteNode extends DecoratorBlockNode {
     }
 
     static importJSON(serializedNode: SerializedCiteNode): CiteNode {
+        let parsedContent;
+        if(typeof serializedNode.sourceContent === 'string'){
+            parsedContent = JSON.parse(serializedNode.sourceContent);
+        }
+        else {
+            parsedContent = serializedNode.sourceContent;
+        }
         const author = {
             name: serializedNode.authorName,
             link: serializedNode.authorLink,
             avatar: serializedNode.authorAvatar,
         };
         const source = {
-            content: serializedNode.sourceContent,
+            content: JSON.stringify(parsedContent.editorState),
             link: serializedNode.sourceLink,
         };
-
         return $createCiteNode(author, source);
     }
 

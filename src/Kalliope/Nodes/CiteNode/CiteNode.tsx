@@ -73,9 +73,6 @@ export class CiteNode extends DecoratorBlockNode {
             this.__authorAvatar !== null &&
             this.__authorAvatar !== undefined ? this.__authorAvatar : '';
 
-        console.log("__________________");
-        console.log(this.__initialEditor.toJSON());
-
         return {
             authorName: this.__authorName,
             authorLink: this.__authorLink,

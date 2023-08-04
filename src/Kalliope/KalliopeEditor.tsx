@@ -87,7 +87,6 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     if(editorRef.current.isEditable() !== isEditable){
       editorRef.current.setEditable(!config.readOnly);
     }
-    console.log();
   }
 
   const initialConfig= {
@@ -146,6 +145,8 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     plugins: EditorPlugins,
     onEditorChange,
     setFormats,
+    setCanUndo,
+    setCanRedo,
     isSmallWidthViewport,
     internalFormat,
     setInternalFormat,

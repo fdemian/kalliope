@@ -6,6 +6,7 @@ import {
     DecoratorBlockNode,
     SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
+import {createEditor} from "lexical";
 
 export type SerializedCiteNode = Spread<
     {
@@ -36,6 +37,7 @@ export class CiteNode extends DecoratorBlockNode {
     __authorAvatar?: string;
     __sourceContent: string;
     __sourceLink: string;
+    __initialEditor: LexicalEditor;
 
     static clone(node: CiteNode): CiteNode {
         const author: Author = {
@@ -63,6 +65,7 @@ export class CiteNode extends DecoratorBlockNode {
         this.__authorAvatar = author.avatar;
         this.__sourceLink = source.link;
         this.__sourceContent = source.content;
+        this.__initialEditor = createEditor();
     }
 
     exportJSON(): SerializedCiteNode {
@@ -70,11 +73,14 @@ export class CiteNode extends DecoratorBlockNode {
             this.__authorAvatar !== null &&
             this.__authorAvatar !== undefined ? this.__authorAvatar : '';
 
+        console.log("__________________");
+        console.log(this.__initialEditor.toJSON());
+
         return {
             authorName: this.__authorName,
             authorLink: this.__authorLink,
             authorAvatar: serializedAvatar,
-            sourceContent: this.__sourceContent,
+            sourceContent: this.__initialEditor.toJSON(),
             sourceLink: this.__sourceLink,
             type: 'cite-node',
             version: 1
@@ -91,6 +97,7 @@ export class CiteNode extends DecoratorBlockNode {
             content: serializedNode.sourceContent,
             link: serializedNode.sourceLink,
         };
+
         return $createCiteNode(author, source);
     }
 
@@ -114,6 +121,7 @@ export class CiteNode extends DecoratorBlockNode {
            authorLink={this.__authorLink}
            sourceLink={this.__sourceLink}
            content={this.__sourceContent}
+           initialEditor={this.__initialEditor}
         />
       </BlockWithAlignableContents>
       );

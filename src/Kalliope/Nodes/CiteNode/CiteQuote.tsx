@@ -3,6 +3,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { CalliopeContext } from '../../context';
 import CiteTextEditor from './CiteTextEditor';
 import './CiteQuote.css';
+import {LexicalEditor} from "lexical";
 
 type SourceCompProps = {
   sourceLink: string
@@ -20,6 +21,7 @@ type CiteQuoteProps = {
   authorLink: string;
   sourceLink: string;
   content: string;
+  initialEditor: LexicalEditor;
 };
 
 const DefaultSourceComp = ({ sourceLink }: SourceCompProps) => <a href={sourceLink}>{sourceLink}</a>;
@@ -27,7 +29,7 @@ const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
   return <a href={author.link}>{author.name}</a>;
 };
 
-const CiteQuote = ({ authorName, authorLink, sourceLink, content }: CiteQuoteProps) => {
+const CiteQuote = ({ authorName, authorLink, sourceLink, content, initialEditor }: CiteQuoteProps) => {
   const calliopeConfig = useContext(CalliopeContext);
   const [editor] = useLexicalComposerContext();
 
@@ -59,6 +61,7 @@ const CiteQuote = ({ authorName, authorLink, sourceLink, content }: CiteQuotePro
         </figcaption>
         <blockquote>
           <CiteTextEditor
+              initialEditor={initialEditor}
               content={content}
               readOnly={!editor.isEditable()}
           />

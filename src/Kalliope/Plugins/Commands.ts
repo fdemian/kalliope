@@ -37,6 +37,7 @@ import { INSERT_EXCALIDRAW_COMMAND } from './ExcalidrawPlugin';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
+import { INSERT_PAGE_BREAK } from './PageBreakPlugin';
 import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
@@ -346,6 +347,11 @@ const EDITOR_COMMANDS: EditorCommands = [
     command: INSERT_CITE_QUOTE,
     directCommand: true,
   },
+  {
+    name: 'INSERT_PAGE_BREAK',
+    command: INSERT_PAGE_BREAK,
+    directCommand: true,
+  }
 ];
 
 export default EDITOR_COMMANDS;

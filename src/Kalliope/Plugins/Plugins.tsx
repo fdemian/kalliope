@@ -21,6 +21,7 @@ import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 
 //
+const PageBreakPlugin = lazy(() => import( './PageBreakPlugin'));
 const EquationsPlugin = lazy(() => import('./EquationsPlugin'));
 const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
@@ -123,6 +124,7 @@ function EditorPlugins({
       <CitePlugin />
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
+      <PageBreakPlugin />
       <MentionsPlugin config={config.mentions} />
       {!isNestedPlugin && <EditorRefPlugin editorRef={editorRef} />}
   </>

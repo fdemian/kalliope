@@ -41,6 +41,11 @@
   background-color: rgba(60, 132, 244, 0.1);
 }
 
+i.page-break,
+.icon.page-break {
+  background-image: url(UI/Images/scissors.svg);
+}
+
 .editor-image .image-resizer.image-resizer-n {
   top: -6px;
   left: 48%;

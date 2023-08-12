@@ -29,6 +29,7 @@ import { CiteNode } from './CiteNode/CiteNode';
 import { CollapsibleContainerNode } from '../Plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleContentNode } from '../Plugins/CollapsiblePlugin/CollapsibleContentNode';
 import { CollapsibleTitleNode } from '../Plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { PageBreakNode } from "./PageBreak";
 
 const Nodes: Klass<LexicalNode>[] = [
   ListNode,
@@ -58,6 +59,7 @@ const Nodes: Klass<LexicalNode>[] = [
   CollapsibleContainerNode,
   CollapsibleContentNode,
   CollapsibleTitleNode,
+  PageBreakNode,
   MarkNode,
 ];
 

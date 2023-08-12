@@ -504,6 +504,12 @@ export const EditorComposer = () => {
       directCommand: true
     },
     {
+      text: "Page break",
+      command: "INSERT_PAGE_BREAK",
+      props: null,
+      directCommand: true
+    },
+    {
       text: "UNDO",
       command:"UNDO",
       props: null,

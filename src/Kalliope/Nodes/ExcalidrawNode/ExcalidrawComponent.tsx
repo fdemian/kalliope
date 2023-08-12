@@ -39,7 +39,7 @@ export default function ExcalidrawComponent({
 }): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   const [isModalOpen, setModalOpen] = useState<boolean>(
-    data === '[]' && editor.isEditable(),
+    data === '[]' && editor.isEditable()
   );
   const imageContainerRef = useRef<HTMLImageElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -76,9 +76,9 @@ export default function ExcalidrawComponent({
   // Set editor to readOnly if excalidraw is open to prevent unwanted changes
   useEffect(() => {
     if (isModalOpen) {
-      editor.setEditable(false);
-    } else {
       editor.setEditable(true);
+    } else {
+      editor.setEditable(false);
     }
   }, [isModalOpen, editor]);
 

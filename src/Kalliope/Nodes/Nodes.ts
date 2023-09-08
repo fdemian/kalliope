@@ -22,6 +22,8 @@ import { SpoilerNode } from './Spoiler/SpoilerNode';
 import { ImageNode } from './ImageNode/ImageNode';
 import { TweetNode } from './TweetNode/TweetNode';
 import { EquationNode } from './Equation/EquationNode';
+import { LayoutContainerNode } from "./Layout/LayoutContainerNode";
+import { LayoutItemNode } from "./Layout/LayoutItemNode";
 import { VideoNode } from './VideoNode/VideoNode';
 import { ExcalidrawNode } from './ExcalidrawNode';
 import { InlineImageNode } from "./InlineImageNode/InlineImageNode";
@@ -61,6 +63,8 @@ const Nodes: Klass<LexicalNode>[] = [
   CollapsibleTitleNode,
   PageBreakNode,
   MarkNode,
+  LayoutContainerNode,
+  LayoutItemNode
 ];
 
 export default Nodes;

@@ -84,6 +84,8 @@ export const EditorComposer = () => {
   const [isSpeechToText, setIsSpeechToText] = useState<boolean | null>(false);
 
   // TOOLBARS
+  const [layoutFormat, setLayoutFormat] = useState("1");
+  const [isLayoutToolbar, setLayoutToolbar] = useState(false);
   const [isTweetToolbar, setTweetToolbar] = useState<boolean | null>(false);
   const [isVideoToolbar, setVideoToolbar] = useState<boolean | null>(false);
   const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
@@ -106,6 +108,10 @@ export const EditorComposer = () => {
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand(val, null);
+  }
+
+  const layoutFormatChangeFn = (val: string) => {
+    setLayoutFormat(val);
   }
 
   const codeLanguageChange = (val: string) => {
@@ -431,6 +437,28 @@ export const EditorComposer = () => {
    '20px'
   ];
 
+  const LAYOUT_FORMATS = [
+    {key: "1", name: '2 columns (equal width)', value: '1fr 1fr'},
+    {key: "2", name: '2 columns (25% - 75%)', value: '1fr 3fr'},
+    {key: "3", name: '3 columns (equal width)', value: '1fr 1fr 1fr'},
+    {key: "4", name: '3 columns (25% - 50% - 25%)', value: '1fr 2fr 1fr'},
+    {key: "5", name: '4 columns (equal width)', value: '1fr 1fr 1fr 1fr'},
+  ];
+
+  const insertColumnLayout = () => {
+    if(!containerRef.current)
+      return;
+
+    const lf:any = LAYOUT_FORMATS.find(l => l.key == layoutFormat);
+
+    if(lf === undefined)
+      return;
+
+    const actualFormat: string = lf.value;
+    containerRef.current.executeCommand("INSERT_LAYOUT_COMMAND", actualFormat);
+    setLayoutToolbar(false);
+  }
+
   const INSERT_BUTTONS = [
     {
       text: "Rule",
@@ -510,6 +538,12 @@ export const EditorComposer = () => {
       directCommand: true
     },
     {
+      text: "Columns Layout",
+      command: () => setLayoutToolbar(true),
+      props: null,
+      directCommand: false
+    },
+    {
       text: "UNDO",
       command:"UNDO",
       props: null,
@@ -533,7 +567,8 @@ export const EditorComposer = () => {
   let text = "";
   let insertFn: MouseEventHandler<HTMLButtonElement> | undefined;
   let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined;
-  const altToolbar = isTweetToolbar || isVideoToolbar || isImageToolbar;
+
+  const altToolbar =  isTweetToolbar || isVideoToolbar || isImageToolbar;
   if(altToolbar){
     text = isTweetToolbar ? "Insert Tweet" : (isVideoToolbar ? "Insert Video" :  "Insert image");
     insertFn = isTweetToolbar ? insertTweet : (isVideoToolbar ? insertVideo :  insertImage);
@@ -661,6 +696,23 @@ export const EditorComposer = () => {
     </div>
     <br />
     <br />
+    {
+      isLayoutToolbar &&
+      <>
+        <strong>Layout toolbar &nbsp;</strong>
+        <select
+          name="layout-format"
+          id="layout-format-select"
+          value={layoutFormat}
+          onChange={(e) => layoutFormatChangeFn(e.target.value)}
+        >
+          {LAYOUT_FORMATS.map(fmt => (
+              <option key={fmt.key} value={fmt.key}>{fmt.name}</option>
+          ))}
+        </select>
+        <button onClick={insertColumnLayout}>Insert</button>
+     </>
+    }
     { altToolbar &&
       <>
       <URLToolbar

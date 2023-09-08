@@ -26,6 +26,7 @@ const EquationsPlugin = lazy(() => import('./EquationsPlugin'));
 const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
+const LayoutPlugin = lazy(() => import('./LayoutPlugin'));
 const KeyboardPlugin = lazy(() => import('./KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./SpoilerPlugin'));
 const ClickableLinkPlugin = lazy(() => import('./ClickableLinkPlugin'));
@@ -39,6 +40,7 @@ const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
 const InlineImagePlugin = lazy(() => import('./InlineImagePlugin'));
+
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
@@ -125,6 +127,7 @@ function EditorPlugins({
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       <PageBreakPlugin />
+      <LayoutPlugin />
       <MentionsPlugin config={config.mentions} />
       {!isNestedPlugin && <EditorRefPlugin editorRef={editorRef} />}
   </>

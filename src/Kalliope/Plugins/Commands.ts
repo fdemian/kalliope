@@ -38,6 +38,7 @@ import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
 import { INSERT_PAGE_BREAK } from './PageBreakPlugin';
+import { INSERT_LAYOUT_COMMAND } from './LayoutPlugin';
 import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
@@ -351,6 +352,11 @@ const EDITOR_COMMANDS: EditorCommands = [
     name: 'INSERT_PAGE_BREAK',
     command: INSERT_PAGE_BREAK,
     directCommand: true,
+  },
+  {
+    name: 'INSERT_LAYOUT_COMMAND',
+    command: INSERT_LAYOUT_COMMAND,
+    directCommand: true
   }
 ];
 

@@ -12,6 +12,8 @@ const theme = {
   image: 'editor-image',
   inlineImage: 'inline-editor-image',
   indent: 'calliope-indent',
+  layoutContainer: 'calliope-layout-container',
+  layoutItem: 'calliope-layout-layout-item',
   link: 'editor-link',
   placeholder: 'editor-placeholder',
   paragraph: 'editor-paragraph',

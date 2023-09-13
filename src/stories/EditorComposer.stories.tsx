@@ -187,6 +187,13 @@ export const EditorComposer = () => {
     containerRef.current.executeCommand("INSERT_TABLE", {columns, rows});
   }
 
+  const insertFigmaTest = () => {
+    if(!containerRef.current)
+      return;
+    const FIGMA_URL:string = "https://www.figma.com/file/LKQ4FJ4bTnCSjedbRpk931/Sample-File";
+    containerRef.current.executeCommand("INSERT_FIGMA_COMMAND", FIGMA_URL);
+  }
+
   const config = {
     placeholderText: 'Insert text...',
     initialState: undefined,
@@ -498,6 +505,12 @@ export const EditorComposer = () => {
     {
       text: "Table",
       command: insertTable,
+      props: null,
+      directCommand: false
+    },
+    {
+      text: "Figma drawing",
+      command: insertFigmaTest,
       props: null,
       directCommand: false
     },

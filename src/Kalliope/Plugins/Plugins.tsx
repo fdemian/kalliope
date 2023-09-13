@@ -40,7 +40,7 @@ const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
 const InlineImagePlugin = lazy(() => import('./InlineImagePlugin'));
-
+const FigmaPlugin = lazy(() => import('./FigmaPlugin'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
@@ -124,6 +124,7 @@ function EditorPlugins({
       <ExcalidrawPlugin />
       <VideoPlugin />
       <CitePlugin />
+      <FigmaPlugin />
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       <PageBreakPlugin />

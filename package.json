@@ -22,7 +22,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@excalidraw/excalidraw": "^0.15.3",
+    "@excalidraw/excalidraw": "^0.16.0",
     "@lexical/clipboard": "0.12.2",
     "@lexical/code": "0.12.2",
     "@lexical/file": "0.12.2",

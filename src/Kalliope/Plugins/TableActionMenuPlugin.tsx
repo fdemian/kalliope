@@ -39,7 +39,7 @@ import {
   DEPRECATED_$isGridSelection,
   GridSelection,
 } from 'lexical';
-import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
+import {ReactNode, ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import invariant from "../utils/invariant";
 
@@ -446,100 +446,100 @@ function TableActionMenu({
   }
 
   return createPortal(
-      <div
-          className="dropdown"
-          ref={dropDownRef}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}>
-        {mergeCellButton}
-        <button
-            className="item"
-            onClick={() => insertTableRowAtSelection(false)}
-            data-test-id="table-insert-row-above">
-        <span className="text">
-          Insert{' '}
-          {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
-          above
-        </span>
-        </button>
-        <button
-            className="item"
-            onClick={() => insertTableRowAtSelection(true)}
-            data-test-id="table-insert-row-below">
-        <span className="text">
-          Insert{' '}
-          {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
-          below
-        </span>
-        </button>
-        <hr />
-        <button
-            className="item"
-            onClick={() => insertTableColumnAtSelection(false)}
-            data-test-id="table-insert-column-before">
-        <span className="text">
-          Insert{' '}
-          {selectionCounts.columns === 1
-              ? 'column'
-              : `${selectionCounts.columns} columns`}{' '}
-          left
-        </span>
-        </button>
-        <button
-            className="item"
-            onClick={() => insertTableColumnAtSelection(true)}
-            data-test-id="table-insert-column-after">
-        <span className="text">
-          Insert{' '}
-          {selectionCounts.columns === 1
-              ? 'column'
-              : `${selectionCounts.columns} columns`}{' '}
-          right
-        </span>
-        </button>
-        <hr />
-        <button
-            className="item"
-            onClick={() => deleteTableColumnAtSelection()}
-            data-test-id="table-delete-columns">
-          <span className="text">Delete column</span>
-        </button>
-        <button
-            className="item"
-            onClick={() => deleteTableRowAtSelection()}
-            data-test-id="table-delete-rows">
-          <span className="text">Delete row</span>
-        </button>
-        <button
-            className="item"
-            onClick={() => deleteTableAtSelection()}
-            data-test-id="table-delete">
-          <span className="text">Delete table</span>
-        </button>
-        <hr />
-        <button className="item" onClick={() => toggleTableRowIsHeader()}>
-        <span className="text">
-          {/* tslint:disable-next-line:no-bitwise */}
-          {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
-          TableCellHeaderStates.ROW
-              ? 'Remove'
-              : 'Add'}{' '}
-          row header
-        </span>
-        </button>
-        <button className="item" onClick={() => toggleTableColumnIsHeader()}>
-        <span className="text">
-          {/* tslint:disable-next-line:no-bitwise */}
-          {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
-          TableCellHeaderStates.COLUMN
-              ? 'Remove'
-              : 'Add'}{' '}
-          column header
-        </span>
-        </button>
-      </div>,
-      document.body,
+  <div
+      className="dropdown"
+      ref={dropDownRef}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}>
+    {mergeCellButton}
+    <button
+        className="item"
+        onClick={() => insertTableRowAtSelection(false)}
+        data-test-id="table-insert-row-above">
+    <span className="text">
+      Insert{' '}
+      {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
+      above
+    </span>
+    </button>
+    <button
+        className="item"
+        onClick={() => insertTableRowAtSelection(true)}
+        data-test-id="table-insert-row-below">
+    <span className="text">
+      Insert{' '}
+      {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
+      below
+    </span>
+    </button>
+    <hr />
+    <button
+        className="item"
+        onClick={() => insertTableColumnAtSelection(false)}
+        data-test-id="table-insert-column-before">
+    <span className="text">
+      Insert{' '}
+      {selectionCounts.columns === 1
+          ? 'column'
+          : `${selectionCounts.columns} columns`}{' '}
+      left
+    </span>
+    </button>
+    <button
+        className="item"
+        onClick={() => insertTableColumnAtSelection(true)}
+        data-test-id="table-insert-column-after">
+    <span className="text">
+      Insert{' '}
+      {selectionCounts.columns === 1
+          ? 'column'
+          : `${selectionCounts.columns} columns`}{' '}
+      right
+    </span>
+    </button>
+    <hr />
+    <button
+        className="item"
+        onClick={() => deleteTableColumnAtSelection()}
+        data-test-id="table-delete-columns">
+      <span className="text">Delete column</span>
+    </button>
+    <button
+        className="item"
+        onClick={() => deleteTableRowAtSelection()}
+        data-test-id="table-delete-rows">
+      <span className="text">Delete row</span>
+    </button>
+    <button
+        className="item"
+        onClick={() => deleteTableAtSelection()}
+        data-test-id="table-delete">
+      <span className="text">Delete table</span>
+    </button>
+    <hr />
+    <button className="item" onClick={() => toggleTableRowIsHeader()}>
+    <span className="text">
+      {/* tslint:disable-next-line:no-bitwise */}
+      {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
+      TableCellHeaderStates.ROW
+          ? 'Remove'
+          : 'Add'}{' '}
+      row header
+    </span>
+    </button>
+    <button className="item" onClick={() => toggleTableColumnIsHeader()}>
+    <span className="text">
+      {/* tslint:disable-next-line:no-bitwise */}
+      {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
+      TableCellHeaderStates.COLUMN
+          ? 'Remove'
+          : 'Add'}{' '}
+      column header
+    </span>
+    </button>
+  </div>,
+  document.body,
   );
 }
 
@@ -549,7 +549,7 @@ function TableCellActionMenuContainer({
                                       }: {
   anchorElem: HTMLElement;
   cellMerge: boolean;
-}): JSX.Element {
+}): ReactNode {
   const [editor] = useLexicalComposerContext();
 
   const menuButtonRef = useRef(null);
@@ -681,13 +681,14 @@ export default function TableActionMenuPlugin({
   cellMerge?: boolean;
 }): null | ReactPortal {
   const isEditable = useLexicalEditable();
-  return createPortal(
-      isEditable ? (
-          <TableCellActionMenuContainer
-              anchorElem={anchorElem}
-              cellMerge={cellMerge}
-          />
-      ) : null,
-      anchorElem,
+  if(isEditable)
+    return createPortal(
+    <TableCellActionMenuContainer
+      anchorElem={anchorElem}
+      cellMerge={cellMerge}
+    />,
+    anchorElem,
   );
+
+  return null;
 }

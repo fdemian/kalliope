@@ -20,9 +20,6 @@ const CiteTextEditor = ({ initialEditor, content, readOnly }:CiteEditorProps) =>
   const [citeEditorState, setCiteEditorState] = useState<EditorState|null> (null);
   const calliopeConfig: CalliopeContextType | null = useContext(CalliopeContext);
 
-  if(!calliopeConfig)
-    return null;
-
   useEffect(() => {
     if (content !== null && (typeof content) === 'string') {
       const editorState = initialEditor.parseEditorState(content);
@@ -31,13 +28,17 @@ const CiteTextEditor = ({ initialEditor, content, readOnly }:CiteEditorProps) =>
         initialEditor.setEditorState(editorState);
       }
     }
-  }, [])
+  }, [content, initialEditor])
 
   useEffect(() => {
     if (citeEditorState && !citeEditorState.isEmpty()) {
       initialEditor.setEditorState(citeEditorState);
     }
-  }, [citeEditorState])
+  }, [initialEditor, citeEditorState])
+
+
+  if(!calliopeConfig)
+    return null;
 
   const setEditorContent = (newContent:EditorState): void => {
     setCiteEditorState(newContent);

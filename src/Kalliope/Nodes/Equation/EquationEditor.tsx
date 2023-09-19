@@ -15,13 +15,12 @@ type BaseEquationEditorProps = {
   setEquation: (equation: string) => void;
 };
 
-function EquationEditor(
-  {equation, setEquation, inline}: BaseEquationEditorProps,
-  forwardedRef: Ref<HTMLInputElement | HTMLTextAreaElement>,
-): JSX.Element {
-  const onChange = (event: ChangeEvent) => {
-    setEquation((event.target as HTMLInputElement).value);
-  };
+const EquationEditor = (
+    {equation, setEquation, inline}: BaseEquationEditorProps,
+    forwardedRef: Ref<HTMLInputElement | HTMLTextAreaElement>
+): JSX.Element => {
+
+  const onChange = (event: ChangeEvent) => setEquation((event.target as HTMLInputElement).value);
 
   return inline && forwardedRef instanceof HTMLInputElement ? (
     <span className="EquationEditor_inputBackground">
@@ -49,4 +48,6 @@ function EquationEditor(
   );
 }
 
-export default forwardRef(EquationEditor);
+const forwardRefEditor = forwardRef(EquationEditor);
+
+export default forwardRefEditor;

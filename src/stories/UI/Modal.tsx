@@ -16,10 +16,10 @@ function PortalImpl({
                         title,
                         closeOnClickOutside,
                     }: {
-    children: ReactNode;
-    closeOnClickOutside: boolean;
     onClose: () => void;
+    children: ReactNode;
     title: string;
+    closeOnClickOutside: boolean;
 }) {
     const modalRef = useRef<HTMLDivElement>(null);
 
@@ -81,16 +81,11 @@ function PortalImpl({
     );
 }
 
-export default function Modal({
-                                  onClose,
-                                  children,
-                                  title,
-                                  closeOnClickOutside = false,
-                              }: {
-    children: ReactNode;
-    closeOnClickOutside?: boolean;
+export default function Modal({ onClose, children, title, closeOnClickOutside = false }: {
     onClose: () => void;
+    children: ReactNode;
     title: string;
+    closeOnClickOutside?: boolean;
 }): ReactPortal {
     return createPortal(
     <PortalImpl
@@ -100,6 +95,6 @@ export default function Modal({
     >
       {children}
     </PortalImpl>,
-    document.body,
+    document.body
     );
 }

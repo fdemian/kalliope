@@ -14,7 +14,7 @@ import {
 } from 'react';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 
-const ExcalidrawModal = (props: ExcalidrawModalProps) => {
+const ExcalidrawModal: JSX.Element = (props: ExcalidrawModalProps) => {
   const {
     excalidrawComponent,
     excaliDrawSceneRef,

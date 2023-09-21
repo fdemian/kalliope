@@ -5,9 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 import './index.css';
-
 import {
   $isCodeNode,
   CodeNode,
@@ -16,10 +14,9 @@ import {
 } from '@lexical/code';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $getNearestNodeFromDOMNode } from 'lexical';
-import { useEffect, useRef, useState } from 'react';
-import * as React from 'react';
+import {ReactElement, useEffect, useRef, useState} from 'react';
+import { ReactPortal } from "react";
 import { createPortal } from 'react-dom';
-
 import { CopyButton } from './components/CopyButton';
 import { canBePrettier, PrettierButton } from './components/PrettierButton';
 import { useDebounce } from './utils';
@@ -31,11 +28,7 @@ interface Position {
   right: string;
 }
 
-function CodeActionMenuContainer({
-  anchorElem,
-}: {
-  anchorElem: HTMLElement;
-}): JSX.Element {
+function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): ReactElement {
   const [editor] = useLexicalComposerContext();
 
   const [lang, setLang] = useState('');
@@ -169,9 +162,12 @@ function getMouseInfo(event: MouseEvent): {
 }
 
 export default function CodeActionMenuPlugin({
-  anchorElem = document.body,
+  anchorElem = document.body as HTMLElement,
 }: {
   anchorElem?: HTMLElement;
-}): React.ReactPortal | null {
-  return createPortal(<CodeActionMenuContainer anchorElem={anchorElem} />, anchorElem);
+}): ReactPortal | null {
+  return createPortal(
+  <CodeActionMenuContainer anchorElem={anchorElem} />,
+  anchorElem
+  );
 }

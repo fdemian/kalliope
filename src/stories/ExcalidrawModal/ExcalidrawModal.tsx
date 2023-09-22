@@ -9,12 +9,15 @@
 import './ExcalidrawModal.css';
 import {createPortal} from 'react-dom';
 import {
+  ReactElement,
   useEffect,
   useRef,
 } from 'react';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 
-const ExcalidrawModal: JSX.Element = (props: ExcalidrawModalProps) => {
+type ExcalidrawModalType = (props: ExcalidrawModalProps) => ReactElement;
+
+const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
   const {
     excalidrawComponent,
     excaliDrawSceneRef,

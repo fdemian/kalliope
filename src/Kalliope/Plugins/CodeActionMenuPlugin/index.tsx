@@ -29,15 +29,13 @@ interface Position {
 }
 
 function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): ReactElement {
+
   const [editor] = useLexicalComposerContext();
 
   const [lang, setLang] = useState('');
   const [isShown, setShown] = useState<boolean>(false);
   const [shouldListenMouseMove, setShouldListenMouseMove] = useState<boolean>(false);
-  const [position, setPosition] = useState<Position>({
-    right: '0',
-    top: '0',
-  });
+  const [position, setPosition] = useState<Position>({ right: '0', top: '0' });
   const codeSetRef = useRef<Set<string>>(new Set());
   const codeDOMNodeRef = useRef<HTMLElement | null>(null);
 

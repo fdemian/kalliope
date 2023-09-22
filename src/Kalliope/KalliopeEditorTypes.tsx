@@ -4,6 +4,7 @@ import {
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
+import { ReactElement } from "react";
 
 type DispatcherFn = () => void;
 
@@ -112,7 +113,7 @@ export type CalliopeConfigProps = {
     loadingComponent: ({ tweetId }: LoadingTweetProps) => JSX.Element;
   };
   excalidrawConfig: {
-    modal: (props: ExcalidrawModalProps) => JSX.Element;
+    modal: (props: ExcalidrawModalProps) => ReactElement;
   };
   citation: {
     sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;

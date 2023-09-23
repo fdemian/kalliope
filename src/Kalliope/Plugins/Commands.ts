@@ -3,6 +3,7 @@ import {
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
+  $isTextNode,
   DEPRECATED_$isGridSelection,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
@@ -11,6 +12,7 @@ import {
   REDO_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
+import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import {
   $patchStyleText,
@@ -23,6 +25,13 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
+import {
+  $getNearestBlockElementAncestorOrThrow
+} from '@lexical/utils';
+import {
+  $isHeadingNode,
+  $isQuoteNode
+} from '@lexical/rich-text';
 import { $createHeadingNode, $createQuoteNode, HeadingTagType } from '@lexical/rich-text';
 import { TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
@@ -46,6 +55,47 @@ import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 
 type LexicalEditorRef = {
   current: LexicalEditor;
+};
+
+const clearFormatting = (editor: LexicalEditorRef)=> {
+  const activeEditor = editor.current;
+  activeEditor.update(() => {
+    const selection = $getSelection();
+    if ($isRangeSelection(selection)) {
+      const anchor = selection.anchor;
+      const focus = selection.focus;
+      const nodes = selection.getNodes();
+
+      if (anchor.key === focus.key && anchor.offset === focus.offset) {
+        return;
+      }
+
+      nodes.forEach((node, idx) => {
+        // We split the first and last node by the selection
+        // So that we don't format unselected text inside those nodes
+        if ($isTextNode(node)) {
+          if (idx === 0 && anchor.offset !== 0) {
+            node = node.splitText(anchor.offset)[1] || node;
+          }
+          if (idx === nodes.length - 1) {
+            node = node.splitText(focus.offset)[0] || node;
+          }
+
+          if (node.__style !== '') {
+            node.setStyle('');
+          }
+          if (node.__format !== 0) {
+            node.setFormat(0);
+            $getNearestBlockElementAncestorOrThrow(node).setFormat('');
+          }
+        } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
+          node.replace($createParagraphNode(), true);
+        } else if ($isDecoratorBlockNode(node)) {
+          node.setFormat('');
+        }
+      });
+    }
+  });
 };
 
 const onCodeLanguageSelect = (editor: LexicalEditorRef, value: string) => {
@@ -154,7 +204,6 @@ const applyStyleText = (styles: Record<string, string>, editor: LexicalEditorRef
     }
   });
 };
-
 
 // @ts-ignore
 const selectFontFamily = (editor:LexicalEditorRef, _, family:string) => {
@@ -286,6 +335,11 @@ const EDITOR_COMMANDS: EditorCommands = [
   {
     name: 'CHANGE_FONT_BG_COLOR',
     command: selectBGColor,
+    directCommand: false,
+  },
+  {
+    name: "CLEAR_FORMATTING",
+    command: clearFormatting,
     directCommand: false,
   },
   {

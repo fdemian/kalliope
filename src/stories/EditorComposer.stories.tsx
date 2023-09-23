@@ -557,6 +557,12 @@ export const EditorComposer = () => {
       directCommand: false
     },
     {
+      text: "Clear formatting",
+      command: "CLEAR_FORMATTING",
+      props: null,
+      directCommand: true
+    },
+    {
       text: "UNDO",
       command:"UNDO",
       props: null,

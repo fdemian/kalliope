@@ -35,6 +35,8 @@ import {
 import { $createHeadingNode, $createQuoteNode, HeadingTagType } from '@lexical/rich-text';
 import { TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
+
+// Load custom commands.
 import { INSERT_KEYBOARD_COMMAND } from './KeyboardPlugin';
 import { INSERT_SPOILER_COMMAND } from './SpoilerPlugin';
 import { INSERT_IMAGE_COMMAND } from './ImagesPlugin';
@@ -42,13 +44,14 @@ import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagePlugin';
 import { INSERT_TWEET_COMMAND } from './TwitterPlugin';
 import { INSERT_EQUATION_COMMAND } from './EquationsPlugin';
 import { INSERT_VIDEO_COMMAND } from './VideoPlugin';
-import { INSERT_EXCALIDRAW_COMMAND } from './ExcalidrawPlugin';
+import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './CitePlugin';
 import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
 import { INSERT_PAGE_BREAK } from './PageBreakPlugin';
 import { INSERT_LAYOUT_COMMAND } from './LayoutPlugin';
 import { INSERT_FIGMA_COMMAND } from './FigmaPlugin';
+
 import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';

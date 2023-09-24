@@ -35,7 +35,7 @@ const ImagesPlugin = lazy(() => import('./ImagesPlugin'));
 const TwitterPlugin = lazy(() => import('./TwitterPlugin'));
 const TableCellResizer = lazy(() => import('./TableCellResizer/index'));
 const VideoPlugin = lazy(() => import('./VideoPlugin'));
-const ExcalidrawPlugin = lazy(() => import('./ExcalidrawPlugin'));
+const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));

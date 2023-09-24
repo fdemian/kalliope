@@ -5,18 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type { LexicalCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
   $isRangeSelection,
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
+  COMMAND_PRIORITY_EDITOR
 } from 'lexical';
 import { useEffect } from 'react';
-import { $createExcalidrawNode, ExcalidrawNode } from '../Nodes/ExcalidrawNode/index';
+import { $createExcalidrawNode, ExcalidrawNode } from '../../Nodes/ExcalidrawNode';
+import { INSERT_EXCALIDRAW_COMMAND } from "./ExcalidrawCommand";
 
-export const INSERT_EXCALIDRAW_COMMAND: LexicalCommand<void> = createCommand();
 export default function ExcalidrawPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {

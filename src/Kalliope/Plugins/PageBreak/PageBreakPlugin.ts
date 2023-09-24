@@ -10,15 +10,11 @@ import {$insertNodeToNearestRoot, mergeRegister} from '@lexical/utils';
 import {
     $getSelection,
     $isRangeSelection,
-    COMMAND_PRIORITY_EDITOR,
-    createCommand,
-    LexicalCommand,
+    COMMAND_PRIORITY_EDITOR
 } from 'lexical';
 import {useEffect} from 'react';
-
-import {$createPageBreakNode, PageBreakNode} from '../Nodes/PageBreak';
-
-export const INSERT_PAGE_BREAK: LexicalCommand<undefined> = createCommand();
+import {$createPageBreakNode, PageBreakNode} from '../../Nodes/PageBreak';
+import { INSERT_PAGE_BREAK } from "./PageBreakCommand";
 
 export default function PageBreakPlugin(): JSX.Element | null {
     const [editor] = useLexicalComposerContext();

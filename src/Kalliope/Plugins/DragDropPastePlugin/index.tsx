@@ -11,7 +11,7 @@ import { DRAG_DROP_PASTE } from '@lexical/rich-text';
 import { COMMAND_PRIORITY_LOW } from 'lexical';
 import { useEffect, useContext } from 'react';
 
-import { INSERT_IMAGE_COMMAND } from '../ImagesPlugin';
+import { INSERT_IMAGE_COMMAND } from '../ImagesPlugin/ImagesCommand';
 
 const ACCEPTABLE_IMAGE_TYPES = [
   'image/',

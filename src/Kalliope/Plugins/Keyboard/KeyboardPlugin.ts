@@ -6,33 +6,32 @@
  *
  * @flow strict
  */
-import type { LexicalCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $createSpoilerNode } from '../Nodes/Spoiler/SpoilerNode';
 import {
   $getSelection,
   $isRangeSelection,
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
+  COMMAND_PRIORITY_EDITOR
 } from 'lexical';
-
+import { $createKeyboardNode } from '../../Nodes/Keyboard/Keyboard';
 import { useEffect } from 'react';
+import { INSERT_KEYBOARD_COMMAND } from './KeyboardCommand';
 
-export const INSERT_SPOILER_COMMAND: LexicalCommand<{ text: string }> = createCommand();
-
-export default function SpoilerPlugin(): null {
+export default function KeyboardPlugin(): null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     return editor.registerCommand(
-      INSERT_SPOILER_COMMAND,
+      INSERT_KEYBOARD_COMMAND,
       () => {
         const selection = $getSelection();
         if (!$isRangeSelection(selection)) {
           return false;
         }
-        const spoilerNode = $createSpoilerNode(selection.getTextContent());
-        selection.insertNodes([spoilerNode]);
+        const focusNode = selection.focus.getNode();
+        if (focusNode !== null) {
+          const kbdNode = $createKeyboardNode(selection.getTextContent());
+          selection.insertNodes([kbdNode]);
+        }
         return true;
       },
       COMMAND_PRIORITY_EDITOR

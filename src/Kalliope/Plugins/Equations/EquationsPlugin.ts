@@ -5,25 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type { LexicalCommand } from 'lexical';
 import 'katex/dist/katex.css';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR,
-  createCommand,
 } from 'lexical';
 import { useEffect } from 'react';
 
-import { $createEquationNode, EquationNode } from '../Nodes/Equation/EquationNode';
-
-type CommandPayload = {
-  equation: string;
-  inline: boolean;
-};
-
-export const INSERT_EQUATION_COMMAND: LexicalCommand<CommandPayload> = createCommand();
+import { $createEquationNode, EquationNode } from '../../Nodes/Equation/EquationNode';
+import { INSERT_EQUATION_COMMAND, CommandPayload } from './EquationsCommand';
 
 export default function EquationsPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();

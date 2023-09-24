@@ -21,7 +21,6 @@ import {
   $isRangeSelection,
   $setSelection,
   COMMAND_PRIORITY_LOW,
-  createCommand,
   DELETE_CHARACTER_COMMAND,
   ElementNode,
   INSERT_PARAGRAPH_COMMAND,
@@ -29,8 +28,7 @@ import {
   KEY_ARROW_LEFT_COMMAND,
   KEY_ARROW_RIGHT_COMMAND,
   KEY_ARROW_UP_COMMAND,
-  LexicalNode,
-  NodeKey,
+  LexicalNode
 } from 'lexical';
 import {useEffect} from 'react';
 
@@ -49,9 +47,7 @@ import {
   $isCollapsibleTitleNode,
   CollapsibleTitleNode,
 } from './CollapsibleTitleNode';
-
-export const INSERT_COLLAPSIBLE_COMMAND = createCommand<void>();
-export const TOGGLE_COLLAPSIBLE_COMMAND = createCommand<NodeKey>();
+import { INSERT_COLLAPSIBLE_COMMAND } from './ColllapsibleCommand';
 
 export default function CollapsiblePlugin(): null {
   const [editor] = useLexicalComposerContext();

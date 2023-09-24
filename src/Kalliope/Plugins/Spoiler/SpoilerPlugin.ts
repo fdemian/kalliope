@@ -6,36 +6,29 @@
  *
  * @flow strict
  */
-
-import type { LexicalCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $createSpoilerNode } from '../../Nodes/Spoiler/SpoilerNode';
 import {
   $getSelection,
   $isRangeSelection,
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
+  COMMAND_PRIORITY_EDITOR
 } from 'lexical';
+import { INSERT_SPOILER_COMMAND } from './SpoilerCommand';
 import { useEffect } from 'react';
-import { $createCiteNode, CiteNode } from '../Nodes/CiteNode/CiteNode';
 
-export const INSERT_CITE_QUOTE: LexicalCommand<string> = createCommand();
-
-export default function CitePlugin(): JSX.Element | null {
+export default function SpoilerPlugin(): null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
-    if (!editor.hasNodes([CiteNode])) {
-      throw new Error('CitePlugin: CiteNode not registered on editor');
-    }
-
     return editor.registerCommand(
-      INSERT_CITE_QUOTE,
-      (payload: any) => {
+      INSERT_SPOILER_COMMAND,
+      () => {
         const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          const citeNode = $createCiteNode(payload.author, payload.source);
-          selection.insertNodes([citeNode]);
+        if (!$isRangeSelection(selection)) {
+          return false;
         }
+        const spoilerNode = $createSpoilerNode(selection.getTextContent());
+        selection.insertNodes([spoilerNode]);
         return true;
       },
       COMMAND_PRIORITY_EDITOR

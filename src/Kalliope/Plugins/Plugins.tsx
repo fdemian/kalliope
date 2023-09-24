@@ -21,26 +21,26 @@ import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 
 //
-const PageBreakPlugin = lazy(() => import( './PageBreakPlugin'));
-const EquationsPlugin = lazy(() => import('./EquationsPlugin'));
+const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
+const EquationsPlugin = lazy(() => import('./Equations/EquationsPlugin'));
 const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
-const LayoutPlugin = lazy(() => import('./LayoutPlugin'));
-const KeyboardPlugin = lazy(() => import('./KeyboardPlugin'));
-const SpoilerPlugin = lazy(() => import('./SpoilerPlugin'));
+const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
+const KeyboardPlugin = lazy(() => import('./Keyboard/KeyboardPlugin'));
+const SpoilerPlugin = lazy(() => import('./Spoiler/SpoilerPlugin'));
 const ClickableLinkPlugin = lazy(() => import('./ClickableLinkPlugin'));
 const CodeHighlightPlugin = lazy(() => import('./CodeHighlightPlugin'));
-const ImagesPlugin = lazy(() => import('./ImagesPlugin'));
-const TwitterPlugin = lazy(() => import('./TwitterPlugin'));
+const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
+const TwitterPlugin = lazy(() => import('./Twitter/TwitterPlugin'));
 const TableCellResizer = lazy(() => import('./TableCellResizer/index'));
-const VideoPlugin = lazy(() => import('./VideoPlugin'));
+const VideoPlugin = lazy(() => import('./Video/VideoPlugin'));
 const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
-const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
-const CitePlugin = lazy(() => import('./CitePlugin'));
+const SpeechToTextPlugin = lazy(() => import('./SpeechToText/SpeechToTextPlugin'));
+const CitePlugin = lazy(() => import('./Cite/CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
-const InlineImagePlugin = lazy(() => import('./InlineImagePlugin'));
-const FigmaPlugin = lazy(() => import('./FigmaPlugin'));
+const InlineImagePlugin = lazy(() => import('./InlineImagesPlugin/InlineImagePlugin'));
+const FigmaPlugin = lazy(() => import('./Figma/FigmaPlugin'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;

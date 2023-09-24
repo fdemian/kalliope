@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type { LexicalCommand, LexicalEditor } from 'lexical';
+import type { LexicalEditor } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -18,26 +18,25 @@ import {
   COMMAND_PRIORITY_EDITOR,
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
-  createCommand,
   DRAGOVER_COMMAND,
   DRAGSTART_COMMAND,
   DROP_COMMAND,
 } from 'lexical';
 import { useEffect } from 'react';
-import { CAN_USE_DOM } from '../shared/canUseDOM';
+import { CAN_USE_DOM } from '../../shared/canUseDOM';
 import {
   $createImageNode,
   $isImageNode,
   ImageNode,
   ImagePayload,
-} from '../Nodes/ImageNode/ImageNode';
+} from '../../Nodes/ImageNode/ImageNode';
+import { INSERT_IMAGE_COMMAND } from './ImagesCommand';
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 
 const getDOMSelection = (): Selection | null =>
   CAN_USE_DOM ? window.getSelection() : null;
 
-export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand();
 export default function ImagesPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 

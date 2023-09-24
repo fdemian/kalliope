@@ -6,14 +6,12 @@
  *
  * @flow strict
  */
-import type { LexicalCommand } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical';
+import { COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
 import { $insertNodeToNearestRoot } from '@lexical/utils';
-import { $createVideoNode, VideoNode } from '../Nodes/VideoNode/VideoNode';
-
-export const INSERT_VIDEO_COMMAND: LexicalCommand<string> = createCommand();
+import { $createVideoNode, VideoNode } from '../../Nodes/VideoNode/VideoNode';
+import { INSERT_VIDEO_COMMAND } from './VideoCommand';
 
 export default function VideoPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();

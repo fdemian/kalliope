@@ -18,28 +18,24 @@ import {
     COMMAND_PRIORITY_EDITOR,
     COMMAND_PRIORITY_HIGH,
     COMMAND_PRIORITY_LOW,
-    createCommand,
     DRAGOVER_COMMAND,
     DRAGSTART_COMMAND,
     DROP_COMMAND,
-    LexicalCommand,
     LexicalEditor,
 } from 'lexical';
 import {useEffect } from 'react';
-import { CAN_USE_DOM } from '../shared/canUseDOM';
+import { CAN_USE_DOM } from '../../shared/canUseDOM';
 import {
     $createInlineImageNode,
     $isInlineImageNode,
     InlineImageNode,
     InlineImagePayload,
-} from '../Nodes/InlineImageNode/InlineImageNode';
+} from '../../Nodes/InlineImageNode/InlineImageNode';
+import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagesCommand';
 export type InsertInlineImagePayload = Readonly<InlineImagePayload>;
 
 const getDOMSelection = (targetWindow: Window | null): Selection | null =>
     CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
-
-export const INSERT_INLINE_IMAGE_COMMAND: LexicalCommand<InlineImagePayload> =
-    createCommand('INSERT_INLINE_IMAGE_COMMAND');
 
 export default function InlineImagePlugin(): JSX.Element | null {
     const [editor] = useLexicalComposerContext();

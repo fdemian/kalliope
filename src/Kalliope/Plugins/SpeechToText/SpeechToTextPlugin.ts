@@ -6,24 +6,18 @@
  *
  */
 
-import type { LexicalCommand, LexicalEditor, RangeSelection } from 'lexical';
-
+import type { LexicalEditor, RangeSelection } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getSelection,
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR,
-  createCommand,
   REDO_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
 import { useEffect, useRef, useState } from 'react';
-
-import useReport from './useReport';
-
-export const SPEECH_TO_TEXT_COMMAND: LexicalCommand<boolean> = createCommand(
-  'SPEECH_TO_TEXT_COMMAND'
-);
+import useReport from '../useReport';
+import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextCommand';
 
 const VOICE_COMMANDS: Readonly<
   Record<string, (arg0: { editor: LexicalEditor; selection: RangeSelection }) => void>

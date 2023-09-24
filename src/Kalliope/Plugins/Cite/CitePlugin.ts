@@ -10,30 +10,27 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import {
   $getSelection,
   $isRangeSelection,
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
+  COMMAND_PRIORITY_EDITOR
 } from 'lexical';
-import { $createKeyboardNode } from '../Nodes/Keyboard/Keyboard';
 import { useEffect } from 'react';
-import type { LexicalCommand } from 'lexical';
+import { $createCiteNode, CiteNode } from '../../Nodes/CiteNode/CiteNode';
+import { INSERT_CITE_QUOTE } from './CiteCommand';
 
-export const INSERT_KEYBOARD_COMMAND: LexicalCommand<{ text: string }> = createCommand();
-
-export default function KeyboardPlugin(): null {
+export default function CitePlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
+    if (!editor.hasNodes([CiteNode])) {
+      throw new Error('CitePlugin: CiteNode not registered on editor');
+    }
+
     return editor.registerCommand(
-      INSERT_KEYBOARD_COMMAND,
-      () => {
+      INSERT_CITE_QUOTE,
+      (payload: any) => {
         const selection = $getSelection();
-        if (!$isRangeSelection(selection)) {
-          return false;
-        }
-        const focusNode = selection.focus.getNode();
-        if (focusNode !== null) {
-          const kbdNode = $createKeyboardNode(selection.getTextContent());
-          selection.insertNodes([kbdNode]);
+        if ($isRangeSelection(selection)) {
+          const citeNode = $createCiteNode(payload.author, payload.source);
+          selection.insertNodes([citeNode]);
         }
         return true;
       },

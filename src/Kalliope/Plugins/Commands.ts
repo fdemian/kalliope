@@ -37,20 +37,20 @@ import { TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
 
 // Load custom commands.
-import { INSERT_KEYBOARD_COMMAND } from './KeyboardPlugin';
-import { INSERT_SPOILER_COMMAND } from './SpoilerPlugin';
-import { INSERT_IMAGE_COMMAND } from './ImagesPlugin';
-import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagePlugin';
-import { INSERT_TWEET_COMMAND } from './TwitterPlugin';
-import { INSERT_EQUATION_COMMAND } from './EquationsPlugin';
-import { INSERT_VIDEO_COMMAND } from './VideoPlugin';
+import { INSERT_KEYBOARD_COMMAND } from './Keyboard/KeyboardCommand';
+import { INSERT_SPOILER_COMMAND } from './Spoiler/SpoilerCommand';
+import { INSERT_IMAGE_COMMAND } from './ImagesPlugin/ImagesCommand';
+import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagesPlugin/InlineImagesCommand';
+import { INSERT_TWEET_COMMAND } from './Twitter/TwitterCommand';
+import { INSERT_EQUATION_COMMAND } from './Equations/EquationsCommand';
+import { INSERT_VIDEO_COMMAND } from './Video/VideoCommand';
 import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
-import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
-import { INSERT_CITE_QUOTE } from './CitePlugin';
-import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin';
-import { INSERT_PAGE_BREAK } from './PageBreakPlugin';
-import { INSERT_LAYOUT_COMMAND } from './LayoutPlugin';
-import { INSERT_FIGMA_COMMAND } from './FigmaPlugin';
+import { SPEECH_TO_TEXT_COMMAND } from './SpeechToText/SpeechToTextCommand';
+import { INSERT_CITE_QUOTE } from './Cite/CiteCommand';
+import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin/ColllapsibleCommand';
+import { INSERT_PAGE_BREAK } from './PageBreak/PageBreakCommand';
+import { INSERT_LAYOUT_COMMAND } from './Layout/LayoutCommand';
+import { INSERT_FIGMA_COMMAND } from './Figma/FigmaCommand';
 
 import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';

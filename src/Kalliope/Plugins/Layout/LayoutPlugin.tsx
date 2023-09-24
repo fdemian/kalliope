@@ -22,15 +22,13 @@ import {
     $createLayoutContainerNode,
     $isLayoutContainerNode,
     LayoutContainerNode,
-} from '../Nodes/Layout/LayoutContainerNode';
+} from '../../Nodes/Layout/LayoutContainerNode';
 import {
     $createLayoutItemNode,
     $isLayoutItemNode,
     LayoutItemNode,
-} from '../Nodes/Layout/LayoutItemNode';
-
-export const INSERT_LAYOUT_COMMAND: LexicalCommand<string> =
-    createCommand<string>();
+} from '../../Nodes/Layout/LayoutItemNode';
+import { INSERT_LAYOUT_COMMAND } from './LayoutCommand';
 
 export const UPDATE_LAYOUT_COMMAND: LexicalCommand<{
     template: string;

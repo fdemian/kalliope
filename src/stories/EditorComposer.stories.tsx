@@ -97,7 +97,7 @@ export const EditorComposer = () => {
   const toggleVideoToolbar = () => setVideoToolbar(false);
   const toggleImageToolbar = () => setImageToolbar(false);
 
-  const onSearchChange = (match: string) => {
+  const onSearchChange = (match: string | null) => {
     if(match) {
       const newSuggestions = initialMentions.filter(p => p.name.includes(match));
       setSuggestions(newSuggestions);

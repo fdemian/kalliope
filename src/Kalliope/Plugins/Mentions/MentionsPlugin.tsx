@@ -29,7 +29,7 @@ type MentionPluginProps = {
     onAddMention: (arg: MentionFnProps) => void;
     onRemoveMention: (arg: MentionFnProps) => void;
     mentionsData: MentionTypeaheadOption[];
-    onSearchChange: (match: string) => void;
+    onSearchChange: (match: string | null) => void;
     entryComponent: EntryComponentType;
   }
 }
@@ -99,7 +99,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.E
 
   return (
     <LexicalTypeaheadMenuPlugin<MentionTypeaheadOption>
-      onQueryChange={() => {}}
+      onQueryChange={config.onSearchChange}
       onSelectOption={onSelectOption}
       triggerFn={checkForMentionMatch}
       options={options}

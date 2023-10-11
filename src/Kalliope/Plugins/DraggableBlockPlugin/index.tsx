@@ -20,6 +20,7 @@ import {
   DROP_COMMAND,
   LexicalEditor,
 } from 'lexical';
+import type { ReactPortal } from "react";
 import {DragEvent as ReactDragEvent, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -257,7 +258,7 @@ function useDraggableBlockMenu(
   editor: LexicalEditor,
   anchorElem: HTMLElement,
   isEditable: boolean,
-): JSX.Element {
+): ReactPortal {
   const scrollerElem = anchorElem.parentElement;
 
   const menuRef = useRef<HTMLDivElement>(null);

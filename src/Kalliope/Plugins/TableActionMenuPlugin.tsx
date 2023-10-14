@@ -39,7 +39,7 @@ import {
   DEPRECATED_$isGridSelection,
   GridSelection,
 } from 'lexical';
-import {ReactNode, ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
+import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
 import {createPortal} from 'react-dom';
 import invariant from "../utils/invariant";
 
@@ -549,7 +549,7 @@ function TableCellActionMenuContainer({
                                       }: {
   anchorElem: HTMLElement;
   cellMerge: boolean;
-}): ReactNode {
+}): JSX.Element {
   const [editor] = useLexicalComposerContext();
 
   const menuButtonRef = useRef(null);

@@ -128,7 +128,7 @@ export default function EmojiPickerPlugin() {
       menuRenderFn={(
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
-      ): Element | ReactPortal | null => {
+      ): JSX.Element | ReactPortal | null => {
         if (anchorElementRef == null || options.length === 0) {
           return null;
         }

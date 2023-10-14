@@ -13,6 +13,7 @@ import {
 import { $getSelection, $isRangeSelection, TextNode } from 'lexical';
 import { useCallback, useEffect, useContext, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
+import { ReactPortal } from 'react';
 import EmojiMenuItem from './EmojiMenuItem';
 import EmojiOption from './EmojiOption';
 import { $createEmojiNode, EmojiNode } from '../../Nodes/EmojiNode/EmojiNode';

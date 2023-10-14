@@ -24,5 +24,5 @@ export default defineConfig({
                 exports: "named"
             }
         }
-    }
+    },
 });

@@ -108,6 +108,12 @@ export default function EquationComponent({
     }
   }, [editor, nodeKey, onHide, showEquationEditor]);
 
+  const onDoubleClick = () => {
+    if(editor.isEditable()){
+      setShowEquationEditor(true);
+    }
+  }
+
   return (
     <>
       {showEquationEditor ? (
@@ -122,7 +128,7 @@ export default function EquationComponent({
           <KatexRenderer
             equation={equationValue}
             inline={inline}
-            onDoubleClick={() => setShowEquationEditor(true)}
+            onDoubleClick={onDoubleClick}
           />
         </ErrorBoundary>
       )}

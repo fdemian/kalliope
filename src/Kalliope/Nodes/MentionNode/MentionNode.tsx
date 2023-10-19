@@ -36,9 +36,10 @@ export class MentionNode extends DecoratorNode<JSX.Element> {
 
   exportJSON(): SerializedMentionNode {
     return {
-      ...super.exportJSON(),
       mention: this.__mentionName,
-      link: this.__link
+      link: this.__link,
+      type: "mention",
+      version: 1
     };
   }
 

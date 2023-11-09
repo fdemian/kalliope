@@ -4913,19 +4913,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/katex@npm:^0.16.5":
-  version: 0.16.5
-  resolution: "@types/katex@npm:0.16.5"
-  checksum: a1ce22cd87acd9b32891931f2bc4355c3540cc0a423e161a2e5b040d3e50812cb85ce1fd09f23d42324b19f9da30ded6b1807114f215624f670d79bb46c47cc8
+"@types/katex@npm:^0.16.6":
+  version: 0.16.6
+  resolution: "@types/katex@npm:0.16.6"
+  checksum: 20166070de2c92c4658c066bf13af5c0cd705a9c6d43e30aa6f097725fd30d5892ccbd2320257894eab9c224444c356070376a94886fdc19ec33a1458f793bf8
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.10":
-  version: 4.17.10
-  resolution: "@types/lodash-es@npm:4.17.10"
+"@types/lodash-es@npm:^4.17.11":
+  version: 4.17.11
+  resolution: "@types/lodash-es@npm:4.17.11"
   dependencies:
     "@types/lodash": "*"
-  checksum: 129e9dde830815a72f9bd17c3a7b7ffb10a9cf76d65c7bb4f14df13b38411ed3ebe9ebbc2f9059c4e61198e784d499e48d0a281e27a4defbbba748dd8a4cfd9d
+  checksum: bd8f3cd65fb1b2b54f18269a44847b159bbb8dd0a3ff33d26f06b68fca727d4cc079cf734e1d5dbf140563cc00e11f91c5a9d6c36ac1e66087875ae090b60b06
   languageName: node
   linkType: hard
 
@@ -5046,22 +5046,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-color@npm:^3.0.9":
-  version: 3.0.9
-  resolution: "@types/react-color@npm:3.0.9"
+"@types/react-color@npm:^3.0.10":
+  version: 3.0.10
+  resolution: "@types/react-color@npm:3.0.10"
   dependencies:
     "@types/react": "*"
     "@types/reactcss": "*"
-  checksum: af4fc80c177f4b1161d99031c458b31d76565e555b125f5aa794909d7e76488d957ac74d8d65837a15d31d7be8ffaa86bc71a00c8202a657ff0c0904526d493b
+  checksum: 1cf7cc4629a9f48715aa12cb1e5280bf3e429af55f5d741a23d8a8081f8f38ad1ebd8aed40af2a0809d58573535dbf21d0f4c1d6584fc18f0d423077a0fedc1b
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.14":
-  version: 18.2.14
-  resolution: "@types/react-dom@npm:18.2.14"
+"@types/react-dom@npm:18.2.15":
+  version: 18.2.15
+  resolution: "@types/react-dom@npm:18.2.15"
   dependencies:
     "@types/react": "*"
-  checksum: 890289c70d1966c168037637c09cacefe6205bdd27a33252144a6b432595a2943775ac1a1accac0beddaeb67f8fdf721e076acb1adc990b08e51c3d9fd4e780c
+  checksum: 8e9631600c21ff561328e38a951d1991b3b3b20f538af4c0efbd1327c883a5573a63f50e1b945c34fa51b114b30e1ca5e62317bd54f21e063d6697b4be843a03
   languageName: node
   linkType: hard
 
@@ -5076,14 +5076,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.36":
-  version: 18.2.36
-  resolution: "@types/react@npm:18.2.36"
+"@types/react@npm:18.2.37":
+  version: 18.2.37
+  resolution: "@types/react@npm:18.2.37"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 561fab294117983f3d245a63730bcffb423fc2a1b0f27d20c870abc5d980bc206a74f741cb11b5170fcdf0e747ac05448369cd930fbf345f74ed567f8fef3a9e
+  checksum: 2d2599f1a09e4f678509161fea8baeaf76d21deee460f4f3ccc1ca431ebe85f896d7d0b906127de17e97ed57240cec61955eb97d0b5d9cbf4e97fd6620b1acdb
   languageName: node
   linkType: hard
 
@@ -9033,12 +9033,12 @@ __metadata:
     "@storybook/react": 7.5.3
     "@storybook/react-vite": 7.5.3
     "@storybook/testing-library": 0.2.2
-    "@types/katex": ^0.16.5
-    "@types/lodash-es": ^4.17.10
+    "@types/katex": ^0.16.6
+    "@types/lodash-es": ^4.17.11
     "@types/prettier": ^3.0.0
-    "@types/react": 18.2.36
-    "@types/react-color": ^3.0.9
-    "@types/react-dom": 18.2.14
+    "@types/react": 18.2.37
+    "@types/react-color": ^3.0.10
+    "@types/react-dom": 18.2.15
     "@typescript-eslint/eslint-plugin": 6.10.0
     "@typescript-eslint/parser": 6.10.0
     "@vitejs/plugin-react-swc": 3.4.1

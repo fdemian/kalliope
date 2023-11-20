@@ -68,7 +68,7 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
    }, [closeOnClickOutside, onDelete]);
 
   const Excalidraw = excalidrawComponent;
-
+  
   return createPortal(
   <div
     className="ExcalidrawModal__overlay"

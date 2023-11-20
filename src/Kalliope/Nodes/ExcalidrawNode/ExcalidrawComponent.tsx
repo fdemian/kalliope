@@ -178,7 +178,7 @@ export default function ExcalidrawComponent({
     files = {},
     appState = {},
   } = useMemo(() => JSON.parse(data), [data]);
-
+  
   return (
     <>
       <ExcalidrawModalContainer

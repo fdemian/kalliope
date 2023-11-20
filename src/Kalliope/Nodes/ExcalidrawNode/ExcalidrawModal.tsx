@@ -81,12 +81,13 @@ export default function ExcalidrawModal({
   const [elements, setElements] =
     useState<ReadonlyArray<ExcalidrawElementFragment>>(initialElements);
   const [files, setFiles] = useState<BinaryFiles>(initialFiles);
-
+  
   useEffect(() => {
     if (excaliDrawModelRef.current !== null) {
       excaliDrawModelRef.current.focus();
     }
   }, []);
+
 
   useEffect(() => {
     let modalOverlayElement: HTMLElement | null = null;
@@ -139,22 +140,6 @@ export default function ExcalidrawModal({
   const save = () => {
     if (elements.filter((el) => !el.isDeleted).length > 0) {
       const appState = excaliDrawSceneRef?.current?.getAppState();
-      if(appState === undefined || appState === null) {
-        return({
-            exportBackground: false,
-            exportScale: false,
-            exportWithDarkMode: false,
-            isBindingEnabled: false,
-            isLoading: true,
-            name: false,
-            theme: false,
-            viewBackgroundColor: false,
-            viewModeEnabled: false,
-            zenModeEnabled: false,
-            zoom: false,
-         })
-      }
-
       // We only need a subset of the state
       const partialState: Partial<AppState> = {
         exportBackground: appState.exportBackground,
@@ -178,11 +163,11 @@ export default function ExcalidrawModal({
 
   const discard = () => {
     if (elements.filter((el) => !el.isDeleted).length === 0) {
-      // Delete node if the scene is clear
+      // delete node if the scene is clear
       onDelete();
     } else {
-      // Otherwise close the modal.
-      onClose();
+      //Otherwise, show confirmation dialog before closing
+      onClose(true);
     }
   };
 
@@ -204,7 +189,7 @@ export default function ExcalidrawModal({
   // like a module resolution issue with ESM vs CJS?
   const excalidrawComponent =
     Excalidraw.$$typeof != null ? Excalidraw : Excalidraw.default;
-
+  
   return (
   <ExternalExcalidrawModal
     excaliDrawSceneRef={excaliDrawSceneRef}

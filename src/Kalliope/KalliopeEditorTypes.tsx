@@ -26,7 +26,7 @@ type ExcalidrawElementFragment = {
 
 export type ExcalidrawModalProps = {
   excalidrawComponent: JSX.Element;
-  excaliDrawSceneRef: ExcalidrawImperativeAPI;
+  setExcalidrawAPI: (api: ExcalidrawImperativeAPI) => void;
   discard: () => void;
   save: () => void;
   onChange: () => void;

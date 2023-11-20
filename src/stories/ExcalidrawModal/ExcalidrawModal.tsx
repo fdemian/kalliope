@@ -20,7 +20,7 @@ type ExcalidrawModalType = (props: ExcalidrawModalProps) => ReactElement;
 const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
   const {
     excalidrawComponent,
-    excaliDrawSceneRef,
+    setExcalidrawAPI,
     discard,
     save,
     onDelete,
@@ -82,7 +82,7 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
       <div className="ExcalidrawModal__row">
         <Excalidraw
           onChange={onChange}
-          ref={excaliDrawSceneRef}
+          excalidrawAPI={(api) => setExcalidrawAPI(api)}
           initialData={{
             appState: initialAppState || {isLoading: false},
             elements: initialElements,

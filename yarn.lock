@@ -4998,19 +4998,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/katex@npm:^0.16.6":
-  version: 0.16.6
-  resolution: "@types/katex@npm:0.16.6"
-  checksum: 20166070de2c92c4658c066bf13af5c0cd705a9c6d43e30aa6f097725fd30d5892ccbd2320257894eab9c224444c356070376a94886fdc19ec33a1458f793bf8
+"@types/katex@npm:^0.16.7":
+  version: 0.16.7
+  resolution: "@types/katex@npm:0.16.7"
+  checksum: 4fd15d93553be97c02c064e16be18d7ccbabf66ec72a9dc7fd5bfa47f0c7581da2f942f693c7cb59499de4c843c2189796e49c9647d336cbd52b777b6722a95a
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.11":
-  version: 4.17.11
-  resolution: "@types/lodash-es@npm:4.17.11"
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
   dependencies:
     "@types/lodash": "*"
-  checksum: bd8f3cd65fb1b2b54f18269a44847b159bbb8dd0a3ff33d26f06b68fca727d4cc079cf734e1d5dbf140563cc00e11f91c5a9d6c36ac1e66087875ae090b60b06
+  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
   languageName: node
   linkType: hard
 
@@ -5141,12 +5141,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:18.2.15":
-  version: 18.2.15
-  resolution: "@types/react-dom@npm:18.2.15"
+"@types/react-dom@npm:18.2.17":
+  version: 18.2.17
+  resolution: "@types/react-dom@npm:18.2.17"
   dependencies:
     "@types/react": "*"
-  checksum: 8e9631600c21ff561328e38a951d1991b3b3b20f538af4c0efbd1327c883a5573a63f50e1b945c34fa51b114b30e1ca5e62317bd54f21e063d6697b4be843a03
+  checksum: 7a4e704ed4be6e0c3ccd8a22ff69386fe548304bf4db090513f42e059ff4c65f7a427790320051524d6578a2e4c9667bb7a80a4c989b72361c019fbe851d9385
   languageName: node
   linkType: hard
 
@@ -9126,12 +9126,12 @@ __metadata:
     "@storybook/react": 7.5.3
     "@storybook/react-vite": 7.5.3
     "@storybook/testing-library": 0.2.2
-    "@types/katex": ^0.16.6
-    "@types/lodash-es": ^4.17.11
+    "@types/katex": ^0.16.7
+    "@types/lodash-es": ^4.17.12
     "@types/prettier": ^3.0.0
     "@types/react": 18.2.6
     "@types/react-color": ^3.0.10
-    "@types/react-dom": 18.2.15
+    "@types/react-dom": 18.2.17
     "@typescript-eslint/eslint-plugin": 6.12.0
     "@typescript-eslint/parser": 6.12.0
     "@vitejs/plugin-react-swc": 3.5.0
@@ -9154,7 +9154,7 @@ __metadata:
     storybook: 7.5.3
     tslint: ^6.1.3
     typescript: 5.3.2
-    vite: 5.0.0
+    vite: 5.0.2
     vite-plugin-css-injected-by-js: ^3.3.0
   languageName: unknown
   linkType: soft
@@ -12785,9 +12785,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:5.0.0":
-  version: 5.0.0
-  resolution: "vite@npm:5.0.0"
+"vite@npm:5.0.2":
+  version: 5.0.2
+  resolution: "vite@npm:5.0.2"
   dependencies:
     esbuild: ^0.19.3
     fsevents: ~2.3.3
@@ -12821,7 +12821,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 1f953b062593b072f0e718384e1ff3307b548235ff8c4016fcaa85c09568eb0ba8cd8cfd80e99d940d3bea296b4661b1d0384fe5cb9a996d3e935feb69259755
+  checksum: 28784e10ae40f20afdafb81f09439800b2ba48b4e9f14720cb97a8bc47537369b91dc0d1ea955543dd5a443277d4af4718df9e95a9062276167c428fbc931566
   languageName: node
   linkType: hard
 

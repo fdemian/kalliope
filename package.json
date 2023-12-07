@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.17.2",
+    "@excalidraw/utils": "^0.1.2",
     "@lexical/clipboard": "0.12.5",
     "@lexical/code": "0.12.5",
     "@lexical/file": "0.12.5",

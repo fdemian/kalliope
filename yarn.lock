@@ -2439,6 +2439,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@excalidraw/utils@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@excalidraw/utils@npm:0.1.2"
+  checksum: 58d5ac47edd00a9a9cecb80a9ecf4361fe4737c52cc1d3a2e5a5f83c2add2119b7368db67f19c8e9729ed901355a1c646c63932944447a49d2c898cb86b19903
+  languageName: node
+  linkType: hard
+
 "@fal-works/esbuild-plugin-global-externals@npm:^2.1.2":
   version: 2.1.2
   resolution: "@fal-works/esbuild-plugin-global-externals@npm:2.1.2"
@@ -9011,6 +9018,7 @@ __metadata:
   resolution: "kalliope@workspace:."
   dependencies:
     "@excalidraw/excalidraw": ^0.17.2
+    "@excalidraw/utils": ^0.1.2
     "@lexical/clipboard": 0.12.5
     "@lexical/code": 0.12.5
     "@lexical/file": 0.12.5

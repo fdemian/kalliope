@@ -6,8 +6,6 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
-    console.clear();
-    console.log(env);
     return {
         plugins: [
             react(),

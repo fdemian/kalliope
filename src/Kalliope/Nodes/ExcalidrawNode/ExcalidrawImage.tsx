@@ -6,7 +6,7 @@
  *
  */
 
-import {exportToSvg} from '@excalidraw/excalidraw';
+import {exportToSvg} from '@excalidraw/utils';
 import {
   ExcalidrawElement,
   NonDeleted,

@@ -186,6 +186,10 @@ export default function ExcalidrawModal({
     setFiles(fls);
   };
 
+  console.clear();
+  console.log(Excalidraw);
+  console.log("---------------------------------");
+
   // This is a hacky work-around for Excalidraw + Vite.
   // In DEV, Vite pulls this in fine, in prod it doesn't. It seems
   // like a module resolution issue with ESM vs CJS?

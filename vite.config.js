@@ -5,8 +5,7 @@ export default defineConfig(({ command, mode }) => {
     return {
         define: {
           // If you want to exposes all env variables, which is not recommended
-          'process.env': env,
-          module: {}
+          'process.env': env
         },
     };
 });

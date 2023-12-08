@@ -6,7 +6,7 @@
  *
  */
 // @ts-nocheck
-import * as Excalidraw from '@excalidraw/excalidraw';
+import { Excalidraw } from '@excalidraw/excalidraw';
 import {
   AppState,
   BinaryFiles,

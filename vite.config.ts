@@ -6,6 +6,8 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
+    console.clear();
+    console.log(env);
     return {
         plugins: [
             react(),
@@ -30,6 +32,7 @@ export default defineConfig(({ command, mode }) => {
         define: {
             // If you want to exposes all env variables, which is not recommended
             'process.env': env,
+            'process.env.IS_PREACT': false,
             module: {}
         },
     }

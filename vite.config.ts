@@ -6,8 +6,7 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
-    console.clear();
-    console.log(env);
+    const buildMode = command === "build" ? "production" : "development";
     return {
         plugins: [
             react(),
@@ -30,9 +29,8 @@ export default defineConfig(({ command, mode }) => {
             },
         },
         define: {
-            'process.env': env,
-            'process.env.IS_PREACT': 'false',
-            module: {}
+            'process.env.NODE_ENV': JSON.stringify(buildMode),
+            'process.env.IS_PREACT': 'false'
         },
     }
     

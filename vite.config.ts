@@ -33,5 +33,4 @@ export default defineConfig(({ command, mode }) => {
             'process.env.IS_PREACT': 'false'
         },
     }
-    
 });

@@ -6,6 +6,12 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "declaration": true,
+    "rootDir": "./src/",
+
+    "typeRoots": [
+      "src/customTypings",
+      "node_modules/@types"
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

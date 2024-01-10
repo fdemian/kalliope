@@ -37,7 +37,8 @@
   content: '';
   position: absolute;
   left: 7px;
-  top: 11px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .Collapsible__container[open] .Collapsible__title:before {

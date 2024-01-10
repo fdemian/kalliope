@@ -9,7 +9,6 @@
  
 import type {
   ElementFormatType,
-  SerializedLexicalNode,
   LexicalNode,
   LexicalEditor,
   EditorConfig,
@@ -17,7 +16,11 @@ import type {
   Spread
 } from 'lexical';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
-import { DecoratorNode } from 'lexical';
+import {
+  DecoratorBlockNode,
+  SerializedDecoratorBlockNode,
+} from '@lexical/react/LexicalDecoratorBlockNode';
+
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
 
@@ -38,7 +41,7 @@ export type SerializedVideoNode = Spread<
     type: 'video';
     version: 1;
   },
-  SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
 function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode) {
@@ -61,7 +64,7 @@ function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode
   );
 }
 
-export class VideoNode extends DecoratorNode<JSX.Element> {
+export class VideoNode extends DecoratorBlockNode {
   __url: string;
 
   static getType(): string {
@@ -69,11 +72,11 @@ export class VideoNode extends DecoratorNode<JSX.Element> {
   }
 
   static clone(node: VideoNode): VideoNode {
-    return new VideoNode(node.__url, node.__key);
+    return new VideoNode(node.__url, node.__format, node.__key);
   }
 
-  constructor(url: string, key?: NodeKey) {
-    super(key);
+  constructor(url: string, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__url = url;
   }
 

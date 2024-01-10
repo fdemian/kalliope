@@ -6,7 +6,11 @@
  *
  */
 
-import type { DEPRECATED_GridCellNode, ElementNode } from 'lexical';
+import type {
+  DEPRECATED_GridCellNode,
+  ElementNode
+} from 'lexical';
+
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import useLexicalEditable from '@lexical/react/useLexicalEditable';
 import {
@@ -18,15 +22,16 @@ import {
   $getTableRowIndexFromTableCellNode,
   $insertTableColumn__EXPERIMENTAL,
   $insertTableRow__EXPERIMENTAL,
-  $isGridCellNode,
   $isGridSelection,
   $isTableCellNode,
   $isTableRowNode,
   $unmergeCell,
   getTableSelectionFromTableElement,
+  GridSelection,
   HTMLTableElementWithWithTableSelectionState,
   TableCellHeaderStates,
   TableCellNode,
+  TableRowNode,
 } from '@lexical/table';
 import {
   $createParagraphNode,
@@ -37,9 +42,9 @@ import {
   $isRangeSelection,
   $isTextNode,
   DEPRECATED_$getNodeTriplet,
-  GridSelection,
+  DEPRECATED_$isGridCellNode,
 } from 'lexical';
-import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
+import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import invariant from "../utils/invariant";
 
@@ -58,16 +63,17 @@ function computeSelectionCount(selection: GridSelection): {
 // of selecting merged cells and non-merged)
 function isGridSelectionRectangular(selection: GridSelection): boolean {
   const nodes = selection.getNodes();
-  const currentRows: number[] = [];
+  const currentRows: Array<number> = [];
   let currentRow = null;
   let expectedColumns = null;
   let currentColumns = 0;
-  for (const node of nodes) {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
     if ($isTableCellNode(node)) {
       const row = node.getParentOrThrow();
       invariant(
-          $isTableRowNode(row),
-          'Expected CellNode to have a RowNode parent',
+        $isTableRowNode(row),
+        'Expected CellNode to have a RowNode parent',
       );
       if (currentRow !== row) {
         if (expectedColumns !== null && currentColumns !== expectedColumns) {
@@ -90,18 +96,17 @@ function isGridSelectionRectangular(selection: GridSelection): boolean {
     }
   }
   return (
-      (expectedColumns === null || currentColumns === expectedColumns) &&
-      currentRows.every((v) => v === currentRows[0])
+    (expectedColumns === null || currentColumns === expectedColumns) &&
+    currentRows.every((v) => v === currentRows[0])
   );
 }
 
 function $canUnmerge(): boolean {
   const selection = $getSelection();
   if (
-      ($isRangeSelection(selection) && !selection.isCollapsed()) ||
-      (DEPRECATED_$isGridSelection(selection) &&
-          !selection.anchor.is(selection.focus)) ||
-      (!$isRangeSelection(selection) && !DEPRECATED_$isGridSelection(selection))
+    ($isRangeSelection(selection) && !selection.isCollapsed()) ||
+    ($isGridSelection(selection) && !selection.anchor.is(selection.focus)) ||
+    (!$isRangeSelection(selection) && !$isGridSelection(selection))
   ) {
     return false;
   }
@@ -140,12 +145,12 @@ type TableCellActionMenuProps = Readonly<{
 }>;
 
 function TableActionMenu({
-                           onClose,
-                           tableCellNode: _tableCellNode,
-                           setIsMenuOpen,
-                           contextRef,
-                           cellMerge
-                         }: TableCellActionMenuProps) {
+  onClose,
+  tableCellNode: _tableCellNode,
+  setIsMenuOpen,
+  contextRef,
+  cellMerge
+}: TableCellActionMenuProps) {
   const [editor] = useLexicalComposerContext();
   const dropDownRef = useRef<HTMLDivElement | null>(null);
   const [tableCellNode, updateTableCellNode] = useState(_tableCellNode);
@@ -159,7 +164,7 @@ function TableActionMenu({
   useEffect(() => {
     return editor.registerMutationListener(TableCellNode, (nodeMutations) => {
       const nodeUpdated =
-          nodeMutations.get(tableCellNode.getKey()) === 'updated';
+        nodeMutations.get(tableCellNode.getKey()) === 'updated';
 
       if (nodeUpdated) {
         editor.getEditorState().read(() => {
@@ -173,13 +178,13 @@ function TableActionMenu({
     editor.getEditorState().read(() => {
       const selection = $getSelection();
       // Merge cells
-      if (DEPRECATED_$isGridSelection(selection)) {
+      if ($isGridSelection(selection)) {
         const currentSelectionCounts = computeSelectionCount(selection);
         updateSelectionCounts(computeSelectionCount(selection));
         setCanMergeCells(
-            isGridSelectionRectangular(selection) &&
+          isGridSelectionRectangular(selection) &&
             (currentSelectionCounts.columns > 1 ||
-                currentSelectionCounts.rows > 1),
+              currentSelectionCounts.rows > 1),
         );
       }
       // Unmerge cell
@@ -193,9 +198,9 @@ function TableActionMenu({
     const rootElement = editor.getRootElement();
 
     if (
-        menuButtonElement != null &&
-        dropDownElement != null &&
-        rootElement != null
+      menuButtonElement != null &&
+      dropDownElement != null &&
+      rootElement != null
     ) {
       const rootEleRect = rootElement.getBoundingClientRect();
       const menuButtonRect = menuButtonElement.getBoundingClientRect();
@@ -204,11 +209,11 @@ function TableActionMenu({
       const margin = 5;
       let leftPosition = menuButtonRect.right + margin;
       if (
-          leftPosition + dropDownElementRect.width > window.innerWidth ||
-          leftPosition + dropDownElementRect.width > rootEleRect.right
+        leftPosition + dropDownElementRect.width > window.innerWidth ||
+        leftPosition + dropDownElementRect.width > rootEleRect.right
       ) {
         const position =
-            menuButtonRect.left - dropDownElementRect.width - margin;
+          menuButtonRect.left - dropDownElementRect.width - margin;
         leftPosition = (position < 0 ? margin : position) + window.pageXOffset;
       }
       dropDownElement.style.left = `${leftPosition + window.pageXOffset}px`;
@@ -225,10 +230,10 @@ function TableActionMenu({
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-          dropDownRef.current != null &&
-          contextRef.current != null &&
-          !dropDownRef.current.contains(event.target as Node) &&
-          !contextRef.current.contains(event.target as Node)
+        dropDownRef.current != null &&
+        contextRef.current != null &&
+        !dropDownRef.current.contains(event.target as Node) &&
+        !contextRef.current.contains(event.target as Node)
       ) {
         setIsMenuOpen(false);
       }
@@ -244,7 +249,7 @@ function TableActionMenu({
       if (tableCellNode.isAttached()) {
         const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
         const tableElement = editor.getElementByKey(
-            tableNode.getKey(),
+          tableNode.getKey(),
         ) as HTMLTableElementWithWithTableSelectionState;
 
         if (!tableElement) {
@@ -272,16 +277,17 @@ function TableActionMenu({
         const {columns, rows} = computeSelectionCount(selection);
         const nodes = selection.getNodes();
         let firstCell: null | DEPRECATED_GridCellNode = null;
-        for (const node of nodes) {
-          if ($isGridCellNode(node)) {
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i];
+          if (DEPRECATED_$isGridCellNode(node)) {
             if (firstCell === null) {
               node.setColSpan(columns).setRowSpan(rows);
               firstCell = node;
               const isEmpty = $cellContainsEmptyParagraph(node);
               let firstChild;
               if (
-                  isEmpty &&
-                  $isParagraphNode((firstChild = node.getFirstChild()))
+                isEmpty &&
+                $isParagraphNode((firstChild = node.getFirstChild()))
               ) {
                 firstChild.remove();
               }
@@ -312,25 +318,25 @@ function TableActionMenu({
   };
 
   const insertTableRowAtSelection = useCallback(
-      (shouldInsertAfter: boolean) => {
-        editor.update(() => {
-          $insertTableRow__EXPERIMENTAL(shouldInsertAfter);
-          onClose();
-        });
-      },
-      [editor, onClose],
+    (shouldInsertAfter: boolean) => {
+      editor.update(() => {
+        $insertTableRow__EXPERIMENTAL(shouldInsertAfter);
+        onClose();
+      });
+    },
+    [editor, onClose],
   );
 
   const insertTableColumnAtSelection = useCallback(
-      (shouldInsertAfter: boolean) => {
-        editor.update(() => {
-          for (let i = 0; i < selectionCounts.columns; i++) {
-            $insertTableColumn__EXPERIMENTAL(shouldInsertAfter);
-          }
-          onClose();
-        });
-      },
-      [editor, onClose, selectionCounts.columns],
+    (shouldInsertAfter: boolean) => {
+      editor.update(() => {
+        for (let i = 0; i < selectionCounts.columns; i++) {
+          $insertTableColumn__EXPERIMENTAL(shouldInsertAfter);
+        }
+        onClose();
+      });
+    },
+    [editor, onClose, selectionCounts.columns],
   );
 
   const deleteTableRowAtSelection = useCallback(() => {
@@ -393,19 +399,28 @@ function TableActionMenu({
       const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
 
       const tableColumnIndex =
-          $getTableColumnIndexFromTableCellNode(tableCellNode);
+        $getTableColumnIndexFromTableCellNode(tableCellNode);
 
-      const tableRows = tableNode.getChildren();
+      const tableRows = tableNode.getChildren<TableRowNode>();
+      const maxRowsLength = Math.max(
+        ...tableRows.map((row) => row.getChildren().length),
+      );
 
-      for (const tableRow of tableRows) {
+      if (tableColumnIndex >= maxRowsLength || tableColumnIndex < 0) {
+        throw new Error('Expected table cell to be inside of table row.');
+      }
+
+      for (let r = 0; r < tableRows.length; r++) {
+        const tableRow = tableRows[r];
+
         if (!$isTableRowNode(tableRow)) {
           throw new Error('Expected table row');
         }
 
         const tableCells = tableRow.getChildren();
-
-        if (tableColumnIndex >= tableCells.length || tableColumnIndex < 0) {
-          throw new Error('Expected table cell to be inside of table row.');
+        if (tableColumnIndex >= tableCells.length) {
+          // if cell is outside of bounds for the current row (for example various merge cell cases) we shouldn't highlight it
+          continue;
         }
 
         const tableCell = tableCells[tableColumnIndex];
@@ -426,127 +441,130 @@ function TableActionMenu({
   if (cellMerge) {
     if (canMergeCells) {
       mergeCellButton = (
-          <button
-              className="item"
-              onClick={() => mergeTableCellsAtSelection()}
-              data-test-id="table-merge-cells">
-            Merge cells
-          </button>
+        <button
+          className="item"
+          onClick={() => mergeTableCellsAtSelection()}
+          data-test-id="table-merge-cells">
+          Merge cells
+        </button>
       );
     } else if (canUnmergeCell) {
       mergeCellButton = (
-          <button
-              className="item"
-              onClick={() => unmergeTableCellsAtSelection()}
-              data-test-id="table-unmerge-cells">
-            Unmerge cells
-          </button>
+        <button
+          className="item"
+          onClick={() => unmergeTableCellsAtSelection()}
+          data-test-id="table-unmerge-cells">
+          Unmerge cells
+        </button>
       );
     }
   }
 
   return createPortal(
-  <div
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
       className="dropdown"
       ref={dropDownRef}
       onClick={(e) => {
         e.stopPropagation();
       }}>
-    {mergeCellButton}
-    <button
+      {mergeCellButton}
+      <hr />
+      <button
         className="item"
         onClick={() => insertTableRowAtSelection(false)}
         data-test-id="table-insert-row-above">
-    <span className="text">
-      Insert{' '}
-      {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
-      above
-    </span>
-    </button>
-    <button
+        <span className="text">
+          Insert{' '}
+          {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
+          above
+        </span>
+      </button>
+      <button
         className="item"
         onClick={() => insertTableRowAtSelection(true)}
         data-test-id="table-insert-row-below">
-    <span className="text">
-      Insert{' '}
-      {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
-      below
-    </span>
-    </button>
-    <hr />
-    <button
+        <span className="text">
+          Insert{' '}
+          {selectionCounts.rows === 1 ? 'row' : `${selectionCounts.rows} rows`}{' '}
+          below
+        </span>
+      </button>
+      <hr />
+      <button
         className="item"
         onClick={() => insertTableColumnAtSelection(false)}
         data-test-id="table-insert-column-before">
-    <span className="text">
-      Insert{' '}
-      {selectionCounts.columns === 1
-          ? 'column'
-          : `${selectionCounts.columns} columns`}{' '}
-      left
-    </span>
-    </button>
-    <button
+        <span className="text">
+          Insert{' '}
+          {selectionCounts.columns === 1
+            ? 'column'
+            : `${selectionCounts.columns} columns`}{' '}
+          left
+        </span>
+      </button>
+      <button
         className="item"
         onClick={() => insertTableColumnAtSelection(true)}
         data-test-id="table-insert-column-after">
-    <span className="text">
-      Insert{' '}
-      {selectionCounts.columns === 1
-          ? 'column'
-          : `${selectionCounts.columns} columns`}{' '}
-      right
-    </span>
-    </button>
-    <hr />
-    <button
+        <span className="text">
+          Insert{' '}
+          {selectionCounts.columns === 1
+            ? 'column'
+            : `${selectionCounts.columns} columns`}{' '}
+          right
+        </span>
+      </button>
+      <hr />
+      <button
         className="item"
         onClick={() => deleteTableColumnAtSelection()}
         data-test-id="table-delete-columns">
-      <span className="text">Delete column</span>
-    </button>
-    <button
+        <span className="text">Delete column</span>
+      </button>
+      <button
         className="item"
         onClick={() => deleteTableRowAtSelection()}
         data-test-id="table-delete-rows">
-      <span className="text">Delete row</span>
-    </button>
-    <button
+        <span className="text">Delete row</span>
+      </button>
+      <button
         className="item"
         onClick={() => deleteTableAtSelection()}
         data-test-id="table-delete">
-      <span className="text">Delete table</span>
-    </button>
-    <hr />
-    <button className="item" onClick={() => toggleTableRowIsHeader()}>
-    <span className="text">
-      {/* tslint:disable-next-line:no-bitwise */}
-      {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
-      TableCellHeaderStates.ROW
-          ? 'Remove'
-          : 'Add'}{' '}
-      row header
-    </span>
-    </button>
-    <button className="item" onClick={() => toggleTableColumnIsHeader()}>
-    <span className="text">
-      {/* tslint:disable-next-line:no-bitwise */}
-      {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
-      TableCellHeaderStates.COLUMN
-          ? 'Remove'
-          : 'Add'}{' '}
-      column header
-    </span>
-    </button>
-  </div>,
-  document.body,
+        <span className="text">Delete table</span>
+      </button>
+      <hr />
+      <button className="item" onClick={() => toggleTableRowIsHeader()}>
+        <span className="text">
+          {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
+          TableCellHeaderStates.ROW
+            ? 'Remove'
+            : 'Add'}{' '}
+          row header
+        </span>
+      </button>
+      <button
+        className="item"
+        onClick={() => toggleTableColumnIsHeader()}
+        data-test-id="table-column-header">
+        <span className="text">
+          {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
+          TableCellHeaderStates.COLUMN
+            ? 'Remove'
+            : 'Add'}{' '}
+          column header
+        </span>
+      </button>
+    </div>,
+    document.body,
   );
 }
 
 function TableCellActionMenuContainer({
-                                        anchorElem,
-                                        cellMerge,
-                                      }: {
+  anchorElem,
+  cellMerge,
+}: {
   anchorElem: HTMLElement;
   cellMerge: boolean;
 }): JSX.Element {
@@ -557,7 +575,7 @@ function TableCellActionMenuContainer({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [tableCellNode, setTableMenuCellNode] = useState<TableCellNode | null>(
-      null,
+    null,
   );
 
   const moveMenu = useCallback(() => {
@@ -574,13 +592,13 @@ function TableCellActionMenuContainer({
     const rootElement = editor.getRootElement();
 
     if (
-        $isRangeSelection(selection) &&
-        rootElement !== null &&
-        nativeSelection !== null &&
-        rootElement.contains(nativeSelection.anchorNode)
+      $isRangeSelection(selection) &&
+      rootElement !== null &&
+      nativeSelection !== null &&
+      rootElement.contains(nativeSelection.anchorNode)
     ) {
       const tableCellNodeFromSelection = $getTableCellNodeFromLexicalNode(
-          selection.anchor.getNode(),
+        selection.anchor.getNode(),
       );
 
       if (tableCellNodeFromSelection == null) {
@@ -589,7 +607,7 @@ function TableCellActionMenuContainer({
       }
 
       const tableCellParentNodeDOM = editor.getElementByKey(
-          tableCellNodeFromSelection.getKey(),
+        tableCellNodeFromSelection.getKey(),
       );
 
       if (tableCellParentNodeDOM == null) {
@@ -624,7 +642,7 @@ function TableCellActionMenuContainer({
 
         const top = tableCellRect.top - anchorRect.top + 4;
         const left =
-            tableCellRect.right - menuRect.width - 10 - anchorRect.left;
+          tableCellRect.right - menuRect.width - 10 - anchorRect.left;
 
         menuButtonDOM.style.opacity = '1';
         menuButtonDOM.style.transform = `translate(${left}px, ${top}px)`;
@@ -646,49 +664,48 @@ function TableCellActionMenuContainer({
   }, [prevTableCellDOM, tableCellNode]);
 
   return (
-      <div className="table-cell-action-button-container" ref={menuButtonRef}>
-        {tableCellNode != null && (
-            <>
-              <button
-                  className="table-cell-action-button chevron-down"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMenuOpen(!isMenuOpen);
-                  }}
-                  ref={menuRootRef}>
-                <i className="chevron-down" />
-              </button>
-              {isMenuOpen && (
-                  <TableActionMenu
-                      contextRef={menuRootRef}
-                      setIsMenuOpen={setIsMenuOpen}
-                      onClose={() => setIsMenuOpen(false)}
-                      tableCellNode={tableCellNode}
-                      cellMerge={cellMerge}
-                  />
-              )}
-            </>
-        )}
-      </div>
+    <div className="table-cell-action-button-container" ref={menuButtonRef}>
+      {tableCellNode != null && (
+        <>
+          <button
+            className="table-cell-action-button chevron-down"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsMenuOpen(!isMenuOpen);
+            }}
+            ref={menuRootRef}>
+            <i className="chevron-down" />
+          </button>
+          {isMenuOpen && (
+            <TableActionMenu
+              contextRef={menuRootRef}
+              setIsMenuOpen={setIsMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+              tableCellNode={tableCellNode}
+              cellMerge={cellMerge}
+            />
+          )}
+        </>
+      )}
+    </div>
   );
 }
 
 export default function TableActionMenuPlugin({
-                                                anchorElem = document.body,
-                                                cellMerge = false,
-                                              }: {
+  anchorElem = document.body,
+  cellMerge = false,
+}: {
   anchorElem?: HTMLElement;
   cellMerge?: boolean;
 }): null | ReactPortal {
   const isEditable = useLexicalEditable();
-  if(isEditable)
-    return createPortal(
-    <TableCellActionMenuContainer
-      anchorElem={anchorElem}
-      cellMerge={cellMerge}
-    />,
+  return createPortal(
+    isEditable ? (
+      <TableCellActionMenuContainer
+        anchorElem={anchorElem}
+        cellMerge={cellMerge}
+      />
+    ) : null,
     anchorElem,
   );
-
-  return null;
 }

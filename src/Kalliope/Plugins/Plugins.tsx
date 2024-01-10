@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, useState } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 import type { EditorState } from 'lexical';
@@ -72,6 +72,7 @@ function EditorPlugins({
   isNestedPlugin
 }: PluginComponentProps): JSX.Element {
   const { historyState } = useSharedHistoryContext();
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 
   return (
     <>
@@ -85,7 +86,10 @@ function EditorPlugins({
         </>
       )}
       {   !isNestedPlugin &&
-          floatingAnchorElem && <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} />
+          floatingAnchorElem && <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem}
+          isLinkEditMode={isLinkEditMode}
+          setIsLinkEditMode={setIsLinkEditMode}
+        />
       }
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />

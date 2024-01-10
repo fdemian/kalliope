@@ -31,7 +31,7 @@ import {
     SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {Suspense, useCallback, useContext, useEffect, useRef, useState} from 'react';
-import FloatingLinkEditorPlugin from '../../Plugins/FloatingLinkEditorPlugin/index';
+//import FloatingLinkEditorPlugin from '../../Plugins/FloatingLinkEditorPlugin/index';
 import {$isInlineImageNode } from './InlineImageNode';
 import {CalliopeContext} from "../../context";
 
@@ -300,7 +300,6 @@ export default function InlineImageComponent({
                     <div className="image-caption-container">
                         <LexicalNestedComposer initialEditor={caption}>
                             <AutoFocusPlugin />
-                            <FloatingLinkEditorPlugin />
                             <RichTextPlugin
                                 contentEditable={<ContentEditable className="InlineImageNode__contentEditable" />}
                                 placeholder={

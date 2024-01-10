@@ -31,7 +31,6 @@ import {
     SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {Suspense, useCallback, useContext, useEffect, useRef, useState} from 'react';
-//import FloatingLinkEditorPlugin from '../../Plugins/FloatingLinkEditorPlugin/index';
 import {$isInlineImageNode } from './InlineImageNode';
 import {CalliopeContext} from "../../context";
 

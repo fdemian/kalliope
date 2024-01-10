@@ -18,13 +18,13 @@ import {
   $getTableRowIndexFromTableCellNode,
   $isTableCellNode,
   $isTableRowNode,
+  $isGridSelection,
   getCellFromTarget,
 } from '@lexical/table';
 import {
   $getNearestNodeFromDOMNode,
   $getSelection,
   COMMAND_PRIORITY_HIGH,
-  DEPRECATED_$isGridSelection,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {
@@ -67,7 +67,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
         SELECTION_CHANGE_COMMAND,
         () => {
           const selection = $getSelection();
-          const isGridSelection = DEPRECATED_$isGridSelection(selection);
+          const isGridSelection = $isGridSelection(selection);
 
           if (isSelectingGrid !== isGridSelection) {
             updateIsSelectingGrid(isGridSelection);

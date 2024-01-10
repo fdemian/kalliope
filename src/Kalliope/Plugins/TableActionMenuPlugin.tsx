@@ -18,6 +18,8 @@ import {
   $getTableRowIndexFromTableCellNode,
   $insertTableColumn__EXPERIMENTAL,
   $insertTableRow__EXPERIMENTAL,
+  $isGridCellNode,
+  $isGridSelection,
   $isTableCellNode,
   $isTableRowNode,
   $unmergeCell,
@@ -35,8 +37,6 @@ import {
   $isRangeSelection,
   $isTextNode,
   DEPRECATED_$getNodeTriplet,
-  DEPRECATED_$isGridCellNode,
-  DEPRECATED_$isGridSelection,
   GridSelection,
 } from 'lexical';
 import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
@@ -268,12 +268,12 @@ function TableActionMenu({
   const mergeTableCellsAtSelection = () => {
     editor.update(() => {
       const selection = $getSelection();
-      if (DEPRECATED_$isGridSelection(selection)) {
+      if ($isGridSelection(selection)) {
         const {columns, rows} = computeSelectionCount(selection);
         const nodes = selection.getNodes();
         let firstCell: null | DEPRECATED_GridCellNode = null;
         for (const node of nodes) {
-          if (DEPRECATED_$isGridCellNode(node)) {
+          if ($isGridCellNode(node)) {
             if (firstCell === null) {
               node.setColSpan(columns).setRowSpan(rows);
               firstCell = node;

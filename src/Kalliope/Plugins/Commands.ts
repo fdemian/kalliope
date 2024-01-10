@@ -4,7 +4,6 @@ import {
   $getSelection,
   $isRangeSelection,
   $isTextNode,
-  DEPRECATED_$isGridSelection,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INDENT_CONTENT_COMMAND,
@@ -34,7 +33,7 @@ import {
 } from '@lexical/rich-text';
 import { $createHeadingNode, $createQuoteNode, HeadingTagType } from '@lexical/rich-text';
 import { TOGGLE_LINK_COMMAND } from '@lexical/link';
-import { INSERT_TABLE_COMMAND } from '@lexical/table';
+import { INSERT_TABLE_COMMAND, $isGridSelection } from '@lexical/table';
 
 // Load custom commands.
 import { INSERT_KEYBOARD_COMMAND } from './Keyboard/KeyboardCommand';
@@ -72,25 +71,28 @@ const clearFormatting = (editor: LexicalEditorRef)=> {
       if (anchor.key === focus.key && anchor.offset === focus.offset) {
         return;
       }
-
+      
       nodes.forEach((node, idx) => {
         // We split the first and last node by the selection
         // So that we don't format unselected text inside those nodes
         if ($isTextNode(node)) {
+          // Use a separate variable to ensure TS does not lose the refinement
+          let textNode = node;
           if (idx === 0 && anchor.offset !== 0) {
-            node = node.splitText(anchor.offset)[1] || node;
+            textNode = textNode.splitText(anchor.offset)[1] || textNode;
           }
           if (idx === nodes.length - 1) {
-            node = node.splitText(focus.offset)[0] || node;
+            textNode = textNode.splitText(focus.offset)[0] || textNode;
           }
 
-          if (node.__style !== '') {
-            node.setStyle('');
+          if (textNode.__style !== '') {
+            textNode.setStyle('');
           }
-          if (node.__format !== 0) {
-            node.setFormat(0);
-            $getNearestBlockElementAncestorOrThrow(node).setFormat('');
+          if (textNode.__format !== 0) {
+            textNode.setFormat(0);
+            $getNearestBlockElementAncestorOrThrow(textNode).setFormat('');
           }
+          node = textNode;
         } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
           node.replace($createParagraphNode(), true);
         } else if ($isDecoratorBlockNode(node)) {
@@ -98,7 +100,8 @@ const clearFormatting = (editor: LexicalEditorRef)=> {
         }
       });
     }
-  });
+  }
+  );
 };
 
 const onCodeLanguageSelect = (editor: LexicalEditorRef, value: string) => {
@@ -184,7 +187,7 @@ const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatType
     editor.current.update(() => {
       let selection = $getSelection();
 
-      if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+      if ($isRangeSelection(selection) || $isGridSelection(selection)) {
         if (selection.isCollapsed()) {
           $setBlocksType(selection, () => $createCodeNode());
         } else {

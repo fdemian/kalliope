@@ -1,4 +1,8 @@
 
+# v0.7.5 (2024-01-10)
+
+ - Fix typescript types.
+
 # v0.7.4 (2024-01-10)
 
  - Add typescript types.

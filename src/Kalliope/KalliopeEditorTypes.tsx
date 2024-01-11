@@ -116,8 +116,8 @@ export type CalliopeConfigProps = {
     modal: (props: ExcalidrawModalProps) => ReactElement;
   };
   citation: {
-    sourceLinkComponent: ({ sourceLink }: SourceCompProps) => JSX.Element;
-    authorComponent: ({ author }: AuthorCompProps) => JSX.Element;
+    sourceLinkComponent: (({ sourceLink }: SourceCompProps) => JSX.Element) | null | undefined;
+    authorComponent: (({ author }: AuthorCompProps) => JSX.Element) | null | undefined;
   };
   imageConfig: {
     addCaptionText: string,

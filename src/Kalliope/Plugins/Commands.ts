@@ -33,7 +33,7 @@ import {
 } from '@lexical/rich-text';
 import { $createHeadingNode, $createQuoteNode, HeadingTagType } from '@lexical/rich-text';
 import { TOGGLE_LINK_COMMAND } from '@lexical/link';
-import { INSERT_TABLE_COMMAND, $isGridSelection } from '@lexical/table';
+import { INSERT_TABLE_COMMAND, $isTableSelection } from '@lexical/table';
 
 // Load custom commands.
 import { INSERT_KEYBOARD_COMMAND } from './Keyboard/KeyboardCommand';
@@ -187,7 +187,7 @@ const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatType
     editor.current.update(() => {
       let selection = $getSelection();
 
-      if ($isRangeSelection(selection) || $isGridSelection(selection)) {
+      if ($isRangeSelection(selection) || $isTableSelection(selection)) {
         if (selection.isCollapsed()) {
           $setBlocksType(selection, () => $createCodeNode());
         } else {

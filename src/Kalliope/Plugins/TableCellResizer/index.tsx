@@ -18,7 +18,7 @@ import {
   $getTableRowIndexFromTableCellNode,
   $isTableCellNode,
   $isTableRowNode,
-  $isGridSelection,
+  $isTableSelection,
   getCellFromTarget,
 } from '@lexical/table';
 import {
@@ -58,7 +58,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
       useState<MousePosition | null>(null);
 
   const [activeCell, updateActiveCell] = useState<Cell | null>(null);
-  const [isSelectingGrid, updateIsSelectingGrid] = useState<boolean>(false);
+  const [isSelectingTable, updateIsSelectingTable] = useState<boolean>(false);
   const [draggingDirection, updateDraggingDirection] =
       useState<MouseDraggingDirection | null>(null);
 
@@ -67,10 +67,10 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
         SELECTION_CHANGE_COMMAND,
         () => {
           const selection = $getSelection();
-          const isGridSelection = $isGridSelection(selection);
+          const isTableSelection = $isTableSelection(selection);
 
-          if (isSelectingGrid !== isGridSelection) {
-            updateIsSelectingGrid(isGridSelection);
+          if (isSelectingTable !== isTableSelection) {
+            updateIsSelectingTable(isTableSelection);
           }
 
           return false;
@@ -351,7 +351,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
 
   return (
       <div ref={resizerRef}>
-        {activeCell != null && !isSelectingGrid && (
+        {activeCell != null && !isSelectingTable && (
             <>
               <div
                   className="TableCellResizer__resizer TableCellResizer__ui"
@@ -376,10 +376,10 @@ export default function TableCellResizerPlugin(): null | ReactPortal {
   const isEditable = useLexicalEditable();
 
   return useMemo(
-      () =>
-          isEditable
-              ? createPortal(<TableCellResizer editor={editor} />, document.body)
-              : null,
-      [editor, isEditable],
+    () =>
+      isEditable
+        ? createPortal(<TableCellResizer editor={editor} />, document.body)
+        : null,
+    [editor, isEditable],
   );
 }

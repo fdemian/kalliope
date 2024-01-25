@@ -432,32 +432,6 @@ function TableActionMenu({
     });
   }, [editor, tableCellNode, clearTableSelection, onClose]);
 
-  const handleCellBackgroundColor = useCallback(
-    (value: string) => {
-      editor.update(() => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection) || $isTableSelection(selection)) {
-          const [cell] = $getNodeTriplet(selection.anchor);
-          if ($isTableCellNode(cell)) {
-            cell.setBackgroundColor(value);
-          }
-
-          if ($isTableSelection(selection)) {
-            const nodes = selection.getNodes();
-
-            for (let i = 0; i < nodes.length; i++) {
-              const node = nodes[i];
-              if ($isTableCellNode(node)) {
-                node.setBackgroundColor(value);
-              }
-            }
-          }
-        }
-      });
-    },
-    [editor],
-  );
-
   let mergeCellButton: null | JSX.Element = null;
   if (cellMerge) {
     if (canMergeCells) {

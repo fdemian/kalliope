@@ -137,11 +137,11 @@ export type CalliopeConfigProps = {
   };
 };
 
-type CalliopeContainerType = HTMLDivElement & {
+export type CalliopeContainerType = HTMLDivElement & {
   focus: () => void;
   clear: () => void;
   getContent: () => string;
-  executeCommand: (name: string, props: any) => void;
+  executeCommand: (name: string, props?: any) => void;
 };
 
 export type CalliopeEditorProps = {

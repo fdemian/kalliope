@@ -1,11 +1,12 @@
 import { getCodeLanguageOptions } from './utils/codeUtils';
 import { $getNodeByKey } from "lexical";
 import Kalliope from './KalliopeEditor';
-import type { CalliopeEditorProps } from './KalliopeEditorTypes';
+import type { CalliopeEditorProps, CalliopeContainerType } from './KalliopeEditorTypes';
 
 export {
   getCodeLanguageOptions,
-  $getNodeByKey
+  $getNodeByKey,
+  CalliopeContainerType
 };
 
 export default Kalliope as (props:CalliopeEditorProps) => JSX.Element;

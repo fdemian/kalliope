@@ -124,7 +124,7 @@ export type CalliopeConfigProps = {
     defaultCaptionText: string
   };
   inlineImage: {
-    showModal: (showModalProps: ShowModalProps) => void;
+    showModal: (showModalProps: any) => void;
   };
   dragAndDropImage: {
     handleDroppedFile: (file: File) => void

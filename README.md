@@ -2,6 +2,8 @@
 
 <img src="https://github.com/fdemian/kalliope/blob/main/Kalliope.png" alt="Kalliope" />
 
+![build-and-test](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 An extensible WYSWYG editor based on [Lexical](https://lexical.dev/).
 
 # What is Kalliope?

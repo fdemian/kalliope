@@ -2,7 +2,7 @@
 
 <img src="https://github.com/fdemian/kalliope/blob/main/Kalliope.png" alt="Kalliope" />
 
-![Install and build](https://github.com/fdemian/kalliope/.github/workflows/build-and-test.yml)
+![Install and build](https://github.com/fdemian/kalliope/.github/workflows/build-and-test.svg)
 
 An extensible WYSWYG editor based on [Lexical](https://lexical.dev/).
 

@@ -118,6 +118,7 @@ export default function ImageComponent({
         const node = $getNodeByKey(nodeKey);
         if ($isImageNode(node)) {
           node.remove();
+          return true;
         }
       }
       return false;

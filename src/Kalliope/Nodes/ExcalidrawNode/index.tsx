@@ -21,6 +21,8 @@ import { DecoratorNode } from 'lexical';
 import * as React from 'react';
 import { Suspense } from 'react';
 
+type Dimension = number | 'inherit';
+
 const ExcalidrawComponent = React.lazy(
   // @ts-ignore
   () => import('./ExcalidrawComponent')
@@ -30,12 +32,13 @@ export type SerializedExcalidrawNode = Spread<
   {
     data: string;
     type: string;
-    width: number | 'inherit';
-    height: number | 'inherit';
+    width: Dimension;
+    height: Dimension;
     version: number;
   },
   SerializedLexicalNode
 >;
+
 
 function convertExcalidrawElement(domNode: HTMLElement): DOMConversionOutput | null {
   const excalidrawData = domNode.getAttribute('data-lexical-excalidraw-json');
@@ -51,8 +54,8 @@ function convertExcalidrawElement(domNode: HTMLElement): DOMConversionOutput | n
 
 export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
   __data: string;
-  __width: number | 'inherit';
-  __height: number | 'inherit';
+  __width: Dimension;
+  __height: Dimension;
 
   static getType(): string {
     return 'excalidraw';

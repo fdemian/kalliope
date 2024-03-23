@@ -65,6 +65,7 @@ export default function ExcalidrawComponent({
           const node = $getNodeByKey(nodeKey);
           if ($isExcalidrawNode(node)) {
             node.remove();
+            return true;
           }
         });
       }

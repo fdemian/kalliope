@@ -13,6 +13,7 @@ import {$findMatchingParent, mergeRegister} from '@lexical/utils';
 import {
   $getSelection,
   $isRangeSelection,
+  $isLineBreakNode,
   BaseSelection,
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_HIGH,
@@ -274,17 +275,37 @@ function useFloatingLinkEditorToolbar(
     function updateToolbar() {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
-        const node = getSelectedNode(selection);
-        const linkParent = $findMatchingParent(node, $isLinkNode);
-        const autoLinkParent = $findMatchingParent(node, $isAutoLinkNode);
-        // We don't want this menu to open for auto links.
-        if (linkParent !== null && autoLinkParent === null) {
+        const focusNode = getSelectedNode(selection);
+        const focusLinkNode = $findMatchingParent(focusNode, $isLinkNode);
+        const focusAutoLinkNode = $findMatchingParent(
+          focusNode,
+          $isAutoLinkNode,
+        );
+        if (!(focusLinkNode || focusAutoLinkNode)) {
+          setIsLink(false);
+          return;
+        }
+        const badNode = selection.getNodes().find((node) => {
+          const linkNode = $findMatchingParent(node, $isLinkNode);
+          const autoLinkNode = $findMatchingParent(node, $isAutoLinkNode);
+          if (
+            !linkNode?.is(focusLinkNode) &&
+            !autoLinkNode?.is(focusAutoLinkNode) &&
+            !linkNode &&
+            !autoLinkNode &&
+            !$isLineBreakNode(node)
+          ) {
+            return node;
+          }
+        });
+        if (!badNode) {
           setIsLink(true);
         } else {
           setIsLink(false);
         }
-      }
     }
+  }
+    
     return mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
         editorState.read(() => {

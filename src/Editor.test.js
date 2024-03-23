@@ -21,6 +21,5 @@ describe('<Editor />', () => {
       mentionsData={[]}
     />
     );
-    screen.debug(undefined, 300000000);
   })
 });

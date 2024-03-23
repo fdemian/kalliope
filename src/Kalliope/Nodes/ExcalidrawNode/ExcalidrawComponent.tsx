@@ -76,7 +76,7 @@ export default function ExcalidrawComponent({
 
   // Set editor to readOnly if excalidraw is open to prevent unwanted changes
   useEffect(() => {
-    if (isModalOpen || editor.isEditable()) {
+    if (isModalOpen && editor.isEditable()) {
       editor.setEditable(true);
     } else {
       editor.setEditable(false);
@@ -88,6 +88,10 @@ export default function ExcalidrawComponent({
       editor.registerCommand(
         CLICK_COMMAND,
         (event: MouseEvent) => {
+
+          if(!editor.isEditable())
+            return false;
+
           const buttonElem = buttonRef.current;
           const eventTarget = event.target;
 

@@ -307,7 +307,7 @@ export default function ImageComponent({
         )}
         {resizable && $isNodeSelection(selection) && isFocused && (
           <ImageResizer
-            showCaption={showCaption}
+            showCaption={showCaption && editor.isEditable()}
             setShowCaption={setShowCaption}
             editor={editor}
             buttonRef={buttonRef}

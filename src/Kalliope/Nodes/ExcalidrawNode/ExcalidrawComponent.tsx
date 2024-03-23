@@ -76,7 +76,7 @@ export default function ExcalidrawComponent({
 
   // Set editor to readOnly if excalidraw is open to prevent unwanted changes
   useEffect(() => {
-    if (isModalOpen) {
+    if (isModalOpen || editor.isEditable()) {
       editor.setEditable(true);
     } else {
       editor.setEditable(false);
@@ -221,7 +221,7 @@ export default function ExcalidrawComponent({
             files={files}
             appState={appState}
           />
-          {isSelected && (
+          {isSelected && editor.isEditable() && (
             <div
                 className="image-edit-button"
                 role="button"

@@ -1,3 +1,11 @@
+# v.0.8.5 (2024-03-23)
+
+- Update lexical to version 0.14.2 bringing in many bugfixes.
+   + ImportDOM and ExportDOM for LayoutContainerNode (#5722) Ivaylo Pavlov
+   + Fix dont call importDOM methods more than once (#5726) Georgii Dolzhykov
+   + Fix to count tabs as list indentation on importing markdown (#5706) wnhlee
+
+- Update storybook
 
 # v0.7.5 (2024-01-10)
 

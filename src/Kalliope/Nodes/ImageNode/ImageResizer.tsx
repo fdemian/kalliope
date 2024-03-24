@@ -232,7 +232,7 @@ export default function ImageResizer({
 
   return (
     <div ref={controlWrapperRef}>
-      {!showCaption && captionsEnabled && (
+      {!showCaption && captionsEnabled && editor.isEditable() && (
         <button
           className="image-caption-button"
           ref={buttonRef}

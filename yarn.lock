@@ -4451,7 +4451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
+"@types/react@npm:*, @types/react@npm:18.2.6":
   version: 18.2.6
   resolution: "@types/react@npm:18.2.6"
   dependencies:
@@ -4462,7 +4462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.69, @types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
+"@types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
   version: 18.2.69
   resolution: "@types/react@npm:18.2.69"
   dependencies:
@@ -8408,7 +8408,7 @@ __metadata:
     "@types/katex": ^0.16.7
     "@types/lodash-es": ^4.17.12
     "@types/prettier": ^3.0.0
-    "@types/react": 18.2.69
+    "@types/react": 18.2.6
     "@types/react-color": ^3.0.12
     "@types/react-dom": 18.2.22
     "@typescript-eslint/eslint-plugin": 7.3.1

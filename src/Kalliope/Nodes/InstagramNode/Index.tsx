@@ -25,7 +25,7 @@ import './InstagramNode.css';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 
 function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | null {
-  const id = domNode.getAttribute('data-lexical-tweet-id');
+  const id = domNode.getAttribute('data-lexical-instagram-id');
   if (id) {
     const node = $createInstagramNode(id);
     return { node };
@@ -33,7 +33,7 @@ function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | nul
   return null;
 }
 
-export type SerializedTweetNode = Spread<
+export type SerializedInstagramNode = Spread<
   {
     url: string;
     type: 'instagram';
@@ -53,16 +53,16 @@ export class InstagramNode extends DecoratorBlockNode {
     return new InstagramNode(node.__url, node.__format, node.__key);
   }
 
-  static importJSON(serializedNode: SerializedTweetNode): InstagramNode {
+  static importJSON(serializedNode: SerializedInstagramNode): InstagramNode {
     const node = $createInstagramNode(serializedNode.url);
     node.setFormat(serializedNode.format);
     return node;
   }
 
-  exportJSON(): SerializedTweetNode {
+  exportJSON(): SerializedInstagramNode {
     return {
       ...super.exportJSON(),
-      id: this.getId(),
+      url: this.getURL(),
       type: 'instagram',
       version: 1,
     };
@@ -71,7 +71,7 @@ export class InstagramNode extends DecoratorBlockNode {
   static importDOM(): DOMConversionMap<HTMLDivElement> | null {
     return {
       div: (domNode: HTMLDivElement) => {
-        if (!domNode.hasAttribute('data-lexical-tweet-id')) {
+        if (!domNode.hasAttribute('data-lexical-instagram-id')) {
           return null;
         }
         return {
@@ -84,7 +84,7 @@ export class InstagramNode extends DecoratorBlockNode {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('div');
-    element.setAttribute('data-lexical-tweet-id', this.__url);
+    element.setAttribute('data-lexical-instagram-id', this.__url);
     const text = document.createTextNode(this.getTextContent());
     element.append(text);
     return { element };
@@ -95,7 +95,7 @@ export class InstagramNode extends DecoratorBlockNode {
     this.__url = id;
   }
 
-  getId(): string {
+  getURL(): string {
     return this.__url;
   }
 

@@ -153,7 +153,7 @@ export type CalliopeEditorProps = {
 };
 
 export type CalliopeFormatTypes = {
-  blockType: string;
+  blockType: string | null;
   selectedElementKey: string | null;
   isLink: boolean;
   isBold: boolean;

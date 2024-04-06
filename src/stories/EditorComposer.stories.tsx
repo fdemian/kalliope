@@ -684,7 +684,7 @@ export const EditorComposer = () => {
         <select
           name="block-format"
           id="block-format-select"
-          value={blockFormatMap[formats.blockType]}
+          value={formats.blockType ? blockFormatMap[formats.blockType] : blockFormatMap['Normal']}
           onChange={(e) => blockFormatChangeFn(e.target.value)}
         >
           <option value="">--Please choose an option--</option>

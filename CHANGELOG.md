@@ -1,3 +1,8 @@
+# v.0.8.6 (2024-04-06)
+
+- Update lexical to version 0.14.3 bringing in many bugfixes.
+- Support for inserting instagram posts.
+
 # v.0.8.5 (2024-03-23)
 
 - Update lexical to version 0.14.2 bringing in many bugfixes.

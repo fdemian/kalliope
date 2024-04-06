@@ -33,6 +33,7 @@ const ClickableLinkPlugin = lazy(() => import('./ClickableLinkPlugin'));
 const CodeHighlightPlugin = lazy(() => import('./CodeHighlightPlugin'));
 const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
 const TwitterPlugin = lazy(() => import('./Twitter/TwitterPlugin'));
+const InstagramPlugin = lazy(() => import('./Instagram/InstagramPlugins'));
 const TableCellResizer = lazy(() => import('./TableCellResizer/index'));
 const VideoPlugin = lazy(() => import('./Video/VideoPlugin'));
 const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
@@ -125,6 +126,7 @@ function EditorPlugins({
       <CollapsiblePlugin />
       <MarkdownShortcutPlugin />
       <TwitterPlugin />
+      <InstagramPlugin />
       <ExcalidrawPlugin />
       <VideoPlugin />
       <CitePlugin />

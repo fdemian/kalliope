@@ -340,6 +340,12 @@ Accesible using the `containerRef` ref.
       <td>Insert a tweet into the editor.</td>
     </tr>
     <tr>
+      <td>INSERT_INSTAGRAM_POST</td>
+      <td>string instagramURL. The instagram URL (Instagram urls are formatted like this: "https://www.instagram.com/p/<ID>/")
+      </td>
+      <td>Insert an instagram post into the editor (only works for public instagram links).</td>
+    </tr>
+    <tr>
       <td>INSERT_TABLE</td>
       <td>object {columns: <code>integer</code>, rows: <code>integer</code>}
       </td>

@@ -41,6 +41,7 @@ import { INSERT_SPOILER_COMMAND } from './Spoiler/SpoilerCommand';
 import { INSERT_IMAGE_COMMAND } from './ImagesPlugin/ImagesCommand';
 import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagesPlugin/InlineImagesCommand';
 import { INSERT_TWEET_COMMAND } from './Twitter/TwitterCommand';
+import { INSERT_INSTAGRAM_COMMAND } from './Instagram/InstagramCommands';
 import { INSERT_EQUATION_COMMAND } from './Equations/EquationsCommand';
 import { INSERT_VIDEO_COMMAND } from './Video/VideoCommand';
 import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
@@ -366,6 +367,11 @@ const EDITOR_COMMANDS: EditorCommands = [
   {
     name: 'INSERT_TWEET',
     command: INSERT_TWEET_COMMAND,
+    directCommand: true,
+  },
+  {
+    name: 'INSERT_INSTAGRAM_POST',
+    command: INSERT_INSTAGRAM_COMMAND,
     directCommand: true,
   },
   {

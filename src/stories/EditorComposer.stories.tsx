@@ -87,6 +87,7 @@ export const EditorComposer = () => {
   const [layoutFormat, setLayoutFormat] = useState("1");
   const [isLayoutToolbar, setLayoutToolbar] = useState(false);
   const [isTweetToolbar, setTweetToolbar] = useState<boolean | null>(false);
+  const [isInstagramToolbar, setInstagramToolbar] = useState<boolean | null>(false);
   const [isVideoToolbar, setVideoToolbar] = useState<boolean | null>(false);
   const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
   const [url, setUrl] = useState<string | null>(null);
@@ -151,6 +152,16 @@ export const EditorComposer = () => {
     containerRef.current.executeCommand("INSERT_TWEET", tweetId);
     setUrl(null);
     setTweetToolbar(false);
+  }
+
+  const insertIGLink = () => {
+    if(!containerRef.current || url === null || url === undefined)
+    return;
+    const BASE_IG_URL = "https://www.instagram.com/p/";
+    const igUrl = BASE_IG_URL + url?.split("p/")[1] + "embed/";
+    containerRef.current.executeCommand("INSERT_INSTAGRAM_POST", igUrl);
+    setUrl(null);
+    setInstagramToolbar(false);
   }
 
   const insertImage = () => {
@@ -497,6 +508,12 @@ export const EditorComposer = () => {
       directCommand: false
     },
     {
+      text: "Instagram",
+      command: () => setInstagramToolbar(true),
+      props: null,
+      directCommand: false
+    },
+    {
       text: "Video",
       command: () => setVideoToolbar(true),
       props: null,
@@ -587,10 +604,10 @@ export const EditorComposer = () => {
   let insertFn: MouseEventHandler<HTMLButtonElement> | undefined;
   let cancelFn: MouseEventHandler<HTMLButtonElement> | undefined;
 
-  const altToolbar =  isTweetToolbar || isVideoToolbar || isImageToolbar;
+  const altToolbar =  isTweetToolbar || isVideoToolbar || isImageToolbar || isInstagramToolbar;
   if(altToolbar){
-    text = isTweetToolbar ? "Insert Tweet" : (isVideoToolbar ? "Insert Video" :  "Insert image");
-    insertFn = isTweetToolbar ? insertTweet : (isVideoToolbar ? insertVideo :  insertImage);
+    text = (isTweetToolbar || isInstagramToolbar) ? "Insert Tweet/IG Link" : (isVideoToolbar ? "Insert Video" :  "Insert image");
+    insertFn =  isInstagramToolbar ? insertIGLink : (isTweetToolbar ? insertTweet : (isVideoToolbar ? insertVideo :  insertImage));
     cancelFn = isTweetToolbar ? toggleTweetToolbar : (isVideoToolbar ? toggleVideoToolbar :  toggleImageToolbar);
   }
 

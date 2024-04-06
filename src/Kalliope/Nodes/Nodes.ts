@@ -21,6 +21,7 @@ import { KeyboardNode } from './Keyboard/Keyboard';
 import { SpoilerNode } from './Spoiler/SpoilerNode';
 import { ImageNode } from './ImageNode/ImageNode';
 import { TweetNode } from './TweetNode/TweetNode';
+import { InstagramNode } from './InstagramNode/Index';
 import { EquationNode } from './Equation/EquationNode';
 import { LayoutContainerNode } from "./Layout/LayoutContainerNode";
 import { LayoutItemNode } from "./Layout/LayoutItemNode";
@@ -46,6 +47,7 @@ const Nodes: Klass<LexicalNode>[] = [
   SpoilerNode,
   HeadingNode,
   FigmaNode,
+  InstagramNode,
   QuoteNode,
   CodeHighlightNode,
   CodeNode,

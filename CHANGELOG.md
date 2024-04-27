@@ -1,3 +1,7 @@
+# v0.8.7 (2024-04-27)
+
+- Update react version.
+
 # v.0.8.7 (2024-04-06)
 
 - Update lexical to version 0.14.5.

@@ -1,4 +1,10 @@
-# v0.8.7 (2024-04-27)
+
+# v0.8.9 (2024-05-01)
+
+- Update packages
+- Increase instagram node height.
+
+# v0.8.8 (2024-04-27)
 
 - Update react version.
 

@@ -18,16 +18,11 @@ import {
   $getTableRowIndexFromTableCellNode,
   $isTableCellNode,
   $isTableRowNode,
-  $isTableSelection,
   getDOMCellFromTarget,
   TableCellNode,
 } from '@lexical/table';
-import {
-  $getNearestNodeFromDOMNode,
-  $getSelection,
-  COMMAND_PRIORITY_HIGH,
-  SELECTION_CHANGE_COMMAND,
-} from 'lexical';
+import {calculateZoomLevel} from '@lexical/utils';
+import {$getNearestNodeFromDOMNode} from 'lexical';
 import {
   MouseEventHandler,
   ReactPortal,
@@ -59,27 +54,9 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
     useState<MousePosition | null>(null);
 
   const [activeCell, updateActiveCell] = useState<TableDOMCell | null>(null);
-  const [isSelectingGrid, updateIsSelectingGrid] = useState<boolean>(false);
+  const [isMouseDown, updateIsMouseDown] = useState<boolean>(false);
   const [draggingDirection, updateDraggingDirection] =
     useState<MouseDraggingDirection | null>(null);
-
-  useEffect(() => {
-    return editor.registerCommand(
-      SELECTION_CHANGE_COMMAND,
-      /* @ts-expect-error */
-      (payload) => {
-        const selection = $getSelection();
-        const isTableSelection = $isTableSelection(selection);
-
-        if (isSelectingGrid !== isTableSelection) {
-          updateIsSelectingGrid(isTableSelection);
-        }
-
-        return false;
-      },
-      COMMAND_PRIORITY_HIGH,
-    );
-  });
 
   const resetState = useCallback(() => {
     updateActiveCell(null);
@@ -88,6 +65,10 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
     mouseStartPosRef.current = null;
     tableRectRef.current = null;
   }, []);
+
+  const isMouseDownOnEvent = (event: MouseEvent) => {
+    return (event.buttons & 1) === 1;
+  };
 
   useEffect(() => {
     const onMouseMove = (event: MouseEvent) => {
@@ -101,7 +82,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
           });
           return;
         }
-
+        updateIsMouseDown(isMouseDownOnEvent(event));
         if (resizerRef.current && resizerRef.current.contains(target as Node)) {
           return;
         }
@@ -136,15 +117,33 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
       }, 0);
     };
 
+    const onMouseDown = (event: MouseEvent) => {
+      setTimeout(() => {
+        updateIsMouseDown(true);
+      }, 0);
+    };
+
+    const onMouseUp = (event: MouseEvent) => {
+      setTimeout(() => {
+        updateIsMouseDown(false);
+      }, 0);
+    };
+
     document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mouseup', onMouseUp);
 
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener('mouseup', onMouseUp);
     };
   }, [activeCell, draggingDirection, editor, resetState]);
 
   const isHeightChanging = (direction: MouseDraggingDirection) => {
-    if (direction === 'bottom') return true;
+    if (direction === 'bottom') {
+      return true;
+    }
     return false;
   };
 
@@ -258,10 +257,11 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
           if (activeCell === null) {
             return;
           }
+          const zoom = calculateZoomLevel(event.target as Element);
 
           if (isHeightChanging(direction)) {
             const height = activeCell.elem.getBoundingClientRect().height;
-            const heightChange = Math.abs(event.clientY - y);
+            const heightChange = Math.abs(event.clientY - y) / zoom;
 
             const isShrinking = direction === 'bottom' && y > event.clientY;
 
@@ -277,7 +277,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
             width -=
               parseFloat(computedStyle.paddingLeft) +
               parseFloat(computedStyle.paddingRight);
-            const widthChange = Math.abs(event.clientX - x);
+            const widthChange = Math.abs(event.clientX - x) / zoom;
 
             const isShrinking = direction === 'right' && x > event.clientX;
 
@@ -324,6 +324,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
     if (activeCell) {
       const {height, width, top, left} =
         activeCell.elem.getBoundingClientRect();
+      const zoom = calculateZoomLevel(activeCell.elem);
 
       const styles = {
         bottom: {
@@ -352,7 +353,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
             window.pageXOffset + tableRect.left
           }px`;
           styles[draggingDirection].top = `${
-            window.pageYOffset + mouseCurrentPos.y
+            window.pageYOffset + mouseCurrentPos.y / zoom
           }px`;
           styles[draggingDirection].height = '3px';
           styles[draggingDirection].width = `${tableRect.width}px`;
@@ -361,7 +362,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
             window.pageYOffset + tableRect.top
           }px`;
           styles[draggingDirection].left = `${
-            window.pageXOffset + mouseCurrentPos.x
+            window.pageXOffset + mouseCurrentPos.x / zoom
           }px`;
           styles[draggingDirection].width = '3px';
           styles[draggingDirection].height = `${tableRect.height}px`;
@@ -385,7 +386,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
 
   return (
     <div ref={resizerRef}>
-      {activeCell != null && !isSelectingGrid && (
+      {activeCell != null && !isMouseDown && (
         <>
           <div
             className="TableCellResizer__resizer TableCellResizer__ui"

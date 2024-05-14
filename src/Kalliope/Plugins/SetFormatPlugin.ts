@@ -23,6 +23,7 @@ import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
 } from '@lexical/selection';
+import { $isTableSelection } from '@lexical/table';
 
 type SetFormatPluginProps = {
   internalFormat: CalliopeFormatTypes,
@@ -131,6 +132,26 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         fontFamily,
       };
     }
+    
+    if ($isTableSelection(selection)) {
+      try {
+        fontSize = $getSelectionStyleValueForProperty(selection, 'font-size', '15px');
+        fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000');
+        bgColor = $getSelectionStyleValueForProperty(selection, 'background-color', '#fff');
+        fontFamily = $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial');
+      } catch {
+        console.log('[ERROR] - $getSelectionStyleValueForProperty');
+      }
+
+      _formats = {
+        ...internalFormat,
+        fontSize,
+        fontColor,
+        bgColor,
+        fontFamily,
+      };
+    }
+
     return _formats;
   }, [editor, internalFormat]);
 

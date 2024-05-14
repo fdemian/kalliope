@@ -454,6 +454,10 @@ The following code languages are accepted by the highlighter. The value column i
           <td>Python</td>
         </tr>
         <tr>
+          <td>powershell</td>
+          <td>Powershell</td>
+        </tr>
+        <tr>
           <td>rust</td>
           <td>Rust</td>
         </tr>

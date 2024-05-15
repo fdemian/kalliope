@@ -1,3 +1,9 @@
+# v0.8.10 (2024-05-14)
+
+- Update lexical to version 0.15.0
+- Update collapsible container logic.
+- Add powershell to the list of supported languages.
+- Actually apply styles to text that is inside the table.
 
 # v0.8.9 (2024-05-01)
 

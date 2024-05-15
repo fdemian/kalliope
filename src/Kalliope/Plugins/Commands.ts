@@ -222,8 +222,6 @@ const selectFontFamily = (editor:LexicalEditorRef, _, family:string) => {
 
 // @ts-ignore
 const selectFontSize = (editor: LexicalEditorRef, _, fontSize: string) => {
-  console.clear();
-  console.log(fontSize);
   return applyStyleText({ 'font-size': fontSize }, editor);
 };
 

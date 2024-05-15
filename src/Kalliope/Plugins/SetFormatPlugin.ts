@@ -139,7 +139,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         fontColor = $getSelectionStyleValueForProperty(selection, 'color', '#000');
         bgColor = $getSelectionStyleValueForProperty(selection, 'background-color', '#fff');
         fontFamily = $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial');
-      } catch {
+      } catch{
         console.log('[ERROR] - $getSelectionStyleValueForProperty');
       }
 
@@ -151,7 +151,6 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         fontFamily,
       };
     }
-
     return _formats;
   }, [editor, internalFormat]);
 

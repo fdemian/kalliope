@@ -203,13 +203,16 @@ const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatType
   }
 };
 
-const applyStyleText = (styles: Record<string, string>, editor: LexicalEditorRef) => {
-  editor.current.update(() => {
-    const selection = $getSelection();
-    if ($isRangeSelection(selection)) {
-      $patchStyleText(selection, styles);
-    }
-  });
+const applyStyleText = (styles: Record<string, string>, editor: LexicalEditorRef, skipHistoryStack?: boolean) => {
+  editor.current.update(
+    () => {
+      const selection = $getSelection();
+      if (selection !== null) {
+        $patchStyleText(selection, styles);
+      }
+    },
+    skipHistoryStack ? {tag: 'historic'} : {},
+  );
 };
 
 // @ts-ignore
@@ -219,6 +222,8 @@ const selectFontFamily = (editor:LexicalEditorRef, _, family:string) => {
 
 // @ts-ignore
 const selectFontSize = (editor: LexicalEditorRef, _, fontSize: string) => {
+  console.clear();
+  console.log(fontSize);
   return applyStyleText({ 'font-size': fontSize }, editor);
 };
 

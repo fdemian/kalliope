@@ -275,7 +275,7 @@ export default function InlineImageComponent({
     return (
         <Suspense fallback={null}>
             <>
-                <div draggable={draggable}>
+                <span draggable={draggable}>
                     <button
                         className="image-edit-button"
                         ref={buttonRef}
@@ -295,9 +295,9 @@ export default function InlineImageComponent({
                         height={height}
                         position={position}
                     />
-                </div>
+                </span>
                 {showCaption && (
-                    <div className="image-caption-container">
+                    <span className="image-caption-container">
                         <LexicalNestedComposer initialEditor={caption}>
                             <AutoFocusPlugin />
                             <RichTextPlugin
@@ -310,7 +310,7 @@ export default function InlineImageComponent({
                                 ErrorBoundary={LexicalErrorBoundary}
                             />
                         </LexicalNestedComposer>
-                    </div>
+                    </span>
                 )}
             </>
         </Suspense>

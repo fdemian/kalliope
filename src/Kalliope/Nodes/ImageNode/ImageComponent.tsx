@@ -10,6 +10,7 @@ import './ImageNode.css';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import PlainTextEditor from './PlainTextEditor';
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
+import brokenImage from '../../UI/Images/image-broken.svg';
 import { mergeRegister } from '@lexical/utils';
 import {
   $getNodeByKey,
@@ -41,6 +42,9 @@ function useSuspenseImage(src: string) {
         imageCache.add(src);
         resolve(null);
       };
+      img.onerror = () => {
+        imageCache.add(src);
+      };
     });
   }
 }
@@ -53,6 +57,7 @@ function LazyImage({
   width,
   height,
   maxWidth,
+  onError
 }: {
   altText: string;
   className: string | null;
@@ -61,6 +66,7 @@ function LazyImage({
   maxWidth: number;
   src: string;
   width: 'inherit' | number;
+  onError: () => void;
 }): JSX.Element {
   useSuspenseImage(src);
   return (
@@ -74,10 +80,26 @@ function LazyImage({
         maxWidth,
         width,
       }}
+      onError={onError}
       draggable="false"
     />
   );
 }
+
+function BrokenImage(): JSX.Element {
+  return (
+    <img
+      src={brokenImage}
+      style={{
+        height: 200,
+        opacity: 0.2,
+        width: 200,
+      }}
+      draggable="false"
+    />
+  );
+}
+
 
 export default function ImageComponent({
   src,
@@ -109,6 +131,7 @@ export default function ImageComponent({
   const [editor] = useLexicalComposerContext();
   const [selection, setSelection] = useState<BaseSelection | null>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);
+  const [isLoadError, setIsLoadError] = useState<boolean>(false);
 
   const onDelete = useCallback(
     (payload: KeyboardEvent) => {
@@ -282,6 +305,9 @@ export default function ImageComponent({
     <Suspense fallback={null}>
       <>
         <div draggable={draggable}>
+        {isLoadError ? (
+            <BrokenImage />
+          ) : (
           <LazyImage
             className={
               isFocused
@@ -294,7 +320,9 @@ export default function ImageComponent({
             width={width}
             height={height}
             maxWidth={maxWidth}
+            onError={() => setIsLoadError(true)}
           />
+          )}
         </div>
         {showCaption && (
           <div className="image-caption-container">
@@ -315,7 +343,7 @@ export default function ImageComponent({
             maxWidth={maxWidth}
             onResizeStart={onResizeStart}
             onResizeEnd={onResizeEnd}
-            captionsEnabled={captionsEnabled}
+            captionsEnabled={!isLoadError && captionsEnabled}
             config={config}
           />
         )}

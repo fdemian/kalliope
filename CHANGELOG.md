@@ -1,3 +1,9 @@
+# v0.8.11 (2024-06-06)
+
+- Update lexical to version 0.16.0
+- Load image error UI.
+- Refactor InlineImageNode (spans) for correct HTML.
+
 # v0.8.10 (2024-05-14)
 
 - Update lexical to version 0.15.0

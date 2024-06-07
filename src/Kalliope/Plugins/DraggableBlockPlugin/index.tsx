@@ -9,7 +9,7 @@ import './index.css';
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {eventFiles} from '@lexical/rich-text';
-import {mergeRegister} from '@lexical/utils';
+import {calculateZoomLevel, mergeRegister} from '@lexical/utils';
 import {
   $getNearestNodeFromDOMNode,
   $getNodeByKey,
@@ -20,7 +20,6 @@ import {
   DROP_COMMAND,
   LexicalEditor,
 } from 'lexical';
-import type { ReactPortal } from "react";
 import {DragEvent as ReactDragEvent, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
@@ -60,27 +59,27 @@ function getCollapsedMargins(elem: HTMLElement): {
   marginBottom: number;
 } {
   const getMargin = (
-      element: Element | null,
-      margin: 'marginTop' | 'marginBottom',
+    element: Element | null,
+    margin: 'marginTop' | 'marginBottom',
   ): number =>
-      element ? parseFloat(window.getComputedStyle(element)[margin]) : 0;
+    element ? parseFloat(window.getComputedStyle(element)[margin]) : 0;
 
   const {marginTop, marginBottom} = window.getComputedStyle(elem);
   const prevElemSiblingMarginBottom = getMargin(
-      elem.previousElementSibling,
-      'marginBottom',
+    elem.previousElementSibling,
+    'marginBottom',
   );
   const nextElemSiblingMarginTop = getMargin(
-      elem.nextElementSibling,
-      'marginTop',
+    elem.nextElementSibling,
+    'marginTop',
   );
   const collapsedTopMargin = Math.max(
-      parseFloat(marginTop),
-      prevElemSiblingMarginBottom,
+    parseFloat(marginTop),
+    prevElemSiblingMarginBottom,
   );
   const collapsedBottomMargin = Math.max(
-      parseFloat(marginBottom),
-      nextElemSiblingMarginTop,
+    parseFloat(marginBottom),
+    nextElemSiblingMarginTop,
   );
 
   return {marginBottom: collapsedBottomMargin, marginTop: collapsedTopMargin};
@@ -90,7 +89,7 @@ function getBlockElement(
   anchorElem: HTMLElement,
   editor: LexicalEditor,
   event: MouseEvent,
-  useEdgeAsDefault = false
+  useEdgeAsDefault = false,
 ): HTMLElement | null {
   const anchorElementRect = anchorElem.getBoundingClientRect();
   const topLevelNodeKeys = getTopLevelNodeKeys(editor);
@@ -98,7 +97,6 @@ function getBlockElement(
   let blockElem: HTMLElement | null = null;
 
   editor.getEditorState().read(() => {
-
     if (useEdgeAsDefault) {
       const [firstNode, lastNode] = [
         editor.getElementByKey(topLevelNodeKeys[0]),
@@ -111,9 +109,11 @@ function getBlockElement(
       ];
 
       if (firstNodeRect && lastNodeRect) {
-        if (event.y < firstNodeRect.top) {
+        const firstNodeZoom = calculateZoomLevel(firstNode);
+        const lastNodeZoom = calculateZoomLevel(lastNode);
+        if (event.y / firstNodeZoom < firstNodeRect.top) {
           blockElem = firstNode;
-        } else if (event.y > lastNodeRect.bottom) {
+        } else if (event.y / lastNodeZoom > lastNodeRect.bottom) {
           blockElem = lastNode;
         }
 
@@ -132,15 +132,15 @@ function getBlockElement(
       if (elem === null) {
         break;
       }
-      const point = new Point(event.x, event.y);
+      const zoom = calculateZoomLevel(elem);
+      const point = new Point(event.x / zoom, event.y / zoom);
       const domRect = Rect.fromDOM(elem);
       const {marginTop, marginBottom} = getCollapsedMargins(elem);
-
       const rect = domRect.generateNewRect({
-        bottom: domRect.bottom + parseFloat(marginBottom.toString()),
+        bottom: domRect.bottom + marginBottom,
         left: anchorElementRect.left,
         right: anchorElementRect.right,
-        top: domRect.top - parseFloat(marginTop.toString()),
+        top: domRect.top - marginTop,
       });
 
       const {
@@ -228,7 +228,6 @@ function setTargetLine(
     targetBlockElem.getBoundingClientRect();
   const {top: anchorTop, width: anchorWidth} =
     anchorElem.getBoundingClientRect();
-
   const {marginTop, marginBottom} = getCollapsedMargins(targetBlockElem);
   let lineTop = targetBlockElemTop;
   if (mouseY >= targetBlockElemTop) {
@@ -258,7 +257,7 @@ function useDraggableBlockMenu(
   editor: LexicalEditor,
   anchorElem: HTMLElement,
   isEditable: boolean,
-): ReactPortal {
+): JSX.Element {
   const scrollerElem = anchorElem.parentElement;
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -321,13 +320,18 @@ function useDraggableBlockMenu(
       if (targetBlockElem === null || targetLineElem === null) {
         return false;
       }
-      setTargetLine(targetLineElem, targetBlockElem, pageY, anchorElem);
+      setTargetLine(
+        targetLineElem,
+        targetBlockElem,
+        pageY / calculateZoomLevel(target),
+        anchorElem,
+      );
       // Prevent default event to be able to trigger onDrop events
       event.preventDefault();
       return true;
     }
 
-    function onDrop(event: DragEvent): boolean {
+    function $onDrop(event: DragEvent): boolean {
       if (!isDraggingBlockRef.current) {
         return false;
       }
@@ -356,7 +360,7 @@ function useDraggableBlockMenu(
         return true;
       }
       const targetBlockElemTop = targetBlockElem.getBoundingClientRect().top;
-      if (pageY >= targetBlockElemTop) {
+      if (pageY / calculateZoomLevel(target) >= targetBlockElemTop) {
         targetNode.insertAfter(draggedNode);
       } else {
         targetNode.insertBefore(draggedNode);
@@ -377,7 +381,7 @@ function useDraggableBlockMenu(
       editor.registerCommand(
         DROP_COMMAND,
         (event) => {
-          return onDrop(event);
+          return $onDrop(event);
         },
         COMMAND_PRIORITY_HIGH,
       ),
@@ -407,19 +411,18 @@ function useDraggableBlockMenu(
   }
 
   return createPortal(
-  <>
-    <div
-      className="icon draggable-block-menu"
-      ref={menuRef}
-      draggable={true}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-    >
-      <div className={isEditable ? 'icon' : ''} />
-    </div>
-    <div className="draggable-block-target-line" ref={targetLineRef} />
-  </>,
-  anchorElem,
+    <>
+      <div
+        className="icon draggable-block-menu"
+        ref={menuRef}
+        draggable={true}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}>
+        <div className={isEditable ? 'icon' : ''} />
+      </div>
+      <div className="draggable-block-target-line" ref={targetLineRef} />
+    </>,
+    anchorElem,
   );
 }
 

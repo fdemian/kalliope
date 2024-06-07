@@ -575,7 +575,7 @@ function TableCellActionMenuContainer({
     null,
   );
 
-  const moveMenu = useCallback(() => {
+  const $moveMenu = useCallback(() => {
     const menu = menuButtonRef.current;
     const selection = $getSelection();
     const nativeSelection = window.getSelection();
@@ -621,7 +621,7 @@ function TableCellActionMenuContainer({
   useEffect(() => {
     return editor.registerUpdateListener(() => {
       editor.getEditorState().read(() => {
-        moveMenu();
+        $moveMenu();
       });
     });
   });
@@ -660,11 +660,13 @@ function TableCellActionMenuContainer({
     prevTableCellDOM.current = tableCellNode;
   }, [prevTableCellDOM, tableCellNode]);
 
+
   return (
     <div className="table-cell-action-button-container" ref={menuButtonRef}>
       {tableCellNode != null && (
         <>
           <button
+            type="button"
             className="table-cell-action-button chevron-down"
             onClick={(e) => {
               e.stopPropagation();
@@ -686,6 +688,7 @@ function TableCellActionMenuContainer({
       )}
     </div>
   );
+
 }
 
 export default function TableActionMenuPlugin({

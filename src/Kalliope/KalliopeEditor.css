@@ -619,7 +619,7 @@ i.chevron-down {
   display: inline-block;
   height: 8px;
   width: 8px;
-  background-image: url(UI/Images/chevron-down.svg);
+  background-image: url(./UI/Images/chevron-down.svg);
 }
 
 .action-button {

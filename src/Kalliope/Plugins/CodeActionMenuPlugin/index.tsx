@@ -99,6 +99,32 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
     };
   }, [shouldListenMouseMove, debouncedOnMouseMove]);
 
+  useEffect(() => {
+    return editor.registerMutationListener(
+      CodeNode,
+      (mutations) => {
+        editor.getEditorState().read(() => {
+          for (const [key, type] of mutations) {
+            switch (type) {
+              case 'created':
+                codeSetRef.current.add(key);
+                break;
+
+              case 'destroyed':
+                codeSetRef.current.delete(key);
+                break;
+
+              default:
+                break;
+            }
+          }
+        });
+        setShouldListenMouseMove(codeSetRef.current.size > 0);
+      },
+      {skipInitialization: false},
+      );
+  }, [editor]);
+
   editor.registerMutationListener(CodeNode, (mutations) => {
     editor.getEditorState().read(() => {
       for (const [key, type] of mutations) {

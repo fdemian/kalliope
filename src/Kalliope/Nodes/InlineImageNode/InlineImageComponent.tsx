@@ -10,9 +10,9 @@ import type {BaseSelection, LexicalEditor, NodeKey} from 'lexical';
 import './InlineImageNode.css';
 import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {LexicalNestedComposer} from '@lexical/react/LexicalNestedComposer';
-import {ContentEditable} from '@lexical/react/LexicalContentEditable';
+import ContentEditable  from '../../../UI/ContentEditable';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {mergeRegister} from '@lexical/utils';
@@ -301,11 +301,13 @@ export default function InlineImageComponent({
                         <LexicalNestedComposer initialEditor={caption}>
                             <AutoFocusPlugin />
                             <RichTextPlugin
-                                contentEditable={<ContentEditable className="InlineImageNode__contentEditable" />}
-                                placeholder={
-                                <div className="InlineImageNode__placeholder">
-                                    Enter a caption...
-                                </div>
+                                contentEditable={
+                                    <ContentEditable 
+                                        placeholderClassName="editor-placeholder"
+                                        className="editor-input"
+                                        aria-placeholder="Enter a caption..."
+                                        placeholder="Enter a caption..."
+                                    />
                                 }
                                 ErrorBoundary={LexicalErrorBoundary}
                             />

@@ -7,11 +7,12 @@ import {
   useImperativeHandle
 } from 'react';
 import { CAN_USE_DOM } from './shared/canUseDOM';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {CLEAR_EDITOR_COMMAND, EditorState} from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import ContentEditable from "../UI/ContentEditable";
+
 import EditorNodes from './Nodes/Nodes';
 import EditorPlugins from './Plugins/Plugins';
 import EDITOR_COMMANDS from './Plugins/Commands';
@@ -178,14 +179,14 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
                     className={`editor-content-editable-root editor-${
                       config.readOnly ? 'readonly' : 'editable'
                     }`}
+                    placeholderClassName='editor-placeholder'
+                    aria-placeholder={config.placeholderText}
+                    placeholder={config.placeholderText}
                   />
                 </div>
               </div>
-            }
-            placeholder={
-              <div className="editor-placeholder">{config.placeholderText}</div>
-            }
-            ErrorBoundary={LexicalErrorBoundary}
+             }
+             ErrorBoundary={LexicalErrorBoundary}
           />
           <EditorPlugins
              readOnly={config.readOnly}

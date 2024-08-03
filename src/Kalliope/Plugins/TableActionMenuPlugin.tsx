@@ -471,7 +471,6 @@ function TableActionMenu({
         e.stopPropagation();
       }}>
       {mergeCellButton}
-      <hr />
       <button
         className="item"
         onClick={() => insertTableRowAtSelection(false)}

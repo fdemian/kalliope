@@ -197,14 +197,14 @@ function TableHoverActionsContainer({
     <>
       {isShownRow && (
         <button
-          className={'calliope-table-add-rows'}
+          className={'calliope-editor-table-add-rows'}
           style={{...position}}
           onClick={() => insertAction(true)}
         />
       )}
       {isShownColumn && (
         <button
-          className={'calliope-table-add-columns'}
+          className={'calliope-editor-table-add-columns'}
           style={{...position}}
           onClick={() => insertAction(false)}
         />

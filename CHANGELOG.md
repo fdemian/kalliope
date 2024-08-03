@@ -1,3 +1,9 @@
+# v0.8.14 (2024-06-06)
+
+- Update lexical to version 0.17.0
+- Add hover buttons to table (for adding columns and rows)
+- Aesthetic fixes to table menu.
+
 # v0.8.11 (2024-06-06)
 
 - Update lexical to version 0.16.0

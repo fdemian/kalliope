@@ -642,10 +642,11 @@ i.chevron-down {
 .calliope-table {
   border-collapse: collapse;
   border-spacing: 0;
-  max-width: 100%;
   overflow-y: scroll;
+  overflow-x: scroll;
   table-layout: fixed;
-  width: 100%;
+  width: max-content;
+  margin: 0px 25px 30px 0px;
 }
 
 .calliope-table-cell {
@@ -663,11 +664,8 @@ i.chevron-down {
 
 .calliope-editor-table-add-columns {
   position: absolute;
-  top: 0;
-  width: 20px;
   background-color: #eee;
   height: 100%;
-  right: 0;
   animation: table-controls 0.2s ease;
   border: 0;
   cursor: pointer;
@@ -694,15 +692,13 @@ i.chevron-down {
 
 .calliope-editor-table-add-rows {
   position: absolute;
-  bottom: -25px;
   width: calc(100% - 25px);
   background-color: #eee;
-  height: 20px;
-  left: 0;
   animation: table-controls 0.2s ease;
   border: 0;
   cursor: pointer;
 }
+
 .calliope-editor-table-add-rows:after {
   background-image: url(UI/Images/plus.svg);
   background-size: contain;
@@ -729,6 +725,12 @@ i.chevron-down {
   100% {
     opacity: 1;
   }
+}
+
+
+.calliope-editor-table-add-columns:hover,
+.calliope-editor-table-add-rows:hover {
+  background-color: #c9dbf0;
 }
 
 .calliope-table-cell-resize-ruler {

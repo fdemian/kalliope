@@ -1,7 +1,7 @@
 {
   "name": "kalliope",
   "license": "BSD-2-Clause",
-  "version": "0.8.12",
+  "version": "0.8.13",
   "type": "module",
   "files": [
     "dist"
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.17.6",
-    "@excalidraw/utils": "^0.1.2",
+    "@excalidraw/utils": "^0.1.3-test13",
     "@lexical/clipboard": "0.17.0",
     "@lexical/code": "0.17.0",
     "@lexical/file": "0.17.0",
@@ -42,6 +42,7 @@
     "emoji-toolkit": "^9.0.1",
     "emojibase": "15.3.1",
     "emojibase-data": "15.3.2",
+    "fractional-indexing": "^3.2.0",
     "katex": "^0.16.11",
     "lexical": "0.17.0",
     "react": "^18.3.1",

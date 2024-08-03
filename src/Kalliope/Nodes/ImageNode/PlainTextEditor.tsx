@@ -3,7 +3,7 @@ import type { LexicalEditor } from 'lexical';
 import { createEditor } from 'lexical';
 import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
-import ContentEditable from '../../../UI/ContentEditable';
+import ContentEditable from '../UIPath/ContentEditable';
 
 import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import Placeholder from './Placeholder';

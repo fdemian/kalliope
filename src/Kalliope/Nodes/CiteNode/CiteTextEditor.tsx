@@ -6,7 +6,7 @@ import { CalliopeContext, CalliopeContextType } from '../../context';
 import Plugins from "../../Plugins/Plugins";
 import Nodes from "../Nodes";
 import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
-import {ContentEditable} from "@lexical/react/LexicalContentEditable";
+import ContentEditable from "../UIPath/ContentEditable";
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 
 type CiteEditorProps = {
@@ -64,7 +64,7 @@ const CiteTextEditor = ({ initialEditor, content, readOnly }:CiteEditorProps) =>
   >
     <RichTextPlugin
       placeholder={<div className="editor-placeholder"></div>}
-      contentEditable={<ContentEditable className="CiteNode__contentEditable" />}
+      contentEditable={<ContentEditable placeholder="" className="CiteNode__contentEditable" />}
       ErrorBoundary={LexicalErrorBoundary}
     />
     <Plugins

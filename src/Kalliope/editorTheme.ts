@@ -1,4 +1,6 @@
-const theme = {
+import type {EditorThemeClasses} from 'lexical';
+
+const theme:EditorThemeClasses = {
   ltr: 'ltr',
   rtl: 'rtl',
   heading: {
@@ -59,8 +61,6 @@ const theme = {
     variable: 'calliope__tokenVariable',
   },
   table: 'calliope-table',
-  tableAddColumns: 'calliope-editor-table-add-columns',
-  tableAddRows: 'calliope-editor-table-add-rows',
   tableCell: 'calliope-table-cell',
   tableCellActionButton: 'calliope-table-cell-action-button',
   tableCellActionButtonContainer: 'calliope-table-cell-action-button-container',

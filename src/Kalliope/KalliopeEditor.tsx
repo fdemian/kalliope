@@ -11,7 +11,7 @@ import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {CLEAR_EDITOR_COMMAND, EditorState} from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import ContentEditable from "../UI/ContentEditable";
+import ContentEditable from "./Nodes/UIPath/ContentEditable";
 
 import EditorNodes from './Nodes/Nodes';
 import EditorPlugins from './Plugins/Plugins';

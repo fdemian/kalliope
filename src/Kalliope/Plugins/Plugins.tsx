@@ -19,6 +19,7 @@ import DraggableBlockPlugin from './DraggableBlockPlugin';
 import CollapsiblePlugin from './CollapsiblePlugin';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
+import TableHoverActionsPlugin from './TableHoverActionsPlugin';
 
 //
 const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
@@ -105,6 +106,7 @@ function EditorPlugins({
       <EquationsPlugin />
       <TablePlugin />
       <TableCellResizer />
+      <TableHoverActionsPlugin />
       <ImagesPlugin />
       <InlineImagePlugin />
       {!readOnly && (

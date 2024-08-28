@@ -1,3 +1,7 @@
+# v0.8.16 (2024-08-27)
+
+- Update lexical to version 0.17.1
+
 # v0.8.14 (2024-06-06)
 
 - Update lexical to version 0.17.0

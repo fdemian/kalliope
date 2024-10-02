@@ -816,6 +816,10 @@ i.chevron-down {
   background-color: transparent;
 }
 
+.calliope-table-row-stripping tr:nth-child(even) {
+  background-color: #f2f5fb;
+}
+
 /* --- Table dropdown classes */
 .dropdown {
   z-index: 99999999;

@@ -1,3 +1,10 @@
+# v0.8.17 (2024-10-02)
+
+- Upgrade lexical to v0.18.0
+- Add row stripping.
+- Add multiline element transformers.
+- Fix excalidraw resizing.
+
 # v0.8.16 (2024-08-27)
 
 - Update lexical to version 0.17.1

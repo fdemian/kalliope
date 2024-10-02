@@ -57,6 +57,9 @@ type Props = {
     appState: Partial<AppState>,
     files: BinaryFiles,
   ) => void;
+
+  width: string;
+  height: string;
 };
 
 /**
@@ -74,6 +77,8 @@ export default function ExcalidrawModal({
   isShown = false,
   onDelete,
   onClose,
+  width,
+  height
 }: Props): ReactPortal | null {
 
   const ExternalExcalidrawModal = modalComponent;
@@ -205,6 +210,8 @@ export default function ExcalidrawModal({
     initialAppState={initialAppState}
     initialFiles={initialFiles}
     isShown={isShown}
+    width={width}
+    height={height}
   />
   );
 }

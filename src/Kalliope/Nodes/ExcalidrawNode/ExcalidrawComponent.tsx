@@ -13,8 +13,6 @@ import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {mergeRegister} from '@lexical/utils';
 import {
  $getNodeByKey,
- $getSelection,
- $isNodeSelection,
  CLICK_COMMAND,
  COMMAND_PRIORITY_LOW,
  KEY_BACKSPACE_COMMAND,
@@ -41,7 +39,7 @@ export default function ExcalidrawComponent({
   const [isModalOpen, setModalOpen] = useState<boolean>(
     data === '[]' && editor.isEditable()
   );
-  const imageContainerRef = useRef<HTMLImageElement | null>(null);
+  const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const captionButtonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] =
@@ -57,15 +55,14 @@ export default function ExcalidrawComponent({
   const { excalidrawConfig } = config;
   const CustomExcalidrawModal: ExcalidrawModalType = excalidrawConfig ? excalidrawConfig.modal : null;
 
-  const onDelete = useCallback(
+  const $onDelete = useCallback(
     (event: KeyboardEvent) => {
-      if (isSelected && $isNodeSelection($getSelection())) {
+      if (isSelected) {
         event.preventDefault();
         editor.update(() => {
           const node = $getNodeByKey(nodeKey);
-          if ($isExcalidrawNode(node)) {
+          if (node) {
             node.remove();
-            return true;
           }
         });
       }
@@ -116,22 +113,22 @@ export default function ExcalidrawComponent({
       ),
       editor.registerCommand(
         KEY_DELETE_COMMAND,
-        onDelete,
+        $onDelete,
         COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand(
         KEY_BACKSPACE_COMMAND,
-        onDelete,
+        $onDelete,
         COMMAND_PRIORITY_LOW,
       ),
     );
-  }, [clearSelection, editor, isSelected, isResizing, onDelete, setSelected]);
+  }, [clearSelection, editor, isSelected, isResizing, $onDelete, setSelected]);
 
   const deleteNode = useCallback(() => {
     setModalOpen(false);
     return editor.update(() => {
       const node = $getNodeByKey(nodeKey);
-      if ($isExcalidrawNode(node)) {
+      if (node) {
         node.remove();
       }
     });
@@ -197,6 +194,21 @@ export default function ExcalidrawComponent({
     appState = {},
   } = useMemo(() => JSON.parse(data), [data]);
   
+  const [initialWidth, initialHeight] = useMemo(() => {
+    let nodeWidth: 'inherit' | number = 'inherit';
+    let nodeHeight: 'inherit' | number = 'inherit';
+
+    editor.getEditorState().read(() => {
+      const node = $getNodeByKey(nodeKey);
+      if ($isExcalidrawNode(node)) {
+        nodeWidth = node.getWidth();
+        nodeHeight = node.getHeight();
+      }
+    });
+
+    return [nodeWidth, nodeHeight];
+  }, [editor, nodeKey]);
+
   return (
     <>
       <ExcalidrawModalContainer
@@ -213,6 +225,8 @@ export default function ExcalidrawComponent({
           setModalOpen(false);
         }}
         closeOnClickOutside={false}
+        width={initialWidth}
+        height={initialHeight}
       />
       {elements.length > 0 && (
         <button

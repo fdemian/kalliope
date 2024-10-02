@@ -194,7 +194,10 @@ export const TABLE: ElementTransformer = {
         if (!$isTableCellNode(cell)) {
           return;
         }
-        cell.toggleHeaderStyle(TableCellHeaderStates.ROW);
+        cell.setHeaderStyles(
+          TableCellHeaderStates.ROW,
+          TableCellHeaderStates.ROW,
+        );        
       });
 
       // Remove line

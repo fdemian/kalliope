@@ -31,8 +31,8 @@ const ExcalidrawComponent = React.lazy(
 export type SerializedExcalidrawNode = Spread<
   {
     data: string;
-    width: Dimension;
-    height: Dimension;
+    width?: Dimension;
+    height?: Dimension;
   },
   SerializedLexicalNode
 >;
@@ -71,18 +71,19 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
   static importJSON(serializedNode: SerializedExcalidrawNode): ExcalidrawNode {
     return new ExcalidrawNode(
       serializedNode.data,
-      serializedNode.width,
-      serializedNode.height,
+      serializedNode.width ?? 'inherit',
+      serializedNode.height ?? 'inherit',
     );
   }
 
   exportJSON(): SerializedExcalidrawNode {
     return {
+      ...super.exportJSON(),
       data: this.__data,
-      height: this.__height,
+      height: this.__height === 'inherit' ? undefined : this.__height,
       type: 'excalidraw',
       version: 1,
-      width: this.__width,
+      width: this.__width === 'inherit' ? undefined : this.__width,
     };
   }
 
@@ -106,11 +107,6 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     if (className !== undefined) {
       span.className = className;
     }
-
-    span.style.width =
-    this.__width === 'inherit' ? 'inherit' : `${this.__width}px`;
-  span.style.height =
-    this.__height === 'inherit' ? 'inherit' : `${this.__height}px`;
 
     return span;
   }
@@ -170,6 +166,14 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     self.__height = height;
   }
 
+  getWidth(): Dimension {
+    return this.getLatest().__width;
+  }
+
+  getHeight(): Dimension {
+    return this.getLatest().__height;
+  }
+
   decorate(): JSX.Element {
     return (
       <Suspense fallback={null}>
@@ -179,10 +183,14 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
   }
 }
 
-export function $createExcalidrawNode(): ExcalidrawNode {
-  return new ExcalidrawNode();
+export function $createExcalidrawNode(
+  data: string = '[]',
+  width: Dimension = 'inherit',
+  height: Dimension = 'inherit',
+): ExcalidrawNode {
+  return new ExcalidrawNode(data, width, height);
 }
 
-export function $isExcalidrawNode(node: LexicalNode | null): node is ExcalidrawNode {
+export function $isExcalidrawNode(node: LexicalNode | null | undefined): node is ExcalidrawNode {
   return node instanceof ExcalidrawNode;
 }

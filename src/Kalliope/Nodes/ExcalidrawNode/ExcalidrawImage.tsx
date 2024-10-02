@@ -15,6 +15,7 @@ import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types/types';
 import {useEffect, useState} from 'react';
 
 type ImageType = 'svg' | 'canvas';
+type Dimension = 'inherit' | number;
 
 type Props = {
   /**
@@ -30,17 +31,17 @@ type Props = {
    */
   elements: NonDeleted<ExcalidrawElement>[];
   /**
-   * The Excalidraw elements to be rendered as an image
+   * The Excalidraw files associated with the elements
    */
   files: BinaryFiles;
   /**
    * The height of the image to be rendered
    */
-  height?: number | null;
+  height?: Dimension;
   /**
    * The ref object to be used to render the image
    */
-  imageContainerRef: {current: null | HTMLDivElement};
+  imageContainerRef: React.MutableRefObject<HTMLDivElement | null>;
   /**
    * The type of image to be rendered
    */
@@ -52,7 +53,7 @@ type Props = {
   /**
    * The width of the image to be rendered
    */
-  width?: number | null;
+  width?: Dimension;
 };
 
 // exportToSvg has fonts from excalidraw.com

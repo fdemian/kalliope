@@ -7,6 +7,7 @@
  */
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {
   $getTableColumnIndexFromTableCellNode,
   $getTableRowIndexFromTableCellNode,
@@ -32,7 +33,8 @@ function TableHoverActionsContainer({
   anchorElem,
 }: {
   anchorElem: HTMLElement;
-}): JSX.Element {
+}): JSX.Element | null {
+  const isEditable = useLexicalEditable();
   const [editor] = useLexicalComposerContext();
   const [isShownRow, setShownRow] = useState<boolean>(false);
   const [isShownColumn, setShownColumn] = useState<boolean>(false);
@@ -41,6 +43,10 @@ function TableHoverActionsContainer({
   const [position, setPosition] = useState({});
   const codeSetRef = useRef<Set<NodeKey>>(new Set());
   const tableDOMNodeRef = useRef<HTMLElement | null>(null);
+
+  if (!isEditable) {
+    return null;
+  }
 
   const debouncedOnMouseMove = useDebounce(
     (event: MouseEvent) => {
@@ -246,8 +252,9 @@ export default function TableHoverActionsPlugin({
 }: {
   anchorElem?: HTMLElement;
 }): React.ReactPortal | null {
-  return createPortal(
+  const isEditable = useLexicalEditable();
+  return isEditable ? createPortal(
     <TableHoverActionsContainer anchorElem={anchorElem} />,
     anchorElem,
-  );
+  ) : null;
 }

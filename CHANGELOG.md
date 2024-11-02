@@ -5,6 +5,7 @@
 - Do not show equation component while in read only mode.
 - Table hover layout actions helper.
 - Bug Fix: Disable image and inline focusing, adding caption and editing in read-only mode.
+- Numerous bug fixes.
 
 # v0.8.17 (2024-10-02)
 

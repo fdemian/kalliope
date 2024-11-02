@@ -10,6 +10,7 @@ import './ImageNode.css';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import PlainTextEditor from './PlainTextEditor';
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import brokenImage from '../../UI/Images/image-broken.svg';
 import { mergeRegister } from '@lexical/utils';
 import {
@@ -132,7 +133,8 @@ export default function ImageComponent({
   const [selection, setSelection] = useState<BaseSelection | null>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);
   const [isLoadError, setIsLoadError] = useState<boolean>(false);
-
+  const isEditable = useLexicalEditable();
+  
   const onDelete = useCallback(
     (payload: KeyboardEvent) => {
       if (isSelected && $isNodeSelection($getSelection())) {
@@ -293,7 +295,7 @@ export default function ImageComponent({
   };
 
   const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
-  const isFocused = isSelected || isResizing;
+  const isFocused = (isSelected || isResizing) && isEditable;
   const calliopeConfig = useContext(CalliopeContext);
 
   if(!calliopeConfig)

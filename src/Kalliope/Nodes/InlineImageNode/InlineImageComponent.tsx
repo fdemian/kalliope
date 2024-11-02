@@ -15,6 +15,7 @@ import {LexicalNestedComposer} from '@lexical/react/LexicalNestedComposer';
 import ContentEditable from '../UIPath/ContentEditable';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {mergeRegister} from '@lexical/utils';
 import {
     $getNodeByKey,
@@ -110,6 +111,7 @@ export default function InlineImageComponent({
     const [editor] = useLexicalComposerContext();
     const [selection, setSelection] = useState<BaseSelection | null>(null);
     const activeEditorRef = useRef<LexicalEditor | null>(null);
+    const isEditable = useLexicalEditable();
 
     const calliopeConfig = useContext(CalliopeContext);
 
@@ -265,7 +267,7 @@ export default function InlineImageComponent({
     ]);
 
     const draggable = isSelected && $isNodeSelection(selection);
-    const isFocused = isSelected;
+    const isFocused = isSelected && isEditable;
 
     const showModalProps = {
         activeEditor: editor,
@@ -276,12 +278,14 @@ export default function InlineImageComponent({
         <Suspense fallback={null}>
             <>
                 <span draggable={draggable}>
+                  {isEditable && (
                     <button
                         className="image-edit-button"
                         ref={buttonRef}
                         onClick={() => showModal(showModalProps)}>
                         Edit
                     </button>
+                    )}
                     <LazyImage
                         className={
                             isFocused

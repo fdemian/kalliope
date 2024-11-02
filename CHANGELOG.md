@@ -1,3 +1,11 @@
+# v0.8.18 (2024-11-02)
+
+- Upgrade lexical to v0.19.0
+- Disable table hover actions on read only mode.
+- Do not show equation component while in read only mode.
+- Table hover layout actions helper.
+- Bug Fix: Disable image and inline focusing, adding caption and editing in read-only mode.
+
 # v0.8.17 (2024-10-02)
 
 - Upgrade lexical to v0.18.0

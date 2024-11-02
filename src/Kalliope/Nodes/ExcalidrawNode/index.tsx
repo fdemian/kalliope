@@ -177,7 +177,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
   decorate(): JSX.Element {
     return (
       <Suspense fallback={null}>
-        <ExcalidrawComponent nodeKey={this.getKey()} data={this.__data} />
+        <ExcalidrawComponent nodeKey={this.getKey()} data={this.__data} width={this.__width} height={this.__height} />
       </Suspense>
     );
   }

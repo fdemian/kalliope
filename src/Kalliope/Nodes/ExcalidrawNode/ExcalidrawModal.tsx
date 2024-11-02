@@ -11,6 +11,7 @@ import {
   AppState,
   BinaryFiles,
   ExcalidrawImperativeAPI,
+  ExcalidrawInitialDataState,
 } from '@excalidraw/excalidraw/types/types';
 import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
@@ -21,6 +22,7 @@ export type ExcalidrawElementFragment = {
   isDeleted?: boolean;
 };
 
+export type ExcalidrawInitialElements = ExcalidrawInitialDataState['elements'];
 
 type Props = {
   modalComponent:ExcalidrawModalType;
@@ -53,7 +55,7 @@ type Props = {
    * Callback when the save button is clicked
    */
   onSave: (
-    elements: ReadonlyArray<ExcalidrawElementFragment>,
+    elements: ExcalidrawInitialElements,
     appState: Partial<AppState>,
     files: BinaryFiles,
   ) => void;

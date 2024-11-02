@@ -5,39 +5,49 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type {ExcalidrawElementFragment} from './ExcalidrawModal';
+
 import type {NodeKey} from 'lexical';
 import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types/types';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {mergeRegister} from '@lexical/utils';
 import {
- $getNodeByKey,
- CLICK_COMMAND,
- COMMAND_PRIORITY_LOW,
- KEY_BACKSPACE_COMMAND,
- KEY_DELETE_COMMAND,
+  $getNodeByKey,
+  CLICK_COMMAND,
+  COMMAND_PRIORITY_LOW,
+  KEY_BACKSPACE_COMMAND,
+  KEY_DELETE_COMMAND,
 } from 'lexical';
-import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import ImageResizer from './ImageResizer';
-import { $isExcalidrawNode } from './index';
-import ExcalidrawImage from './ExcalidrawImage';
-import ExcalidrawModalContainer from './ExcalidrawModal';
+import {useCallback, useEffect, useContext, useMemo, useRef, useState} from 'react';
 import { CalliopeContext } from '../../context';
+import {$isExcalidrawNode} from '.';
+import ExcalidrawImage from './ExcalidrawImage';
+export type ExcalidrawInitialElements = ExcalidrawInitialDataState['elements'];
+import {
+  ExcalidrawInitialDataState,
+} from '@excalidraw/excalidraw/types/types';
 import { ExcalidrawModalProps } from '../../KalliopeEditorTypes';
+import ExcalidrawModalContainer from './ExcalidrawModal';
+import ImageResizer from './ImageResizer';
 
 export type ExcalidrawModalType = ((props:ExcalidrawModalProps) => JSX.Element) | null;
 
 export default function ExcalidrawComponent({
   nodeKey,
-  data
+  data,
+  width,
+  height,
 }: {
   data: string;
   nodeKey: NodeKey;
+  width: 'inherit' | number;
+  height: 'inherit' | number;
 }): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
+  const isEditable = useLexicalEditable();
   const [isModalOpen, setModalOpen] = useState<boolean>(
-    data === '[]' && editor.isEditable()
+    data === '[]' && editor.isEditable(),
   );
   const imageContainerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -45,16 +55,15 @@ export default function ExcalidrawComponent({
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey);
   const [isResizing, setIsResizing] = useState<boolean>(false);
-
   const calliopeConfig = useContext(CalliopeContext);
-
+  
   if(!calliopeConfig)
-      return null;
-
+    return null;
+  
   const { config } = calliopeConfig;
   const { excalidrawConfig } = config;
   const CustomExcalidrawModal: ExcalidrawModalType = excalidrawConfig ? excalidrawConfig.modal : null;
-
+  
   const $onDelete = useCallback(
     (event: KeyboardEvent) => {
       if (isSelected) {
@@ -71,24 +80,17 @@ export default function ExcalidrawComponent({
     [editor, isSelected, nodeKey],
   );
 
-  // Set editor to readOnly if excalidraw is open to prevent unwanted changes
   useEffect(() => {
-    if (isModalOpen && editor.isEditable()) {
-      editor.setEditable(true);
-    } else {
-      editor.setEditable(false);
+    if (!isEditable) {
+      if (isSelected) {
+        clearSelection();
+      }
+      return;
     }
-  }, [isModalOpen, editor]);
-
-  useEffect(() => {
     return mergeRegister(
       editor.registerCommand(
         CLICK_COMMAND,
         (event: MouseEvent) => {
-
-          if(!editor.isEditable())
-            return false;
-
           const buttonElem = buttonRef.current;
           const eventTarget = event.target;
 
@@ -122,7 +124,15 @@ export default function ExcalidrawComponent({
         COMMAND_PRIORITY_LOW,
       ),
     );
-  }, [clearSelection, editor, isSelected, isResizing, $onDelete, setSelected]);
+  }, [
+    clearSelection,
+    editor,
+    isSelected,
+    isResizing,
+    $onDelete,
+    setSelected,
+    isEditable,
+  ]);
 
   const deleteNode = useCallback(() => {
     setModalOpen(false);
@@ -135,17 +145,14 @@ export default function ExcalidrawComponent({
   }, [editor, nodeKey]);
 
   const setData = (
-    els: ReadonlyArray<ExcalidrawElementFragment>,
+    els: ExcalidrawInitialElements,
     aps: Partial<AppState>,
     fls: BinaryFiles,
   ) => {
-    if (!editor.isEditable()) {
-      return;
-    }
     return editor.update(() => {
       const node = $getNodeByKey(nodeKey);
       if ($isExcalidrawNode(node)) {
-        if (els.length > 0 || Object.keys(fls).length > 0) {
+        if ((els && els.length > 0) || Object.keys(fls).length > 0) {
           node.setData(
             JSON.stringify({
               appState: aps,
@@ -181,7 +188,6 @@ export default function ExcalidrawComponent({
         node.setHeight(nextHeight);
       }
     });
-    
   };
 
   const openModal = useCallback(() => {
@@ -193,41 +199,40 @@ export default function ExcalidrawComponent({
     files = {},
     appState = {},
   } = useMemo(() => JSON.parse(data), [data]);
-  
-  const [initialWidth, initialHeight] = useMemo(() => {
-    let nodeWidth: 'inherit' | number = 'inherit';
-    let nodeHeight: 'inherit' | number = 'inherit';
 
-    editor.getEditorState().read(() => {
-      const node = $getNodeByKey(nodeKey);
-      if ($isExcalidrawNode(node)) {
-        nodeWidth = node.getWidth();
-        nodeHeight = node.getHeight();
-      }
-    });
-
-    return [nodeWidth, nodeHeight];
-  }, [editor, nodeKey]);
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+    if (elements.length === 0) {
+      editor.update(() => {
+        const node = $getNodeByKey(nodeKey);
+        if (node) {
+          node.remove();
+        }
+      });
+    }
+  }, [editor, nodeKey, elements.length]);
 
   return (
     <>
+      {isEditable && isModalOpen && (
       <ExcalidrawModalContainer
-        modalComponent={CustomExcalidrawModal}
-        initialElements={elements}
-        initialFiles={files}
-        initialAppState={appState}
-        isShown={isModalOpen}
-        onDelete={deleteNode}
-        onClose={() => setModalOpen(false)}
-        onSave={(els, aps, fls) => {
-          editor.setEditable(true);
-          setData(els, aps, fls);
-          setModalOpen(false);
-        }}
-        closeOnClickOutside={false}
-        width={initialWidth}
-        height={initialHeight}
+          modalComponent={CustomExcalidrawModal}
+          initialElements={elements}
+          initialFiles={files}
+          initialAppState={appState}
+          isShown={isModalOpen}
+          onDelete={deleteNode}
+          onClose={closeModal}
+          onSave={(els, aps, fls) => {
+            editor.setEditable(true);
+            setData(els, aps, fls);
+            setModalOpen(false);
+          }}
+          width={width.toString()}
+          height={height.toString()}
+          closeOnClickOutside={false}
       />
+      )}
       {elements.length > 0 && (
         <button
           ref={buttonRef}
@@ -238,17 +243,19 @@ export default function ExcalidrawComponent({
             elements={elements}
             files={files}
             appState={appState}
+            width={width}
+            height={height}
           />
-          {isSelected && editor.isEditable() && (
+          {isSelected && isEditable && (
             <div
-                className="image-edit-button"
-                role="button"
-                tabIndex={0}
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={openModal}
+              className="image-edit-button"
+              role="button"
+              tabIndex={0}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={openModal}
             />
           )}
-          {(isSelected || isResizing) && (
+          {(isSelected || isResizing) && isEditable && (
             <ImageResizer
               buttonRef={captionButtonRef}
               showCaption={true}

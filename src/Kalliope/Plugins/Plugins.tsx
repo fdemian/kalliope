@@ -106,7 +106,7 @@ function EditorPlugins({
       <EquationsPlugin />
       <TablePlugin />
       <TableCellResizer />
-      <TableHoverActionsPlugin />
+      <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
       <ImagesPlugin />
       <InlineImagePlugin />
       {!readOnly && (

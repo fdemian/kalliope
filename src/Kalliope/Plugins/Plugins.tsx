@@ -93,6 +93,7 @@ function EditorPlugins({
           setIsLinkEditMode={setIsLinkEditMode}
         />
       }
+      { floatingAnchorElem && <TableHoverActionsPlugin anchorElem={floatingAnchorElem} /> }
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       {config.autoFocus && <AutoFocusPlugin />}
@@ -106,7 +107,6 @@ function EditorPlugins({
       <EquationsPlugin />
       <TablePlugin />
       <TableCellResizer />
-      <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
       <ImagesPlugin />
       <InlineImagePlugin />
       {!readOnly && (

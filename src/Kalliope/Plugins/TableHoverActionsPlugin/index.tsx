@@ -104,7 +104,6 @@ function TableHoverActionsContainer({
         const {
           width: tableElemWidth,
           y: tableElemY,
-          x: tableElemX,
           right: tableElemRight,
           left: tableElemLeft,
           bottom: tableElemBottom,

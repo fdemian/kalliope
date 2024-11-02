@@ -19,6 +19,7 @@ import {
 } from 'lexical';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 
 import EquationEditor from './EquationEditor';
 import KatexRenderer from './KatexRenderer';
@@ -36,6 +37,7 @@ export default function EquationComponent({
   nodeKey,
 }: EquationComponentProps): JSX.Element {
   const [editor] = useLexicalComposerContext();
+  const isEditable = useLexicalEditable();
   const [equationValue, setEquationValue] = useState(equation);
   const [showEquationEditor, setShowEquationEditor] = useState<boolean>(false);
   const inputRef = useRef(null);
@@ -57,10 +59,13 @@ export default function EquationComponent({
   );
 
   useEffect(() => {
+    if (!isEditable) {
+      return;
+    }
     if (!showEquationEditor && equationValue !== equation) {
       setEquationValue(equation);
     }
-  }, [showEquationEditor, equation, equationValue]);
+  }, [showEquationEditor, equation, equationValue, isEditable]);
 
   useEffect(() => {
     if (showEquationEditor) {
@@ -116,7 +121,7 @@ export default function EquationComponent({
 
   return (
     <>
-      {showEquationEditor ? (
+      {showEquationEditor && isEditable ? (
         <EquationEditor
           equation={equationValue}
           setEquation={setEquationValue}

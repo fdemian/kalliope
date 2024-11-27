@@ -645,7 +645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/utils@npm:^0.1.3-test-17":
+"@excalidraw/utils@npm:^0.1.3-test9":
   version: 0.1.3-test9
   resolution: "@excalidraw/utils@npm:0.1.3-test9"
   dependencies:
@@ -4894,7 +4894,7 @@ __metadata:
   resolution: "kalliope@workspace:."
   dependencies:
     "@excalidraw/excalidraw": ^0.17.6
-    "@excalidraw/utils": ^0.1.3-test-17
+    "@excalidraw/utils": ^0.1.3-test9
     "@lexical/clipboard": 0.20.0
     "@lexical/code": 0.20.0
     "@lexical/file": 0.20.0

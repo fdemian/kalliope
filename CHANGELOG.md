@@ -1,3 +1,10 @@
+# v0.9.0 (2024-11-27)
+
+- Upgrade lexical to v0.20.0
+- Fix importDOM for Layout plugin
+- Upgrade vite
+- Upgrade storybook packages
+
 # v0.8.18 (2024-11-02)
 
 - Upgrade lexical to v0.19.0

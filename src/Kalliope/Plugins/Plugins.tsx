@@ -12,6 +12,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import {SelectionAlwaysOnDisplay} from '@lexical/react/LexicalSelectionAlwaysOnDisplay';
 import FloatingLinkEditorPlugin from './FloatingLinkEditorPlugin/index';
 import TableCellActionMenuPlugin from './TableActionMenuPlugin';
 import CodeActionMenuPlugin from './CodeActionMenuPlugin/index';
@@ -78,6 +79,7 @@ function EditorPlugins({
 
   return (
     <>
+      {config.selectionAlwaysOnDisplay && <SelectionAlwaysOnDisplay />}
       {
           !isNestedPlugin &&
           floatingAnchorElem && !isSmallWidthViewport && (

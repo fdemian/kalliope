@@ -210,6 +210,7 @@ export const EditorComposer = () => {
     initialState: undefined,
     readOnly: false,
     autoFocus: false,
+    selectionAlwaysOnDisplay: false,
     onError: (error: Error) => {
       throw error;
     },

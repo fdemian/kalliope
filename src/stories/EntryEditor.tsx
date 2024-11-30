@@ -32,6 +32,7 @@ export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialStat
     initialState,
     readOnly,
     autoFocus: false,
+    selectionAlwaysOnDisplay: false,
     onError: (error: Error) => {
       throw error;
     },

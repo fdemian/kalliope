@@ -1,3 +1,12 @@
+# v0.9.1 ()
+
+- Update lexical to v0.20.1
+- Stop spellchecking mentions
+- Fix floating link editor selection
+- Fix table actions menu plugin
+- Add selectionIsAllwaysOnPlugin (defaults to false).
+- Add horizontal scroll to columns. Add invariant function.
+
 # v0.9.0 (2024-11-27)
 
 - Upgrade lexical to v0.20.0

@@ -24,7 +24,6 @@ import {
   $unmergeCell,
   getTableElement,
   getTableObserverFromTableElement,
-  HTMLTableElementWithWithTableSelectionState,
   TableCellHeaderStates,
   TableCellNode,
   TableRowNode,

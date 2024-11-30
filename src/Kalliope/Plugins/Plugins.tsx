@@ -107,7 +107,7 @@ function EditorPlugins({
       <ListPlugin />
       <CheckListPlugin />
       <EquationsPlugin />
-      <TablePlugin />
+      <TablePlugin hasHorizontalScroll={true} />
       <TableCellResizer />
       <ImagesPlugin />
       <InlineImagePlugin />

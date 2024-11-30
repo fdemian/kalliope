@@ -22,6 +22,7 @@ import {
   $isTableRowNode,
   $isTableSelection,
   $unmergeCell,
+  getTableElement,
   getTableObserverFromTableElement,
   HTMLTableElementWithWithTableSelectionState,
   TableCellHeaderStates,
@@ -40,6 +41,7 @@ import {
 } from 'lexical';
 import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
+import invariant from '../shared/invariant';
 
 function computeSelectionCount(selection: TableSelection): {
   columns: number;
@@ -203,13 +205,15 @@ function TableActionMenu({
     editor.update(() => {
       if (tableCellNode.isAttached()) {
         const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
-        const tableElement = editor.getElementByKey(
-          tableNode.getKey(),
-        ) as HTMLTableElementWithWithTableSelectionState;
+        const tableElement = getTableElement(
+          tableNode,
+          editor.getElementByKey(tableNode.getKey()),
+        );
 
-        if (!tableElement) {
-          throw new Error('Expected to find tableElement in DOM');
-        }
+        invariant(
+          tableElement !== null,
+          'TableActionMenu: Expected to find tableElement in DOM',
+        );
 
         const tableObserver = getTableObserverFromTableElement(tableElement);
         if (tableObserver !== null) {

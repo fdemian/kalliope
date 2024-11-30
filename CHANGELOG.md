@@ -1,4 +1,4 @@
-# v0.9.1 ()
+# v0.9.1 (2024-11-30)
 
 - Update lexical to v0.20.1
 - Stop spellchecking mentions

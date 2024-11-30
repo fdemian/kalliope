@@ -7,7 +7,7 @@
 *
 */
 import './index.css';
-import {$isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+import {$isAutoLinkNode, $isLinkNode, $createLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$findMatchingParent, mergeRegister} from '@lexical/utils';
 import {
@@ -20,6 +20,7 @@ import {
   COMMAND_PRIORITY_LOW,
   KEY_ESCAPE_COMMAND,
   LexicalEditor,
+  getDOMSelection,
   SELECTION_CHANGE_COMMAND,
   CLICK_COMMAND
 } from 'lexical';
@@ -29,6 +30,12 @@ import {createPortal} from 'react-dom';
 import {getSelectedNode} from '../../utils/getSelectedNode';
 import {setFloatingElemPositionForLinkEditor} from './setFloatingElemPositionForLinkEditor';
 import {sanitizeUrl} from './utils';
+
+function preventDefault(
+  event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>,
+): void {
+  event.preventDefault();
+}
 
 function FloatingLinkEditor({
   editor,
@@ -53,7 +60,7 @@ function FloatingLinkEditor({
     null,
   );
 
-  const updateLinkEditor = useCallback(() => {
+  const $updateLinkEditor = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const node = getSelectedNode(selection);
@@ -71,7 +78,7 @@ function FloatingLinkEditor({
       }
     }
     const editorElem = editorRef.current;
-    const nativeSelection = window.getSelection();
+    const nativeSelection = getDOMSelection(editor._window);
     const activeElement = document.activeElement;
 
     if (editorElem === null) {
@@ -111,7 +118,7 @@ function FloatingLinkEditor({
 
     const update = () => {
       editor.getEditorState().read(() => {
-        updateLinkEditor();
+        $updateLinkEditor();
       });
     };
 
@@ -128,20 +135,20 @@ function FloatingLinkEditor({
         scrollerElem.removeEventListener('scroll', update);
       }
     };
-  }, [anchorElem.parentElement, editor, updateLinkEditor]);
+  }, [anchorElem.parentElement, editor, $updateLinkEditor]);
 
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
         editorState.read(() => {
-          updateLinkEditor();
+          $updateLinkEditor();
         });
       }),
 
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         () => {
-          updateLinkEditor();
+          $updateLinkEditor();
           return true;
         },
         COMMAND_PRIORITY_LOW,
@@ -158,13 +165,13 @@ function FloatingLinkEditor({
         COMMAND_PRIORITY_HIGH,
       ),
     );
-  }, [editor, updateLinkEditor, setIsLink, isLink]);
+  }, [editor, $updateLinkEditor, setIsLink, isLink]);
 
   useEffect(() => {
     editor.getEditorState().read(() => {
-      updateLinkEditor();
+      $updateLinkEditor();
     });
-  }, [editor, updateLinkEditor]);
+  }, [editor, $updateLinkEditor]);
 
   useEffect(() => {
     if (isLinkEditMode && inputRef.current) {
@@ -176,18 +183,39 @@ function FloatingLinkEditor({
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
-      handleLinkSubmission();
+      handleLinkSubmission(event);
     } else if (event.key === 'Escape') {
       event.preventDefault();
       setIsLinkEditMode(false);
     }
   };
 
-  const handleLinkSubmission = () => {
+  const handleLinkSubmission = (
+    event:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLElement>,
+  ) => {
+    event.preventDefault();
     if (lastSelection !== null) {
       if (linkUrl !== '') {
-        editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl(editedLinkUrl));
+        editor.update(() => {
+          editor.dispatchCommand(
+            TOGGLE_LINK_COMMAND,
+            sanitizeUrl(editedLinkUrl),
+          );
+          const selection = $getSelection();
+          if ($isRangeSelection(selection)) {
+            const parent = getSelectedNode(selection).getParent();
+            if ($isAutoLinkNode(parent)) {
+              const linkNode = $createLinkNode(parent.getURL(), {
+                rel: parent.__rel,
+                target: parent.__target,
+                title: parent.__title,
+              });
+              parent.replace(linkNode, true);
+            }
+          }
+        });
       }
       setEditedLinkUrl('https://');
       setIsLinkEditMode(false);
@@ -214,7 +242,7 @@ function FloatingLinkEditor({
               className="link-cancel"
               role="button"
               tabIndex={0}
-              onMouseDown={(event) => event.preventDefault()}
+              onMouseDown={preventDefault}
               onClick={() => {
                 setIsLinkEditMode(false);
               }}
@@ -224,7 +252,7 @@ function FloatingLinkEditor({
               className="link-confirm"
               role="button"
               tabIndex={0}
-              onMouseDown={(event) => event.preventDefault()}
+              onMouseDown={preventDefault}
               onClick={handleLinkSubmission}
             />
           </div>
@@ -241,8 +269,9 @@ function FloatingLinkEditor({
             className="link-edit"
             role="button"
             tabIndex={0}
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={() => {
+            onMouseDown={preventDefault}
+            onClick={(event) => {
+              event.preventDefault();
               setEditedLinkUrl(linkUrl);
               setIsLinkEditMode(true);
             }}
@@ -251,7 +280,7 @@ function FloatingLinkEditor({
             className="link-trash"
             role="button"
             tabIndex={0}
-            onMouseDown={(event) => event.preventDefault()}
+            onMouseDown={preventDefault}
             onClick={() => {
               editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
             }}
@@ -272,7 +301,7 @@ function useFloatingLinkEditorToolbar(
   const [isLink, setIsLink] = useState(false);
 
   useEffect(() => {
-    function updateToolbar() {
+    function $updateToolbar() {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         const focusNode = getSelectedNode(selection);
@@ -295,7 +324,9 @@ function useFloatingLinkEditorToolbar(
               (focusLinkNode && !focusLinkNode.is(linkNode)) ||
               (linkNode && !linkNode.is(focusLinkNode)) ||
               (focusAutoLinkNode && !focusAutoLinkNode.is(autoLinkNode)) ||
-              (autoLinkNode && !autoLinkNode.is(focusAutoLinkNode))
+              (autoLinkNode &&
+                (!autoLinkNode.is(focusAutoLinkNode) ||
+                  autoLinkNode.getIsUnlinked()))
             );
           });
         if (!badNode) {
@@ -303,19 +334,18 @@ function useFloatingLinkEditorToolbar(
         } else {
           setIsLink(false);
         }
+      }
     }
-  }
-    
     return mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
         editorState.read(() => {
-          updateToolbar();
+          $updateToolbar();
         });
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
-          updateToolbar();
+          $updateToolbar();
           setActiveEditor(newEditor);
           return false;
         },

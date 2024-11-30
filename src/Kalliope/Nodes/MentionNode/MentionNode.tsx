@@ -71,7 +71,7 @@ export class MentionNode extends DecoratorNode<JSX.Element> {
 
   decorate(): JSX.Element {
     return (
-      <a href={this.__link} className="user-mention">
+      <a href={this.__link} className="user-mention" spellCheck="false">
         @{this.__mentionName}
       </a>
     );

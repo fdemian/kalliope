@@ -111,13 +111,16 @@ i.page-break,
 
 .editor {
   flex: auto;
+  /*max-width: 100%;*/
   position: relative;
   resize: vertical;
+  /*z-index: -1;*/
 }
 
 .editor-scroller {
   cursor: text;
   min-height: 150px;
+  max-width: 100%;
   border: 0;
   display: flex;
   position: relative;
@@ -818,6 +821,16 @@ i.chevron-down {
 
 .calliope-table-row-stripping tr:nth-child(even) {
   background-color: #f2f5fb;
+}
+
+.calliope-table-scrollable-wrapper {
+  overflow-x: auto;
+  margin: 0px 25px 30px 0px;
+}
+
+.calliope-table-scrollable-wrapper .calliope-editor-table {
+  /* Remove the table's margin and put it on the wrapper */
+  margin: 0;
 }
 
 /* --- Table dropdown classes */

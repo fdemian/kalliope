@@ -72,6 +72,7 @@ const theme:EditorThemeClasses = {
   tableCellSortedIndicator: 'calliope-table-cell-sorted-indicator',
   tableResizeRuler: 'calliope-table-cell-resize-ruler',
   tableRowStriping: 'calliope-table-row-stripping',
+  tableScrollableWrapper: 'calliope-table-scrollable-wrapper',
   tableSelected: 'calliope-table-selected',
   tableSelection: 'calliope-table-selection',
   text: {

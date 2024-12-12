@@ -9,7 +9,6 @@ import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
 import ContentEditable from "../UIPath/ContentEditable";
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import Placeholder from '../ImageNode/Placeholder';
-import { initial } from 'lodash-es';
 
 type CiteEditorProps = {
   initialEditor: LexicalEditor;

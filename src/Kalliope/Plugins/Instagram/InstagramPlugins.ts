@@ -23,9 +23,6 @@ export default function InstagramPlugin(): JSX.Element | null {
     return editor.registerCommand<string>(
         INSERT_INSTAGRAM_COMMAND,
       (payload) => {
-        console.clear();
-        console.log(payload);
-        console.log("_------");
         const igNode = $createInstagramNode(payload);
         $insertNodeToNearestRoot(igNode);
 

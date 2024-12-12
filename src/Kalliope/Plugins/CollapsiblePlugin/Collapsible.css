@@ -39,6 +39,7 @@
   left: 7px;
   top: 50%;
   transform: translateY(-50%);
+  margin-top: -2px;
 }
 
 .Collapsible__container[open] > .Collapsible__title:before {

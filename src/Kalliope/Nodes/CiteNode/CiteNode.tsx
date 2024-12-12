@@ -2,11 +2,7 @@
 import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
 import CiteQuote from './CiteQuote';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
-import {
-    DecoratorBlockNode,
-    SerializedDecoratorBlockNode,
-} from '@lexical/react/LexicalDecoratorBlockNode';
-import {createEditor, SerializedEditorState} from "lexical";
+import {createEditor, SerializedEditorState, DecoratorNode, SerializedLexicalNode} from "lexical";
 
 export type SerializedCiteNode = Spread<
     {
@@ -16,7 +12,7 @@ export type SerializedCiteNode = Spread<
         sourceContent: string | object;
         sourceLink: string;
     },
-    SerializedDecoratorBlockNode
+    SerializedLexicalNode
 >;
 
 type Author = {
@@ -30,7 +26,7 @@ type Source = {
     link: string;
 };
 
-export class CiteNode extends DecoratorBlockNode {
+export class CiteNode extends DecoratorNode<JSX.Element> {
     __id: string = '';
     __authorName: string;
     __authorLink: string;

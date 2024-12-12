@@ -8,6 +8,8 @@ import Nodes from "../Nodes";
 import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
 import ContentEditable from "../UIPath/ContentEditable";
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import Placeholder from '../ImageNode/Placeholder';
+import { initial } from 'lodash-es';
 
 type CiteEditorProps = {
   initialEditor: LexicalEditor;
@@ -31,7 +33,12 @@ const CiteTextEditor = ({ initialEditor, content, readOnly }:CiteEditorProps) =>
   }, [content, initialEditor])
 
   useEffect(() => {
-    if (citeEditorState && !citeEditorState.isEmpty()) {
+
+    const newState = JSON.stringify(initialEditor.getEditorState());
+    const currState = JSON.stringify(citeEditorState);
+    const stateChanged = newState !== currState;
+    
+    if (stateChanged && citeEditorState && !citeEditorState.isEmpty()) {
       initialEditor.setEditorState(citeEditorState);
     }
   }, [initialEditor, citeEditorState])
@@ -63,7 +70,7 @@ const CiteTextEditor = ({ initialEditor, content, readOnly }:CiteEditorProps) =>
       skipCollabChecks={true}
   >
     <RichTextPlugin
-      placeholder={<div className="editor-placeholder"></div>}
+      placeholder={<Placeholder className="CiteEditor__placeholder"> </Placeholder>}
       contentEditable={<ContentEditable placeholder="" className="CiteNode__contentEditable" />}
       ErrorBoundary={LexicalErrorBoundary}
     />

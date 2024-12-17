@@ -13,11 +13,11 @@ type BaseEquationEditorProps = {
   equation: string;
   inline: boolean;
   setEquation: (equation: string) => void;
+  inputRef: Ref<HTMLInputElement | HTMLTextAreaElement>;
 };
 
 const EquationEditor = (
-    {equation, setEquation, inline}: BaseEquationEditorProps,
-    inputRef: Ref<HTMLInputElement | HTMLTextAreaElement>
+    {equation, setEquation, inline, inputRef}: BaseEquationEditorProps,
 ): JSX.Element => {
 
   const onChange = (event: ChangeEvent) => setEquation((event.target as HTMLInputElement).value);

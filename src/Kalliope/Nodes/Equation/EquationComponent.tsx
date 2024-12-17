@@ -126,7 +126,7 @@ export default function EquationComponent({
           equation={equationValue}
           setEquation={setEquationValue}
           inline={inline}
-          ref={inputRef}
+          inputRef={inputRef}
         />
       ) : (
         <ErrorBoundary onError={(e) => editor._onError(e)} fallback={null}>

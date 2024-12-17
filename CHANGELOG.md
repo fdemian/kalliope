@@ -1,5 +1,9 @@
-# v0.9.1 (2024-11-30)
+# v0.9.2 (2024-12-17)
+- Update lexical to v0.21.0
+- Update katex and storybook. Remove unused logs.
+- Fix collapsible container styles.
 
+# v0.9.1 (2024-11-30)
 - Update lexical to v0.20.1
 - Stop spellchecking mentions
 - Fix floating link editor selection

@@ -44,6 +44,25 @@ function LayoutPlugin(): null {
             );
         }
 
+        const $fillLayoutItemIfEmpty = (node: LayoutItemNode) => {
+            if (node.isEmpty()) {
+              node.append($createParagraphNode());
+            }
+          };
+      
+        const $removeIsolatedLayoutItem = (node: LayoutItemNode): boolean => {
+            const parent = node.getParent<ElementNode>();
+            if (!$isLayoutContainerNode(parent)) {
+              const children = node.getChildren<LexicalNode>();
+              for (const child of children) {
+                node.insertBefore(child);
+              }
+              node.remove();
+              return true;
+            }
+            return false;
+        };
+
         return mergeRegister(
             editor.registerCommand(
                 INSERT_LAYOUT_COMMAND,
@@ -107,17 +126,16 @@ function LayoutPlugin(): null {
                 },
                 COMMAND_PRIORITY_EDITOR,
             ),
-            // Structure enforcing transformers for each node type. In case nesting structure is not
-            // "Container > Item" it'll unwrap nodes and convert it back
-            // to regular content.
-            editor.registerNodeTransform(LayoutItemNode, (node) => {
-                const parent = node.getParent<ElementNode>();
-                if (!$isLayoutContainerNode(parent)) {
-                    const children = node.getChildren<LexicalNode>();
-                    for (const child of children) {
-                        node.insertBefore(child);
-                    }
-                    node.remove();
+
+            editor.registerNodeTransform(LayoutItemNode, (node) => {    
+                // Structure enforcing transformers for each node type. In case nesting structure is not
+                // "Container > Item" it'll unwrap nodes and convert it back
+                // to regular content.
+                const isRemoved = $removeIsolatedLayoutItem(node);
+                if (!isRemoved) {
+                    // Layout item should always have a child. this function will listen
+                    // for any empty layout item and fill it with a paragraph node
+                    $fillLayoutItemIfEmpty(node);
                 }
             }),
             editor.registerNodeTransform(LayoutContainerNode, (node) => {

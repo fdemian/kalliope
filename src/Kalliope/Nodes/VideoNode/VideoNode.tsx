@@ -85,8 +85,7 @@ export class VideoNode extends DecoratorBlockNode {
   }
 
   static importJSON(serializedNode: SerializedVideoNode) {
-    const node = $createVideoNode(serializedNode.videoURL);
-    return node;
+    return $createVideoNode(serializedNode.videoURL).updateFromJSON(serializedNode);
   }
 
   exportJSON(): SerializedVideoNode {

@@ -16,6 +16,7 @@ import type {
   NodeKey,
   SerializedEditor,
   SerializedLexicalNode,
+  LexicalUpdateJSON,
   Spread,
 } from 'lexical';
 
@@ -105,7 +106,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
       showCaption,
       src,
       width,
-    });
+    }).updateFromJSON(serializedNode);;
     const nestedEditor = node.__caption;
     const editorState = nestedEditor.parseEditorState(caption.editorState);
     if (!editorState.isEmpty()) {
@@ -113,6 +114,19 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     }
     return node;
   }
+
+  updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedImageNode>): this {
+    const node = super.updateFromJSON(serializedNode);
+    const {caption} = serializedNode;
+
+    const nestedEditor = node.__caption;
+    const editorState = nestedEditor.parseEditorState(caption.editorState);
+    if (!editorState.isEmpty()) {
+      nestedEditor.setEditorState(editorState);
+    }
+    return node;
+  }
+ 
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('img');

@@ -25,8 +25,7 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
   }
 
   static importJSON(serializedNode: SerializedKeyboardNode) {
-    const node = $createKeyboardNode(serializedNode.text);
-    return node;
+    return $createKeyboardNode(serializedNode.text).updateFromJSON(serializedNode);
   }
 
   exportJSON(): SerializedKeyboardNode {

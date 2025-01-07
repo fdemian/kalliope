@@ -30,8 +30,9 @@ export class MentionNode extends DecoratorNode<JSX.Element> {
   }
 
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
-    const node = $createMentionNode(serializedNode.mention, serializedNode.link);
-    return node;
+    return $createMentionNode(serializedNode.mention, serializedNode.link).updateFromJSON(
+      serializedNode
+    );
   }
 
   exportJSON(): SerializedMentionNode {

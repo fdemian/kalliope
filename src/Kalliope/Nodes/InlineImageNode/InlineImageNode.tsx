@@ -24,6 +24,7 @@ import type {
     SerializedEditor,
     SerializedLexicalNode,
     Spread,
+    LexicalUpdateJSON,
 } from 'lexical';
 
 import {
@@ -116,7 +117,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
             showCaption,
             src,
             width,
-        });
+        }).updateFromJSON(serializedNode);
         const nestedEditor = node.__caption;
         const editorState = nestedEditor.parseEditorState(caption.editorState);
         if (!editorState.isEmpty()) {
@@ -125,6 +126,18 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
         return node;
     }
 
+    updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedInlineImageNode>): this {
+        const node = super.updateFromJSON(serializedNode);
+        const {caption} = serializedNode;
+    
+        const nestedEditor = node.__caption;
+        const editorState = nestedEditor.parseEditorState(caption.editorState);
+        if (!editorState.isEmpty()) {
+          nestedEditor.setEditorState(editorState);
+        }
+        return node;
+    }
+     
     static importDOM(): DOMConversionMap | null {
         return {
             img: () => ({

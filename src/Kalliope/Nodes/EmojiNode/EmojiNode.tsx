@@ -19,8 +19,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
   }
 
   static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
-    const node = $createEmojiNode(serializedNode.emoji);
-    return node;
+    return $createEmojiNode(serializedNode.emoji).updateFromJSON(serializedNode);
   }
 
   exportJSON(): SerializedEmojiNode {

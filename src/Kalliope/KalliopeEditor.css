@@ -596,6 +596,50 @@ figcaption {
   padding: 8px 16px;
 }
 
+/* TAB NODE */
+.calliope-tab-node {
+  position: relative;
+  text-decoration: none;
+}
+
+
+.calliope-tab-node.calliope-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.15em;
+  border-bottom: 0.1em solid currentColor;
+}
+
+.calliope-tab-node.calliope-underline-strikethrough::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
+}
+
+.calliope-tab-node.calliope-underline-strikethrough::before,
+.calliope-tab-node.calliope-underline-strikethrough::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.calliope-tab-node.calliope-underline-strikethrough::before {
+  top: 0.69em;
+  border-top: 0.1em solid currentColor;
+}
+
+.calliope-tab-node.calliope-underline-strikethrough::after {
+  bottom: 0.05em;
+  border-bottom: 0.1em solid currentColor;
+}
+
+
 /* TABLE */
 .table-cell-action-button-container {
   position: absolute;

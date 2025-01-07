@@ -60,6 +60,7 @@ const theme:EditorThemeClasses = {
     url: 'calliope__tokenOperator',
     variable: 'calliope__tokenVariable',
   },
+  tab: 'calliope-tab-node',
   table: 'calliope-table',
   tableCell: 'calliope-table-cell',
   tableCellActionButton: 'calliope-table-cell-action-button',
@@ -83,7 +84,7 @@ const theme:EditorThemeClasses = {
     subscript: 'calliope-subscript',
     superscript: 'calliope-superscript',
     underline: 'calliope-underline',
-    underlineStrikethrough: 'underline-strikethrough',
+    underlineStrikethrough: 'calliope-underline-strikethrough',
   },
   list: {
     listitem: 'calliope-list-item',

@@ -22,7 +22,7 @@ import {
   DRAGSTART_COMMAND,
   DROP_COMMAND,
   isHTMLElement,
-  getDOMSelection
+  getDOMSelectionFromTarget,
 } from 'lexical';
 import { useEffect } from 'react';
 import {
@@ -62,21 +62,21 @@ export default function ImagesPlugin(): JSX.Element | null {
       editor.registerCommand<DragEvent>(
         DRAGSTART_COMMAND,
         (event) => {
-          return onDragStart(event);
+          return $onDragStart(event);
         },
         COMMAND_PRIORITY_HIGH
       ),
       editor.registerCommand<DragEvent>(
         DRAGOVER_COMMAND,
         (event) => {
-          return onDragover(event);
+          return $onDragover(event);
         },
         COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand<DragEvent>(
         DROP_COMMAND,
         (event) => {
-          return onDrop(event, editor);
+          return $onDrop(event, editor);
         },
         COMMAND_PRIORITY_HIGH
       )
@@ -91,8 +91,8 @@ const TRANSPARENT_IMAGE =
 const img = document.createElement('img');
 img.src = TRANSPARENT_IMAGE;
 
-function onDragStart(event: DragEvent): boolean {
-  const node = getImageNodeInSelection();
+function $onDragStart(event: DragEvent): boolean {
+  const node = $getImageNodeInSelection();
   if (!node) {
     return false;
   }
@@ -116,14 +116,14 @@ function onDragStart(event: DragEvent): boolean {
         width: node.__width,
       },
       type: 'image',
-    })
+    }),
   );
 
   return true;
 }
 
-function onDragover(event: DragEvent): boolean {
-  const node = getImageNodeInSelection();
+function $onDragover(event: DragEvent): boolean {
+  const node = $getImageNodeInSelection();
   if (!node) {
     return false;
   }
@@ -133,8 +133,9 @@ function onDragover(event: DragEvent): boolean {
   return true;
 }
 
-function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
-  const node = getImageNodeInSelection();
+
+function $onDrop(event: DragEvent, editor: LexicalEditor): boolean {
+  const node = $getImageNodeInSelection();
   if (!node) {
     return false;
   }
@@ -146,22 +147,17 @@ function onDrop(event: DragEvent, editor: LexicalEditor): boolean {
   if (canDropImage(event)) {
     const range = getDragSelection(event);
     node.remove();
-    const domSelection = getDOMSelection();
-
-    if(!domSelection || !range)
-      throw Error("Dom selection is null");
-
-    domSelection.removeAllRanges();
-    domSelection.addRange(range);
     const rangeSelection = $createRangeSelection();
-    rangeSelection.applyDOMRange(range);
+    if (range !== null && range !== undefined) {
+      rangeSelection.applyDOMRange(range);
+    }
     $setSelection(rangeSelection);
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
   }
   return true;
 }
 
-function getImageNodeInSelection(): ImageNode | null {
+function $getImageNodeInSelection(): ImageNode | null {
   const selection = $getSelection();
   if (!$isNodeSelection(selection)) {
     return null;
@@ -176,7 +172,7 @@ function getDragImageData(event: DragEvent): null | InsertImagePayload {
   if (!dragData) {
     return null;
   }
-  const { type, data } = JSON.parse(dragData);
+  const {type, data} = JSON.parse(dragData);
   if (type !== 'image') {
     return null;
   }
@@ -201,16 +197,12 @@ function canDropImage(event: DragEvent): boolean {
   );
 }
 
-function getDragSelection(event: DragEvent): Range | null {
+function getDragSelection(event: DragEvent): Range | null | undefined {
   let range;
-  const domSelection = getSelection();
-
-  if(!domSelection)
-    throw Error("Dom selection is null");
-
+  const domSelection = getDOMSelectionFromTarget(event.target);
   if (document.caretRangeFromPoint) {
     range = document.caretRangeFromPoint(event.clientX, event.clientY);
-  } else if (event.rangeParent) {
+  } else if (event.rangeParent && domSelection !== null) {
     domSelection.collapse(event.rangeParent, event.rangeOffset || 0);
     range = domSelection.getRangeAt(0);
   } else {

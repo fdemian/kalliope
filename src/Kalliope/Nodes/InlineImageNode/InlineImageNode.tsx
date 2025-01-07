@@ -243,7 +243,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     }
 
     updateDOM(
-        prevNode: InlineImageNode,
+        prevNode: this,
         dom: HTMLElement,
         config: EditorConfig,
     ): false {

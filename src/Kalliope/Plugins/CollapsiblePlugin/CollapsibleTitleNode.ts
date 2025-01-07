@@ -48,7 +48,7 @@ export class CollapsibleTitleNode extends ElementNode {
     return dom;
   }
 
-  updateDOM(prevNode: CollapsibleTitleNode, dom: HTMLElement): boolean {
+  updateDOM(prevNode: this, dom: HTMLElement): boolean {
     return false;
   }
 

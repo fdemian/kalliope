@@ -42,7 +42,7 @@ export class CollapsibleContentNode extends ElementNode {
     return dom;
   }
 
-  updateDOM(prevNode: CollapsibleContentNode, dom: HTMLElement): boolean {
+  updateDOM(prevNode: this, dom: HTMLElement): boolean {
     return false;
   }
 

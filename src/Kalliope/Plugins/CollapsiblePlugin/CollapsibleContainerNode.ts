@@ -67,7 +67,7 @@ export class CollapsibleContainerNode extends ElementNode {
   }
 
   updateDOM(
-    prevNode: CollapsibleContainerNode,
+    prevNode: this,
     dom: HTMLDetailsElement,
   ): boolean {
     if (prevNode.__open !== this.__open) {

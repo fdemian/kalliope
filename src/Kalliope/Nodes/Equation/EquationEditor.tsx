@@ -5,29 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 import type {Ref, RefObject} from 'react';
-
+import {ChangeEvent} from 'react';
 import './EquationEditor.css';
-
-import {isHTMLElement} from 'lexical';
-import {ChangeEvent, forwardRef} from 'react';
 
 type BaseEquationEditorProps = {
   equation: string;
   inline: boolean;
   setEquation: (equation: string) => void;
+  inputRef: Ref<HTMLInputElement | HTMLTextAreaElement>;
 };
 
-function EquationEditor(
-  {equation, setEquation, inline}: BaseEquationEditorProps,
-  forwardedRef: Ref<HTMLInputElement | HTMLTextAreaElement>,
-): JSX.Element {
-  const onChange = (event: ChangeEvent) => {
-    setEquation((event.target as HTMLInputElement).value);
-  };
+const EquationEditor = (
+    {equation, setEquation, inline, inputRef}: BaseEquationEditorProps,
+): JSX.Element => {
 
-  return inline && isHTMLElement(forwardedRef) ? (
+  const onChange = (event: ChangeEvent) => setEquation((event.target as HTMLInputElement).value);
+
+  return inline && inputRef instanceof HTMLInputElement ? (
     <span className="EquationEditor_inputBackground">
       <span className="EquationEditor_dollarSign">$</span>
       <input
@@ -35,7 +30,7 @@ function EquationEditor(
         value={equation}
         onChange={onChange}
         autoFocus={true}
-        ref={forwardedRef as RefObject<HTMLInputElement>}
+        ref={inputRef as RefObject<HTMLInputElement>}
       />
       <span className="EquationEditor_dollarSign">$</span>
     </span>
@@ -46,11 +41,11 @@ function EquationEditor(
         className="EquationEditor_blockEditor"
         value={equation}
         onChange={onChange}
-        ref={forwardedRef as RefObject<HTMLTextAreaElement>}
+        ref={inputRef as RefObject<HTMLTextAreaElement>}
       />
       <span className="EquationEditor_dollarSign">{'\n$$'}</span>
     </div>
   );
 }
 
-export default forwardRef(EquationEditor);
+export default EquationEditor;

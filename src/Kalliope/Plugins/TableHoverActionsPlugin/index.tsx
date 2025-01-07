@@ -112,6 +112,16 @@ function TableHoverActionsContainer({
           height: tableElemHeight,
         } = (tableDOMElement as HTMLTableElement).getBoundingClientRect();
 
+        // Adjust for using the scrollable table container
+        const parentElement = (tableDOMElement as HTMLTableElement).parentElement;
+        let tableHasScroll = false;
+        if (
+          parentElement &&
+          parentElement.classList.contains('calliope-table-scrollable-wrapper')
+        ) {
+          tableHasScroll = parentElement.scrollWidth > parentElement.clientWidth;
+        }
+
         const {y: editorElemY, left: editorElemLeft} =
           anchorElem.getBoundingClientRect();
 
@@ -120,9 +130,15 @@ function TableHoverActionsContainer({
           setShownRow(true);
           setPosition({
             height: BUTTON_WIDTH_PX,
-            left: tableElemLeft - editorElemLeft,
-            top: tableElemBottom - editorElemY + 5,
-            width: tableElemWidth,
+            left:
+            tableHasScroll && parentElement
+              ? parentElement.offsetLeft
+              : tableElemLeft - editorElemLeft,
+          top: tableElemBottom - editorElemY + 5,
+          width:
+            tableHasScroll && parentElement
+              ? parentElement.offsetWidth
+              : tableElemWidth,
           });
         } else if (hoveredColumnNode) {
           setShownColumn(true);
@@ -232,14 +248,14 @@ function TableHoverActionsContainer({
     <>
       {isShownRow && (
         <button
-          className={'PlaygroundEditorTheme__tableAddRows'}
+          className={'calliope-table-add-rows'}
           style={{...position}}
           onClick={() => insertAction(true)}
         />
       )}
       {isShownColumn && (
         <button
-          className={'PlaygroundEditorTheme__tableAddColumns'}
+          className={'calliope-table-add-columns'}
           style={{...position}}
           onClick={() => insertAction(false)}
         />
@@ -256,16 +272,16 @@ function getMouseInfo(event: MouseEvent): {
 
   if (isHTMLElement(target)) {
     const tableDOMNode = target.closest<HTMLElement>(
-      'td.PlaygroundEditorTheme__tableCell, th.PlaygroundEditorTheme__tableCell',
+      'td.calliope-table-cell, th.calliope-table-cell',
     );
 
     const isOutside = !(
       tableDOMNode ||
       target.closest<HTMLElement>(
-        'button.PlaygroundEditorTheme__tableAddRows',
+        'button.calliope-table-add-rows',
       ) ||
       target.closest<HTMLElement>(
-        'button.PlaygroundEditorTheme__tableAddColumns',
+        'button.calliope-table-add-columns',
       ) ||
       target.closest<HTMLElement>('div.TableCellResizer__resizer')
     );

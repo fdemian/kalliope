@@ -658,6 +658,15 @@ i.chevron-down {
   width: 75px;
   vertical-align: top;
   text-align: start;
+  overflow: auto;
+}
+
+/*
+  A firefox workaround to allow scrolling of overflowing table cell
+  ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1904159
+*/
+.calliope-table-cell > * {
+  overflow: inherit;
 }
 
 .calliope-table-cell-header {

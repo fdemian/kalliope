@@ -1,3 +1,14 @@
+# v0.9.3 ()
+- Update lexical to v0.23.0
+- Allow TableSelection to be preserved during contextmenu events.
+- Allow scrolling if the table cell content overflows.
+- Fix Insertion of multiple rows.
+- Fix bug where tabs do not show on strikethrough underline.
+- Fix empty layout item causes 100% CPU usage.
+- Fix table hover actions button position. 
+- Add updateFromJSON and move more textFormattextStyle to ElementNode.
+- Support capitalization format.
+
 # v0.9.2 (2024-12-17)
 - Update lexical to v0.21.0
 - Update katex and storybook. Remove unused logs.

@@ -13,6 +13,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
+import {isDOMNode} from 'lexical';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 
 type ExcalidrawModalType = (props: ExcalidrawModalProps) => ReactElement;
@@ -46,7 +47,8 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
     const target = event.target;
     if (
       excaliDrawModelRef.current !== null &&
-      !excaliDrawModelRef.current.contains(target as Node) &&
+      isDOMNode(target) &&
+      !excaliDrawModelRef.current.contains(target) &&
       closeOnClickOutside
     ) {
       onDelete();

@@ -21,9 +21,10 @@ import {
   DRAGOVER_COMMAND,
   DRAGSTART_COMMAND,
   DROP_COMMAND,
+  isHTMLElement,
+  getDOMSelection
 } from 'lexical';
 import { useEffect } from 'react';
-import { CAN_USE_DOM } from '../../shared/canUseDOM';
 import {
   $createImageNode,
   $isImageNode,
@@ -33,9 +34,6 @@ import {
 import { INSERT_IMAGE_COMMAND } from './ImagesCommand';
 
 export type InsertImagePayload = Readonly<ImagePayload>;
-
-const getDOMSelection = (): Selection | null =>
-  CAN_USE_DOM ? window.getSelection() : null;
 
 export default function ImagesPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
@@ -196,10 +194,9 @@ declare global {
 function canDropImage(event: DragEvent): boolean {
   const target = event.target;
   return !!(
-    target &&
-    target instanceof HTMLElement &&
+    isHTMLElement(target) &&
     !target.closest('code, span.editor-image') &&
-    target.parentElement &&
+    isHTMLElement(target.parentElement) &&
     target.parentElement.closest('div.ContentEditable__root')
   );
 }

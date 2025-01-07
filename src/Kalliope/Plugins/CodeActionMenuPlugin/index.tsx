@@ -13,7 +13,7 @@ import {
   normalizeCodeLang,
 } from '@lexical/code';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getNearestNodeFromDOMNode } from 'lexical';
+import {$getNearestNodeFromDOMNode, isHTMLElement} from 'lexical';
 import {ReactElement, useEffect, useRef, useState} from 'react';
 import { ReactPortal } from "react";
 import { createPortal } from 'react-dom';
@@ -173,7 +173,7 @@ function getMouseInfo(event: MouseEvent): {
 } {
   const target = event.target;
 
-  if (target && target instanceof HTMLElement) {
+  if (isHTMLElement(target)) {
     const codeDOMNode = target.closest<HTMLElement>('code.calliope-code');
     const isOutside = !(
       codeDOMNode || target.closest<HTMLElement>('div.code-action-menu-container')

@@ -26,7 +26,12 @@ import type {
     Spread,
 } from 'lexical';
 
-import {$applyNodeReplacement, createEditor, DecoratorNode} from 'lexical';
+import {
+    $applyNodeReplacement,
+    createEditor,
+    DecoratorNode,
+    isHTMLElement,
+  } from 'lexical';
 import {Suspense, lazy} from 'react';
 
 const InlineImageComponent = lazy(() => import('./InlineImageComponent'));
@@ -50,9 +55,9 @@ export interface UpdateInlineImagePayload {
     position?: Position;
 }
 
-function convertInlineImageElement(domNode: Node): null | DOMConversionOutput {
-    if (domNode instanceof HTMLImageElement) {
-        const {alt: altText, src, width, height} = domNode;
+function $convertInlineImageElement(domNode: Node): null | DOMConversionOutput {
+    if (isHTMLElement(domNode) && domNode.nodeName === 'IMG') {
+        const {alt: altText, src, width, height} = domNode as HTMLImageElement;
         const node = $createInlineImageNode({altText, height, src, width});
         return {node};
     }
@@ -123,7 +128,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     static importDOM(): DOMConversionMap | null {
         return {
             img: () => ({
-                conversion: convertInlineImageElement,
+                conversion: $convertInlineImageElement,
                 priority: 0,
             }),
         };

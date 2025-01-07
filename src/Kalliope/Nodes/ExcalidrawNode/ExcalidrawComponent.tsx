@@ -18,6 +18,7 @@ import {
   COMMAND_PRIORITY_LOW,
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
+  isDOMNode
 } from 'lexical';
 import {useCallback, useEffect, useContext, useMemo, useRef, useState} from 'react';
 import { CalliopeContext } from '../../context';
@@ -98,7 +99,12 @@ export default function ExcalidrawComponent({
             return true;
           }
 
-          if (buttonElem !== null && buttonElem.contains(eventTarget as Node)) {
+
+          if (
+            buttonElem !== null &&
+            isDOMNode(eventTarget) &&
+            buttonElem.contains(eventTarget)
+          ) {
             if (!event.shiftKey) {
               clearSelection();
             }

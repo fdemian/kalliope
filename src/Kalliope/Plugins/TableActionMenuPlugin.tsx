@@ -37,6 +37,7 @@ import {
   $isParagraphNode,
   $isRangeSelection,
   $isTextNode,
+  isDOMNode,
 } from 'lexical';
 import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
@@ -188,8 +189,9 @@ function TableActionMenu({
       if (
         dropDownRef.current != null &&
         contextRef.current != null &&
-        !dropDownRef.current.contains(event.target as Node) &&
-        !contextRef.current.contains(event.target as Node)
+        isDOMNode(event.target) &&
+        !dropDownRef.current.contains(event.target) &&
+        !contextRef.current.contains(event.target)
       ) {
         setIsMenuOpen(false);
       }

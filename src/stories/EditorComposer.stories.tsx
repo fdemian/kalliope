@@ -40,6 +40,9 @@ const initialFormatTypes = {
   isSpoiler: false,
   isKeyboard: false,
   isItalic: false,
+  isLowercase: false,
+  isUppercase: false,
+  isCapitalize: false,
   isUnderline: false,
   isStrikethrough: false,
   isSubscript: false,
@@ -342,6 +345,24 @@ export const EditorComposer = () => {
       command: "LINK",
       props: formats.isLink ? null: "https://",
       isActive: formats.isLink
+    },
+    {
+      text: "UPPERCASE",
+      command: "FORMAT",
+      props: "uppercase",
+      isActive: formats.isUppercase
+    },
+    {
+      text: "LOWERCASE",
+      command: "FORMAT",
+      props: "lowercase",
+      isActive: formats.isLowercase
+    },
+    {
+      text: "CAPITALIZE",
+      command: "FORMAT",
+      props: "capitalize",
+      isActive: formats.isCapitalize
     },
     {
        /* left, center, right justify */

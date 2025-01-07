@@ -160,6 +160,9 @@ export type CalliopeFormatTypes = {
   isSpoiler: boolean;
   isKeyboard: boolean;
   isItalic: boolean;
+  isLowercase: boolean;
+  isUppercase: boolean;
+  isCapitalize: boolean;
   isUnderline: boolean;
   isStrikethrough: boolean;
   isSubscript: boolean;

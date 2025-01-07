@@ -297,6 +297,18 @@ figcaption {
   border-radius: 0;
 }
 
+.calliope-text-lowercased {
+  text-transform: lowercase;
+}
+
+.calliope-text-uppercase {
+  text-transform: uppercase;
+}
+
+.calliope-text-capitalized {
+  text-transform: capitalize;
+}
+
 .calliope-paragraph {
   margin: 0;
   margin-bottom: 8px;

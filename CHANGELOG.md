@@ -1,3 +1,6 @@
+# v0.9.4 (2025-01-07)
+- Add support for finding out if a given text has a capitalization format. 
+
 # v0.9.3 (2025-01-07)
 - Update lexical to v0.23.0
 - Allow TableSelection to be preserved during contextmenu events.

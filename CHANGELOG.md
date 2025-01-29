@@ -1,3 +1,7 @@
+# v0.9.5 (2025-01-28)
+- Update lexical to v0.23.0
+- Merge TabIndentionPlugin and ListMaxIndentLevelPlugin plugins.
+
 # v0.9.4 (2025-01-07)
 - Add support for finding out if a given text has a capitalization format. 
 

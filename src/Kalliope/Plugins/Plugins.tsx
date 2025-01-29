@@ -12,6 +12,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import {TabIndentationPlugin} from '@lexical/react/LexicalTabIndentationPlugin';
 import {SelectionAlwaysOnDisplay} from '@lexical/react/LexicalSelectionAlwaysOnDisplay';
 import FloatingLinkEditorPlugin from './FloatingLinkEditorPlugin/index';
 import TableCellActionMenuPlugin from './TableActionMenuPlugin';
@@ -25,7 +26,6 @@ import TableHoverActionsPlugin from './TableHoverActionsPlugin';
 //
 const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
 const EquationsPlugin = lazy(() => import('./Equations/EquationsPlugin'));
-const ListMaxIndentLevelPlugin = lazy(() => import('./ListMaxIndentLevelPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
 const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
@@ -102,7 +102,7 @@ function EditorPlugins({
       <EmojisPlugin />
       <ClearEditorPlugin />
       <CodeHighlightPlugin />
-      <ListMaxIndentLevelPlugin maxDepth={7} />
+      <TabIndentationPlugin maxIndent={7} />
       <LinkPlugin />
       <ListPlugin />
       <CheckListPlugin />

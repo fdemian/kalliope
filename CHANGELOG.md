@@ -1,3 +1,8 @@
+# v0.9.6 ()
+- Update lexical to v0.24.0"
+- Add table alignment.
+
+
 # v0.9.5 (2025-01-28)
 - Update lexical to v0.23.0
 - Merge TabIndentionPlugin and ListMaxIndentLevelPlugin plugins.

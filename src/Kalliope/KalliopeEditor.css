@@ -887,8 +887,18 @@ i.chevron-down {
 }
 
 .calliope-table-scrollable-wrapper .calliope-editor-table {
-  /* Remove the table's margin and put it on the wrapper */
-  margin: 0;
+  /* Remove the table's vertical margin and put it on the wrapper */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.calliope-table-alignment-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.calliope-table-alignment-right {
+  margin-left: auto;
 }
 
 /* --- Table dropdown classes */

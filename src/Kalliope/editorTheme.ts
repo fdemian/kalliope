@@ -62,6 +62,10 @@ const theme:EditorThemeClasses = {
   },
   tab: 'calliope-tab-node',
   table: 'calliope-table',
+  tableAlignment: {
+    center: 'calliope-table-alignment-center',
+    right: 'calliope-table-alignment-right',
+  },
   tableCell: 'calliope-table-cell',
   tableCellActionButton: 'calliope-table-cell-action-button',
   tableCellActionButtonContainer: 'calliope-table-cell-action-button-container',

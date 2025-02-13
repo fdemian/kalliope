@@ -2,6 +2,7 @@
 - Update lexical to v0.24.0"
 - Add table alignment.
 - Fix Columns Layout Item Overflow
+- Clean up nested editor update
 
 # v0.9.5 (2025-01-28)
 - Update lexical to v0.23.0

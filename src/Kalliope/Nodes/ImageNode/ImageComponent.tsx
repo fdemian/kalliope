@@ -135,20 +135,21 @@ export default function ImageComponent({
   const [isLoadError, setIsLoadError] = useState<boolean>(false);
   const isEditable = useLexicalEditable();
   
-  const onDelete = useCallback(
+  const $onDelete = useCallback(
     (payload: KeyboardEvent) => {
-      if (isSelected && $isNodeSelection($getSelection())) {
+      const deleteSelection = $getSelection();
+      if (isSelected && $isNodeSelection(deleteSelection)) {
         const event: KeyboardEvent = payload;
         event.preventDefault();
-        const node = $getNodeByKey(nodeKey);
-        if ($isImageNode(node)) {
-          node.remove();
-          return true;
-        }
+        deleteSelection.getNodes().forEach((node) => {
+          if ($isImageNode(node)) {
+            node.remove();
+          }
+        });
       }
       return false;
     },
-    [isSelected, nodeKey]
+    [isSelected],
   );
 
   const onEnter = useCallback(
@@ -246,8 +247,8 @@ export default function ImageComponent({
         },
         COMMAND_PRIORITY_LOW
       ),
-      editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_DELETE_COMMAND, $onDelete, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_BACKSPACE_COMMAND, $onDelete, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
     );
@@ -261,7 +262,7 @@ export default function ImageComponent({
     isResizing,
     isSelected,
     nodeKey,
-    onDelete,
+    $onDelete,
     onEnter,
     onEscape,
     setSelected,

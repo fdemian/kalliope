@@ -121,21 +121,25 @@ export default function InlineImageComponent({
     const { inlineImage } = calliopeConfig.config;
     const { showModal } = inlineImage;
 
-    const onDelete = useCallback(
+    const $onDelete = useCallback(
         (payload: KeyboardEvent) => {
-            if (isSelected && $isNodeSelection($getSelection())) {
-                const event: KeyboardEvent = payload;
-                event.preventDefault();
-                const node = $getNodeByKey(nodeKey);
+          const deleteSelection = $getSelection();
+          if (isSelected && $isNodeSelection(deleteSelection)) {
+            const event: KeyboardEvent = payload;
+            event.preventDefault();
+            if (isSelected && $isNodeSelection(deleteSelection)) {
+              deleteSelection.getNodes().forEach((node) => {
                 if ($isInlineImageNode(node)) {
-                    node.remove();
-                    return true;
+                  node.remove();
                 }
+              });
             }
-            return false;
+          }
+          return false;
         },
-        [isSelected, nodeKey],
-    );
+        [isSelected],
+      );
+    
 
     const onEnter = useCallback(
         (event: KeyboardEvent) => {
@@ -236,12 +240,12 @@ export default function InlineImageComponent({
             ),
             editor.registerCommand(
                 KEY_DELETE_COMMAND,
-                onDelete,
+                $onDelete,
                 COMMAND_PRIORITY_LOW,
             ),
             editor.registerCommand(
                 KEY_BACKSPACE_COMMAND,
-                onDelete,
+                $onDelete,
                 COMMAND_PRIORITY_LOW,
             ),
             editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
@@ -260,7 +264,7 @@ export default function InlineImageComponent({
         editor,
         isSelected,
         nodeKey,
-        onDelete,
+        $onDelete,
         onEnter,
         onEscape,
         setSelected,

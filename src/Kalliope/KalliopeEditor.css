@@ -606,6 +606,8 @@ figcaption {
 .calliope-layout-layout-item {
   border: 1px dashed #ddd;
   padding: 8px 16px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* TAB NODE */

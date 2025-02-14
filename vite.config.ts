@@ -33,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
                 fileName: 'kalliope'
             },
             rollupOptions: {
-                external: ['react'],
+                external: ['react', 'react-dom', 'react-jsx/runtime'],
                 output: {
                     globals: {
                         react: 'React'

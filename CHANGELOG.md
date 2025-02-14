@@ -1,4 +1,4 @@
-# v0.9.6 ()
+# v0.9.6 (2020-02-14)
 - Update lexical to v0.24.0"
 - Add table alignment.
 - Fix Columns Layout Item Overflow

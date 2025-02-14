@@ -18,7 +18,6 @@ import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {mergeRegister} from '@lexical/utils';
 import {
-    $getNodeByKey,
     $getSelection,
     $isNodeSelection,
     $setSelection,

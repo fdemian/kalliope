@@ -24,9 +24,8 @@ export default function ExcalidrawPlugin(): JSX.Element | null {
 
     return editor.registerCommand(
       INSERT_EXCALIDRAW_COMMAND,
-      () => {
+      () => {        
         const selection = $getSelection();
-
         if ($isRangeSelection(selection)) {
           const excalidrawNode = $createExcalidrawNode();
           selection.insertNodes([excalidrawNode]);

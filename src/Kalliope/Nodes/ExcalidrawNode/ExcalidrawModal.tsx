@@ -17,6 +17,7 @@ import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
 import { ExcalidrawModalType } from "./ExcalidrawComponent";
 import ExcalidrawPlugin from '../../Plugins/Excalidraw/ExcalidrawPlugin';
+import type {JSX} from 'react';
 
 export type ExcalidrawElementFragment = {
   isDeleted?: boolean;

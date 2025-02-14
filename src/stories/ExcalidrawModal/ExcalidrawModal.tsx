@@ -15,6 +15,7 @@ import {
 } from 'react';
 import {isDOMNode} from 'lexical';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
+import type {JSX} from 'react';
 
 type ExcalidrawModalType = (props: ExcalidrawModalProps) => ReactElement;
 

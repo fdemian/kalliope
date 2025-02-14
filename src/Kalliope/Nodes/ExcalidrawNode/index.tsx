@@ -20,6 +20,7 @@ import type {
 import { DecoratorNode } from 'lexical';
 import * as React from 'react';
 import { Suspense } from 'react';
+import type {JSX} from 'react';
 
 type Dimension = number | 'inherit';
 
@@ -81,8 +82,6 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
       ...super.exportJSON(),
       data: this.__data,
       height: this.__height === 'inherit' ? undefined : this.__height,
-      type: 'excalidraw',
-      version: 1,
       width: this.__width === 'inherit' ? undefined : this.__width,
     };
   }
@@ -99,7 +98,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     this.__height = height;
   }
   
-  // View
+
   createDOM(config: EditorConfig): HTMLElement {
     const span = document.createElement('span');
     const theme = config.theme;
@@ -144,7 +143,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
 
     element.style.width =
     this.__width === 'inherit' ? 'inherit' : `${this.__width}px`;
-  element.style.height =
+    element.style.height =
     this.__height === 'inherit' ? 'inherit' : `${this.__height}px`;
 
     element.setAttribute('data-lexical-excalidraw-json', this.__data);

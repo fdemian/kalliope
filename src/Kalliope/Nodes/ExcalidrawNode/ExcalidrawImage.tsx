@@ -13,6 +13,7 @@ import {
 } from '@excalidraw/excalidraw/types/element/types';
 import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types/types';
 import {useEffect, useState} from 'react';
+import type {JSX} from 'react';
 
 type ImageType = 'svg' | 'canvas';
 type Dimension = 'inherit' | number;

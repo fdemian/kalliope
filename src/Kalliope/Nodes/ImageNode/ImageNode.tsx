@@ -22,7 +22,6 @@ import type {
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
 import * as React from 'react';
-import { Suspense } from 'react';
 
 const ImageComponent = React.lazy(
   // @ts-ignore
@@ -219,20 +218,18 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   decorate(): JSX.Element {
     return (
-      <Suspense fallback={null}>
-        <ImageComponent
-          src={this.__src}
-          altText={this.__altText}
-          width={this.__width}
-          height={this.__height}
-          maxWidth={this.__maxWidth}
-          nodeKey={this.getKey()}
-          showCaption={this.__showCaption}
-          caption={this.__caption}
-          captionsEnabled={this.__captionsEnabled}
-          resizable={true}
-        />
-      </Suspense>
+    <ImageComponent
+      src={this.__src}
+      altText={this.__altText}
+      width={this.__width}
+      height={this.__height}
+      maxWidth={this.__maxWidth}
+      nodeKey={this.getKey()}
+      showCaption={this.__showCaption}
+      caption={this.__caption}
+      captionsEnabled={this.__captionsEnabled}
+      resizable={true}
+    />
     );
   }
 }

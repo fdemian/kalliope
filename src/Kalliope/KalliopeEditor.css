@@ -20,6 +20,21 @@
   border: 1px solid #fff;
 }
 
+.icon.vertical-top,
+i.left-align {
+  background-image: url(UI/Images/vertical-top.svg);
+}
+
+.icon.vertical-middle,
+i.center-align {
+  background-image: url(UI/Images/vertical-middle.svg);
+}
+
+.icon.vertical-bottom,
+i.right-align {
+  background-image: url(UI/Images/vertical-bottom.svg);
+}
+
 .editor-shell .editor-image .image-edit-button {
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 5px;

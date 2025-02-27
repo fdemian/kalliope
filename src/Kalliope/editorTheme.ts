@@ -74,6 +74,7 @@ const theme:EditorThemeClasses = {
   tableCellPrimarySelected: 'calliope-table-cell-primary-selected',
   tableCellResizer: 'calliope-table-cell-resizer',
   tableCellSelected: 'calliope-table-cell-selected',
+  tableFrozenColumn: 'calliope-table-frozen-column',
   tableCellSortedIndicator: 'calliope-table-cell-sorted-indicator',
   tableResizeRuler: 'calliope-table-cell-resize-ruler',
   tableRowStriping: 'calliope-table-row-stripping',

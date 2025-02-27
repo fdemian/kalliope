@@ -126,21 +126,20 @@ i.page-break,
 
 .editor {
   flex: auto;
-  /*max-width: 100%;*/
+  max-width: 100%;
   position: relative;
   resize: vertical;
-  /*z-index: -1;*/
+  z-index: -1;
 }
 
 .editor-scroller {
-  cursor: text;
   min-height: 150px;
   max-width: 100%;
   border: 0;
   display: flex;
   position: relative;
   outline: 0;
-  overflow: auto;
+  z-index: 0;
   resize: vertical;
 }
 
@@ -736,6 +735,7 @@ figcaption {
 
 .table-cell-action-button-container {
   position: absolute;
+  z-index: 3;
   top: 0;
   left: 0;
   will-change: transform;
@@ -832,6 +832,30 @@ i.chevron-down {
 
 .calliope-table-cell-selected {
   background-color: #c9dbf0;
+}
+
+.calliope-table-frozen-column tr > td:first-child {
+  background-color: #ffffff;
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.calliope-table-frozen-column tr > th:first-child {
+  background-color: #f2f3f5;
+  position: sticky;
+  z-index: 2;
+  left: 0;
+}
+
+.calliope-table-frozen-column tr > :first-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-right: 1px solid #bbb;
 }
 
 .calliope-table-cell-action-button-container {

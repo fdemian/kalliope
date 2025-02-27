@@ -1,4 +1,15 @@
-# v0.9.6 (2020-02-14)
+# v0.9.7 (2020-02-27)
+ - Toggle first row freeze.
+ - Toggle first column freeze.
+ - Add add verticalAlign attribute to tables.
+ - Bug Fix: Ensure rectangular table cell merge behavior.
+ - Add name to collapsible command.
+ - Update to lexical v0.25.0
+ - Remove special case for collapsible forward deletion
+ - Fix Optimize table cell resizer event listeners.
+ - Remove redundant Suspense from node decorators.
+
+# v0.9.6 (2025-02-14)
 - Update lexical to v0.24.0"
 - Add table alignment.
 - Fix Columns Layout Item Overflow

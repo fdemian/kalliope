@@ -834,6 +834,32 @@ i.chevron-down {
   background-color: #c9dbf0;
 }
 
+.calliope-table-frozen-row tr:nth-of-type(1) > td {
+  overflow: clip;
+  background-color: #ffffff;
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.calliope-table-frozen-row tr:nth-of-type(1) > th {
+  overflow: clip;
+  background-color: #f2f3f5;
+  position: sticky;
+  z-index: 2;
+  top: 44px;
+}
+
+.calliope-table-frozen-row tr:nth-of-type(1) > th:after,
+.calliope-table-frozen-row tr:nth-of-type(1) > td:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 1px solid #bbb;
+}
+
 .calliope-table-frozen-column tr > td:first-child {
   background-color: #ffffff;
   position: sticky;

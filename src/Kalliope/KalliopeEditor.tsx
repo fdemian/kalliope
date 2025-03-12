@@ -1,4 +1,5 @@
 // @ts-nocheck
+import type {JSX} from 'react';
 import {
   useRef,
   useState,

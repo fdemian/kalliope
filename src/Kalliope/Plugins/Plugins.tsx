@@ -1,3 +1,4 @@
+import type {JSX} from 'react';
 import { lazy, useState } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';

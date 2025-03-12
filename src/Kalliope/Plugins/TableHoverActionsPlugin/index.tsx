@@ -22,7 +22,13 @@ import {
   TableRowNode,
 } from '@lexical/table';
 import {$findMatchingParent, mergeRegister} from '@lexical/utils';
-import {$getNearestNodeFromDOMNode, isHTMLElement, NodeKey} from 'lexical';
+import {
+  $getNearestNodeFromDOMNode,
+  EditorThemeClasses,
+  isHTMLElement,
+  NodeKey,
+} from 'lexical';
+import {getThemeSelector} from '../../utils/getTheemeSelector';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import * as React from 'react';
 import {createPortal} from 'react-dom';
@@ -37,7 +43,7 @@ function TableHoverActionsContainer({
 }: {
   anchorElem: HTMLElement;
 }): JSX.Element | null {
-  const [editor] = useLexicalComposerContext();
+  const [editor, {getTheme}] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [isShownRow, setShownRow] = useState<boolean>(false);
   const [isShownColumn, setShownColumn] = useState<boolean>(false);
@@ -49,7 +55,7 @@ function TableHoverActionsContainer({
 
   const debouncedOnMouseMove = useDebounce(
     (event: MouseEvent) => {
-      const {isOutside, tableDOMNode} = getMouseInfo(event);
+      const {isOutside, tableDOMNode} = getMouseInfo(event, getTheme);
 
       if (isOutside) {
         setShownRow(false);
@@ -248,14 +254,14 @@ function TableHoverActionsContainer({
     <>
       {isShownRow && (
         <button
-          className={'calliope-table-add-rows'}
+          className={`${getTheme()?.tableAddRows}`}
           style={{...position}}
           onClick={() => insertAction(true)}
         />
       )}
       {isShownColumn && (
         <button
-          className={'calliope-table-add-columns'}
+          className={`${getTheme()?.tableAddColumns}`}
           style={{...position}}
           onClick={() => insertAction(false)}
         />
@@ -264,11 +270,15 @@ function TableHoverActionsContainer({
   );
 }
 
-function getMouseInfo(event: MouseEvent): {
+function getMouseInfo(  
+   event: MouseEvent,
+   getTheme: () => EditorThemeClasses | null | undefined
+  ): {
   tableDOMNode: HTMLElement | null;
   isOutside: boolean;
 } {
   const target = event.target;
+  const tableCellClass = getThemeSelector(getTheme, 'tableCell');
 
   if (isHTMLElement(target)) {
     const tableDOMNode = target.closest<HTMLElement>(
@@ -278,10 +288,10 @@ function getMouseInfo(event: MouseEvent): {
     const isOutside = !(
       tableDOMNode ||
       target.closest<HTMLElement>(
-        'button.calliope-table-add-rows',
+        `button${getThemeSelector(getTheme, 'tableAddRows')}`,
       ) ||
       target.closest<HTMLElement>(
-        'button.calliope-table-add-columns',
+        `button${getThemeSelector(getTheme, 'tableAddColumns')}`,
       ) ||
       target.closest<HTMLElement>('div.TableCellResizer__resizer')
     );

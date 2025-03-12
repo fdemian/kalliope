@@ -7,7 +7,7 @@
  */
 import type {ElementNode } from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import useLexicalEditable from '@lexical/react/useLexicalEditable';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {
   $computeTableMapSkipCellCheck,
   $deleteTableColumn__EXPERIMENTAL,

@@ -76,12 +76,7 @@ export class CollapsibleTitleNode extends ElementNode {
       version: 1,
     };
   }
-
-  collapseAtStart(_selection: RangeSelection): boolean {
-    this.getParentOrThrow().insertBefore(this);
-    return true;
-  }
-
+  
   insertNewAfter(_: RangeSelection, restoreSelection = true): ElementNode {
     const containerNode = this.getParentOrThrow();
 

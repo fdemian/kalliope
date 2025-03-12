@@ -197,11 +197,13 @@ export default function ImageComponent({
   );
 
   useEffect(() => {
-    let isMounted = true;
     const unregister = mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
-        if (isMounted) {
-          setSelection(editorState.read(() => $getSelection()));
+        const updatedSelection = editorState.read(() => $getSelection());
+        if ($isNodeSelection(updatedSelection)) {
+          setSelection(updatedSelection);
+        } else {
+          setSelection(null);
         }
       }),
       editor.registerCommand(
@@ -253,7 +255,6 @@ export default function ImageComponent({
       editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
     );
     return () => {
-      isMounted = false;
       unregister();
     };
   }, [

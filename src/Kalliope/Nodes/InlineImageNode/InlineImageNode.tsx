@@ -33,6 +33,12 @@ import {
     DecoratorNode,
     isHTMLElement,
   } from 'lexical';
+
+  import {
+    addClassNamesToElement,
+    removeClassNamesFromElement,
+  } from '@lexical/utils';
+
 import {lazy} from 'react';
 
 const InlineImageComponent = lazy(() => import('./InlineImageComponent'));
@@ -77,6 +83,10 @@ export type SerializedInlineImageNode = Spread<
     },
     SerializedLexicalNode
 >;
+
+function getPositionClass(position: Position | undefined): string | undefined {
+  return typeof position === 'string' ? `position-${position}` : undefined;
+}
 
 export class InlineImageNode extends DecoratorNode<JSX.Element> {
     // tslint:disable:variable-name
@@ -247,12 +257,16 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     // View
 
     createDOM(config: EditorConfig): HTMLElement {
-        const span = document.createElement('span');
-        const className = `${config.theme.inlineImage} position-${this.__position}`;
-        if (className !== undefined) {
-            span.className = className;
+      const span = document.createElement('span');
+      for (const cls of [
+        config.theme.inlineImage,
+        getPositionClass(this.__position),
+      ]) {
+        if (cls) {
+          addClassNamesToElement(span, cls);
         }
-        return span;
+      }
+      return span;
     }
 
     updateDOM(
@@ -262,10 +276,8 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     ): false {
         const position = this.__position;
         if (position !== prevNode.__position) {
-            const className = `${config.theme.inlineImage} position-${position}`;
-            if (className !== undefined) {
-                dom.className = className;
-            }
+            removeClassNamesFromElement(dom, getPositionClass(prevNode.__position));
+            addClassNamesToElement(dom, getPositionClass(position));
         }
         return false;
     }

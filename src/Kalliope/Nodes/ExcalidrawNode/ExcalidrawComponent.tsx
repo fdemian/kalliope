@@ -7,7 +7,7 @@
  */
 
 import type {NodeKey} from 'lexical';
-import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types/types';
+import {AppState, BinaryFiles, ExcalidrawInitialDataState} from '@excalidraw/excalidraw/types';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
@@ -25,9 +25,6 @@ import { CalliopeContext } from '../../context';
 import {$isExcalidrawNode} from '.';
 import ExcalidrawImage from './ExcalidrawImage';
 export type ExcalidrawInitialElements = ExcalidrawInitialDataState['elements'];
-import {
-  ExcalidrawInitialDataState,
-} from '@excalidraw/excalidraw/types/types';
 import { ExcalidrawModalProps } from '../../KalliopeEditorTypes';
 import ExcalidrawModalContainer from './ExcalidrawModal';
 import ImageResizer from './ImageResizer';

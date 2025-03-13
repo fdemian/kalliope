@@ -10,8 +10,8 @@ import {exportToSvg} from '@excalidraw/utils';
 import {
   ExcalidrawElement,
   NonDeleted,
-} from '@excalidraw/excalidraw/types/element/types';
-import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types/types';
+} from '@excalidraw/excalidraw/element/types';
+import {AppState, BinaryFiles} from '@excalidraw/excalidraw/types';
 import {useEffect, useState} from 'react';
 import type {JSX} from 'react';
 

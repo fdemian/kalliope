@@ -3,7 +3,7 @@ import {
   AppState,
   BinaryFiles,
   ExcalidrawImperativeAPI,
-} from '@excalidraw/excalidraw/types/types';
+} from '@excalidraw/excalidraw/types';
 import { ReactElement } from "react";
 
 type DispatcherFn = () => void;

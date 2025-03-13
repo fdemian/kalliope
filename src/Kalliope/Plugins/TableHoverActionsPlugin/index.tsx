@@ -270,10 +270,10 @@ function TableHoverActionsContainer({
   );
 }
 
-function getMouseInfo(  
-   event: MouseEvent,
-   getTheme: () => EditorThemeClasses | null | undefined
-  ): {
+function getMouseInfo(
+  event: MouseEvent,
+  getTheme: () => EditorThemeClasses | null | undefined,
+): {
   tableDOMNode: HTMLElement | null;
   isOutside: boolean;
 } {
@@ -282,11 +282,11 @@ function getMouseInfo(
 
   if (isHTMLElement(target)) {
     const tableDOMNode = target.closest<HTMLElement>(
-      'td.calliope-table-cell, th.calliope-table-cell',
+      `td${tableCellClass}, th${tableCellClass}`,
     );
 
     const isOutside = !(
-      tableDOMNode ||
+      tableDOMNode ||      
       target.closest<HTMLElement>(
         `button${getThemeSelector(getTheme, 'tableAddRows')}`,
       ) ||
@@ -301,6 +301,7 @@ function getMouseInfo(
     return {isOutside: true, tableDOMNode: null};
   }
 }
+
 
 export default function TableHoverActionsPlugin({
   anchorElem = document.body,

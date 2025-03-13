@@ -272,6 +272,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     updateDOM(
         prevNode: this,
         dom: HTMLElement,
+        // @ts-ignore
         config: EditorConfig,
     ): false {
         const position = this.__position;

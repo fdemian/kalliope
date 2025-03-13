@@ -670,8 +670,16 @@ figcaption {
 
 /* TABLE */
 
-.TableCellResizer__resizer {
+.calliope-table-cell-resizer {
   position: absolute;
+  touch-action: none;
+}
+
+@media (pointer: coarse) {
+  .calliope-table-cell-resizer {
+    background-color: #adf;
+    mix-blend-mode: color;
+  }
 }
 
 .calliope-table-add-columns {

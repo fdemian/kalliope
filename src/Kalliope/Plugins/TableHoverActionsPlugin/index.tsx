@@ -293,7 +293,7 @@ function getMouseInfo(
       target.closest<HTMLElement>(
         `button${getThemeSelector(getTheme, 'tableAddColumns')}`,
       ) ||
-      target.closest<HTMLElement>('div.TableCellResizer__resizer')
+      target.closest<HTMLElement>('div.calliope-table-cell-resizer')
     );
 
     return {isOutside, tableDOMNode};

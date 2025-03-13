@@ -11,6 +11,8 @@ const theme:EditorThemeClasses = {
     h5: 'calliope-h5',
     h6: 'calliope-h6',
   },
+  hr: 'calliope-hr',
+  hrSelected: 'calliope-hr-selected',
   image: 'editor-image',
   inlineImage: 'inline-editor-image',
   indent: 'calliope-indent',

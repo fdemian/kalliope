@@ -1376,3 +1376,23 @@ i.prettier-error {
   color: #000;
   overflow: hidden;
 }
+
+.calliope-hr {
+  padding: 2px 2px;
+  border: none;
+  margin: 1em 0;
+  cursor: pointer;
+}
+
+.calliope-hr:after {
+  content: '';
+  display: block;
+  height: 2px;
+  background-color: #ccc;
+  line-height: 2px;
+}
+
+.calliope-hr.calliope-hr-selected {
+  outline: 2px solid rgb(60, 132, 244);
+  user-select: none;
+}

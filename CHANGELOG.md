@@ -1,4 +1,17 @@
-# v0.9.7 (2020-02-27)
+# CHANGELOG 
+
+Note: this changelog only details lexical changes applied to the main editor.
+To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
+
+## v0.9.8 (2025-03-12)
+ - Update lexical to v0.27.2
+ - Fix Table Action Menu dropdown positioning
+ - Add HR theme config for selected state
+ - Apply correct column headers when column contains vertically merged cells
+ - Add touch support for TableCellResizer
+ - Fix: row height resizing for merged cells
+
+## v0.9.7 (2025-02-27)
  - Toggle first row freeze.
  - Toggle first column freeze.
  - Add add verticalAlign attribute to tables.
@@ -9,20 +22,20 @@
  - Fix Optimize table cell resizer event listeners.
  - Remove redundant Suspense from node decorators.
 
-# v0.9.6 (2025-02-14)
+## v0.9.6 (2025-02-14)
 - Update lexical to v0.24.0"
 - Add table alignment.
 - Fix Columns Layout Item Overflow
 - Clean up nested editor update
 
-# v0.9.5 (2025-01-28)
+## v0.9.5 (2025-01-28)
 - Update lexical to v0.23.0
 - Merge TabIndentionPlugin and ListMaxIndentLevelPlugin plugins.
 
-# v0.9.4 (2025-01-07)
+## v0.9.4 (2025-01-07)
 - Add support for finding out if a given text has a capitalization format. 
 
-# v0.9.3 (2025-01-07)
+## v0.9.3 (2025-01-07)
 - Update lexical to v0.23.0
 - Allow TableSelection to be preserved during contextmenu events.
 - Allow scrolling if the table cell content overflows.
@@ -33,12 +46,12 @@
 - Add updateFromJSON and move more textFormattextStyle to ElementNode.
 - Support capitalization format.
 
-# v0.9.2 (2024-12-17)
+## v0.9.2 (2024-12-17)
 - Update lexical to v0.21.0
 - Update katex and storybook. Remove unused logs.
 - Fix collapsible container styles.
 
-# v0.9.1 (2024-11-30)
+## v0.9.1 (2024-11-30)
 - Update lexical to v0.20.1
 - Stop spellchecking mentions
 - Fix floating link editor selection
@@ -46,14 +59,14 @@
 - Add selectionIsAllwaysOnPlugin (defaults to false).
 - Add horizontal scroll to columns. Add invariant function.
 
-# v0.9.0 (2024-11-27)
+## v0.9.0 (2024-11-27)
 
 - Upgrade lexical to v0.20.0
 - Fix importDOM for Layout plugin
 - Upgrade vite
 - Upgrade storybook packages
 
-# v0.8.18 (2024-11-02)
+## v0.8.18 (2024-11-02)
 
 - Upgrade lexical to v0.19.0
 - Disable table hover actions on read only mode.
@@ -62,55 +75,55 @@
 - Bug Fix: Disable image and inline focusing, adding caption and editing in read-only mode.
 - Numerous bug fixes.
 
-# v0.8.17 (2024-10-02)
+## v0.8.17 (2024-10-02)
 
 - Upgrade lexical to v0.18.0
 - Add row stripping.
 - Add multiline element transformers.
 - Fix excalidraw resizing.
 
-# v0.8.16 (2024-08-27)
+## v0.8.16 (2024-08-27)
 
 - Update lexical to version 0.17.1
 
-# v0.8.14 (2024-06-06)
+## v0.8.14 (2024-06-06)
 
 - Update lexical to version 0.17.0
 - Add hover buttons to table (for adding columns and rows)
 - Aesthetic fixes to table menu.
 
-# v0.8.11 (2024-06-06)
+## v0.8.11 (2024-06-06)
 
 - Update lexical to version 0.16.0
 - Load image error UI.
 - Refactor InlineImageNode (spans) for correct HTML.
 
-# v0.8.10 (2024-05-14)
+## v0.8.10 (2024-05-14)
 
 - Update lexical to version 0.15.0
 - Update collapsible container logic.
 - Add powershell to the list of supported languages.
 - Actually apply styles to text that is inside the table.
 
-# v0.8.9 (2024-05-01)
+## v0.8.9 (2024-05-01)
 
 - Update packages
 - Increase instagram node height.
 
-# v0.8.8 (2024-04-27)
+## v0.8.8 (2024-04-27)
 
 - Update react version.
 
-# v.0.8.7 (2024-04-06)
+## v.0.8.7 (2024-04-06)
 
 - Update lexical to version 0.14.5.
 
-# v.0.8.6 (2024-04-06)
+## v.0.8.6 (2024-04-06)
 
 - Update lexical to version 0.14.3 bringing in many bugfixes.
 - Support for inserting instagram posts.
 
-# v.0.8.5 (2024-03-23)
+## v.0.8.5 (2024-03-23)
 
 - Update lexical to version 0.14.2 bringing in many bugfixes.
    + ImportDOM and ExportDOM for LayoutContainerNode (#5722) Ivaylo Pavlov
@@ -119,11 +132,11 @@
 
 - Update storybook
 
-# v0.7.5 (2024-01-10)
+## v0.7.5 (2024-01-10)
 
  - Fix typescript types.
 
-# v0.7.4 (2024-01-10)
+## v0.7.4 (2024-01-10)
 
  - Add typescript types.
 

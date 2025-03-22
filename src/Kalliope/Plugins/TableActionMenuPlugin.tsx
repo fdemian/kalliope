@@ -30,12 +30,12 @@ import {
 } from '@lexical/table';
 import {
   $createParagraphNode,
-  $getRoot,
   $getSelection,
   $isElementNode,
   $isParagraphNode,
   $isRangeSelection,
   $isTextNode,
+  $setSelection,
   isDOMNode,
 } from 'lexical';
 import {ReactPortal, useCallback, useEffect, useRef, useState} from 'react';
@@ -225,8 +225,7 @@ function TableActionMenu({
         updateTableCellNode(tableCellNode.getLatest());
       }
 
-      const rootNode = $getRoot();
-      rootNode.selectStart();
+      $setSelection(null);
     });
   }, [editor, tableCellNode]);
 

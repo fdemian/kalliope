@@ -6,7 +6,6 @@ import typescript from '@rollup/plugin-typescript';
 
 const resolvePath = (str: string) => resolve(__dirname, str)
 
-
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), '');

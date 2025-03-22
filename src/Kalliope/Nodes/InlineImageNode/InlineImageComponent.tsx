@@ -24,14 +24,11 @@ import {
     CLICK_COMMAND,
     COMMAND_PRIORITY_LOW,
     DRAGSTART_COMMAND,
-    KEY_BACKSPACE_COMMAND,
-    KEY_DELETE_COMMAND,
     KEY_ENTER_COMMAND,
     KEY_ESCAPE_COMMAND,
     SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {Suspense, useCallback, useContext, useEffect, useRef, useState} from 'react';
-import {$isInlineImageNode } from './InlineImageNode';
 import {CalliopeContext} from "../../context";
 
 const imageCache = new Set();
@@ -119,26 +116,6 @@ export default function InlineImageComponent({
 
     const { inlineImage } = calliopeConfig.config;
     const { showModal } = inlineImage;
-
-    const $onDelete = useCallback(
-        (payload: KeyboardEvent) => {
-          const deleteSelection = $getSelection();
-          if (isSelected && $isNodeSelection(deleteSelection)) {
-            const event: KeyboardEvent = payload;
-            event.preventDefault();
-            if (isSelected && $isNodeSelection(deleteSelection)) {
-              deleteSelection.getNodes().forEach((node) => {
-                if ($isInlineImageNode(node)) {
-                  node.remove();
-                }
-              });
-            }
-          }
-          return false;
-        },
-        [isSelected],
-      );
-    
 
     const onEnter = useCallback(
         (event: KeyboardEvent) => {
@@ -237,16 +214,6 @@ export default function InlineImageComponent({
                 },
                 COMMAND_PRIORITY_LOW,
             ),
-            editor.registerCommand(
-                KEY_DELETE_COMMAND,
-                $onDelete,
-                COMMAND_PRIORITY_LOW,
-            ),
-            editor.registerCommand(
-                KEY_BACKSPACE_COMMAND,
-                $onDelete,
-                COMMAND_PRIORITY_LOW,
-            ),
             editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
             editor.registerCommand(
                 KEY_ESCAPE_COMMAND,
@@ -263,7 +230,6 @@ export default function InlineImageComponent({
         editor,
         isSelected,
         nodeKey,
-        $onDelete,
         onEnter,
         onEscape,
         setSelected,

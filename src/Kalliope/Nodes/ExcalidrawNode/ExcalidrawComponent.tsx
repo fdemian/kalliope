@@ -16,8 +16,6 @@ import {
   $getNodeByKey,
   CLICK_COMMAND,
   COMMAND_PRIORITY_LOW,
-  KEY_BACKSPACE_COMMAND,
-  KEY_DELETE_COMMAND,
   isDOMNode
 } from 'lexical';
 import {useCallback, useEffect, useContext, useMemo, useRef, useState} from 'react';
@@ -56,9 +54,6 @@ export default function ExcalidrawComponent({
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const calliopeConfig = useContext(CalliopeContext);
   
-  console.clear();
-  console.log(calliopeConfig);
-
   if(!calliopeConfig)
     return null;
   
@@ -66,20 +61,6 @@ export default function ExcalidrawComponent({
   const { excalidrawConfig } = config;
   
   const CustomExcalidrawModal: ExcalidrawModalType = excalidrawConfig ? excalidrawConfig.modal : null;
-  
-  const $onDelete = useCallback(
-    (event: KeyboardEvent) => {
-      if (isSelected) {
-        event.preventDefault();
-        const node = $getNodeByKey(nodeKey);
-        if (node) {
-          node.remove();
-        }
-      }
-      return false;
-    },
-    [isSelected, nodeKey],
-  );
 
   useEffect(() => {
     if (!isEditable) {
@@ -119,23 +100,12 @@ export default function ExcalidrawComponent({
         },
         COMMAND_PRIORITY_LOW,
       ),
-      editor.registerCommand(
-        KEY_DELETE_COMMAND,
-        $onDelete,
-        COMMAND_PRIORITY_LOW,
-      ),
-      editor.registerCommand(
-        KEY_BACKSPACE_COMMAND,
-        $onDelete,
-        COMMAND_PRIORITY_LOW,
-      ),
     );
   }, [
     clearSelection,
     editor,
     isSelected,
     isResizing,
-    $onDelete,
     setSelected,
     isEditable,
   ]);

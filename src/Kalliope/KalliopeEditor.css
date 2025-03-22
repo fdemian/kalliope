@@ -350,7 +350,14 @@ figcaption {
 }
 
 .calliope-list-item {
-  margin: 8px 32px;
+  margin: 0px 32px;
+}
+
+.calliope-list-item::marker {
+  color: var(--listitem-marker-color);
+  background-color: var(--listitem-marker-background-color);
+  font-family: var(--listitem-marker-font-family);
+  font-size: var(--listitem-marker-font-size);
 }
 
 .calliope-ol1 {

@@ -3,6 +3,14 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.9.9 (2025-03-22)
+
+- Update lexical to v0.28.0
+- Add plus button to draggable block plugin to add a text block.
+- Make table actions actually clear the selection.
+- Move ListItemNode text style inheritance to custom properties and CSS.
+- Use default delete handler instead of creating one.
+
 ## v0.9.8 (2025-03-12)
  - Update lexical to v0.27.2
  - Fix Table Action Menu dropdown positioning

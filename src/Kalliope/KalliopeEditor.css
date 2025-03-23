@@ -222,7 +222,7 @@ i.page-break,
   position: absolute;
   text-overflow: ellipsis;
   top: 8px;
-  left: 28px;
+  left: 39px;
   right: 28px;
   user-select: none;
   white-space: pre-line;
@@ -231,8 +231,10 @@ i.page-break,
 }
 
 .editor-paragraph {
-  margin: 0;
+  margin-left: 11px;
   margin-bottom: 8px;
+  margin-right: 0px;
+  margin-top: 0px;
   position: relative;
 }
 

@@ -965,7 +965,12 @@ i.chevron-down {
   background-color: #f2f5fb;
 }
 
-.calliope-table-scrollable-wrapper {
+.PlaygroundEditorTheme__tableScrollableWrapper {
+  overflow-x: auto;
+  margin: 0px 25px 30px 0px;
+}
+
+.calliope-table-scrollable-wrapper.calliope-table-frozen-row {
   overflow-x: auto;
   margin: 0px 25px 30px 0px;
 }

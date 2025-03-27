@@ -19,8 +19,17 @@ import type {
   LexicalUpdateJSON,
   Spread,
 } from 'lexical';
-
-import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
+import {HashtagNode} from '@lexical/hashtag';
+import {LinkNode} from '@lexical/link';
+import {
+  $applyNodeReplacement,
+  createEditor,
+  DecoratorNode,
+  LineBreakNode,
+  ParagraphNode,
+  RootNode,
+  TextNode,
+} from 'lexical';
 import * as React from 'react';
 
 const ImageComponent = React.lazy(
@@ -163,7 +172,17 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     this.__width = width || 'inherit';
     this.__height = height || 'inherit';
     this.__showCaption = showCaption || false;
-    this.__caption = caption || createEditor();
+    this.__caption = caption || createEditor({
+      namespace: 'kalliope/ImageNodeCaption',
+      nodes: [
+        RootNode,
+        TextNode,
+        LineBreakNode,
+        ParagraphNode,
+        LinkNode,
+        HashtagNode
+      ],
+    });
     this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
   }
 

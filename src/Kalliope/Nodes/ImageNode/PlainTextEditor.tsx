@@ -28,7 +28,7 @@ const PlainTextEditor = ({ config, caption, readOnly }: PlainTextEditorProps) =>
   if(config !== null && config.imageConfig) {
     CAPTION_ENTER_TEXT = config.imageConfig.defaultCaptionText;
   }
-  const initialEdior: LexicalEditor = (typeof caption !== 'string') ? caption : createEditor();
+  const initialEdior: LexicalEditor = (typeof caption !== 'string') ? caption : createEditor({namespace: 'kalliope/ImageNodeCaption'});
 
   return (
     <LexicalNestedComposer

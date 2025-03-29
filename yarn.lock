@@ -735,24 +735,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@excalidraw/utils@npm:^0.1.3-test9":
-  version: 0.1.3-test9
-  resolution: "@excalidraw/utils@npm:0.1.3-test9"
-  dependencies:
-    "@braintree/sanitize-url": 6.0.2
-    "@excalidraw/laser-pointer": 1.3.1
-    browser-fs-access: 0.29.1
-    open-color: 1.9.1
-    pako: 1.0.11
-    perfect-freehand: 1.2.0
-    png-chunk-text: 1.0.0
-    png-chunks-encode: 1.0.0
-    png-chunks-extract: 1.0.0
-    roughjs: 4.6.4
-  checksum: eba2c44acd756c1e55f17d5030586ee3883d4fff142000bfdc2395c0b2fa573d51430e1b595b455fd3851edc5fba0aca2793153b028994b9dbf0f506f1f680d5
-  languageName: node
-  linkType: hard
-
 "@floating-ui/core@npm:^1.6.0":
   version: 1.6.9
   resolution: "@floating-ui/core@npm:1.6.9"
@@ -6259,7 +6241,6 @@ __metadata:
   resolution: "kalliope@workspace:."
   dependencies:
     "@excalidraw/excalidraw": ^0.18.0
-    "@excalidraw/utils": ^0.1.3-test9
     "@lexical/clipboard": 0.29.0
     "@lexical/code": 0.29.0
     "@lexical/file": 0.29.0
@@ -7412,13 +7393,6 @@ __metadata:
   version: 1.0.1
   resolution: "package-json-from-dist@npm:1.0.1"
   checksum: 58ee9538f2f762988433da00e26acc788036914d57c71c246bf0be1b60cdbd77dd60b6a3e1a30465f0b248aeb80079e0b34cb6050b1dfa18c06953bb1cbc7602
-  languageName: node
-  linkType: hard
-
-"pako@npm:1.0.11":
-  version: 1.0.11
-  resolution: "pako@npm:1.0.11"
-  checksum: 1be2bfa1f807608c7538afa15d6f25baa523c30ec870a3228a89579e474a4d992f4293859524e46d5d87fd30fa17c5edf34dbef0671251d9749820b488660b16
   languageName: node
   linkType: hard
 

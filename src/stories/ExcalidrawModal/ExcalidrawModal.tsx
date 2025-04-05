@@ -84,7 +84,6 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
       tabIndex={-1}
     >
       <div className="ExcalidrawModal__row">
-        <Excalidraw />
         <ExcalidrawComponent
           onChange={onChange}
           excalidrawAPI={(api) => setExcalidrawAPI(api)}

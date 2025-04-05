@@ -3,6 +3,11 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.9.10 (2025-04-05)
+- Upgrade lexical to v0.29.0.
+- Fix equation rendering in Safari.
+- Fix excalidraw modals which were showing incorrectly.
+
 ## v0.9.9 (2025-03-22)
 
 - Update lexical to v0.28.0

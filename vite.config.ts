@@ -14,7 +14,7 @@ export default defineConfig(({ command, mode }) => {
     return {
         plugins: [
             react(),
-            ...viteCopyExcalidrawAssets(),
+            viteCopyExcalidrawAssets(),
             cssInjectedByJsPlugin(),
             typescript(
                 {

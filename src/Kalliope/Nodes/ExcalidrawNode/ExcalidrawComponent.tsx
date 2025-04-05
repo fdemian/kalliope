@@ -6,6 +6,8 @@
  *
  */
 
+import '@excalidraw/excalidraw/index.css';
+
 import type {NodeKey} from 'lexical';
 import {AppState, BinaryFiles, ExcalidrawInitialDataState} from '@excalidraw/excalidraw/types';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';

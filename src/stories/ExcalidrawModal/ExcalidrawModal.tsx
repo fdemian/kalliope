@@ -15,6 +15,7 @@ import {
 } from 'react';
 import {isDOMNode} from 'lexical';
 import { ExcalidrawModalProps } from '../../Kalliope/KalliopeEditorTypes';
+import {Excalidraw} from '@excalidraw/excalidraw';
 import type {JSX} from 'react';
 
 type ExcalidrawModalType = (props: ExcalidrawModalProps) => ReactElement;
@@ -70,7 +71,7 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
     };
    }, [closeOnClickOutside, onDelete]);
 
-  const Excalidraw = excalidrawComponent;
+  const ExcalidrawComponent = excalidrawComponent;
   
   return createPortal(
   <div
@@ -83,7 +84,8 @@ const ExcalidrawModal:ExcalidrawModalType = (props: ExcalidrawModalProps) => {
       tabIndex={-1}
     >
       <div className="ExcalidrawModal__row">
-        <Excalidraw
+        <Excalidraw />
+        <ExcalidrawComponent
           onChange={onChange}
           excalidrawAPI={(api) => setExcalidrawAPI(api)}
           initialData={{

@@ -207,7 +207,7 @@ export const EditorComposer = () => {
     const FIGMA_URL:string = "https://www.figma.com/file/LKQ4FJ4bTnCSjedbRpk931/Sample-File";
     containerRef.current.executeCommand("INSERT_FIGMA_COMMAND", FIGMA_URL);
   }
-
+  
   const config = {
     placeholderText: 'Insert text...',
     initialState: undefined,

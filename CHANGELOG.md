@@ -3,6 +3,19 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.10.0 (2025-04-08)
+- Update to lexical v0.30.0.
+- Add strict indent to list plugin option.
+- Remove some deprecated name utils.
+- Add support for image links.
+- Remove shared imports.
+- Improvements to clearFormatting function.
+- Use natural dimensions for inherited image size.
+- Immediate broken image display on load failure.
+- Clear will also clear any indent/outdent if applied.
+- Floating toolbar position for end-aligned text.
+- Improve logic for pasting table into table.
+
 ## v0.9.10 (2025-04-05)
 - Upgrade lexical to v0.29.0.
 - Fix equation rendering in Safari.

@@ -30,23 +30,28 @@ import ImageResizer from './ImageResizer';
 import { $isImageNode } from './ImageNode';
 import { CalliopeContext } from '../../context';
 
-const imageCache = new Set();
+const imageCache = new Map<string, Promise<boolean> | boolean>();
 
 function useSuspenseImage(src: string) {
-  if (!imageCache.has(src)) {
-    throw new Promise((resolve) => {
+  let cached = imageCache.get(src);
+  if (typeof cached === 'boolean') {
+    return cached;
+  } else if (!cached) {
+    cached = new Promise<boolean>((resolve) => {
       const img = new Image();
       img.src = src;
-      img.onload = () => {
-        imageCache.add(src);
-        resolve(null);
-      };
-      img.onerror = () => {
-        imageCache.add(src);
-      };
+      img.onload = () => resolve(false);
+      img.onerror = () => resolve(true);
+    }).then((hasError) => {
+      imageCache.set(src, hasError);
+      return hasError;
     });
+    imageCache.set(src, cached);
+    throw cached;
   }
+  throw cached;
 }
+
 
 function LazyImage({
   altText,
@@ -84,6 +89,18 @@ function LazyImage({
       });
     }
   }, [imageRef, isSVGImage]);
+
+  const hasError = useSuspenseImage(src);
+
+  useEffect(() => {
+    if (hasError) {
+       onError();
+    }
+  }, [hasError, onError]);
+
+  if (hasError) {
+   return <BrokenImage />;
+  }
 
   // Calculate final dimensions with proper scaling
   const calculateDimensions = () => {
@@ -157,6 +174,7 @@ function BrokenImage(): JSX.Element {
         width: 200,
       }}
       draggable="false"
+      alt="Broken image"
     />
   );
 }

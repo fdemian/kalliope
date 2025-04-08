@@ -1,32 +1,41 @@
-/*
-**
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*
-*/
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+import type {JSX} from 'react';
+
 import './index.css';
-import {$isAutoLinkNode, $isLinkNode, $createLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+
+import {
+  $createLinkNode,
+  $isAutoLinkNode,
+  $isLinkNode,
+  TOGGLE_LINK_COMMAND,
+} from '@lexical/link';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$findMatchingParent, mergeRegister} from '@lexical/utils';
 import {
   $getSelection,
-  $isRangeSelection,
   $isLineBreakNode,
+  $isNodeSelection,
+  $isRangeSelection,
   BaseSelection,
+  CLICK_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
+  getDOMSelection,
   KEY_ESCAPE_COMMAND,
   LexicalEditor,
-  getDOMSelection,
   SELECTION_CHANGE_COMMAND,
-  CLICK_COMMAND
 } from 'lexical';
 import {Dispatch, useCallback, useEffect, useRef, useState} from 'react';
 import * as React from 'react';
 import {createPortal} from 'react-dom';
+
 import {getSelectedNode} from '../../utils/getSelectedNode';
 import {setFloatingElemPositionForLinkEditor} from './setFloatingElemPositionForLinkEditor';
 import {sanitizeUrl} from './utils';
@@ -76,7 +85,24 @@ function FloatingLinkEditor({
       if (isLinkEditMode) {
         setEditedLinkUrl(linkUrl);
       }
+    } else if ($isNodeSelection(selection)) {
+      const nodes = selection.getNodes();
+      if (nodes.length > 0) {
+        const node = nodes[0];
+        const parent = node.getParent();
+        if ($isLinkNode(parent)) {
+          setLinkUrl(parent.getURL());
+        } else if ($isLinkNode(node)) {
+          setLinkUrl(node.getURL());
+        } else {
+          setLinkUrl('');
+        }
+        if (isLinkEditMode) {
+          setEditedLinkUrl(linkUrl);
+        }
+      }
     }
+
     const editorElem = editorRef.current;
     const nativeSelection = getDOMSelection(editor._window);
     const activeElement = document.activeElement;
@@ -87,15 +113,25 @@ function FloatingLinkEditor({
 
     const rootElement = editor.getRootElement();
 
-    if (
-      selection !== null &&
-      nativeSelection !== null &&
-      rootElement !== null &&
-      rootElement.contains(nativeSelection.anchorNode) &&
-      editor.isEditable()
-    ) {
-      const domRect: DOMRect | undefined =
-        nativeSelection.focusNode?.parentElement?.getBoundingClientRect();
+    if (selection !== null && rootElement !== null && editor.isEditable()) {
+      let domRect: DOMRect | undefined;
+
+      if ($isNodeSelection(selection)) {
+        const nodes = selection.getNodes();
+        if (nodes.length > 0) {
+          const element = editor.getElementByKey(nodes[0].getKey());
+          if (element) {
+            domRect = element.getBoundingClientRect();
+          }
+        }
+      } else if (
+        nativeSelection !== null &&
+        rootElement.contains(nativeSelection.anchorNode)
+      ) {
+        domRect =
+          nativeSelection.focusNode?.parentElement?.getBoundingClientRect();
+      }
+
       if (domRect) {
         domRect.y += 40;
         setFloatingElemPositionForLinkEditor(domRect, editorElem, anchorElem);
@@ -330,6 +366,19 @@ function useFloatingLinkEditorToolbar(
             );
           });
         if (!badNode) {
+          setIsLink(true);
+        } else {
+          setIsLink(false);
+        }
+      } else if ($isNodeSelection(selection)) {
+        const nodes = selection.getNodes();
+        if (nodes.length === 0) {
+          setIsLink(false);
+          return;
+        }
+        const node = nodes[0];
+        const parent = node.getParent();
+        if ($isLinkNode(parent) || $isLinkNode(node)) {
           setIsLink(true);
         } else {
           setIsLink(false);

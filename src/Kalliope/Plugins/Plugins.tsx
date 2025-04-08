@@ -105,7 +105,7 @@ function EditorPlugins({
       <CodeHighlightPlugin />
       <TabIndentationPlugin maxIndent={7} />
       <LinkPlugin />
-      <ListPlugin />
+      <ListPlugin hasStrictIndent={false} />
       <CheckListPlugin />
       <EquationsPlugin />
       <TablePlugin hasHorizontalScroll={true} />

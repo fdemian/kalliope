@@ -60,19 +60,20 @@ type LexicalEditorRef = {
   current: LexicalEditor;
 };
 
-const clearFormatting = (editor: LexicalEditorRef)=> {
-  const activeEditor = editor.current;
-  activeEditor.update(() => {
+export const clearFormatting = (currentEditor: LexicalEditorRef) => {
+  const editor: LexicalEditor = currentEditor.current;
+  editor.update(() => {
     const selection = $getSelection();
-    if ($isRangeSelection(selection)) {
+    if ($isRangeSelection(selection) || $isTableSelection(selection)) {
       const anchor = selection.anchor;
       const focus = selection.focus;
       const nodes = selection.getNodes();
+      const extractedNodes = selection.extract();
 
       if (anchor.key === focus.key && anchor.offset === focus.offset) {
         return;
       }
-      
+
       nodes.forEach((node, idx) => {
         // We split the first and last node by the selection
         // So that we don't format unselected text inside those nodes
@@ -85,17 +86,32 @@ const clearFormatting = (editor: LexicalEditorRef)=> {
           if (idx === nodes.length - 1) {
             textNode = textNode.splitText(focus.offset)[0] || textNode;
           }
+          /**
+           * If the selected text has one format applied
+           * selecting a portion of the text, could
+           * clear the format to the wrong portion of the text.
+           *
+           * The cleared text is based on the length of the selected text.
+           */
+          // We need this in case the selected text only has one format
+          const extractedTextNode = extractedNodes[0];
+          if (nodes.length === 1 && $isTextNode(extractedTextNode)) {
+            textNode = extractedTextNode;
+          }
 
           if (textNode.__style !== '') {
             textNode.setStyle('');
           }
           if (textNode.__format !== 0) {
             textNode.setFormat(0);
-            const nearestBlockElement = $getNearestBlockElementAncestorOrThrow(textNode);
-            if (nearestBlockElement.__format !== 0) {
-              nearestBlockElement.setFormat('');
-            }
-
+          }
+          const nearestBlockElement =
+            $getNearestBlockElementAncestorOrThrow(textNode);
+          if (nearestBlockElement.__format !== 0) {
+            nearestBlockElement.setFormat('');
+          }
+          if (nearestBlockElement.__indent !== 0) {
+            nearestBlockElement.setIndent(0);
           }
           node = textNode;
         } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
@@ -105,8 +121,7 @@ const clearFormatting = (editor: LexicalEditorRef)=> {
         }
       });
     }
-  }
-  );
+  });
 };
 
 const onCodeLanguageSelect = (editor: LexicalEditorRef, value: string) => {

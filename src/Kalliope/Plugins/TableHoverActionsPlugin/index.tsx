@@ -12,8 +12,8 @@ import {
   $getTableAndElementByKey,
   $getTableColumnIndexFromTableCellNode,
   $getTableRowIndexFromTableCellNode,
-  $insertTableColumn__EXPERIMENTAL,
-  $insertTableRow__EXPERIMENTAL,
+  $insertTableColumnAtSelection,
+  $insertTableRowAtSelection,
   $isTableCellNode,
   $isTableNode,
   getTableElement,
@@ -236,10 +236,10 @@ function TableHoverActionsContainer({
         );
         maybeTableNode?.selectEnd();
         if (insertRow) {
-          $insertTableRow__EXPERIMENTAL();
+          $insertTableRowAtSelection();
           setShownRow(false);
         } else {
-          $insertTableColumn__EXPERIMENTAL();
+          $insertTableColumnAtSelection();
           setShownColumn(false);
         }
       }

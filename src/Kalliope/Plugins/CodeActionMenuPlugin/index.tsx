@@ -14,8 +14,7 @@ import {
 } from '@lexical/code';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {$getNearestNodeFromDOMNode, isHTMLElement} from 'lexical';
-import {ReactElement, useEffect, useRef, useState} from 'react';
-import { ReactPortal } from "react";
+import {ReactPortal, ReactElement, useEffect, useRef, useState} from 'react';
 import { createPortal } from 'react-dom';
 import { CopyButton } from './components/CopyButton';
 import { canBePrettier, PrettierButton } from './components/PrettierButton';
@@ -34,8 +33,12 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
 
   const [lang, setLang] = useState('');
   const [isShown, setShown] = useState<boolean>(false);
-  const [shouldListenMouseMove, setShouldListenMouseMove] = useState<boolean>(false);
-  const [position, setPosition] = useState<Position>({ right: '0', top: '0' });
+  const [shouldListenMouseMove, setShouldListenMouseMove] =
+    useState<boolean>(false);
+  const [position, setPosition] = useState<Position>({
+    right: '0',
+    top: '0',
+  });
   const codeSetRef = useRef<Set<string>>(new Set());
   const codeDOMNodeRef = useRef<HTMLElement | null>(null);
 
@@ -45,7 +48,7 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
 
   const debouncedOnMouseMove = useDebounce(
     (event: MouseEvent) => {
-      const { codeDOMNode, isOutside } = getMouseInfo(event);
+      const {codeDOMNode, isOutside} = getMouseInfo(event);
       if (isOutside) {
         setShown(false);
         return;
@@ -70,9 +73,9 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
       });
 
       if (codeNode) {
-        const { y: editorElemY, right: editorElemRight } =
+        const {y: editorElemY, right: editorElemRight} =
           anchorElem.getBoundingClientRect();
-        const { y, right } = codeDOMNode.getBoundingClientRect();
+        const {y, right} = codeDOMNode.getBoundingClientRect();
         setLang(_lang);
         setShown(true);
         setPosition({
@@ -82,7 +85,7 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
       }
     },
     50,
-    1000
+    1000,
   );
 
   useEffect(() => {
@@ -122,36 +125,16 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
         setShouldListenMouseMove(codeSetRef.current.size > 0);
       },
       {skipInitialization: false},
-      );
+    );
   }, [editor]);
 
-  editor.registerMutationListener(CodeNode, (mutations) => {
-    editor.getEditorState().read(() => {
-      for (const [key, type] of mutations) {
-        switch (type) {
-          case 'created':
-            codeSetRef.current.add(key);
-            setShouldListenMouseMove(codeSetRef.current.size > 0);
-            break;
-
-          case 'destroyed':
-            codeSetRef.current.delete(key);
-            setShouldListenMouseMove(codeSetRef.current.size > 0);
-            break;
-
-          default:
-            break;
-        }
-      }
-    });
-  });
   const normalizedLang = normalizeCodeLang(lang);
   const codeFriendlyName = getLanguageFriendlyName(lang);
 
   return (
     <>
       {isShown ? (
-        <div className="code-action-menu-container" style={{ ...position }}>
+        <div className="code-action-menu-container" style={{...position}}>
           <div className="code-highlight-language">{codeFriendlyName}</div>
           <CopyButton editor={editor} getCodeDOMNode={getCodeDOMNode} />
           {canBePrettier(normalizedLang) ? (
@@ -167,6 +150,7 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
   );
 }
 
+
 function getMouseInfo(event: MouseEvent): {
   codeDOMNode: HTMLElement | null;
   isOutside: boolean;
@@ -174,14 +158,17 @@ function getMouseInfo(event: MouseEvent): {
   const target = event.target;
 
   if (isHTMLElement(target)) {
-    const codeDOMNode = target.closest<HTMLElement>('code.calliope-code');
+    const codeDOMNode = target.closest<HTMLElement>(
+      'code.calliope-code',
+    );
     const isOutside = !(
-      codeDOMNode || target.closest<HTMLElement>('div.code-action-menu-container')
+      codeDOMNode ||
+      target.closest<HTMLElement>('div.code-action-menu-container')
     );
 
-    return { codeDOMNode, isOutside };
+    return {codeDOMNode, isOutside};
   } else {
-    return { codeDOMNode: null, isOutside: true };
+    return {codeDOMNode: null, isOutside: true};
   }
 }
 

@@ -23,6 +23,7 @@ import CollapsiblePlugin from './CollapsiblePlugin';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 import TableHoverActionsPlugin from './TableHoverActionsPlugin';
+import CodeHighlightPlugin from './CodeHighlightPlugin';
 
 //
 const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
@@ -33,7 +34,6 @@ const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
 const KeyboardPlugin = lazy(() => import('./Keyboard/KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./Spoiler/SpoilerPlugin'));
 const ClickableLinkPlugin = lazy(() => import('./ClickableLinkPlugin'));
-const CodeHighlightPlugin = lazy(() => import('./CodeHighlightPlugin'));
 const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
 const TwitterPlugin = lazy(() => import('./Twitter/TwitterPlugin'));
 const InstagramPlugin = lazy(() => import('./Instagram/InstagramPlugins'));
@@ -102,9 +102,9 @@ function EditorPlugins({
       {config.autoFocus && <AutoFocusPlugin />}
       <EmojisPlugin />
       <ClearEditorPlugin />
-      <CodeHighlightPlugin />
       <TabIndentationPlugin maxIndent={7} />
       <LinkPlugin />
+      <CodeHighlightPlugin />
       <ListPlugin hasStrictIndent={false} />
       <CheckListPlugin />
       <EquationsPlugin />

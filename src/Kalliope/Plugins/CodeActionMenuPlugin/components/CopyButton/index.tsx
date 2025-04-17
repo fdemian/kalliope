@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { $isCodeNode } from '@lexical/code';
+import {$isCodeNode} from '@lexical/code';
 import {
   $getNearestNodeFromDOMNode,
   $getSelection,
   $setSelection,
   LexicalEditor,
 } from 'lexical';
-import { useState } from 'react';
+import {useState} from 'react';
 
-import { useDebounce } from '../../utils';
+import {useDebounce} from '../../utils';
 
 interface Props {
   editor: LexicalEditor;
   getCodeDOMNode: () => HTMLElement | null;
 }
 
-export function CopyButton({ editor, getCodeDOMNode }: Props) {
+export function CopyButton({editor, getCodeDOMNode}: Props) {
   const [isCopyCompleted, setCopyCompleted] = useState<boolean>(false);
 
   const removeSuccessIcon = useDebounce(() => {
@@ -59,7 +59,11 @@ export function CopyButton({ editor, getCodeDOMNode }: Props) {
 
   return (
     <button className="menu-item" onClick={handleClick} aria-label="copy">
-      {isCopyCompleted ? <i className="format success" /> : <i className="format copy" />}
+      {isCopyCompleted ? (
+        <i className="format success" />
+      ) : (
+        <i className="format copy" />
+      )}
     </button>
   );
 }

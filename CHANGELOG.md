@@ -3,6 +3,10 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.11.1 (2025-04-17)
+- Fix code block.
+- Update some packages.
+
 ## v0.11.0 (2025-04-17)
 - Update to React 19.
 

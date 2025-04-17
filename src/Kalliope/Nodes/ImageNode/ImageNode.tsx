@@ -31,6 +31,7 @@ import {
   TextNode,
 } from 'lexical';
 import * as React from 'react';
+import { ReactElement } from 'react';
 
 const ImageComponent = React.lazy(
   // @ts-ignore
@@ -75,7 +76,7 @@ export type SerializedImageNode = Spread<
   SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<JSX.Element> {
+export class ImageNode extends DecoratorNode<ReactElement> {
   __src: string;
   __altText: string;
   __width: 'inherit' | number;
@@ -235,7 +236,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return this.__altText;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return (
     <ImageComponent
       src={this.__src}

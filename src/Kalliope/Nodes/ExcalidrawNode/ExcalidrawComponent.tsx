@@ -28,9 +28,9 @@ export type ExcalidrawInitialElements = ExcalidrawInitialDataState['elements'];
 import { ExcalidrawModalProps } from '../../KalliopeEditorTypes';
 import ExcalidrawModalContainer from './ExcalidrawModal';
 import ImageResizer from './ImageResizer';
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 
-export type ExcalidrawModalType = ((props:ExcalidrawModalProps) => JSX.Element) | null;
+export type ExcalidrawModalType = ((props:ExcalidrawModalProps) => ReactElement) | null;
 
 export default function ExcalidrawComponent({
   nodeKey,
@@ -42,7 +42,7 @@ export default function ExcalidrawComponent({
   nodeKey: NodeKey;
   width: 'inherit' | number;
   height: 'inherit' | number;
-}): JSX.Element | null {
+}): ReactElement | null {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [isModalOpen, setModalOpen] = useState<boolean>(

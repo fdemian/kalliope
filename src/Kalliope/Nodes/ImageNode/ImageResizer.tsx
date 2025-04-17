@@ -8,7 +8,7 @@
 
 import type { LexicalEditor } from 'lexical';
 import * as React from 'react';
-import { useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 import { CalliopeConfigProps } from '../../KalliopeEditorTypes';
 import './ImageNode.css';
 
@@ -47,7 +47,7 @@ export default function ImageResizer({
   showCaption: boolean;
   captionsEnabled: boolean;
   config: CalliopeConfigProps;
-}): JSX.Element {
+}): ReactElement {
   const controlWrapperRef = useRef<HTMLDivElement>(null);
   const userSelect = useRef({
     priority: '',

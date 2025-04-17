@@ -28,7 +28,7 @@ import {
     KEY_ESCAPE_COMMAND,
     SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import {Suspense, useCallback, useContext, useEffect, useRef, useState} from 'react';
+import {ReactElement, Suspense, useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {CalliopeContext} from "../../context";
 
 const imageCache = new Set();
@@ -62,7 +62,7 @@ function LazyImage({
     src: string;
     width: 'inherit' | number;
     position: Position;
-}): JSX.Element {
+}): ReactElement {
     useSuspenseImage(src);
     return (
         <img
@@ -99,7 +99,7 @@ export default function InlineImageComponent({
     src: string;
     width: 'inherit' | number;
     position: Position;
-}): JSX.Element | null {
+}): ReactElement | null {
     const imageRef = useRef<null | HTMLImageElement>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isSelected, setSelected, clearSelection] =

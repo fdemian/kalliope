@@ -6,6 +6,7 @@
  *
  */
 import './Input.css';
+import { ReactElement } from 'react';
 
 type Props = Readonly<{
     'data-test-id'?: string;
@@ -19,7 +20,7 @@ export default function FileInput({
                                       label,
                                       onChange,
                                       'data-test-id': dataTestId,
-                                  }: Props): JSX.Element {
+                                  }: Props): ReactElement {
     return (
         <div className="Input__wrapper">
             <label className="Input__label">{label}</label>

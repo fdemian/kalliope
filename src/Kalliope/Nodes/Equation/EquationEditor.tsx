@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type {Ref, RefObject} from 'react';
+import type {ReactElement, Ref, RefObject} from 'react';
 import {ChangeEvent} from 'react';
 import './EquationEditor.css';
 
@@ -18,7 +18,7 @@ type BaseEquationEditorProps = {
 
 const EquationEditor = (
     {equation, setEquation, inline, inputRef}: BaseEquationEditorProps,
-): JSX.Element => {
+): ReactElement => {
 
   const onChange = (event: ChangeEvent) => setEquation((event.target as HTMLInputElement).value);
 

@@ -1,4 +1,5 @@
 import MentionTypeaheadOption from './MentionTypeaheadOption';
+import { ReactElement } from 'react';
 
 type ListItemParams = {
   option: {
@@ -6,7 +7,7 @@ type ListItemParams = {
   }
 };
 
-export type EntryComponentType = (param: ListItemParams) => JSX.Element;
+export type EntryComponentType = (param: ListItemParams) => ReactElement;
 
 const DefaultListItem = ({ option }: ListItemParams) => {
   return <span className="text">{option.name}</span>;

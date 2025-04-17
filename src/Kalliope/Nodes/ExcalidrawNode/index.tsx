@@ -19,7 +19,7 @@ import type {
 
 import { DecoratorNode } from 'lexical';
 import * as React from 'react';
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 
 type Dimension = number | 'inherit';
 
@@ -49,7 +49,7 @@ function convertExcalidrawElement(domNode: HTMLElement): DOMConversionOutput | n
   return null;
 }
 
-export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
+export class ExcalidrawNode extends DecoratorNode<ReactElement> {
   __data: string;
   __width: Dimension;
   __height: Dimension;
@@ -172,7 +172,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     return this.getLatest().__height;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return (
     <ExcalidrawComponent 
       nodeKey={this.getKey()} 

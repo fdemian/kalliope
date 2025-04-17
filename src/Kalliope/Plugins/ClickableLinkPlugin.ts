@@ -12,7 +12,7 @@ import type { LexicalEditor } from 'lexical';
 import { $isLinkNode } from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $getNearestNodeFromDOMNode, $getSelection, $isRangeSelection } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 type LinkFilter = (event: MouseEvent, linkNode: LinkNode) => boolean;
 
@@ -22,7 +22,7 @@ export default function ClickableLinkPlugin({
 }: {
   filter?: LinkFilter;
   newTab?: boolean;
-}): JSX.Element | null {
+}): ReactElement | null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     function onClick(e: Event) {

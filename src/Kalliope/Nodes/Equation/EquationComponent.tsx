@@ -17,7 +17,7 @@ import {
   NodeKey,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 
@@ -35,7 +35,7 @@ export default function EquationComponent({
   equation,
   inline,
   nodeKey,
-}: EquationComponentProps): JSX.Element {
+}: EquationComponentProps): ReactElement {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [equationValue, setEquationValue] = useState(equation);

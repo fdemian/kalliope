@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {useEffect, useRef, useState} from "react";
+import {ReactElement, useEffect, useRef, useState} from "react";
 import Button from '../UI/Button';
 import { DialogActions } from '../UI/Dialog';
 import FileInput from '../UI/FileInput';
@@ -22,7 +22,7 @@ type ImagePayloadType = {
 export function InsertInlineImageDialog({saveImage, onClose}: {
     saveImage: (payload: ImagePayloadType) => void;
     onClose: () => void;
-}): JSX.Element {
+}): ReactElement {
     const hasModifier = useRef(false);
 
     const [src, setSrc] = useState('');

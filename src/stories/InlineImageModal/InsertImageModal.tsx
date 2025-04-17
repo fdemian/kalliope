@@ -1,6 +1,6 @@
 import {$getNodeByKey, LexicalEditor, NodeKey} from "lexical";
 import {InlineImageNode, Position} from "../../Kalliope/Nodes/InlineImageNode/InlineImageNode";
-import {useState} from "react";
+import {ReactElement, useState} from "react";
 import Button from '../UI/Button';
 import { DialogActions } from '../UI/Dialog';
 import Select from '../UI/Select';
@@ -14,7 +14,7 @@ export function UpdateInlineImageDialog({
     activeEditor: LexicalEditor;
     nodeKey: NodeKey;
     onClose: () => void;
-}): JSX.Element {
+}): ReactElement {
     const editorState = activeEditor.getEditorState();
     const node = editorState.read(
         () => $getNodeByKey(nodeKey) as InlineImageNode,

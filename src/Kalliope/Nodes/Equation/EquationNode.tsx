@@ -18,6 +18,7 @@ import type {
 import katex from 'katex';
 import {$applyNodeReplacement, DecoratorNode, DOMExportOutput} from 'lexical';
 import * as React from 'react';
+import { ReactElement } from 'react';
 
 const EquationComponent = React.lazy(
   // @ts-ignore
@@ -47,7 +48,7 @@ function convertEquationElement(
   return null;
 }
 
-export class EquationNode extends DecoratorNode<JSX.Element> {
+export class EquationNode extends DecoratorNode<ReactElement> {
   __equation: string;
   __inline: boolean;
 
@@ -145,7 +146,7 @@ export class EquationNode extends DecoratorNode<JSX.Element> {
     writable.__equation = equation;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return (
     <EquationComponent
       equation={this.__equation}

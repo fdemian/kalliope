@@ -25,6 +25,7 @@ import {
 import {calculateZoomLevel, mergeRegister} from '@lexical/utils';
 import {$getNearestNodeFromDOMNode, isHTMLElement} from 'lexical';
 import {
+  ReactElement,
   MouseEventHandler,
   ReactPortal,
   useCallback,
@@ -45,7 +46,7 @@ type MouseDraggingDirection = 'right' | 'bottom';
 const MIN_ROW_HEIGHT = 33;
 const MIN_COLUMN_WIDTH = 92;
 
-function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
+function TableCellResizer({editor}: {editor: LexicalEditor}): ReactElement {
   const targetRef = useRef<HTMLElement | null>(null);
   const resizerRef = useRef<HTMLDivElement | null>(null);
   const tableRectRef = useRef<ClientRect | null>(null);

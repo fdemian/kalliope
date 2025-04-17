@@ -12,11 +12,11 @@ import {
     $isRangeSelection,
     COMMAND_PRIORITY_EDITOR
 } from 'lexical';
-import {useEffect} from 'react';
+import {ReactElement, useEffect} from 'react';
 import {$createPageBreakNode, PageBreakNode} from '../../Nodes/PageBreak';
 import { INSERT_PAGE_BREAK } from "./PageBreakCommand";
 
-export default function PageBreakPlugin(): JSX.Element | null {
+export default function PageBreakPlugin(): ReactElement | null {
     const [editor] = useLexicalComposerContext();
 
     useEffect(() => {

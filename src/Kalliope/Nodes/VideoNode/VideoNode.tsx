@@ -20,6 +20,7 @@ import {
   DecoratorBlockNode,
   SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
+import { ReactElement } from 'react';
 
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
@@ -103,7 +104,7 @@ export class VideoNode extends DecoratorBlockNode {
   }
 
   // @ts-ignore
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(editor: LexicalEditor, config: EditorConfig): ReactElement {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || '',

@@ -8,11 +8,11 @@
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$insertNodeToNearestRoot} from '@lexical/utils';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
-import {useEffect} from 'react';
+import { ReactElement, useEffect} from 'react';
 import {$createFigmaNode, FigmaNode} from '../../Nodes/FigmaNode/FigmaNode';
 import { INSERT_FIGMA_COMMAND } from './FigmaCommand';
 
-export default function FigmaPlugin(): JSX.Element | null {
+export default function FigmaPlugin(): ReactElement | null {
     const [editor] = useLexicalComposerContext();
 
     useEffect(() => {

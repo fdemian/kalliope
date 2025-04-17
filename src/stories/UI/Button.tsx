@@ -7,7 +7,7 @@
  */
 
 import './Button.css';
-import {ReactNode} from 'react';
+import {ReactElement, ReactNode} from 'react';
 import joinClasses from './joinClasses';
 
 export default function Button({
@@ -26,7 +26,7 @@ export default function Button({
     onClick: () => void;
     small?: boolean;
     title?: string;
-}): JSX.Element {
+}): ReactElement {
     return (
         <button
             disabled={disabled}

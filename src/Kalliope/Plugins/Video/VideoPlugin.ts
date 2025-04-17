@@ -12,9 +12,9 @@ import { useEffect } from 'react';
 import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { $createVideoNode, VideoNode } from '../../Nodes/VideoNode/VideoNode';
 import { INSERT_VIDEO_COMMAND } from './VideoCommand';
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 
-export default function VideoPlugin(): JSX.Element | null {
+export default function VideoPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

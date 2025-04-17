@@ -1,6 +1,7 @@
  
 import type { SerializedLexicalNode, NodeKey, Spread, LexicalNode } from 'lexical';
 import { DecoratorNode } from 'lexical';
+import { ReactElement } from 'react';
 import Spoiler from './Spoiler';
 
 export type SerializedSpoilerNode = Spread<
@@ -12,7 +13,7 @@ export type SerializedSpoilerNode = Spread<
   SerializedLexicalNode
 >;
 
-export class SpoilerNode extends DecoratorNode<JSX.Element> {
+export class SpoilerNode extends DecoratorNode<ReactElement> {
   __text: string;
 
   static getType():string {
@@ -50,7 +51,7 @@ export class SpoilerNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return <Spoiler text={this.__text} />;
   }
 }

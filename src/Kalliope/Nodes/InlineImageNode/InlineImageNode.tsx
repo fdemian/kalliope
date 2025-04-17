@@ -39,7 +39,7 @@ import {
     removeClassNamesFromElement,
   } from '@lexical/utils';
 
-import {lazy} from 'react';
+import {ReactElement, lazy} from 'react';
 
 const InlineImageComponent = lazy(() => import('./InlineImageComponent'));
 
@@ -88,7 +88,7 @@ function getPositionClass(position: Position | undefined): string | undefined {
   return typeof position === 'string' ? `position-${position}` : undefined;
 }
 
-export class InlineImageNode extends DecoratorNode<JSX.Element> {
+export class InlineImageNode extends DecoratorNode<ReactElement> {
     // tslint:disable:variable-name
     __src: string;
     __altText: string;
@@ -283,7 +283,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
         return false;
     }
 
-    decorate(): JSX.Element {
+    decorate(): ReactElement {
 
         return (
         <InlineImageComponent

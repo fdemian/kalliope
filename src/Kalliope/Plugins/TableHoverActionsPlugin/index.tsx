@@ -29,7 +29,7 @@ import {
   NodeKey,
 } from 'lexical';
 import {getThemeSelector} from '../../utils/getTheemeSelector';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {ReactElement, useEffect, useMemo, useRef, useState} from 'react';
 import * as React from 'react';
 import {createPortal} from 'react-dom';
 
@@ -42,7 +42,7 @@ function TableHoverActionsContainer({
   anchorElem,
 }: {
   anchorElem: HTMLElement;
-}): JSX.Element | null {
+}): ReactElement | null {
   const [editor, {getTheme}] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
   const [isShownRow, setShownRow] = useState<boolean>(false);

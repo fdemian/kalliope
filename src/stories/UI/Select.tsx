@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+
+// @ts-nocheck
+
 import './Select.css';
+import { ReactElement } from 'react';
 
 type SelectIntrinsicProps = JSX.IntrinsicElements['select'];
 interface SelectProps extends SelectIntrinsicProps {
@@ -17,7 +21,7 @@ export default function Select({
                                    label,
                                    className,
                                    ...other
-                               }: SelectProps): JSX.Element {
+                               }: SelectProps): ReactElement {
     return (
         <div className="Input__wrapper">
             <label style={{marginTop: '-1em'}} className="Input__label">

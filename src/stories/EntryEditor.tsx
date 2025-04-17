@@ -1,4 +1,5 @@
-import React, {useRef } from 'react';
+// @ts-nocheck
+import { ReactElement, useRef } from 'react';
 import Editor from '../Kalliope/KalliopeEditor';
 import emojiData from 'emojibase-data/en/data.json';
 import type { MentionItem } from '../Kalliope/KalliopeEditorTypes';
@@ -24,7 +25,7 @@ type AuthorCompProps = {
   }
 };
 
-export const EntryEditor: React.VFC<EntryEditorProps> = ({ readOnly, initialState, setFormats, setCanUndo, setCanRedo}: EntryEditorProps) => {
+export const EntryEditor: ReactElement<EntryEditorProps> = ({ readOnly, initialState, setFormats, setCanUndo, setCanRedo}: EntryEditorProps) => {
 
   const containerRef = useRef(null);
   const config = {

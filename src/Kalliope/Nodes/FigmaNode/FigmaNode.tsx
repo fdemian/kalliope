@@ -18,6 +18,7 @@ import {
     DecoratorBlockNode,
     SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
+import { ReactElement } from 'react';
 
 type FigmaComponentProps = Readonly<{
     className: Readonly<{
@@ -103,7 +104,7 @@ export class FigmaNode extends DecoratorBlockNode {
         return `https://www.figma.com/file/${this.__id}`;
     }
 
-    decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+    decorate(_editor: LexicalEditor, config: EditorConfig): ReactElement {
         const embedBlockTheme = config.theme.embedBlock || {};
         const className = {
             base: embedBlockTheme.base || '',

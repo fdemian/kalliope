@@ -21,7 +21,7 @@ import {
   NodeKey,
   SerializedLexicalNode,
 } from 'lexical';
-import {useEffect} from 'react';
+import {ReactElement, useEffect} from 'react';
 
 export type SerializedPageBreakNode = SerializedLexicalNode;
 
@@ -62,7 +62,7 @@ function PageBreakComponent({nodeKey}: {nodeKey: NodeKey}) {
   return null;
 }
 
-export class PageBreakNode extends DecoratorNode<JSX.Element> {
+export class PageBreakNode extends DecoratorNode<ReactElement> {
   static getType(): string {
     return 'page-break';
   }
@@ -110,7 +110,7 @@ export class PageBreakNode extends DecoratorNode<JSX.Element> {
     return false;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return <PageBreakComponent nodeKey={this.__key} />;
   }
 }

@@ -9,6 +9,7 @@
 import './ContentEditable.css';
 
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
+import { ReactElement } from 'react';
 
 type Props = {
   className?: string;
@@ -20,7 +21,7 @@ export default function LexicalContentEditable({
   className,
   placeholder,
   placeholderClassName,
-}: Props): JSX.Element {
+}: Props): ReactElement {
   return (
     <ContentEditable
       className={className ?? 'ContentEditable__root'}

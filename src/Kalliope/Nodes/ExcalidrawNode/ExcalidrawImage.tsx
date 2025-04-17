@@ -11,7 +11,7 @@ import type {
   NonDeleted,
 } from '@excalidraw/excalidraw/element/types';
 import type {AppState, BinaryFiles} from '@excalidraw/excalidraw/types';
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 
 import {exportToSvg} from '@excalidraw/excalidraw';
 import * as React from 'react';
@@ -91,7 +91,7 @@ export default function ExcalidrawImage({
   rootClassName = null,
   width = 'inherit',
   height = 'inherit',
-}: Props): JSX.Element {
+}: Props): ReactElement {
   const [Svg, setSvg] = useState<SVGElement | null>(null);
 
   useEffect(() => {

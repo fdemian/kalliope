@@ -13,7 +13,7 @@ import { MentionNode, $createMentionNode } from '../../Nodes/MentionNode/Mention
 import { MentionsTypeaheadMenuItem, EntryComponentType } from './MentionsTypeaheadMenuItem';
 import MentionTypeaheadOption from './MentionTypeaheadOption';
 import { createPortal } from 'react-dom';
-import { useCallback, useEffect } from 'react';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';
 
 // At most, 5 suggestions are shown in the popup.
@@ -34,7 +34,7 @@ type MentionPluginProps = {
   }
 }
 
-export default function NewMentionsPlugin({ config }: MentionPluginProps): JSX.Element | null {
+export default function NewMentionsPlugin({ config }: MentionPluginProps): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

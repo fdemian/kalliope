@@ -6,7 +6,7 @@
  *
  */
 import katex from 'katex';
-import {useEffect, useRef} from 'react';
+import {ReactElement, useEffect, useRef} from 'react';
 
 export default function KatexRenderer({
   equation,
@@ -16,7 +16,7 @@ export default function KatexRenderer({
   equation: string;
   inline: boolean;
   onDoubleClick: () => void;
-}>): JSX.Element {
+}>): ReactElement {
   const katexElementRef = useRef(null);
 
   useEffect(() => {

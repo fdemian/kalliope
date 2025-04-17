@@ -11,11 +11,11 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR
 } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { $createExcalidrawNode, ExcalidrawNode } from '../../Nodes/ExcalidrawNode';
 import { INSERT_EXCALIDRAW_COMMAND } from "./ExcalidrawCommand";
 
-export default function ExcalidrawPlugin(): JSX.Element | null {
+export default function ExcalidrawPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     if (!editor.hasNodes([ExcalidrawNode])) {

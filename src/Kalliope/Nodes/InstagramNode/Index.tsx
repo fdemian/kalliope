@@ -23,6 +23,7 @@ import {
 } from '@lexical/react/LexicalDecoratorBlockNode';
 import './InstagramNode.css';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
+import { ReactElement } from 'react';
 
 function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | null {
   const id = domNode.getAttribute('data-lexical-instagram-id');
@@ -104,7 +105,7 @@ export class InstagramNode extends DecoratorBlockNode {
   }
 
   // @ts-ignore
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(editor: LexicalEditor, config: EditorConfig): ReactElement {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || '',

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 import {
   useRef,
   useState,
@@ -52,7 +52,7 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   fontFamily: 'Arial',
 };
 
-const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: CalliopeEditorProps): JSX.Element => {
+const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: CalliopeEditorProps): ReactElement => {
   const [internalFormat, setInternalFormat] =
     useState<CalliopeFormatTypes>(INITIAL_FORMATS);
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false);

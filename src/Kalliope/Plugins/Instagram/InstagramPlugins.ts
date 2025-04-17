@@ -8,11 +8,11 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { COMMAND_PRIORITY_EDITOR } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { $createInstagramNode, InstagramNode } from '../../Nodes/InstagramNode/Index';
 import { INSERT_INSTAGRAM_COMMAND } from './InstagramCommands';
 
-export default function InstagramPlugin(): JSX.Element | null {
+export default function InstagramPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

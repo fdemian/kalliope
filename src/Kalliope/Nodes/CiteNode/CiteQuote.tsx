@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { ReactElement, useContext } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { CalliopeContext } from '../../context';
 import CiteTextEditor from './CiteTextEditor';
@@ -24,7 +24,7 @@ type CiteQuoteProps = {
   initialEditor: LexicalEditor;
 };
 
-const DefaultSourceComp = ({ sourceLink }: SourceCompProps) => <a href={sourceLink}>{sourceLink}</a>;
+const DefaultSourceComp = ({ sourceLink }: SourceCompProps): ReactElement => <a href={sourceLink}>{sourceLink}</a>;
 const DefaultAuthorComp = ({ author }: AuthorCompProps) => {
   return <a href={author.link}>{author.name}</a>;
 };

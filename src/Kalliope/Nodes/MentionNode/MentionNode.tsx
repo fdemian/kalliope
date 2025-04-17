@@ -6,7 +6,8 @@
  *
  * @flow strict
  */
- 
+
+import { ReactElement } from 'react';
 import type { SerializedLexicalNode, NodeKey, LexicalNode, Spread } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import './MentionNode.css';
@@ -21,7 +22,7 @@ export type SerializedMentionNode = Spread<
   SerializedLexicalNode
 >;
 
-export class MentionNode extends DecoratorNode<JSX.Element> {
+export class MentionNode extends DecoratorNode<ReactElement> {
   __mentionName: string;
   __link: string;
 
@@ -70,7 +71,7 @@ export class MentionNode extends DecoratorNode<JSX.Element> {
    return false;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return (
       <a href={this.__link} className="user-mention" spellCheck="false">
         @{this.__mentionName}

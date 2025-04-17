@@ -7,8 +7,7 @@
  *
  */
 
-import type {JSX} from 'react';
-
+import type {ReactElement} from 'react';
 import {isDOMNode} from 'lexical';
 import * as React from 'react';
 import {
@@ -40,7 +39,7 @@ export function DropDownItem({
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   title?: string;
 }) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLButtonElement | null>(null);
 
   const dropDownContext = React.useContext(DropDownContext);
 
@@ -52,7 +51,8 @@ export function DropDownItem({
 
   useEffect(() => {
     if (ref && ref.current) {
-      registerItem(ref);
+      // @ts-expect-error
+      registerItem(href);
     }
   }, [ref, registerItem]);
 
@@ -161,7 +161,7 @@ export default function DropDown({
   buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
-}): JSX.Element {
+}): ReactElement {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);

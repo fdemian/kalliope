@@ -25,7 +25,7 @@ type ExcalidrawElementFragment = {
 };
 
 export type ExcalidrawModalProps = {
-  excalidrawComponent: JSX.Element;
+  excalidrawComponent: ReactElement;
   setExcalidrawAPI: (api: ExcalidrawImperativeAPI) => void;
   discard: () => void;
   save: () => void;
@@ -110,14 +110,14 @@ export type CalliopeConfigProps = {
     emojiData: any
   };
   twitterConfig: {
-    loadingComponent: ({ tweetId }: LoadingTweetProps) => JSX.Element;
+    loadingComponent: ({ tweetId }: LoadingTweetProps) => ReactElement;
   };
   excalidrawConfig: {
     modal: (props: ExcalidrawModalProps) => ReactElement;
   };
   citation: {
-    sourceLinkComponent: (({ sourceLink }: SourceCompProps) => JSX.Element) | null | undefined;
-    authorComponent: (({ author }: AuthorCompProps) => JSX.Element) | null | undefined;
+    sourceLinkComponent: (({ sourceLink }: SourceCompProps) => ReactElement) | null | undefined;
+    authorComponent: (({ author }: AuthorCompProps) => ReactElement) | null | undefined;
   };
   imageConfig: {
     addCaptionText: string,

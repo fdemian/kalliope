@@ -12,12 +12,12 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR,
 } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 import { $createEquationNode, EquationNode } from '../../Nodes/Equation/EquationNode';
 import { INSERT_EQUATION_COMMAND, CommandPayload } from './EquationsCommand';
 
-export default function EquationsPlugin(): JSX.Element | null {
+export default function EquationsPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

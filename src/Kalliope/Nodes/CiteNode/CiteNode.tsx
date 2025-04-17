@@ -3,6 +3,7 @@ import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
 import CiteQuote from './CiteQuote';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import {createEditor, SerializedEditorState, DecoratorNode, SerializedLexicalNode} from "lexical";
+import { ReactElement } from 'react';
 
 export type SerializedCiteNode = Spread<
     {
@@ -26,7 +27,7 @@ type Source = {
     link: string;
 };
 
-export class CiteNode extends DecoratorNode<JSX.Element> {
+export class CiteNode extends DecoratorNode<ReactElement> {
     __id: string = '';
     __authorName: string;
     __authorLink: string;
@@ -108,7 +109,7 @@ export class CiteNode extends DecoratorNode<JSX.Element> {
         return false;
     }
 
-    decorate(): JSX.Element {
+    decorate(): ReactElement {
       return (
       <BlockWithAlignableContents
         format={this.__format}

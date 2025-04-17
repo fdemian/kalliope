@@ -11,7 +11,7 @@ import {
   useBasicTypeaheadTriggerMatch,
 } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 import { $getSelection, $isRangeSelection, TextNode } from 'lexical';
-import { useCallback, useEffect, useContext, useMemo, useState } from 'react';
+import { useCallback, useEffect, useContext, useMemo, useState, ReactElement } from 'react';
 import * as ReactDOM from 'react-dom';
 import { ReactPortal } from 'react';
 import EmojiMenuItem from './EmojiMenuItem';
@@ -128,7 +128,7 @@ export default function EmojiPickerPlugin() {
       menuRenderFn={(
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
-      ): JSX.Element | ReactPortal | null => {
+      ): ReactElement | ReactPortal | null => {
         if (anchorElementRef == null || options.length === 0) {
           return null;
         }

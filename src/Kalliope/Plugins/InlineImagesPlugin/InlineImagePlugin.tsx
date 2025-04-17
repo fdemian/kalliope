@@ -24,7 +24,7 @@ import {
     LexicalEditor,
     isHTMLElement,
 } from 'lexical';
-import {useEffect } from 'react';
+import {ReactElement, useEffect } from 'react';
 import { CAN_USE_DOM } from '../../shared/canUseDOM';
 import {
     $createInlineImageNode,
@@ -38,7 +38,7 @@ export type InsertInlineImagePayload = Readonly<InlineImagePayload>;
 const getDOMSelection = (targetWindow: Window | null): Selection | null =>
     CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
 
-export default function InlineImagePlugin(): JSX.Element | null {
+export default function InlineImagePlugin(): ReactElement | null {
     const [editor] = useLexicalComposerContext();
 
     useEffect(() => {

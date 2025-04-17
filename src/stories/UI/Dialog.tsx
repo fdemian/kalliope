@@ -6,21 +6,21 @@
  *
  */
 import './Dialog.css';
-import {ReactNode} from 'react';
+import {ReactElement} from 'react';
 
 type Props = Readonly<{
     'data-test-id'?: string;
-    children: ReactNode;
+    children: ReactElement;
 }>;
 
-export function DialogButtonsList({children}: Props): JSX.Element {
+export function DialogButtonsList({children}: Props): ReactElement {
     return <div className="DialogButtonsList">{children}</div>;
 }
 
 export function DialogActions({
                                   'data-test-id': dataTestId,
                                   children,
-                              }: Props): JSX.Element {
+                              }: Props): ReactElement {
     return (
         <div className="DialogActions" data-test-id={dataTestId}>
             {children}

@@ -25,7 +25,7 @@ import {
   KEY_ESCAPE_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { ReactElement, Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ImageResizer from './ImageResizer';
 import { $isImageNode } from './ImageNode';
 import { CalliopeContext } from '../../context';
@@ -71,7 +71,7 @@ function LazyImage({
   src: string;
   width: 'inherit' | number;
   onError: () => void;
-}): JSX.Element {
+}): ReactElement {
   useSuspenseImage(src);
   const [dimensions, setDimensions] = useState<{
     width: number;
@@ -164,7 +164,7 @@ function LazyImage({
   );
 }
 
-function BrokenImage(): JSX.Element {
+function BrokenImage(): ReactElement {
   return (
     <img
       src={brokenImage}
@@ -205,7 +205,7 @@ export default function ImageComponent({
   src: string;
   width: 'inherit' | number;
   captionsEnabled: boolean;
-}): JSX.Element | null {
+}): ReactElement | null {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);

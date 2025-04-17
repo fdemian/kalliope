@@ -1,5 +1,5 @@
  
-import { ReactNode } from 'react';
+import {ReactElement, ReactNode } from 'react';
 import type { LexicalNode, NodeKey } from 'lexical';
 import { DecoratorNode, SerializedLexicalNode, Spread } from 'lexical';
 import './Keyboard.css';
@@ -49,7 +49,7 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
     return true;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return <kbd>{this.__text}</kbd>;
   }
 }

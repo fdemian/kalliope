@@ -24,7 +24,7 @@ import {
   DecoratorBlockNode,
   SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { ReactElement, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import './TweetNode.css';
 
 const WIDGET_SCRIPT_URL = 'https://platform.twitter.com/widgets.js';
@@ -44,7 +44,7 @@ type TweetComponentProps = Readonly<{
 type LoadingTweetProps = {
   tweetId: string;
 };
-type LoadingTweetElementProps = ({ tweetId }: LoadingTweetProps) => JSX.Element;
+type LoadingTweetElementProps = ({ tweetId }: LoadingTweetProps) => ReactElement;
 
 function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | null {
   const id = domNode.getAttribute('data-lexical-tweet-id');
@@ -203,7 +203,7 @@ export class TweetNode extends DecoratorBlockNode {
   }
 
   // @ts-ignore
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(editor: LexicalEditor, config: EditorConfig): ReactElement {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || '',

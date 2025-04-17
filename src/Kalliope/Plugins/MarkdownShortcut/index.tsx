@@ -7,7 +7,8 @@
  */
 import {MarkdownShortcutPlugin} from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import {PLAYGROUND_TRANSFORMERS} from './MarkdownTransformers';
+import { ReactElement } from 'react';
 
-export default function MarkdownPlugin(): JSX.Element {
+export default function MarkdownPlugin(): ReactElement {
   return <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />;
 }

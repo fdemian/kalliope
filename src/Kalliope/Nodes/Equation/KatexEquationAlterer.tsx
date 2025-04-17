@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {useCallback, useState} from 'react';
+import {ReactElement,useCallback, useState} from 'react';
 import KatexRenderer from './KatexRenderer';
 import './KatexEquationAlterer.css';
 
@@ -15,7 +15,7 @@ type Props = {
 
 export default function KatexEquationAlterer({
   initialEquation = '',
-}: Props): JSX.Element {
+}: Props): ReactElement {
   const [equation, setEquation] = useState<string>(initialEquation);
   const [inline, setInline] = useState<boolean>(true);
 

@@ -12,11 +12,11 @@ import {
   $isRangeSelection,
   COMMAND_PRIORITY_EDITOR
 } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { $createCiteNode, CiteNode } from '../../Nodes/CiteNode/CiteNode';
 import { INSERT_CITE_QUOTE } from './CiteCommand';
 
-export default function CitePlugin(): JSX.Element | null {
+export default function CitePlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

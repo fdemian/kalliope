@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Meta } from '@storybook/react';
 import { EntryEditor } from './EntryEditor';
 

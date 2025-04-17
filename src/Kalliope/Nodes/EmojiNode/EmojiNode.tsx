@@ -1,6 +1,7 @@
 import type { NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';
+import { ReactElement } from 'react';
 
 export type SerializedEmojiNode = Spread<
   {
@@ -11,7 +12,7 @@ export type SerializedEmojiNode = Spread<
   SerializedLexicalNode
 >;
 
-export class EmojiNode extends DecoratorNode<JSX.Element> {
+export class EmojiNode extends DecoratorNode<ReactElement> {
   __emoji: string;
 
   static getType() {
@@ -47,7 +48,7 @@ export class EmojiNode extends DecoratorNode<JSX.Element> {
     return this.__emoji !== prevNode.__emoji;
   }
 
-  decorate(): JSX.Element {
+  decorate(): ReactElement {
     return <EmojiImage emoji={this.__emoji} />;
   }
 }

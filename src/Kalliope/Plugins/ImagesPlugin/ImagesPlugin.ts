@@ -24,7 +24,7 @@ import {
   isHTMLElement,
   getDOMSelectionFromTarget,
 } from 'lexical';
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import {
   $createImageNode,
   $isImageNode,
@@ -33,9 +33,10 @@ import {
 } from '../../Nodes/ImageNode/ImageNode';
 import { INSERT_IMAGE_COMMAND } from './ImagesCommand';
 
+
 export type InsertImagePayload = Readonly<ImagePayload>;
 
-export default function ImagesPlugin(): JSX.Element | null {
+export default function ImagesPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

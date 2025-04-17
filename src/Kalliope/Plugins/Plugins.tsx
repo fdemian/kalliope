@@ -1,4 +1,4 @@
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 import { lazy, useState } from 'react';
 import { useSharedHistoryContext } from '../historyContext';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
@@ -74,7 +74,7 @@ function EditorPlugins({
   floatingAnchorElem,
   isSmallWidthViewport,
   isNestedPlugin
-}: PluginComponentProps): JSX.Element {
+}: PluginComponentProps): ReactElement {
   const { historyState } = useSharedHistoryContext();
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 

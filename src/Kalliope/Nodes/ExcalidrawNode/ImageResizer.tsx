@@ -10,7 +10,7 @@ import type { LexicalEditor } from 'lexical';
 
 import * as React from 'react';
 import { useRef } from 'react';
-import type {JSX} from 'react';
+import type {ReactElement} from 'react';
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -43,7 +43,7 @@ export default function ImageResizer({
   setShowCaption: (show: boolean) => void;
   showCaption: boolean;
   captionsEnabled: boolean;
-}): JSX.Element {
+}): ReactElement {
   const controlWrapperRef = useRef<HTMLDivElement>(null);
   const userSelect = useRef({
     priority: '',

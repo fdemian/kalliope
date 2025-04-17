@@ -3,6 +3,9 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.11.0 (2025-04-17)
+- Update to React 19.
+
 ## v0.10.0 (2025-04-08)
 - Update to lexical v0.30.0.
 - Add strict indent to list plugin option.

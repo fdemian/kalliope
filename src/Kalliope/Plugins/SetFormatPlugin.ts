@@ -8,7 +8,8 @@ import {
   SELECTION_CHANGE_COMMAND,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  KEY_MODIFIER_COMMAND
+  isModifierMatch,
+  KEY_DOWN_COMMAND,
 } from 'lexical';
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
@@ -170,8 +171,8 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
     );
 
     editor.registerCommand(
-    KEY_MODIFIER_COMMAND,
-    (payload) => {
+      KEY_DOWN_COMMAND,
+      (payload) => {
       const event: KeyboardEvent = payload;
       const {code, ctrlKey, metaKey} = event;
       if (code === 'KeyK' && (ctrlKey || metaKey)) {

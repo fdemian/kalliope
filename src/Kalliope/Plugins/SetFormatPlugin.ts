@@ -8,7 +8,6 @@ import {
   SELECTION_CHANGE_COMMAND,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  isModifierMatch,
   KEY_DOWN_COMMAND,
 } from 'lexical';
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';

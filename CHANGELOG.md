@@ -3,6 +3,12 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.12.0 (2025-05-01)
+- Update lexical to v0.31.0.
+- Clarify EquationComponent inputRef type.
+- Migrate string literals to update tag constants.
+- Deprecate KEY_MODIFIER_COMMAND and use KEY_DOWN_COMMAND for shortcuts.
+
 ## v0.11.1 (2025-04-17)
 - Fix code block.
 - Update some packages.

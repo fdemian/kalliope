@@ -23,7 +23,11 @@ import {
   TableNode,
 } from '@lexical/table';
 import {calculateZoomLevel, mergeRegister} from '@lexical/utils';
-import {$getNearestNodeFromDOMNode, isHTMLElement} from 'lexical';
+import {
+  $getNearestNodeFromDOMNode,
+  isHTMLElement,
+  SKIP_SCROLL_INTO_VIEW_TAG,
+} from 'lexical';
 import {
   ReactElement,
   MouseEventHandler,
@@ -243,7 +247,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): ReactElement {
           const newHeight = Math.max(height + heightChange, MIN_ROW_HEIGHT);
           tableRow.setHeight(newHeight);
         },
-        {tag: 'skip-scroll-into-view'},
+        {tag: SKIP_SCROLL_INTO_VIEW_TAG},
       );
     },
     [activeCell, editor],
@@ -306,7 +310,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): ReactElement {
           newColWidths[columnIndex] = newWidth;
           tableNode.setColWidths(newColWidths);
         },
-        {tag: 'skip-scroll-into-view'},
+        {tag: SKIP_SCROLL_INTO_VIEW_TAG},
       );
     },
     [activeCell, editor],

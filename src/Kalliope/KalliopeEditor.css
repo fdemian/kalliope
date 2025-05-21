@@ -1018,7 +1018,8 @@ i.chevron-down {
   background-color: #fff;
   border-radius: 8px;
   border: 0;
-  max-width: 250px;
+  max-width: 264px;
+  min-width: 100px;
 }
 
 .dropdown .item .active {
@@ -1026,6 +1027,12 @@ i.chevron-down {
   width: 20px;
   height: 20px;
   background-size: contain;
+}
+
+.dropdown .item.wide {
+  align-items: center;
+  width: 248px;
+  width: 260px;
 }
 
 .dropdown .item:first-child {

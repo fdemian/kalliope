@@ -1235,6 +1235,7 @@ i.prettier-error {
   box-shadow: 0 5px 10px #0000004d;
   border-radius: 8px;
   margin-top: 25px;
+  position: relative;
 }
 
 .typeahead-popover ul {

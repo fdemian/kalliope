@@ -961,7 +961,11 @@ i.chevron-down {
   background-color: transparent;
 }
 
-.calliope-table-row-stripping tr:nth-child(even) {
+.calliope-table-row-stripping tr:nth-child(even),
+.calliope-table-frozen-column
+.calliope-table.calliope-table-row-stripping 
+  tr:nth-child(even)
+  > td:first-child {
   background-color: #f2f5fb;
 }
 

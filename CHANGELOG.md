@@ -6,7 +6,8 @@ To find out what's new in a given lexical version see [Lexical's own changelog](
 ## v0.13.0 (2025-06-12)
 - Update lexical to v0.31.2.
 - Preserve row striping in frozen table columns.
-
+- Made checklist icon fully scalable, clickable, and properly spaced.
+- 
 
 ## v0.13.0 (2025-05-20)
 - Update lexical to v0.31.2.

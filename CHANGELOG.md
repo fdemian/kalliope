@@ -3,6 +3,11 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.13.0 (2025-06-12)
+- Update lexical to v0.31.2.
+- Preserve row striping in frozen table columns.
+
+
 ## v0.13.0 (2025-05-20)
 - Update lexical to v0.31.2.
 - Add punctuation to emoji picker plugin.

@@ -3,17 +3,20 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import {
   $getSelection,
   $isRangeSelection,
+  $isNodeSelection,
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_NORMAL,
   SELECTION_CHANGE_COMMAND,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   KEY_DOWN_COMMAND,
+  LexicalNode,
+  $isRootOrShadowRoot
 } from 'lexical';
 import type { TextNode, ElementNode, RangeSelection } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 import {sanitizeUrl} from '../utils/url';
-import { $getNearestNodeOfType } from '@lexical/utils';
+import { $getNearestNodeOfType, $findMatchingParent } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isCodeNode, CODE_LANGUAGE_MAP } from '@lexical/code';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
@@ -49,6 +52,62 @@ function getSelectedNode(selection: RangeSelection): TextNode | ElementNode {
   }
 }
 
+export const blockTypeToBlockName = {
+  bullet: 'Bulleted List',
+  check: 'Check List',
+  code: 'Code Block',
+  h1: 'Heading 1',
+  h2: 'Heading 2',
+  h3: 'Heading 3',
+  h4: 'Heading 4',
+  h5: 'Heading 5',
+  h6: 'Heading 6',
+  number: 'Numbered List',
+  paragraph: 'Normal',
+  quote: 'Quote',
+};
+
+
+function $findTopLevelElement(node: LexicalNode) {
+  let topLevelElement =
+    node.getKey() === 'root'
+      ? node
+      : $findMatchingParent(node, (e) => {
+          const parent = e.getParent();
+          return parent !== null && $isRootOrShadowRoot(parent);
+        });
+
+  if (topLevelElement === null) {
+    topLevelElement = node.getTopLevelElementOrThrow();
+  }
+  return topLevelElement;
+}
+
+
+const $handleHeadingNode = (selectedElement: LexicalNode):string | number | symbol | null => {
+    const type = $isHeadingNode(selectedElement)
+      ? selectedElement.getTag()
+      : selectedElement.getType();
+
+    if (type in blockTypeToBlockName) {
+      const blockType = type as keyof typeof blockTypeToBlockName;  
+      return blockType;
+    }
+
+    return null;
+  };
+
+const $handleCodeNode = (element: LexicalNode): string => {
+    if ($isCodeNode(element)) {
+      const language =
+        element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+        return language ? CODE_LANGUAGE_MAP[language] || language : '';
+    }
+
+    return '';
+};
+
+
 const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCanUndo, setCanRedo }: SetFormatPluginProps) => {
   const [editor] = useLexicalComposerContext();
 
@@ -79,10 +138,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
       }
 
       const anchorNode = selection.anchor.getNode();
-      const element =
-        anchorNode.getKey() === 'root'
-          ? anchorNode
-          : anchorNode.getTopLevelElementOrThrow();
+      const element = $findTopLevelElement(anchorNode);
       const elementKey = element.getKey();
       const elementDOM = editor.getElementByKey(elementKey);
 
@@ -94,13 +150,8 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
           const type = parentList ? parentList.getListType() : element.getListType();
           blockType = type;
         } else {
-          const type = $isHeadingNode(element) ? element.getTag() : element.getType();
-          blockType = type;
-
-          if ($isCodeNode(element)) {
-            const language = element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
-            codeLanguage = language ? CODE_LANGUAGE_MAP[language] || language : '';
-          }
+          blockType = $handleHeadingNode(element);
+          codeLanguage = $handleCodeNode(element);
         }
       }
 
@@ -154,6 +205,33 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         fontFamily,
       };
     }
+    
+    if ($isNodeSelection(selection)) {
+      const nodes = selection.getNodes();
+      for (const selectedNode of nodes) {
+        const parentList = $getNearestNodeOfType<ListNode>(
+          selectedNode,
+          ListNode,
+        );
+        if (parentList) {
+          blockType =parentList.getListType();
+          
+        } else {
+          const selectedElement = $findTopLevelElement(selectedNode);
+          blockType = $handleHeadingNode(selectedElement);
+          codeLanguage = $handleCodeNode(selectedElement);
+        }
+      }
+      
+      _formats = {
+        ...internalFormat,
+        fontSize,
+        fontColor,
+        bgColor,
+        fontFamily,
+      };
+    }
+
     return _formats;
   }, [editor, internalFormat]);
 

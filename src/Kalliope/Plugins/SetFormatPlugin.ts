@@ -84,7 +84,7 @@ function $findTopLevelElement(node: LexicalNode) {
 }
 
 
-const $handleHeadingNode = (selectedElement: LexicalNode):string | number | symbol | null => {
+const $handleHeadingNode = (selectedElement: LexicalNode):string | number  => {
     const type = $isHeadingNode(selectedElement)
       ? selectedElement.getTag()
       : selectedElement.getType();
@@ -94,7 +94,7 @@ const $handleHeadingNode = (selectedElement: LexicalNode):string | number | symb
       return blockType;
     }
 
-    return null;
+    return '';
   };
 
 const $handleCodeNode = (element: LexicalNode): string => {
@@ -205,7 +205,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         fontFamily,
       };
     }
-    
+
     if ($isNodeSelection(selection)) {
       const nodes = selection.getNodes();
       for (const selectedNode of nodes) {

@@ -168,6 +168,7 @@ export type CalliopeFormatTypes = {
   isSubscript: boolean;
   isSuperscript: boolean;
   isCode: boolean;
+  listStartNumber: number | null,
   canUndo: boolean;
   canRedo: boolean;
   isRTL: boolean;

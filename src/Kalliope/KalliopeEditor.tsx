@@ -45,6 +45,7 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   canUndo: false,
   canRedo: false,
   isRTL: false,
+  listStartNumber: null as number | null,
   codeLanguage: '',
   fontSize: '15px',
   fontColor: '#000',

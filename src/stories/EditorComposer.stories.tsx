@@ -48,6 +48,7 @@ const initialFormatTypes = {
   isSubscript: false,
   isSuperscript: false,
   isCode: false,
+  listStartNumber: null,
   canUndo: false,
   canRedo: false,
   isRTL: false,

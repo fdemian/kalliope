@@ -179,6 +179,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         isUppercase: selection.hasFormat('uppercase'),
         isLowercase: selection.hasFormat('lowercase'),
         isCapitalize: selection.hasFormat('capitalize'),
+        listStartNumber: null,
         isRTL: $isParentElementRTL(selection),
         fontSize,
         fontColor,

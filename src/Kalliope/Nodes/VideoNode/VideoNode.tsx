@@ -55,7 +55,7 @@ function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode
       <div className="player-wrapper">
         <ReactPlayer
           className="react-player"
-          url={videoURL}
+          src={videoURL}
           controls={true}
           width="100%"
           height="100%"

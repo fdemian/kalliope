@@ -3,6 +3,14 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.15.0 (2025-06-22)
+- Update lexical to v0.33.1.
+- Fix: close link popup when user clicks out of it.
+- Allow deleting empty column layouts via backspace.
+- Add ability to change ordered list start number.
+- Add code diff highlighting.
+- Do not use unused expect-error directives.
+
 ## v0.14.0 (2025-06-14)
 - Update lexical to v0.31.2.
 - Preserve row striping in frozen table columns.

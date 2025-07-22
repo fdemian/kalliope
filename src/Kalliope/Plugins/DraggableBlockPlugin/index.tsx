@@ -56,9 +56,7 @@ export default function DraggableBlockPlugin({
   return (
     <DraggableBlockPlugin_EXPERIMENTAL
       anchorElem={anchorElem}
-      // @ts-expect-error
-      menuRef={menuRef} 
-      // @ts-expect-error
+      menuRef={menuRef}
       targetLineRef={targetLineRef}
       menuComponent={
         <div ref={menuRef} className="icon draggable-block-menu">

@@ -3,6 +3,10 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.15.1 (2025-06-26)
+- Track alignment states for elements.
+- Update more elements.
+
 ## v0.15.0 (2025-06-22)
 - Update lexical to v0.33.1.
 - Fix: close link popup when user clicks out of it.

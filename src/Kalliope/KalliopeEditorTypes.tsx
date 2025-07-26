@@ -152,6 +152,16 @@ export type CalliopeEditorProps = {
   setCanRedo: (payload: boolean) => void;
 };
 
+
+export type ElementFormatType =
+  | 'left'
+  | 'start'
+  | 'center'
+  | 'right'
+  | 'end'
+  | 'justify'
+  | '';
+
 export type CalliopeFormatTypes = {
   blockType: string | number | null;
   selectedElementKey: string | null;
@@ -177,4 +187,5 @@ export type CalliopeFormatTypes = {
   fontColor: string;
   bgColor: string;
   fontFamily: string;
+  elementFormatType: ElementFormatType;
 };

@@ -370,25 +370,29 @@ export const EditorComposer = () => {
        text: "ALIGN LEFT",
        command: "ALIGN",
        props: "left",
-       directCommand: true
+       directCommand: true,
+       isActive: formats.elementFormatType === "left"
      },
      {
         text: "ALIGN RIGHT",
         command: "ALIGN",
         props: "right",
-        directCommand: true
+        directCommand: true,
+        isActive: formats.elementFormatType === "right"
       },
       {
          text: "ALIGN CENTER",
          command: "ALIGN",
          props: "center",
-         directCommand: true
+         directCommand: true,
+         isActive: formats.elementFormatType === "center"
        },
        {
           text: "JUSTIFY",
           command: "ALIGN",
           props: "justify",
-          directCommand: true
+          directCommand: true,
+          isActive: formats.elementFormatType === "justify"
       },
       {
         text: "INDENT",

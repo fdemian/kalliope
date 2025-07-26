@@ -4,6 +4,7 @@ import {
   $getSelection,
   $isRangeSelection,
   $isNodeSelection,
+  $isElementNode,
   COMMAND_PRIORITY_CRITICAL,
   COMMAND_PRIORITY_NORMAL,
   SELECTION_CHANGE_COMMAND,
@@ -162,6 +163,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         isLink = true;
       }
 
+
       // Update text format
       _formats = {
         ...internalFormat,
@@ -179,6 +181,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         isUppercase: selection.hasFormat('uppercase'),
         isLowercase: selection.hasFormat('lowercase'),
         isCapitalize: selection.hasFormat('capitalize'),
+        elementFormatType: $isElementNode(element) ? element.getFormatType() : internalFormat.elementFormatType,
         listStartNumber: null,
         isRTL: $isParentElementRTL(selection),
         fontSize,

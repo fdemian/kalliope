@@ -3,6 +3,9 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.15.2 (2025-06-26)
+- Fix initial status of alignment tracking.
+
 ## v0.15.1 (2025-06-26)
 - Track alignment states for elements.
 - Update more elements.

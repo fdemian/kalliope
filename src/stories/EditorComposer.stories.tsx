@@ -56,7 +56,8 @@ const initialFormatTypes = {
   fontSize: '',
   fontColor: '',
   bgColor: '',
-  fontFamily: ''
+  fontFamily: '',
+  elementFormatType: 'left'
 };
 
 type AuthorCompProps = {

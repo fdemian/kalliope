@@ -50,6 +50,7 @@ const INITIAL_FORMATS: CalliopeFormatTypes = {
   fontSize: '15px',
   fontColor: '#000',
   bgColor: '#fff',
+  elementFormatType: 'left',
   fontFamily: 'Arial',
 };
 

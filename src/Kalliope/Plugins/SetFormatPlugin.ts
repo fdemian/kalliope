@@ -163,6 +163,8 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         isLink = true;
       }
 
+      const elementFormatTypeFromFn = $isElementNode(element) ? element.getFormatType() : '';
+      const elementFormatTypeStr = elementFormatTypeFromFn.trim() !== '' ? elementFormatTypeFromFn : internalFormat.elementFormatType;
 
       // Update text format
       _formats = {
@@ -181,7 +183,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
         isUppercase: selection.hasFormat('uppercase'),
         isLowercase: selection.hasFormat('lowercase'),
         isCapitalize: selection.hasFormat('capitalize'),
-        elementFormatType: $isElementNode(element) ? element.getFormatType() : internalFormat.elementFormatType,
+        elementFormatType: elementFormatTypeStr.trim() !== '' ? elementFormatTypeStr : 'left',
         listStartNumber: null,
         isRTL: $isParentElementRTL(selection),
         fontSize,

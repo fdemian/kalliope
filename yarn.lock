@@ -953,264 +953,264 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lexical/clipboard@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/clipboard@npm:0.33.1"
+"@lexical/clipboard@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/clipboard@npm:0.34.0"
   dependencies:
-    "@lexical/html": 0.33.1
-    "@lexical/list": 0.33.1
-    "@lexical/selection": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: bba9cdf2b6b55e24de25ae2a20c412a223d2fa8a51a4e0d62573667b00018132b578809f3377a2a17235b0cd9bc2c43bdfda44e762d6af9867dcb4e3b603256f
+    "@lexical/html": 0.34.0
+    "@lexical/list": 0.34.0
+    "@lexical/selection": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: bf72c26a4c55ecbec298787020511078a185e229b9ce05d4722f84eccc3bc75f0bbcccfc1a2e8598a65a185a886bd3933c5917fa4d0278ed9ec03cceaf448469
   languageName: node
   linkType: hard
 
-"@lexical/code@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/code@npm:0.33.1"
+"@lexical/code@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/code@npm:0.34.0"
   dependencies:
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
     prismjs: ^1.30.0
-  checksum: 209bc812cad85496900be94be1a8e3f0c4a75158cfb6438da1cf782f025f2b45607aebf110d0af9f72051b46748fcc3f39295e3cfa347af223d08e067243a08c
+  checksum: 7be25d2341de5c714f9200f90c546c5b89eb717734d8204d689fc5f4e146a7b67431ad4bf3ac5ead8e68c0451727665e8224f05267c768cec7600a252d02ca9c
   languageName: node
   linkType: hard
 
-"@lexical/devtools-core@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/devtools-core@npm:0.33.1"
+"@lexical/devtools-core@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/devtools-core@npm:0.34.0"
   dependencies:
-    "@lexical/html": 0.33.1
-    "@lexical/link": 0.33.1
-    "@lexical/mark": 0.33.1
-    "@lexical/table": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
+    "@lexical/html": 0.34.0
+    "@lexical/link": 0.34.0
+    "@lexical/mark": 0.34.0
+    "@lexical/table": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
   peerDependencies:
     react: ">=17.x"
     react-dom: ">=17.x"
-  checksum: 9949ba43c1dfd04c8be0bded716b83a4726c950b4902717b976dc51b9bf8518ef85736673c9406f3e300f59c0dba58585993394e0899e861651685518339cfee
+  checksum: 5c0bc5a161b236171b99b4e058b95f17d70470ada5c71c7e34ef623c0dc8b8cbf17842d360b161ae13f610dc191923fd0788a9345e5b0d0194b11fb6bd01f787
   languageName: node
   linkType: hard
 
-"@lexical/dragon@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/dragon@npm:0.33.1"
+"@lexical/dragon@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/dragon@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: 91cf0f73d0b240060f918bdb66325aeae6951a824ec03a5d34b1b823f616f1b82de215a6feab771558dbe01cd122aa3af18a10cdaf469ee7f61767d3df971850
+    lexical: 0.34.0
+  checksum: ea8ecba805b32f578134987fe529659c0afe290e28e97345641e2a03af5438a36c42ac3b5306bad4f10e186e593eb95db69c96f9ce8ff2246d76c8fd08db0e81
   languageName: node
   linkType: hard
 
-"@lexical/file@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/file@npm:0.33.1"
+"@lexical/file@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/file@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: 4a6c05e549da264b88954c9860c5acd475a7d6b8075150bac4ffba5951be533f3f155743289d5fb34d9583f202d9719b9296743b2293e79a963ea1ab45717606
+    lexical: 0.34.0
+  checksum: 7d28236375e220ca2da57bf161b3345f0b91fe027b89d3a249664f2a86f2c8d4dd825371e82e4e05ad3cb110cb919d7f7d6979b181ca4b0826db756e2763d823
   languageName: node
   linkType: hard
 
-"@lexical/hashtag@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/hashtag@npm:0.33.1"
+"@lexical/hashtag@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/hashtag@npm:0.34.0"
   dependencies:
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: ed7fa0c7cdc490554b1251f55a761b7b65a64ee748e9ea9c59c1b8f0ce9016bd61a67356706cf354cf4018ef03ad985d9d7d701320ce8c2ff788376dc4a540d5
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 1eb4e3127b5c0bfe4a886583bb2f5a4336dfa9d38a62988a62455081a03fd607fb975b18d2e2f2aa7ec5ba05c5ba5f6c8b155c7f6aa7f996da176d554d4878a7
   languageName: node
   linkType: hard
 
-"@lexical/history@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/history@npm:0.33.1"
+"@lexical/history@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/history@npm:0.34.0"
   dependencies:
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: ad7bcf1f36a91132e51e75267a66a8fe8ebfdd97d44f7e3a5ce17beed2e7496a75a487a3be9d5e23c08cc96ed4174b83ece837daa225fe9c28144226f52f03a4
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 1e56dfc5003cb99fd00508b2e7ad79c7726411e2415ab303d206e264474f8587ac3cb983ba57b31d0575b986f688a48e5af00bf117db559929e15f0ac70c0751
   languageName: node
   linkType: hard
 
-"@lexical/html@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/html@npm:0.33.1"
+"@lexical/html@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/html@npm:0.34.0"
   dependencies:
-    "@lexical/selection": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 66af4258ce9db6179bb5863a69f96a62c2616a53e84b20bfb7dcc7623ee3db4bdc39658acdba4808c70e1812ab9888815486011de3313983702ee74e505d0fdc
+    "@lexical/selection": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 1c92676d44ad8fe0c8e08014f9908cd18b8d3e7616f470427ea3ee9a89600b1b5ffaa8c7150844c98260925fc33731dad71b3ca9a51d0d28300eecf1765fa9db
   languageName: node
   linkType: hard
 
-"@lexical/link@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/link@npm:0.33.1"
+"@lexical/link@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/link@npm:0.34.0"
   dependencies:
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 0380f9f40fa27078ee7bdceece9e3a92fd3753deab1e906aca9dc2ef863933407111630e4af593f96fa4c06998fffdeeba24267c780309b8ed884a91462134c5
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 8321d414d66dfc45318cd2c7e982c491f55a35e9181c29a3dc03c1db3b082bdd69257fecaa2049b7808b19bb21635fd462b96368e1cedfb577e9643eb8463d86
   languageName: node
   linkType: hard
 
-"@lexical/list@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/list@npm:0.33.1"
+"@lexical/list@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/list@npm:0.34.0"
   dependencies:
-    "@lexical/selection": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 8d6b808a2930c7ee87e11885c10cad3811912fd1e3fe0d38872410ff54c18535f2f74db464520d52f3de6f510324a5613edcdcdb1528e1ef9e8f75759cc254fd
+    "@lexical/selection": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 349a48517abfcb0bbad37ed66287ca696d863c0da73a642abefd7458a4dcb29f64b0b6541a9132aaa594f0aae105dc4d2f4dbfc4cc644e22da908fee3ecc444d
   languageName: node
   linkType: hard
 
-"@lexical/mark@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/mark@npm:0.33.1"
+"@lexical/mark@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/mark@npm:0.34.0"
   dependencies:
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 30b4504d20c862d8059798759d127c8604488ce8ed375b71a933f4035e901e71392cbfe4c68f0e31a8a9a3e5ff526c89f1dd74d2c28555219e1b74f525f894c8
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: e64437b4d518ae73e269f72afe7b7615c4ff63319f71f76f92663520fb1dcf1f66ae7f7660e039303858cd79297627a3fb48060c45432da857112b722628507c
   languageName: node
   linkType: hard
 
-"@lexical/markdown@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/markdown@npm:0.33.1"
+"@lexical/markdown@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/markdown@npm:0.34.0"
   dependencies:
-    "@lexical/code": 0.33.1
-    "@lexical/link": 0.33.1
-    "@lexical/list": 0.33.1
-    "@lexical/rich-text": 0.33.1
-    "@lexical/text": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: c7aa359a1f162062d8c2f21d723d8ef546a18db08bcf5043acde5ce461f095a5cb8a023f7110cf481e8f14069b9aaeae372cc821e5c482cfab4debd96f38dcab
+    "@lexical/code": 0.34.0
+    "@lexical/link": 0.34.0
+    "@lexical/list": 0.34.0
+    "@lexical/rich-text": 0.34.0
+    "@lexical/text": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 8297fef353b393b4a3378498a5d92047c4bed123c024a84e36a0536a60217bf2558c7e2650e54db15b67f748b0263e1e75ef21ca0e7507b2ad484a780ae4a61f
   languageName: node
   linkType: hard
 
-"@lexical/offset@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/offset@npm:0.33.1"
+"@lexical/offset@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/offset@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: 58e096375efcfaed9c8739ee8f679a9c9e7eafce3ea5b47d8ad8b4e9d0c0bdc775b82c99ce7ac47b79070e0dba21c85675b93dd610f7814e7cec9ccc58839fd5
+    lexical: 0.34.0
+  checksum: 6937d413d869d268ef95394e9f19c242285e67a98f9c4f9234399359556179ba866991f68555883fb947de97096d0249e472118fdb6d5ef6a0f6b9d090e26f04
   languageName: node
   linkType: hard
 
-"@lexical/overflow@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/overflow@npm:0.33.1"
+"@lexical/overflow@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/overflow@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: 76325aa564a237ca0e8deae717c6636a2fb2fefb6796d1ccc3753fed1284ea29d2c7a1bef932bdff9e0753b25918d82d3d06f91a95c4dc236dcc0c1b6ffa76db
+    lexical: 0.34.0
+  checksum: 3c67300d6044713c6beb24d9d3b03cb99a975f3776f1ad4fa9cb85361b8505a7478db740743c31b3284b7232fd5aac2c021e96e7998b86c9529de54f0e292351
   languageName: node
   linkType: hard
 
-"@lexical/plain-text@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/plain-text@npm:0.33.1"
+"@lexical/plain-text@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/plain-text@npm:0.34.0"
   dependencies:
-    "@lexical/clipboard": 0.33.1
-    "@lexical/selection": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 14fd8a1ade6e176015c9d689da0191813bf9183a2c5a0538444d4995b8fa76141ac11fe37157d1c1742a1b47a44fed00026c8f96c618e79b32f6b67ed94823a5
+    "@lexical/clipboard": 0.34.0
+    "@lexical/selection": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 580a97470b6655ce3ac41011d911034983daef91e82e639c39441240ae4c8745e2f2149575633b47fb01303c3a3ad96ac7646e8a51e0efe36ec228ca08a832d2
   languageName: node
   linkType: hard
 
-"@lexical/react@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/react@npm:0.33.1"
+"@lexical/react@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/react@npm:0.34.0"
   dependencies:
     "@floating-ui/react": ^0.27.8
-    "@lexical/devtools-core": 0.33.1
-    "@lexical/dragon": 0.33.1
-    "@lexical/hashtag": 0.33.1
-    "@lexical/history": 0.33.1
-    "@lexical/link": 0.33.1
-    "@lexical/list": 0.33.1
-    "@lexical/mark": 0.33.1
-    "@lexical/markdown": 0.33.1
-    "@lexical/overflow": 0.33.1
-    "@lexical/plain-text": 0.33.1
-    "@lexical/rich-text": 0.33.1
-    "@lexical/table": 0.33.1
-    "@lexical/text": 0.33.1
-    "@lexical/utils": 0.33.1
-    "@lexical/yjs": 0.33.1
-    lexical: 0.33.1
+    "@lexical/devtools-core": 0.34.0
+    "@lexical/dragon": 0.34.0
+    "@lexical/hashtag": 0.34.0
+    "@lexical/history": 0.34.0
+    "@lexical/link": 0.34.0
+    "@lexical/list": 0.34.0
+    "@lexical/mark": 0.34.0
+    "@lexical/markdown": 0.34.0
+    "@lexical/overflow": 0.34.0
+    "@lexical/plain-text": 0.34.0
+    "@lexical/rich-text": 0.34.0
+    "@lexical/table": 0.34.0
+    "@lexical/text": 0.34.0
+    "@lexical/utils": 0.34.0
+    "@lexical/yjs": 0.34.0
+    lexical: 0.34.0
     react-error-boundary: ^3.1.4
   peerDependencies:
     react: ">=17.x"
     react-dom: ">=17.x"
-  checksum: 04548f66ce5d9fa2ca910e9826a05164023829d2d9ab945dc8392922e58d097ef3d801456f41097ad6ea309cc14ccfb38b1a47aefd2694b93a9aa9f8511f4a9c
+  checksum: 29a9c122ee9bcda7f43efe43f2cbc89618c4c1036c61c1e4030b1ce0a02353964f90c0f8785256874896281d40338b4361f054b89a8e46ac7dfcd98371b930d4
   languageName: node
   linkType: hard
 
-"@lexical/rich-text@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/rich-text@npm:0.33.1"
+"@lexical/rich-text@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/rich-text@npm:0.34.0"
   dependencies:
-    "@lexical/clipboard": 0.33.1
-    "@lexical/selection": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 595b25ad81df5da2be6833cb0dbab27c986487fab81939d9b80bc0c762a195fc89c43dacbf36e7606be08d4372e0ef2fb5e64b8569560422956182bdf10b8837
+    "@lexical/clipboard": 0.34.0
+    "@lexical/selection": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 4a1e16ffe428c97ab084d1f9a714c6e03dfdad33975408f347833ec3ed9775a6b6a26061e7ade2b3d4a0919a656c3347048fdf0445f3707fcef62482ddf91922
   languageName: node
   linkType: hard
 
-"@lexical/selection@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/selection@npm:0.33.1"
+"@lexical/selection@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/selection@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: e82e9eb9be9dd76bde74c349ac5ee6b2676f30d5a35b9dd07f0c7789b7f4f7af11818741726e9c6704dc2139e0a167fae6a60febfb448711b8077ca610e7aff9
+    lexical: 0.34.0
+  checksum: 94db855875240d6f32d80b7b48d0698e4e60b706c065e68ccac78eb5771550741e4abc740eb379b64fae835760af8adae24eb1db7f2ce727f57c207b1f87c21e
   languageName: node
   linkType: hard
 
-"@lexical/table@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/table@npm:0.33.1"
+"@lexical/table@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/table@npm:0.34.0"
   dependencies:
-    "@lexical/clipboard": 0.33.1
-    "@lexical/utils": 0.33.1
-    lexical: 0.33.1
-  checksum: 186cb86a984030747b8f32aac8f5b32eaef5e8ac168ced0b2ef8b4f4b525650386fda5259559857b9570f57380b8409cd60eb6d45aa90c1806202119c340c528
+    "@lexical/clipboard": 0.34.0
+    "@lexical/utils": 0.34.0
+    lexical: 0.34.0
+  checksum: 34f0cf977b0635df459fb8baa7933026061868c5e80a7c61260b61741ee4f3128fb28927263407ab18efc5b35000cab8d566dce8e8d0607ac263b875f4fca9f7
   languageName: node
   linkType: hard
 
-"@lexical/text@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/text@npm:0.33.1"
+"@lexical/text@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/text@npm:0.34.0"
   dependencies:
-    lexical: 0.33.1
-  checksum: 944b9294baaf156946705e283ad4cac21d8b2c139e30d713360b0a7b70bc4809cc4d86d0cc450b4ee5ea8229fbf3d0c0e9076c327b890e28c9c9a89719359f1f
+    lexical: 0.34.0
+  checksum: 6a1ae2b50288ae7bca5b807a5101a192ae7097525308726204eec4012433ac5f4b6735f97e857df2fc0bf15e9c951a0870af3f285903b710413996eec10233ed
   languageName: node
   linkType: hard
 
-"@lexical/utils@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/utils@npm:0.33.1"
+"@lexical/utils@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/utils@npm:0.34.0"
   dependencies:
-    "@lexical/list": 0.33.1
-    "@lexical/selection": 0.33.1
-    "@lexical/table": 0.33.1
-    lexical: 0.33.1
-  checksum: ee9de04b02d6060388a543176f2df41cc535452a65ff9f64f83ffe8b537679cf5eb2af0b47480e9361a65260681d49cb5250643d0c7fa5490e5bd9761514e882
+    "@lexical/list": 0.34.0
+    "@lexical/selection": 0.34.0
+    "@lexical/table": 0.34.0
+    lexical: 0.34.0
+  checksum: 73ecc7c91259de24acbec54089f714f03c54d72eb02def4b44d30925971f55a3c4215cf3263214fbec8eab05188d982507983bf9a99ec627f3e3d7ca02b89ddb
   languageName: node
   linkType: hard
 
-"@lexical/yjs@npm:0.33.1":
-  version: 0.33.1
-  resolution: "@lexical/yjs@npm:0.33.1"
+"@lexical/yjs@npm:0.34.0":
+  version: 0.34.0
+  resolution: "@lexical/yjs@npm:0.34.0"
   dependencies:
-    "@lexical/offset": 0.33.1
-    "@lexical/selection": 0.33.1
-    lexical: 0.33.1
+    "@lexical/offset": 0.34.0
+    "@lexical/selection": 0.34.0
+    lexical: 0.34.0
   peerDependencies:
     yjs: ">=13.5.22"
-  checksum: f4c283c135503474ebfba70d1ec92b7eccebe0e0185bef643ae85e05ddd74bc27656eeb6a7e33e417d7cc958d76841de4072bd0dd0a7a8f55e18dc0c08a2dae9
+  checksum: e1fcff25893d913d2c84b8db4d2e64339fcef5a84c0f3270e3b1ebadd1c3ddac2fc7f9a82232c808d8513d0f9b6bd44f50075c022a8760522104325c70e8ba0d
   languageName: node
   linkType: hard
 
@@ -2061,142 +2061,142 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/rollup-android-arm-eabi@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-android-arm-eabi@npm:4.45.1"
+"@rollup/rollup-android-arm-eabi@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-android-arm-eabi@npm:4.48.0"
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@rollup/rollup-android-arm64@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-android-arm64@npm:4.45.1"
+"@rollup/rollup-android-arm64@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-android-arm64@npm:4.48.0"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-darwin-arm64@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-darwin-arm64@npm:4.45.1"
+"@rollup/rollup-darwin-arm64@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.48.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-darwin-x64@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-darwin-x64@npm:4.45.1"
+"@rollup/rollup-darwin-x64@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-darwin-x64@npm:4.48.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-freebsd-arm64@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-freebsd-arm64@npm:4.45.1"
+"@rollup/rollup-freebsd-arm64@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-freebsd-arm64@npm:4.48.0"
   conditions: os=freebsd & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-freebsd-x64@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-freebsd-x64@npm:4.45.1"
+"@rollup/rollup-freebsd-x64@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-freebsd-x64@npm:4.48.0"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-arm-gnueabihf@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-arm-gnueabihf@npm:4.45.1"
+"@rollup/rollup-linux-arm-gnueabihf@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-arm-gnueabihf@npm:4.48.0"
   conditions: os=linux & cpu=arm & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-arm-musleabihf@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-arm-musleabihf@npm:4.45.1"
+"@rollup/rollup-linux-arm-musleabihf@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-arm-musleabihf@npm:4.48.0"
   conditions: os=linux & cpu=arm & libc=musl
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-arm64-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.45.1"
+"@rollup/rollup-linux-arm64-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.48.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-arm64-musl@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.45.1"
+"@rollup/rollup-linux-arm64-musl@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.48.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-loongarch64-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-loongarch64-gnu@npm:4.45.1"
+"@rollup/rollup-linux-loongarch64-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-loongarch64-gnu@npm:4.48.0"
   conditions: os=linux & cpu=loong64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-powerpc64le-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-powerpc64le-gnu@npm:4.45.1"
+"@rollup/rollup-linux-ppc64-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-ppc64-gnu@npm:4.48.0"
   conditions: os=linux & cpu=ppc64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-riscv64-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-riscv64-gnu@npm:4.45.1"
+"@rollup/rollup-linux-riscv64-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-riscv64-gnu@npm:4.48.0"
   conditions: os=linux & cpu=riscv64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-riscv64-musl@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-riscv64-musl@npm:4.45.1"
+"@rollup/rollup-linux-riscv64-musl@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-riscv64-musl@npm:4.48.0"
   conditions: os=linux & cpu=riscv64 & libc=musl
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-s390x-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-s390x-gnu@npm:4.45.1"
+"@rollup/rollup-linux-s390x-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-s390x-gnu@npm:4.48.0"
   conditions: os=linux & cpu=s390x & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-gnu@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.45.1"
+"@rollup/rollup-linux-x64-gnu@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.48.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@rollup/rollup-linux-x64-musl@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-linux-x64-musl@npm:4.45.1"
+"@rollup/rollup-linux-x64-musl@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-linux-x64-musl@npm:4.48.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@rollup/rollup-win32-arm64-msvc@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.45.1"
+"@rollup/rollup-win32-arm64-msvc@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.48.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@rollup/rollup-win32-ia32-msvc@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-win32-ia32-msvc@npm:4.45.1"
+"@rollup/rollup-win32-ia32-msvc@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-win32-ia32-msvc@npm:4.48.0"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@rollup/rollup-win32-x64-msvc@npm:4.45.1":
-  version: 4.45.1
-  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.45.1"
+"@rollup/rollup-win32-x64-msvc@npm:4.48.0":
+  version: 4.48.0
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.48.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3401,30 +3401,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@volar/language-core@npm:2.4.20":
-  version: 2.4.20
-  resolution: "@volar/language-core@npm:2.4.20"
+"@volar/language-core@npm:2.4.23":
+  version: 2.4.23
+  resolution: "@volar/language-core@npm:2.4.23"
   dependencies:
-    "@volar/source-map": 2.4.20
-  checksum: b1169aa120425a85f52c30fd14e6f926586210e943e5eeb2fd61564a6e36a77e13470f76a1f1a4e67ac6de60807632e4f1d68da77a60dab8a737d0526ebc42fa
+    "@volar/source-map": 2.4.23
+  checksum: 051411e4a905ea3b08e5a2d38564ba73dbd36cdb8abcecea2eca9afc02928e2234dc3a6cb6c06eac0cf2c493ec9704e2dc3d0f52aa2afdeb70bb7dac8ac4fe21
   languageName: node
   linkType: hard
 
-"@volar/source-map@npm:2.4.20":
-  version: 2.4.20
-  resolution: "@volar/source-map@npm:2.4.20"
-  checksum: f082644db0c197d324d5a62b6c0eb7e669dae336a8f99d09fe1a394c312fe31c240fb9bdf3fb1cc4ff5e598341a2e653fadf304bbb83466f067de35d4a9dec74
+"@volar/source-map@npm:2.4.23":
+  version: 2.4.23
+  resolution: "@volar/source-map@npm:2.4.23"
+  checksum: a4461d6422e7bcbcbd1eb0bdfed09753f05efd03f09be9381d29acc4a58d492e66efd9498f72ac1ebf4a8ce47404c85b4fc7f0a3ef6c695562efb79455781944
   languageName: node
   linkType: hard
 
-"@volar/typescript@npm:2.4.20":
-  version: 2.4.20
-  resolution: "@volar/typescript@npm:2.4.20"
+"@volar/typescript@npm:2.4.23":
+  version: 2.4.23
+  resolution: "@volar/typescript@npm:2.4.23"
   dependencies:
-    "@volar/language-core": 2.4.20
+    "@volar/language-core": 2.4.23
     path-browserify: ^1.0.1
     vscode-uri: ^3.0.8
-  checksum: b1384988deee19d3606211c82d3aeba65a7cb416da7324269958a5f28886fd3f5df3cf2de4d67dba868810924f00f1c3dc7ffbce130646fe3b67ebc95c6f202e
+  checksum: c44da0dbe9dd3688dbafd57b81956f9117bd78bb9b2a24c4d8649540ef6a84434abfbc25209bbe23d2fa290a2ee86b8df48ac8d0a2eb91e4850a775e107b9b96
   languageName: node
   linkType: hard
 
@@ -3461,11 +3461,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/language-core@npm:3.0.3":
-  version: 3.0.3
-  resolution: "@vue/language-core@npm:3.0.3"
+"@vue/language-core@npm:3.0.6":
+  version: 3.0.6
+  resolution: "@vue/language-core@npm:3.0.6"
   dependencies:
-    "@volar/language-core": 2.4.20
+    "@volar/language-core": 2.4.23
     "@vue/compiler-dom": ^3.5.0
     "@vue/compiler-vue2": ^2.7.16
     "@vue/shared": ^3.5.0
@@ -3478,7 +3478,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 8e206f5e903aa60793b4344afc1208a20aa831b91fb7fdb9de0843a0bbac97b94f12e8fbb8ca783ce0415f96f90577c2d555d33147ebe3bfd04ec5e1b1969f21
+  checksum: ce9f1a724327fee0ffae43b606b38c385ac732264723e984c2a236b28132149cf77265b053f5a4b0dde5de80cf76e8798f260347cd5305f5a5fe83d39b60fbf1
   languageName: node
   linkType: hard
 
@@ -5672,15 +5672,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fdir@npm:^6.4.6":
-  version: 6.4.6
-  resolution: "fdir@npm:6.4.6"
+"fdir@npm:^6.5.0":
+  version: 6.5.0
+  resolution: "fdir@npm:6.5.0"
   peerDependencies:
     picomatch: ^3 || ^4
   peerDependenciesMeta:
     picomatch:
       optional: true
-  checksum: fe9f3014901d023cf631831dcb9eae5447f4d7f69218001dd01ecf007eccc40f6c129a04411b5cc273a5f93c14e02e971e17270afc9022041c80be924091eb6f
+  checksum: bd537daa9d3cd53887eed35efa0eab2dbb1ca408790e10e024120e7a36c6e9ae2b33710cb8381e35def01bc9c1d7eaba746f886338413e68ff6ebaee07b9a6e8
   languageName: node
   linkType: hard
 
@@ -6932,19 +6932,19 @@ __metadata:
   resolution: "kalliope@workspace:."
   dependencies:
     "@excalidraw/excalidraw": ^0.18.0
-    "@lexical/clipboard": 0.33.1
-    "@lexical/code": 0.33.1
-    "@lexical/file": 0.33.1
-    "@lexical/hashtag": 0.33.1
-    "@lexical/link": 0.33.1
-    "@lexical/list": 0.33.1
-    "@lexical/overflow": 0.33.1
-    "@lexical/plain-text": 0.33.1
-    "@lexical/react": 0.33.1
-    "@lexical/rich-text": 0.33.1
-    "@lexical/selection": 0.33.1
-    "@lexical/table": 0.33.1
-    "@lexical/utils": 0.33.1
+    "@lexical/clipboard": 0.34.0
+    "@lexical/code": 0.34.0
+    "@lexical/file": 0.34.0
+    "@lexical/hashtag": 0.34.0
+    "@lexical/link": 0.34.0
+    "@lexical/list": 0.34.0
+    "@lexical/overflow": 0.34.0
+    "@lexical/plain-text": 0.34.0
+    "@lexical/react": 0.34.0
+    "@lexical/rich-text": 0.34.0
+    "@lexical/selection": 0.34.0
+    "@lexical/table": 0.34.0
+    "@lexical/utils": 0.34.0
     "@rollup/plugin-typescript": ^12.1.4
     "@storybook/addon-essentials": 8.6.14
     "@storybook/addon-interactions": 8.6.14
@@ -6971,22 +6971,22 @@ __metadata:
     eslint-plugin-storybook: 0.12.0
     fractional-indexing: ^3.2.0
     katex: ^0.16.22
-    lexical: 0.33.1
+    lexical: 0.34.0
     react: ^19.1.0
     react-color: ^2.19.3
     react-dom: ^19.1.0
     react-player: ^3.3.1
     rollup-plugin-copy: ^3.5.0
     rollup-plugin-postcss: ^4.0.2
-    sass: ^1.89.2
+    sass: ^1.90.0
     storybook: 8.6.14
     tslib: ^2.8.1
     tslint: ^6.1.3
     typescript: ^5.8.3
-    vite: 7.0.5
+    vite: 7.1.3
     vite-plugin-css-injected-by-js: ^3.5.2
-    vite-plugin-static-copy: ^3.1.1
-    vue-tsc: ^3.0.3
+    vite-plugin-static-copy: ^3.1.2
+    vue-tsc: ^3.0.6
   languageName: unknown
   linkType: soft
 
@@ -7052,10 +7052,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lexical@npm:0.33.1":
-  version: 0.33.1
-  resolution: "lexical@npm:0.33.1"
-  checksum: 5d0af27e4797a10099d3b76a667eda27970d654c3d7046aa20748b36906fb0fa964f2deadc047292421334d19ae0d506fbb9f61eee3cbfd892d8c7b4a7214304
+"lexical@npm:0.34.0":
+  version: 0.34.0
+  resolution: "lexical@npm:0.34.0"
+  checksum: 286d32b96c319fca75e31778e4276cb7f1ec43863a6b0c3ba66eaff04b7cac3fb62352d33a03b44a9eb830f1b73f802213c8d3ff80720bb8b7dcdeaf6c73b40e
   languageName: node
   linkType: hard
 
@@ -8279,6 +8279,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "picomatch@npm:4.0.3"
+  checksum: 6817fb74eb745a71445debe1029768de55fd59a42b75606f478ee1d0dc1aa6e78b711d041a7c9d5550e042642029b7f373dc1a43b224c4b7f12d23436735dba0
+  languageName: node
+  linkType: hard
+
 "pify@npm:^5.0.0":
   version: 5.0.0
   resolution: "pify@npm:5.0.0"
@@ -9269,30 +9276,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.40.0":
-  version: 4.45.1
-  resolution: "rollup@npm:4.45.1"
+"rollup@npm:^4.43.0":
+  version: 4.48.0
+  resolution: "rollup@npm:4.48.0"
   dependencies:
-    "@rollup/rollup-android-arm-eabi": 4.45.1
-    "@rollup/rollup-android-arm64": 4.45.1
-    "@rollup/rollup-darwin-arm64": 4.45.1
-    "@rollup/rollup-darwin-x64": 4.45.1
-    "@rollup/rollup-freebsd-arm64": 4.45.1
-    "@rollup/rollup-freebsd-x64": 4.45.1
-    "@rollup/rollup-linux-arm-gnueabihf": 4.45.1
-    "@rollup/rollup-linux-arm-musleabihf": 4.45.1
-    "@rollup/rollup-linux-arm64-gnu": 4.45.1
-    "@rollup/rollup-linux-arm64-musl": 4.45.1
-    "@rollup/rollup-linux-loongarch64-gnu": 4.45.1
-    "@rollup/rollup-linux-powerpc64le-gnu": 4.45.1
-    "@rollup/rollup-linux-riscv64-gnu": 4.45.1
-    "@rollup/rollup-linux-riscv64-musl": 4.45.1
-    "@rollup/rollup-linux-s390x-gnu": 4.45.1
-    "@rollup/rollup-linux-x64-gnu": 4.45.1
-    "@rollup/rollup-linux-x64-musl": 4.45.1
-    "@rollup/rollup-win32-arm64-msvc": 4.45.1
-    "@rollup/rollup-win32-ia32-msvc": 4.45.1
-    "@rollup/rollup-win32-x64-msvc": 4.45.1
+    "@rollup/rollup-android-arm-eabi": 4.48.0
+    "@rollup/rollup-android-arm64": 4.48.0
+    "@rollup/rollup-darwin-arm64": 4.48.0
+    "@rollup/rollup-darwin-x64": 4.48.0
+    "@rollup/rollup-freebsd-arm64": 4.48.0
+    "@rollup/rollup-freebsd-x64": 4.48.0
+    "@rollup/rollup-linux-arm-gnueabihf": 4.48.0
+    "@rollup/rollup-linux-arm-musleabihf": 4.48.0
+    "@rollup/rollup-linux-arm64-gnu": 4.48.0
+    "@rollup/rollup-linux-arm64-musl": 4.48.0
+    "@rollup/rollup-linux-loongarch64-gnu": 4.48.0
+    "@rollup/rollup-linux-ppc64-gnu": 4.48.0
+    "@rollup/rollup-linux-riscv64-gnu": 4.48.0
+    "@rollup/rollup-linux-riscv64-musl": 4.48.0
+    "@rollup/rollup-linux-s390x-gnu": 4.48.0
+    "@rollup/rollup-linux-x64-gnu": 4.48.0
+    "@rollup/rollup-linux-x64-musl": 4.48.0
+    "@rollup/rollup-win32-arm64-msvc": 4.48.0
+    "@rollup/rollup-win32-ia32-msvc": 4.48.0
+    "@rollup/rollup-win32-x64-msvc": 4.48.0
     "@types/estree": 1.0.8
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -9318,7 +9325,7 @@ __metadata:
       optional: true
     "@rollup/rollup-linux-loongarch64-gnu":
       optional: true
-    "@rollup/rollup-linux-powerpc64le-gnu":
+    "@rollup/rollup-linux-ppc64-gnu":
       optional: true
     "@rollup/rollup-linux-riscv64-gnu":
       optional: true
@@ -9340,7 +9347,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 3a84cad560ed0f7a15bc6b8408a52a103c624c1748ef47bbbb845a0dc352a294717754cd6158bdbcade9c1aa82f527a5d28e3640ac6f1458e3f7590fd1f31a4e
+  checksum: 2f786ad604aa3f949856e24dbdfcca7bf9b188927a6598f6dccea6645d9a3d0ed6e7242c7d12aa658fe186541f6de717ab651c55b707ab8c9f54d8b91f07ef5e
   languageName: node
   linkType: hard
 
@@ -9426,9 +9433,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.89.2":
-  version: 1.89.2
-  resolution: "sass@npm:1.89.2"
+"sass@npm:^1.90.0":
+  version: 1.90.0
+  resolution: "sass@npm:1.90.0"
   dependencies:
     "@parcel/watcher": ^2.4.1
     chokidar: ^4.0.0
@@ -9439,7 +9446,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 192a97ffe801d9377d10c0a8a129befe637438c5aa979a56db18fd95da2aa32b656715fa8a2959bfaf059b490792a783e605a94449d44fbbf44d8155aa981490
+  checksum: 1f2ad353eb9a4a294ba7e8f9038363c8fbf69afbf2938d53a3beff9bd9180061c3da71f139b7dedc4707f7421c4a1226164bd0276988dbc3b43b1276c0752055
   languageName: node
   linkType: hard
 
@@ -10285,9 +10292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-static-copy@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "vite-plugin-static-copy@npm:3.1.1"
+"vite-plugin-static-copy@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "vite-plugin-static-copy@npm:3.1.2"
   dependencies:
     chokidar: ^3.6.0
     fs-extra: ^11.3.0
@@ -10296,20 +10303,20 @@ __metadata:
     tinyglobby: ^0.2.14
   peerDependencies:
     vite: ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: d36c5e21967d4059b1d45ff2520e966fad5889237b39628cbd23044d30aaf9487fc98d93abe90729c5eb3a9f0197f96ff7ce2ac8498c2e4649252db47b00d048
+  checksum: 466c1bbbb900f004bbcea080c8c9d388b6cebb7f80e3a852c94197d092b189a890c5047ba5a5d82eb25af7e74089948a499a6e365a515e69ff3e13a70f729d6d
   languageName: node
   linkType: hard
 
-"vite@npm:7.0.5":
-  version: 7.0.5
-  resolution: "vite@npm:7.0.5"
+"vite@npm:7.1.3":
+  version: 7.1.3
+  resolution: "vite@npm:7.1.3"
   dependencies:
     esbuild: ^0.25.0
-    fdir: ^6.4.6
+    fdir: ^6.5.0
     fsevents: ~2.3.3
-    picomatch: ^4.0.2
+    picomatch: ^4.0.3
     postcss: ^8.5.6
-    rollup: ^4.40.0
+    rollup: ^4.43.0
     tinyglobby: ^0.2.14
   peerDependencies:
     "@types/node": ^20.19.0 || >=22.12.0
@@ -10351,7 +10358,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: d5f7f44f53d723a020dd64569906bf9b92eb002bb26d0dd21aa2a7c557685795e084672593fdc5b136c69c954ea405f0fa51de23ffb48add70f05c3413f07830
+  checksum: 625974a3399d0e9f98e6c06d2ce83b982b5d76e030201809a6bbce03a1cbdb8ff4e0e0dc5e71cd4f402f3858afa8940e091551632a3423fddeb6afd213792d45
   languageName: node
   linkType: hard
 
@@ -10362,17 +10369,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "vue-tsc@npm:3.0.3"
+"vue-tsc@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "vue-tsc@npm:3.0.6"
   dependencies:
-    "@volar/typescript": 2.4.20
-    "@vue/language-core": 3.0.3
+    "@volar/typescript": 2.4.23
+    "@vue/language-core": 3.0.6
   peerDependencies:
     typescript: ">=5.0.0"
   bin:
     vue-tsc: ./bin/vue-tsc.js
-  checksum: c2bc41a3bd5fdf39ef81c00cceeb3007b5f7b63b19db07a9b6321c359482fef0a9e44be0198c40f1099ad7f18580cf6b9d65605be149c6648cb4df77b933554f
+  checksum: 4e88b842f8e69df3e14fb06478df2f6a32bbd14d0e8c25467d5ea10a851429d089d2a45d1beb066620556c16e640541e5fbc1b4e7b4af575eb4ce7c5429f613e
   languageName: node
   linkType: hard
 

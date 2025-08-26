@@ -6,8 +6,18 @@
  *
  */
 import type { LexicalEditor } from 'lexical';
+import {
+  $isAutoLinkNode,
+  $isLinkNode,
+  LinkNode,
+  TOGGLE_LINK_COMMAND,
+} from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { mergeRegister } from '@lexical/utils';
+import {
+  $findMatchingParent,
+  $wrapNodeInElement,
+  mergeRegister,
+} from '@lexical/utils';
 import {
   $createRangeSelection,
   $getSelection,
@@ -144,6 +154,11 @@ function $onDrop(event: DragEvent, editor: LexicalEditor): boolean {
   if (!data) {
     return false;
   }
+  const existingLink = $findMatchingParent(
+    node,
+    (parent): parent is LinkNode =>
+      !$isAutoLinkNode(parent) && $isLinkNode(parent),
+  );
   event.preventDefault();
   if (canDropImage(event)) {
     const range = getDragSelection(event);
@@ -154,6 +169,9 @@ function $onDrop(event: DragEvent, editor: LexicalEditor): boolean {
     }
     $setSelection(rangeSelection);
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, data);
+    if (existingLink) {
+      editor.dispatchCommand(TOGGLE_LINK_COMMAND, existingLink.getURL());
+    }
   }
   return true;
 }

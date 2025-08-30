@@ -23,7 +23,11 @@ import CollapsiblePlugin from './CollapsiblePlugin';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 import TableHoverActionsPlugin from './TableHoverActionsPlugin';
-import CodeHighlightPlugin from './CodeHighlightPlugin';
+import CodeHighlightPrismPlugin from './CodeHighlightPrismPlugin';
+import CodeHighlightShikiPlugin from './CodeHighlightShikiPlugin';
+
+
+import { CalliopeConfigProps } from '../KalliopeEditorTypes';
 
 //
 const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
@@ -57,7 +61,7 @@ export type PluginComponentProps = {
   isNestedPlugin: boolean;
   onEditorChange: (editorState: EditorState) => void;
   floatingAnchorElem: HTMLDivElement | null;
-  config: any;
+  config: CalliopeConfigProps;
   readOnly: boolean;
 };
 
@@ -100,11 +104,12 @@ function EditorPlugins({
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       {config.autoFocus && <AutoFocusPlugin />}
+      
       <EmojisPlugin />
       <ClearEditorPlugin />
       <TabIndentationPlugin maxIndent={7} />
       <LinkPlugin />
-      <CodeHighlightPlugin />
+      {config.useShiki ? <CodeHighlightShikiPlugin /> : <CodeHighlightPrismPlugin />}
       <ListPlugin hasStrictIndent={false} />
       <CheckListPlugin />
       <EquationsPlugin />

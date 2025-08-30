@@ -26,6 +26,7 @@
     "@excalidraw/excalidraw": "^0.18.0",
     "@lexical/clipboard": "0.34.0",
     "@lexical/code": "0.34.0",
+    "@lexical/code-shiki": "^0.34.0",
     "@lexical/file": "0.34.0",
     "@lexical/hashtag": "0.34.0",
     "@lexical/link": "0.34.0",

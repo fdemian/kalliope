@@ -5,12 +5,9 @@ import {
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types';
 import { ReactElement } from "react";
+import type {EntryComponentType} from './Plugins/Mentions/MentionsTypeaheadMenuItem';
 
 type DispatcherFn = () => void;
-
-type AvatarEntryComponent = {
-  option: MentionItem;
-}
 
 type LoadingTweetProps = {
   tweetId: string;
@@ -99,11 +96,18 @@ export type ShowModalProps = {
   nodeKey: NodeKey;
 };
 
+type MentionFnProps = {
+  name: string;
+  link: string;
+};
+
 export type CalliopeConfigProps = {
+  selectionAlwaysOnDisplay: boolean;
   placeholderText: string;
   initialState: string | undefined;
   readOnly: boolean;
   autoFocus: boolean;
+  useShiki: boolean; 
   onError: (error: Error) => void;
   plugins: string[];
   emojiConfig: {
@@ -130,9 +134,10 @@ export type CalliopeConfigProps = {
     handleDroppedFile: (file: File) => void
   };
   mentions: {
-    onSearchChange: (match: string) => void;
+    onSearchChange: (match: string | null) => void;
     onAddMention: (mention: MentionItem) => void;
-    entryComponent: (entryProps: AvatarEntryComponent) => void;
+    onRemoveMention: (arg: MentionFnProps) => void;
+    entryComponent: EntryComponentType;
     mentionsData: MentionItem[];
   };
 };

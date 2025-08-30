@@ -15,7 +15,6 @@ import {
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $findMatchingParent,
-  $wrapNodeInElement,
   mergeRegister,
 } from '@lexical/utils';
 import {

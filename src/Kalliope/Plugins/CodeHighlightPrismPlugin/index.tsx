@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 import { registerCodeHighlighting } from '@lexical/code';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ReactElement, useEffect } from 'react';
 
-export default function CodeHighlightPlugin(): ReactElement | null {
+export default function CodeHighlightPrismPlugin(): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

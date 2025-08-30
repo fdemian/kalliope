@@ -15,22 +15,37 @@ import MentionTypeaheadOption from './MentionTypeaheadOption';
 import { createPortal } from 'react-dom';
 import { ReactElement, useCallback, useEffect } from 'react';
 import { getPossibleQueryMatch } from './utils';
+import { type MentionItem } from '../../KalliopeEditorTypes';
 
 // At most, 5 suggestions are shown in the popup.
 const SUGGESTION_LIST_LENGTH_LIMIT = 5;
 
 type MentionFnProps = {
+  id: number;
   name: string;
   link: string;
+  avatar?: string | null;
 }
 
 type MentionPluginProps = {
   config: {
     onAddMention: (arg: MentionFnProps) => void;
     onRemoveMention: (arg: MentionFnProps) => void;
-    mentionsData: MentionTypeaheadOption[];
+    mentionsData: MentionItem[];
     onSearchChange: (match: string | null) => void;
     entryComponent: EntryComponentType;
+  }
+}
+
+type ItemToTypeAhead = (item:MentionItem) => MentionTypeaheadOption;
+
+const convertItemToTypeAheadOption:ItemToTypeAhead = (item)  => {
+  return {
+    name: item.name,
+    link: item.link,
+    avatar: item.avatar ?? "",
+    key: item.name,
+    setRefElement: () => {}
   }
 }
 
@@ -53,6 +68,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
               mentionNodeList.set(nodeKey, mentionNode);
               if (config.onAddMention) {
                 config.onAddMention({
+                  id: 0, // Unused param (for now)
                   name: mentionNode.__mentionName,
                   link: mentionNode.__link,
                 });
@@ -63,6 +79,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
           const mentionNode = mentionNodeList.get(nodeKey);
           if (mentionNode !== undefined) {
             config.onRemoveMention({
+              id: 0,// Unused param (for now)              
               name: mentionNode.__mentionName,
               link: mentionNode.__link,
             });
@@ -102,7 +119,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
       onQueryChange={config.onSearchChange}
       onSelectOption={onSelectOption}
       triggerFn={checkForMentionMatch}
-      options={options}
+      options={options.map(o => convertItemToTypeAheadOption(o))}
       menuRenderFn={(
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex }
@@ -111,20 +128,20 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
           ? createPortal(
               <div className="typeahead-popover mentions-menu">
                 <ul>
-                  {config.mentionsData.map((option:MentionTypeaheadOption, i: number) => (
+                  {config.mentionsData.map((option:MentionItem, i: number) => (
                     <MentionsTypeaheadMenuItem
                       entryComponent={config.entryComponent}
                       index={i}
                       isSelected={selectedIndex === i}
                       onClick={() => {
                         setHighlightedIndex(i);
-                        selectOptionAndCleanUp(option);
+                        selectOptionAndCleanUp(convertItemToTypeAheadOption(option));
                       }}
                       onMouseEnter={() => {
                         setHighlightedIndex(i);
                       }}
                       key={option.link}
-                      option={option}
+                      option={convertItemToTypeAheadOption(option)}
                     />
                   ))}
                 </ul>

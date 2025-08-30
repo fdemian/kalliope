@@ -11,6 +11,7 @@ import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
 import {LexicalEditor} from "lexical";
+import { EntryComponentType } from '../Kalliope/Plugins/Mentions/MentionsTypeaheadMenuItem';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 type CalliopeContainerType = HTMLDivElement & {
@@ -26,10 +27,6 @@ type SourceLinkProps = {
 
 type LoadingTweetProps = {
   tweetId: string;
-}
-
-type AvatarEntryComponent = {
-  option: MentionItem;
 }
 
 const initialFormatTypes = {
@@ -78,6 +75,24 @@ type InlineImageProps = {
   showCaption: boolean;
   src: string;
 };
+
+type MentionFnProps = {
+  name: string;
+  link: string;
+};
+
+
+const getEntryComponentElement: EntryComponentType = ({option: { name }}) => (
+  <>
+   <img
+     src="https://testing-library.com/img/octopus-64x64.png"
+     width="20"
+     height="20"
+     alt="User avatar placeholder"
+     />
+     &nbsp; &nbsp; <strong>{name}</strong>
+  </>
+ );
 
 export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
@@ -212,6 +227,7 @@ export const EditorComposer = () => {
   
   const config = {
     placeholderText: 'Insert text...',
+    useShiki: false,
     initialState: undefined,
     readOnly: false,
     autoFocus: false,
@@ -267,21 +283,11 @@ export const EditorComposer = () => {
         console.clear();
         console.log(mention);
       },
-      onRemoveMention: (mentionName: string) => {
+      onRemoveMention: (arg: MentionFnProps) => {
         console.clear();
-        console.log(mentionName);
+        console.log(arg);        
       },
-      entryComponent: ({option: { name }}: AvatarEntryComponent) => (
-       <>
-        <img
-          src="https://testing-library.com/img/octopus-64x64.png"
-          width="20"
-          height="20"
-          alt="User avatar placeholder"
-          />
-          &nbsp; &nbsp; <strong>{name}</strong>
-       </>
-      ),
+      entryComponent: (o:any) => getEntryComponentElement(o),
       mentionsData: suggestions
     }
   };

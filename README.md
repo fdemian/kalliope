@@ -400,7 +400,7 @@ A list of valid code languages is exported from the editor. To obtain the list d
 ```
 import { getCodeLanguageOptions } from 'kalliope';
 
-const CODE_LANGUAGES = getCodeLanguageOptions();
+const CODE_LANGUAGES = getCodeLanguageOptions(false);
 ```
 
 The following code languages are accepted by the highlighter. The value column indicates the value passed as the parameter of the `CHANGE_CODE_LANGUAGE` command.

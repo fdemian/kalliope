@@ -629,7 +629,7 @@ export const EditorComposer = () => {
 
   const CODE_LANGUAGE_OPTIONS = [
     ['', '- Select language -'],
-    ...getCodeLanguageOptions()
+    ...getCodeLanguageOptions(false)
   ];
   const SUPPORT_SPEECH_RECOGNITION =
     'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;

@@ -6,7 +6,7 @@ To find out what's new in a given lexical version see [Lexical's own changelog](
 ##
 - Update lexical to v0.34.0 .
 - Bug Fix: Image links lose link state when dragged.
-- 
+- Add shiki support.
 
 ## v0.15.2 (2025-06-26)
 - Fix initial status of alignment tracking.

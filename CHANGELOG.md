@@ -3,10 +3,13 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
-##
+## v0.16.0 (2025-08-31)
 - Update lexical to v0.34.0 .
 - Bug Fix: Image links lose link state when dragged.
 - Add shiki support.
+- Add code languages and themes for shiki.
+- Add fontSize utils.
+
 
 ## v0.15.2 (2025-06-26)
 - Fix initial status of alignment tracking.

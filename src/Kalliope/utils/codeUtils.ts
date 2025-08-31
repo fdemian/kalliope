@@ -1,5 +1,4 @@
 import { 
-  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   getCodeLanguageOptions as getCodeLanguageOptionsPrism,
   normalizeCodeLanguage as normalizeCodeLanguagePrism,
 } from '@lexical/code';
@@ -86,3 +85,6 @@ export const CODE_THEME_OPTIONS_SHIKI: [string, string][] =
       'vitesse-light',
     ].includes(option[0]),
   );
+
+ export const normalizePrism = (language: string) => normalizeCodeLanguagePrism(language);
+ export const normalizeShiki = (language: string) => normalizeCodeLanguageShiki(language);

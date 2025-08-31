@@ -403,6 +403,8 @@ import { getCodeLanguageOptions } from 'kalliope';
 const CODE_LANGUAGES = getCodeLanguageOptions(false);
 ```
 
+The function takes a parameter that indicates wether to use Shiki as a code highlighter or not (if not, it will return a list of languages that Prism can highlight).
+
 The following code languages are accepted by the highlighter. The value column indicates the value passed as the parameter of the `CHANGE_CODE_LANGUAGE` command.
 
 <table class="table table-bordered table-striped">

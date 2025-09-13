@@ -3,6 +3,12 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+## v0.16.2 (2025-09-13)
+- Update lexical to v0.35.0.
+- Feature: allow ElementNode direction to be overridden.
+- Refactor remove unnecessary assertions.
+- Fix selection bug.
+
 ## v0.16.1 (2025-08-31)
 - Update react versions to the latest.
 

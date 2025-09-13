@@ -403,9 +403,12 @@ function useFloatingLinkEditorToolbar(
     }
     return mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
-        editorState.read(() => {
-          $updateToolbar();
-        });
+        editorState.read(
+          () => {
+            $updateToolbar();
+          },
+          {editor: activeEditor},
+        );
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,

@@ -165,7 +165,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
 
       const elementFormatTypeFromFn = $isElementNode(element) ? element.getFormatType() : '';
       const elementFormatTypeStr = elementFormatTypeFromFn.trim() !== '' ? elementFormatTypeFromFn : internalFormat.elementFormatType;
-
+      
       // Update text format
       _formats = {
         ...internalFormat,
@@ -288,13 +288,17 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
     COMMAND_PRIORITY_CRITICAL
   );
 
-  editor.registerUpdateListener(({ editorState }) => {
-    editorState.read(() => {
-      const _formats = getEditorFormats();
-      setFormats(_formats);
-      setInternalFormat(_formats);
-    });
+  editor.registerUpdateListener(({editorState}) => {
+    editorState.read(
+      () => {
+        const _formats = getEditorFormats();
+        setFormats(_formats);
+        setInternalFormat(_formats);
+      },
+      {editor: editor},
+    );
   });
+
   }, [editor, internalFormat, getEditorFormats, setFormats, setInternalFormat]);
 
   return null;

@@ -150,7 +150,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): ReactElement {
                 throw new Error('TableCellResizer: Table element not found.');
               }
 
-              targetRef.current = target as HTMLElement;
+              targetRef.current = target;
               tableRectRef.current = tableElement.getBoundingClientRect();
               updateActiveCell(cell);
             });

@@ -45,9 +45,7 @@
     "fractional-indexing": "^3.2.0",
     "katex": "^0.16.22",
     "lexical": "0.36.1",
-    "react": "^19.1.1",
     "react-color": "^2.19.3",
-    "react-dom": "^19.1.1",
     "react-player": "^3.3.3"
   },
   "devDependencies": {

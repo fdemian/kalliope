@@ -3,6 +3,11 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.16.3 (2025-09-28)
+- Remove react and react dom and declare them as peer dependencies.
+- Fix imports.
+- Update lexical to v0.36.0.
+
 ## v0.16.2 (2025-09-13)
 - Update lexical to v0.35.0.
 - Feature: allow ElementNode direction to be overridden.

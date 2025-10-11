@@ -39,7 +39,6 @@ import { INSERT_TABLE_COMMAND, $isTableSelection } from '@lexical/table';
 import { INSERT_KEYBOARD_COMMAND } from './Keyboard/KeyboardCommand';
 import { INSERT_SPOILER_COMMAND } from './Spoiler/SpoilerCommand';
 import { INSERT_IMAGE_COMMAND } from './ImagesPlugin/ImagesCommand';
-import { INSERT_INLINE_IMAGE_COMMAND } from './InlineImagesPlugin/InlineImagesCommand';
 import { INSERT_TWEET_COMMAND } from './Twitter/TwitterCommand';
 import { INSERT_INSTAGRAM_COMMAND } from './Instagram/InstagramCommands';
 import { INSERT_EQUATION_COMMAND } from './Equations/EquationsCommand';
@@ -380,11 +379,6 @@ const EDITOR_COMMANDS: EditorCommands = [
     name: 'INSERT_IMAGE',
     command: INSERT_IMAGE_COMMAND,
     directCommand: true,
-  },
-  {
-    name: 'INSERT_IMAGE_INLINE',
-    command: INSERT_INLINE_IMAGE_COMMAND,
-    directCommand: true
   },
   {
     name: 'INSERT_TWEET',

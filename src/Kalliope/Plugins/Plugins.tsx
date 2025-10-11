@@ -47,7 +47,6 @@ const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToText/SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./Cite/CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
-const InlineImagePlugin = lazy(() => import('./InlineImagesPlugin/InlineImagePlugin'));
 const FigmaPlugin = lazy(() => import('./Figma/FigmaPlugin'));
 
 export type PluginComponentProps = {
@@ -116,7 +115,6 @@ function EditorPlugins({
       <TablePlugin hasHorizontalScroll={true} />
       <TableCellResizer />
       <ImagesPlugin />
-      <InlineImagePlugin />
       {!readOnly && (
         <SetFormatPlugin
           internalFormat={internalFormat}

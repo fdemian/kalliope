@@ -1,5 +1,5 @@
 // @ts-nocheck
-import type {ReactElement} from 'react';
+import {ReactElement, useMemo} from 'react';
 import {
   useRef,
   useState,
@@ -9,8 +9,8 @@ import {
 } from 'react';
 import { CAN_USE_DOM } from './shared/canUseDOM';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
-import {CLEAR_EDITOR_COMMAND, EditorState} from 'lexical';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import {CLEAR_EDITOR_COMMAND, EditorState, defineExtension } from 'lexical';
+import {LexicalExtensionComposer} from '@lexical/react/LexicalExtensionComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import ContentEditable from "./Nodes/UIPath/ContentEditable";
 
@@ -22,6 +22,7 @@ import type {
   CalliopeFormatTypes,
   EditorCommand
 } from './KalliopeEditorTypes';
+import { buildHTMLConfig } from './buildHTMLConfig';
 import { CalliopeContext } from './context';
 import theme from './editorTheme';
 import './KalliopeEditor.css';
@@ -96,16 +97,6 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     }
   }
 
-  const initialConfig= {
-    namespace: 'Kalliope',
-    nodes: EditorNodes,
-    onError: config.onError,
-    editable: !config.readOnly,
-    editorState: config.initialState,
-    theme
-  };
-
-
   const clear = () => {
     if (editorRef && editorRef.current) {
       editorRef.current.dispatchCommand(CLEAR_EDITOR_COMMAND);
@@ -170,13 +161,28 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     };
   });
 
+  const app = useMemo(
+    () =>
+      defineExtension({
+        $initialEditorState: config.initialState,
+        html: buildHTMLConfig(),
+        name: 'Kalliope',
+        namespace: 'Kalliope',
+        nodes: EditorNodes,
+        theme: theme,
+        onError: config.onError,
+        editable: !config.readOnly
+      }),
+    [],
+  );
+
   return (
   <CalliopeContext.Provider value={pluginConfig}>
     <div className="editor-shell">
       <div
         className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
       >
-        <LexicalComposer initialConfig={initialConfig}>
+        <LexicalExtensionComposer extension={app} contentEditable={null}>
           <RichTextPlugin
             contentEditable={
               <div className="editor-scroller">
@@ -208,7 +214,7 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
              floatingAnchorElem={floatingAnchorElem}
              config={config}
             />
-          </LexicalComposer>
+          </LexicalExtensionComposer>
         </div>
       </div>
     </CalliopeContext.Provider>

@@ -5,8 +5,6 @@ import Editor, { getCodeLanguageOptions } from '../Kalliope/kalliope';
 import { SketchPicker } from 'react-color';
 import {initialMentions} from './mentionsData';
 import URLToolbar from './URLToolbar';
-import { InsertInlineImageDialog } from './InlineImageModal/InlineImageUI';
-import { UpdateInlineImageDialog } from "./InlineImageModal/InsertImageModal";
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import useModal from './UI/useModal';
 import type { MouseEventHandler } from 'react';
@@ -64,18 +62,6 @@ type AuthorCompProps = {
   }
 };
 
-type InlineImageModalProps = {
-  activeEditor: LexicalEditor;
-  nodeKey: string;
-};
-
-type InlineImageProps = {
-  altText: string;
-  position: string;
-  showCaption: boolean;
-  src: string;
-};
-
 type MentionFnProps = {
   name: string;
   link: string;
@@ -111,8 +97,6 @@ export const EditorComposer = () => {
   const [isVideoToolbar, setVideoToolbar] = useState<boolean | null>(false);
   const [isImageToolbar, setImageToolbar] = useState<boolean | null>(false);
   const [url, setUrl] = useState<string | null>(null);
-
-  const [inlineImageModal, showModal] = useModal();
 
   const toggleTweetToolbar = () => setTweetToolbar(false);
   const toggleVideoToolbar = () => setVideoToolbar(false);
@@ -196,12 +180,6 @@ export const EditorComposer = () => {
     setImageToolbar(false);
   }
 
-  const insertInlineImage = (image: InlineImageProps) => {
-    if(!containerRef.current)
-      return;
-    containerRef.current.executeCommand("INSERT_IMAGE_INLINE", image);
-  }
-
   const insertVideo = () => {
     if(!containerRef.current || url === null)
       return;
@@ -239,11 +217,6 @@ export const EditorComposer = () => {
     imageConfig: {
       addCaptionText: "Add caption",
       defaultCaptionText: "Enter image caption..."
-    },
-    inlineImage: {
-      showModal: (modalProps:InlineImageModalProps) => showModal('Update inline image', (onClose) => (
-          <UpdateInlineImageDialog {...modalProps} onClose={onClose} />
-      ))
     },
     excalidrawConfig: {
       modal: ExcalidrawModal
@@ -521,17 +494,6 @@ export const EditorComposer = () => {
     {
       text: "Image",
       command: () => setImageToolbar(true),
-      props: null,
-      directCommand: false
-    },
-    {
-      text: "InlineImage",
-      command: () => showModal('Insert inline image', (onClose) => (
-      <InsertInlineImageDialog
-          saveImage={insertInlineImage}
-          onClose={onClose}
-      />
-      )),
       props: null,
       directCommand: false
     },
@@ -822,7 +784,6 @@ export const EditorComposer = () => {
    <div>
      {editorState === null ? "<Nothing to render>" : JSON.stringify(editorState)}
    </div>
-    {inlineImageModal}
   </>
   )
 }

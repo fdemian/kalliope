@@ -42,9 +42,6 @@ export const EntryEditor: ReactElement<EntryEditorProps> = ({ readOnly, initialS
       addCaptionText: "Add caption",
       defaultCaptionText: "Enter image caption..."
     },
-    inlineImage: {
-      showModal: (showModalProps: ShowModalProps) => console.log(showModalProps)
-    },
     excalidrawConfig: {
       modal: ExcalidrawModal
     },

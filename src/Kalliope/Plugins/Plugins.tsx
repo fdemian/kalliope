@@ -25,7 +25,7 @@ import DragDropPastePlugin from './DragDropPastePlugin/index';
 import TableHoverActionsPlugin from './TableHoverActionsPlugin';
 import CodeHighlightPrismPlugin from './CodeHighlightPrismPlugin';
 import CodeHighlightShikiPlugin from './CodeHighlightShikiPlugin';
-
+import TableScrollShadowPlugin from './TableScrollShadowPlugin';
 
 import { CalliopeConfigProps } from '../KalliopeEditorTypes';
 
@@ -112,8 +112,14 @@ function EditorPlugins({
       <ListPlugin hasStrictIndent={false} />
       <CheckListPlugin />
       <EquationsPlugin />
-      <TablePlugin hasHorizontalScroll={true} />
+      <TablePlugin
+        hasCellMerge={true}
+        hasCellBackgroundColor={true}
+        hasHorizontalScroll={true}
+        hasNestedTables={true}
+      />
       <TableCellResizer />
+      <TableScrollShadowPlugin />
       <ImagesPlugin />
       {!readOnly && (
         <SetFormatPlugin

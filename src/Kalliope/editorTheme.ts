@@ -85,6 +85,9 @@ const theme:EditorThemeClasses = {
   tableResizeRuler: 'calliope-table-cell-resize-ruler',
   tableRowStriping: 'calliope-table-row-stripping',
   tableScrollableWrapper: 'calliope-table-scrollable-wrapper',
+  tableScrollRight: 'calliope-table-scroll-right',
+  tableScrollLeft : 'calliope-table-scroll-left',
+  tableScrollMiddle: 'calliope-table-scroll-middle',
   tableSelected: 'calliope-table-selected',
   tableSelection: 'calliope-table-selection',
   text: {

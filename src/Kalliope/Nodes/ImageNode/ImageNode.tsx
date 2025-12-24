@@ -22,21 +22,44 @@ import type {
 import {HashtagNode} from '@lexical/hashtag';
 import {LinkNode} from '@lexical/link';
 import {
+  RangeSelection,
   $applyNodeReplacement,
+  $createRangeSelection,
+  $extendCaretToRange,
+  $getChildCaret,
+  $getEditor,
+  $getRoot,
+  $isElementNode,
+  $isParagraphNode,
+  $selectAll,
+  $setSelection,
   createEditor,
   DecoratorNode,
   LineBreakNode,
   ParagraphNode,
   RootNode,
+  SKIP_DOM_SELECTION_TAG,
   TextNode,
 } from 'lexical';
 import * as React from 'react';
 import { ReactElement } from 'react';
+import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
+import {$insertGeneratedNodes} from '@lexical/clipboard';
 
 const ImageComponent = React.lazy(
   // @ts-ignore
   () => import('./ImageComponent')
 );
+
+
+function isGoogleDocCheckboxImg(img: HTMLImageElement): boolean {
+  return (
+    img.parentElement != null &&
+    img.parentElement.tagName === 'LI' &&
+    img.previousSibling === null &&
+    img.getAttribute('aria-roledescription') === 'checkbox'
+  );
+}
 
 export interface ImagePayload {
   altText: string;
@@ -50,13 +73,27 @@ export interface ImagePayload {
   captionsEnabled?: boolean;
 }
 
+export function $isCaptionEditorEmpty(): boolean {
+  // Search the document for any non-element node
+  // to determine if it's empty or not
+  for (const {origin} of $extendCaretToRange(
+    $getChildCaret($getRoot(), 'next'),
+  )) {
+    if (!$isElementNode(origin)) {
+      return false;
+    }
+  }
+  return true;
+}
 
-function convertImageElement(domNode: Node): null | DOMConversionOutput {
+function $convertImageElement(domNode: Node): null | DOMConversionOutput {
   const img = domNode as HTMLImageElement;
-  if (img.src.startsWith('file:///')) {
+  const src = img.getAttribute('src');
+
+  if (!src || src.startsWith('file:///') || isGoogleDocCheckboxImg(img)) {
     return null;
   }
-  const {alt: altText, src, width, height} = img;
+  const {alt: altText, width, height} = img;
   const node = $createImageNode({altText, height, src, width});
   return {node};
 }
@@ -138,18 +175,88 @@ export class ImageNode extends DecoratorNode<ReactElement> {
  
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('img');
-    element.setAttribute('src', this.__src);
-    element.setAttribute('alt', this.__altText);
-    element.setAttribute('width', this.__width.toString());
-    element.setAttribute('height', this.__height.toString());
-    return { element };
+    const imgElement = document.createElement('img');
+    imgElement.setAttribute('src', this.__src);
+    imgElement.setAttribute('alt', this.__altText);
+    imgElement.setAttribute('width', this.__width.toString());
+    imgElement.setAttribute('height', this.__height.toString());
+
+    if (this.__showCaption && this.__caption) {
+      const captionEditor = this.__caption;
+      const captionHtml = captionEditor.read(() => {
+        if ($isCaptionEditorEmpty()) {
+          return null;
+        }
+        // Don't serialize the wrapping paragraph if there is only one
+        let selection: null | RangeSelection = null;
+        const firstChild = $getRoot().getFirstChild();
+        if (
+          $isParagraphNode(firstChild) &&
+          firstChild.getNextSibling() === null
+        ) {
+          selection = $createRangeSelection();
+          selection.anchor.set(firstChild.getKey(), 0, 'element');
+          selection.focus.set(
+            firstChild.getKey(),
+            firstChild.getChildrenSize(),
+            'element',
+          );
+        }
+        return $generateHtmlFromNodes(captionEditor, selection);
+      });
+      if (captionHtml) {
+        const figureElement = document.createElement('figure');
+        const figcaptionElement = document.createElement('figcaption');
+        figcaptionElement.innerHTML = captionHtml;
+
+        figureElement.appendChild(imgElement);
+        figureElement.appendChild(figcaptionElement);
+
+        return {element: figureElement};
+      }
+    }
+
+    return {element: imgElement};
   }
 
   static importDOM(): DOMConversionMap | null {
     return {
+      figcaption: () => ({
+        conversion: () => ({node: null}),
+        priority: 0,
+      }),
+      figure: () => ({
+        conversion: (node) => {
+          return {
+            after: (childNodes) => {
+              const imageNodes = childNodes.filter($isImageNode);
+              const figcaption = node.querySelector('figcaption');
+              if (figcaption) {
+                for (const imgNode of imageNodes) {
+                  imgNode.setShowCaption(true);
+                  imgNode.__caption.update(
+                    () => {
+                      const editor = $getEditor();
+                      $insertGeneratedNodes(
+                        editor,
+                        $generateNodesFromDOM(editor, figcaption),
+                        $selectAll(),
+                      );
+                      $setSelection(null);
+                    },
+                    {tag: SKIP_DOM_SELECTION_TAG},
+                  );
+                }
+              }
+              return imageNodes;
+            },
+            node: null,
+          };
+        },
+        priority: 0,
+      }),
       img: () => ({
-        conversion: convertImageElement,
+        conversion: $convertImageElement,
         priority: 0,
       }),
     };

@@ -14,6 +14,7 @@ import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import brokenImage from '../../UI/Images/image-broken.svg';
 import { mergeRegister } from '@lexical/utils';
 import {
+  $getRoot,
   $getNodeByKey,
   $getSelection,
   $isNodeSelection,
@@ -27,10 +28,11 @@ import {
 } from 'lexical';
 import { ReactElement, Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ImageResizer from './ImageResizer';
-import { $isImageNode } from './ImageNode';
+import { $isImageNode} from './ImageNode';
 import { CalliopeContext } from '../../context';
 
 const imageCache = new Map<string, Promise<boolean> | boolean>();
+
 
 function useSuspenseImage(src: string) {
   let cached = imageCache.get(src);
@@ -215,7 +217,7 @@ export default function ImageComponent({
   const activeEditorRef = useRef<LexicalEditor | null>(null);
   const [isLoadError, setIsLoadError] = useState<boolean>(false);
   const isEditable = useLexicalEditable();
-  
+
   const onEnter = useCallback(
     (event: KeyboardEvent) => {
       const latestSelection = $getSelection();
@@ -330,11 +332,18 @@ export default function ImageComponent({
     setSelected,
   ]);
 
-  const setShowCaption = () => {
+  const setShowCaption = (show: boolean) => {
     editor.update(() => {
       const node = $getNodeByKey(nodeKey);
       if ($isImageNode(node)) {
-        node.setShowCaption(true);
+        node.setShowCaption(show);
+        if (show) {
+          node.__caption.update(() => {
+            if (!$getSelection()) {
+              $getRoot().selectEnd();
+            }
+          });
+        }
       }
     });
   };
@@ -395,6 +404,7 @@ export default function ImageComponent({
               config={config}
               caption={caption}
               readOnly={!editor.isEditable()}
+              setShowCaption={setShowCaption}
             />
           </div>
         )}

@@ -3,6 +3,11 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.17.0 (2025-12-24)
+- Shadows when table is scrollable.
+- ImageNode caption support for exportDOM and importDOM.
+- Update lexical to v0.39.0
+
 # v0.16.4 (2025-10-11)
 - Use Lexical Extension instead of lexical composer.
 - Remove inline images plugin.

@@ -23,6 +23,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@atlaskit/drag-and-drop-indicator": "^0.11.1",
+    "@atlaskit/pragmatic-drag-and-drop": "^1.7.9",
     "@excalidraw/excalidraw": "^0.18.0",
     "@lexical/clipboard": "0.41.0",
     "@lexical/code": "0.41.0",

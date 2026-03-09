@@ -22,7 +22,8 @@ import DraggableBlockPlugin from './DraggableBlockPlugin';
 import CollapsiblePlugin from './CollapsiblePlugin';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
-import TableHoverActionsPlugin from './TableHoverActionsPlugin';
+//import TableHoverActionsPlugin from './TableHoverActionsPlugin';
+import TableHoverActionsV2Plugin from './FloatingTableTopBorderPlugin';
 import CodeHighlightPrismPlugin from './CodeHighlightPrismPlugin';
 import CodeHighlightShikiPlugin from './CodeHighlightShikiPlugin';
 import TableScrollShadowPlugin from './TableScrollShadowPlugin';
@@ -99,7 +100,7 @@ function EditorPlugins({
           setIsLinkEditMode={setIsLinkEditMode}
         />
       }
-      { floatingAnchorElem && <TableHoverActionsPlugin anchorElem={floatingAnchorElem} /> }
+      { floatingAnchorElem && <TableHoverActionsV2Plugin anchorElem={floatingAnchorElem} /> }
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       {config.autoFocus && <AutoFocusPlugin />}

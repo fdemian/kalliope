@@ -999,6 +999,11 @@ i.chevron-down {
   background-color: #f2f5fb;
 }
 
+.calliope-table-scrollable-wrapper {
+  overflow-x: auto;
+  margin: 0px 0px 5px 0px;
+}
+
 .calliope-table-scroll-right {
   box-shadow: inset -10px 0 10px rgba(0, 0, 0, 0.15);
 }

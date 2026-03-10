@@ -44,7 +44,7 @@ import {
 import {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
-import DropDown, {DropDownItem} from '../../UI/DropDown';
+import DropDown, {DropDownItem} from '../../UI/Dropdown';
 import {getThemeSelector} from '../../utils/getTheemeSelector';
 
 const INDICATOR_SIZE_PX = 18;

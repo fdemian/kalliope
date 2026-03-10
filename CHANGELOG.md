@@ -3,6 +3,15 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.18.0  (2026-03-10)
+- Update lexical to v0.40.0
+- Fix Code block formatting in unintended adjacent lines.
+- Clean up old Table Hover Actions.
+- Fix --lexical-indent-base-value CSS variable override.
+- Specify has fit nested table params.
+- Prevent code block line wrapping to keep line number.
+- Add sorting and dragging capabilities to tables.
+
 # v0.17.0 (2025-12-24)
 - Shadows when table is scrollable.
 - ImageNode caption support for exportDOM and importDOM.

@@ -3,7 +3,10 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
-# v0.18.0  (2026-03-10)
+# v0.18.1  (2026-03-10)
+- Fix build issues with previous version. 
+
+# v0.18.0  (2026-03-9)
 - Update lexical to v0.41.0
 - Fix Code block formatting in unintended adjacent lines.
 - Clean up old Table Hover Actions.

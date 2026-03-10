@@ -1,3 +1,7 @@
+:root {
+  --lexical-indent-base-value: 40px;
+}
+
 .editor-link:hover {
   text-decoration: underline;
   cursor: pointer;

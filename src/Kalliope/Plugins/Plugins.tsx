@@ -104,14 +104,13 @@ function EditorPlugins({
       <DragDropPastePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       {config.autoFocus && <AutoFocusPlugin />}
-      
       <EmojisPlugin />
       <ClearEditorPlugin />
       <TabIndentationPlugin maxIndent={7} />
       <LinkPlugin />
       {config.useShiki ? <CodeHighlightShikiPlugin /> : <CodeHighlightPrismPlugin />}
       <ListPlugin hasStrictIndent={false} />
-      <CheckListPlugin />
+      <CheckListPlugin disableTakeFocusOnClick={false} />
       <EquationsPlugin />
       <TablePlugin
         hasCellMerge={true}

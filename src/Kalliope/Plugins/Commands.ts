@@ -1,5 +1,4 @@
 import {
-  $addUpdateTag,
   $createParagraphNode,
   $createRangeSelection,
   $getSelection,
@@ -11,16 +10,9 @@ import {
   $setSelection,
   $splitNode,
   ElementNode,
-  LexicalEditor,
   LexicalNode,
   RangeSelection,
-  SKIP_DOM_SELECTION_TAG,
-  SKIP_SELECTION_FOCUS_TAG,
   $getNodeByKey,
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
-  $isTextNode,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INDENT_CONTENT_COMMAND,
@@ -28,8 +20,6 @@ import {
   REDO_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
-
-
 import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import {
@@ -286,11 +276,11 @@ const formatCode = (editor: LexicalEditorRef, internalFormat: CalliopeFormatType
         if (selection.isCollapsed()) {
           $setBlocksType(selection, () => $createCodeNode());
         } else {
-          $splitParagraphsByLineBreaks(selection);
           selection = $getSelection();
           if (!$isRangeSelection(selection)) {
             return;
           }
+          $splitParagraphsByLineBreaks(selection);
           const textContent = selection.getTextContent();
           const codeNode = $createCodeNode();
           selection.insertNodes([codeNode]);

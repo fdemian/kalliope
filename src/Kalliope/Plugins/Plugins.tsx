@@ -118,6 +118,7 @@ function EditorPlugins({
         hasCellBackgroundColor={true}
         hasHorizontalScroll={true}
         hasNestedTables={true}
+        hasFitNestedTables={false}
       />
       <TableCellResizer />
       <TableScrollShadowPlugin />

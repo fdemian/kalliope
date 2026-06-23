@@ -323,11 +323,6 @@ Accesible using the `containerRef` ref.
       <td>Change the background color.</td>
     </tr>
     <tr>
-      <td>INSERT_RULE</td>
-      <td>none</td>
-      <td>Insert a horizontal rule.</td>
-    </tr>
-    <tr>
       <td>INSERT_IMAGE</td>
       <td>object { altText: <code>string</code>, src: <code>string</code> }. src is the image url. alt text is the alt text for the image. Neither can be null.
       </td>

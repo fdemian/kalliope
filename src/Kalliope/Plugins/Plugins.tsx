@@ -12,7 +12,6 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
-import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import {TabIndentationPlugin} from '@lexical/react/LexicalTabIndentationPlugin';
 import {SelectionAlwaysOnDisplay} from '@lexical/react/LexicalSelectionAlwaysOnDisplay';
 import FloatingLinkEditorPlugin from './FloatingLinkEditorPlugin/index';
@@ -23,6 +22,7 @@ import CollapsiblePlugin from './CollapsiblePlugin';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 //import TableHoverActionsPlugin from './TableHoverActionsPlugin';
+import TableFitNestedTablePlugin from "./TableFitNestedTablePlugin";
 import TableHoverActionsV2Plugin from './FloatingTableTopBorderPlugin';
 import CodeHighlightPrismPlugin from './CodeHighlightPrismPlugin';
 import CodeHighlightShikiPlugin from './CodeHighlightShikiPlugin';
@@ -117,10 +117,10 @@ function EditorPlugins({
         hasCellBackgroundColor={true}
         hasHorizontalScroll={true}
         hasNestedTables={true}
-        hasFitNestedTables={false}
       />
       <TableCellResizer />
       <TableScrollShadowPlugin />
+      <TableFitNestedTablePlugin />
       <ImagesPlugin />
       {!readOnly && (
         <SetFormatPlugin
@@ -135,7 +135,6 @@ function EditorPlugins({
       <HistoryPlugin />
       <AutoFocusPlugin />
       <KeyboardPlugin />
-      <HorizontalRulePlugin />
       <SpoilerPlugin />
       <ClickableLinkPlugin />
       <CollapsiblePlugin />

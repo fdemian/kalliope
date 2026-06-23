@@ -484,12 +484,6 @@ export const EditorComposer = () => {
 
   const INSERT_BUTTONS = [
     {
-      text: "Rule",
-      command: "INSERT_RULE",
-      props: null,
-      directCommand: true
-    },
-    {
       text: "Image",
       command: () => setImageToolbar(true),
       props: null,

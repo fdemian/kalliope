@@ -21,7 +21,6 @@ import {
   UNDO_COMMAND,
 } from 'lexical';
 import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import {
   $patchStyleText,
   $setBlocksType,
@@ -440,11 +439,6 @@ const EDITOR_COMMANDS: EditorCommands = [
     name: "CLEAR_FORMATTING",
     command: clearFormatting,
     directCommand: false,
-  },
-  {
-    name: 'INSERT_RULE',
-    command: INSERT_HORIZONTAL_RULE_COMMAND,
-    directCommand: true,
   },
   {
     name: 'INSERT_IMAGE',

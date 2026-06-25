@@ -38,9 +38,8 @@ import * as React from 'react';
 import {createPortal} from 'react-dom';
 
 import {getSelectedNode} from '../../utils/getSelectedNode';
-import {setFloatingElemPositionForLinkEditor} from './setFloatingElemPositionForLinkEditor';
 import {sanitizeUrl} from './utils';
-
+import {autoUpdate, flip, offset, shift, useFloating} from '@floating-ui/react';
 
 function $getSelectedLinkNode(selection: RangeSelection): LinkNode | null {
   const node = getSelectedNode(selection);
@@ -99,6 +98,26 @@ function FloatingLinkEditor({
     null,
   );
 
+  const scrollerElem = anchorElem.parentElement;
+
+  const {refs, floatingStyles} = useFloating({
+    middleware: [
+      offset(10),
+      flip({
+        boundary: scrollerElem || undefined,
+        padding: 10,
+      }),
+      shift({
+        boundary: scrollerElem || undefined,
+        padding: 10,
+      }),
+    ],
+    placement: 'bottom-start',
+    strategy: 'absolute',
+    whileElementsMounted: (...args) =>
+      autoUpdate(...args, {ancestorScroll: false}),
+  });
+
   const $updateLinkEditor = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
@@ -133,10 +152,6 @@ function FloatingLinkEditor({
     const nativeSelection = getDOMSelection(editor._window);
     const activeElement = document.activeElement;
 
-    if (editorElem === null) {
-      return;
-    }
-
     const rootElement = editor.getRootElement();
 
     if (selection !== null && rootElement !== null && editor.isEditable()) {
@@ -152,52 +167,26 @@ function FloatingLinkEditor({
         }
       } else if (
         nativeSelection !== null &&
+        nativeSelection.rangeCount > 0 &&
         rootElement.contains(nativeSelection.anchorNode)
       ) {
-        domRect =
-          nativeSelection.focusNode?.parentElement?.getBoundingClientRect();
+        domRect = nativeSelection.getRangeAt(0).getBoundingClientRect();
       }
 
       if (domRect) {
-        domRect.y += 40;
-        setFloatingElemPositionForLinkEditor(domRect, editorElem, anchorElem);
+        refs.setPositionReference({
+          getBoundingClientRect: () => domRect,
+        });
       }
       setLastSelection(selection);
     } else if (!activeElement || activeElement.className !== 'link-input') {
-      if (rootElement !== null) {
-        setFloatingElemPositionForLinkEditor(null, editorElem, anchorElem);
-      }
       setLastSelection(null);
       setIsLinkEditMode(false);
       setLinkUrl('');
     }
 
     return true;
-  }, [anchorElem, editor, setIsLinkEditMode, isLinkEditMode, linkUrl]);
-
-  useEffect(() => {
-    const scrollerElem = anchorElem.parentElement;
-
-    const update = () => {
-      editor.getEditorState().read(() => {
-        $updateLinkEditor();
-      });
-    };
-
-    window.addEventListener('resize', update);
-
-    if (scrollerElem) {
-      scrollerElem.addEventListener('scroll', update);
-    }
-
-    return () => {
-      window.removeEventListener('resize', update);
-
-      if (scrollerElem) {
-        scrollerElem.removeEventListener('scroll', update);
-      }
-    };
-  }, [anchorElem.parentElement, editor, $updateLinkEditor]);
+  }, [editor, setIsLinkEditMode, isLinkEditMode, linkUrl, refs]);
 
   useEffect(() => {
     return mergeRegister(
@@ -302,7 +291,18 @@ function FloatingLinkEditor({
   };
 
   return (
-    <div ref={editorRef} className="link-editor">
+    <div
+      ref={(el) => {
+        editorRef.current = el;
+        refs.setFloating(el);
+      }}
+      className="link-editor"
+      style={{
+        ...floatingStyles,
+        opacity: isLink ? 1 : 0,
+        pointerEvents: isLink ? 'auto' : 'none',
+      }}
+    >
       {!isLink ? null : isLinkEditMode ? (
         <>
           <input

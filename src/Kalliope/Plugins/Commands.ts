@@ -1,4 +1,5 @@
 import {
+  $addUpdateTag,
   $createParagraphNode,
   $createRangeSelection,
   $getSelection,
@@ -9,8 +10,9 @@ import {
   $isTextNode,
   $setSelection,
   $splitNode,
-  ElementNode,
   LexicalNode,
+  ElementNode,
+  NodeKey,
   RangeSelection,
   $getNodeByKey,
   FORMAT_ELEMENT_COMMAND,
@@ -19,6 +21,15 @@ import {
   OUTDENT_CONTENT_COMMAND,
   REDO_COMMAND,
   UNDO_COMMAND,
+  SKIP_DOM_SELECTION_TAG,
+  $getCaretRangeInDirection,
+  $caretRangeFromSelection,
+  $getChildCaret,
+  $getCaretInDirection,
+  $comparePointCaretNext,
+  $normalizeCaret,
+  $isDecoratorNode,
+  type CaretRange,
 } from 'lexical';
 import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
 import {
@@ -33,7 +44,7 @@ import {
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
 import {
-  $getNearestBlockElementAncestorOrThrow
+  $getNearestBlockElementAncestorOrThrow,
 } from '@lexical/utils';
 import {
   $isHeadingNode,
@@ -66,6 +77,122 @@ import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 type LexicalEditorRef = {
   current: LexicalEditor;
 };
+
+//============================= //
+
+/**
+ * A node that can occupy a named slot, implemented by {@link ElementNode} and
+ * {@link DecoratorNode}. Its up-pointer is `__slotHost` rather than `__parent`
+ * (the two are mutually exclusive), so the slot boundary behaves like a shadow
+ * root.
+ *
+ * @experimental
+ */
+export interface SlotChildNode {
+  /** @internal */
+  __slotHost: null | NodeKey;
+}
+
+/**
+ * Shape predicate: true when `node` carries the child's `__slotHost` field —
+ * i.e. it is an {@link ElementNode} or a {@link DecoratorNode}. Narrows to
+ * {@link SlotChildNode}. This is a type guard only; {@link $setSlot} rejects
+ * inline values at runtime. The slot link acts as a virtual shadow root, so
+ * any non-inline block — shadow root or not — can occupy a slot.
+ *
+ * @experimental
+ */
+export function $isSlotChild(
+  node: LexicalNode,
+): node is LexicalNode & SlotChildNode {
+  return $isElementNode(node) || $isDecoratorNode(node);
+}
+
+/**
+ * Returns the key of the host this node is slotted into, or null when the node
+ * is not slotted. Accepts any node and narrows internally so generic callers
+ * (removal guard, up-walk, GC, caret) don't have to. Exposes a raw key, so it
+ * stays internal to the package; public callers use {@link $getSlotHost}.
+ *
+ * @internal
+ */
+export function $getSlotHostKey(node: LexicalNode): null | NodeKey {
+  const latest = node.getLatest();
+  return $isSlotChild(latest) ? latest.__slotHost : null;
+}
+
+
+/**
+ * Returns the slot value (the "slot frame") whose isolated subtree contains
+ * `node`, or `node` itself when it is a slot value, or null when the node is
+ * not inside any slot. The walk follows `getParent()` and naturally stops at a
+ * slot value because a slotted node's `__parent` is null. Non-slot trees have
+ * `__slotHost === null` everywhere, so this always returns null there.
+ *
+ * Selection-driven exporters use this to find the isolated subtree a
+ * RangeSelection lives in (a selection inside a slot never contains the host,
+ * so a root-children walk alone would miss it).
+ *
+ * @experimental
+ */
+export function $getSlotFrame(node: LexicalNode): LexicalNode | null {
+  let current: LexicalNode | null = node.getLatest();
+  while (current !== null) {
+    if ($getSlotHostKey(current) !== null) {
+      return current;
+    }
+    current = current.getParent();
+  }
+  return null;
+}
+
+//============================= //
+
+
+/**
+ * Checks whether the selection covers the entire block: the selection's
+ * start point is at or before the first position inside blockNode and its
+ * end point is at or after the last position inside blockNode. A selection
+ * that extends beyond the block's boundaries still fully selects the block,
+ * and an empty block is fully selected by any selection that touches or
+ * surrounds it.
+ *
+ * @param blockNode - The ElementNode to check, typically a top-level block or the RootNode
+ * @param selectionOrRange - The RangeSelection or CaretRange to check
+ * @returns true if the selection covers the entire blockNode
+ */
+export function $isBlockFullySelected(
+  blockNode: ElementNode,
+  selectionOrRange: RangeSelection | CaretRange,
+): boolean {
+  const range = $getCaretRangeInDirection(
+    $isRangeSelection(selectionOrRange)
+      ? $caretRangeFromSelection(selectionOrRange)
+      : selectionOrRange,
+    'next',
+  );
+  // A named-slot subtree is isolated from its host through a parentless
+  // up-link, so a range inside a slot can never cover a block outside that
+  // slot frame (and vice versa) — and the caret comparison below has no
+  // common ancestor to walk across the boundary. Different frames are
+  // never fully selected; the same frame compares safely within it.
+  const anchorFrame = $getSlotFrame(range.anchor.origin);
+  const blockFrame = $getSlotFrame(blockNode.getLatest());
+  if (
+    anchorFrame === null ? blockFrame !== null : !anchorFrame.is(blockFrame)
+  ) {
+    return false;
+  }
+  const blockStart = $normalizeCaret($getChildCaret(blockNode, 'next'));
+  const blockEnd = $getCaretInDirection(
+    $normalizeCaret($getChildCaret(blockNode, 'previous')),
+    'next',
+  );
+  return (
+    $comparePointCaretNext(range.anchor, blockStart) <= 0 &&
+    $comparePointCaretNext(range.focus, blockEnd) >= 0
+  );
+}
 
 function $splitParagraphsByLineBreaks(selection: RangeSelection): void {
   const blocks: Set<ElementNode> = new Set();
@@ -123,61 +250,74 @@ function $findParagraphParent(node: LexicalNode): ElementNode | null {
   return $isElementNode(parent) && $isParagraphNode(parent) ? parent : null;
 }
 
+function $clearBlockFormat(block: ElementNode): void {
+  if (block.getFormat() !== 0) {
+    block.setFormat('');
+  }
+  if (block.getIndent() !== 0) {
+    block.setIndent(0);
+  }
+}
 
-export const clearFormatting = (currentEditor: LexicalEditorRef) => {
-  const editor: LexicalEditor = currentEditor.current;
-  editor.update(() => {
+export const clearFormatting = (
+  editor: { current: LexicalEditor },
+  skipRefocus: boolean = false,
+) => {
+  const currentEditor:LexicalEditor = editor.current;
+  currentEditor.update(() => {
+    if (skipRefocus) {
+      $addUpdateTag(SKIP_DOM_SELECTION_TAG);
+    }
     const selection = $getSelection();
     if ($isRangeSelection(selection) || $isTableSelection(selection)) {
       const anchor = selection.anchor;
       const focus = selection.focus;
-      const nodes = selection.getNodes();
       const extractedNodes = selection.extract();
 
       if (anchor.key === focus.key && anchor.offset === focus.offset) {
+        $clearBlockFormat(
+          $getNearestBlockElementAncestorOrThrow(anchor.getNode()),
+        );
         return;
       }
 
-      nodes.forEach((node, idx) => {
-        // We split the first and last node by the selection
-        // So that we don't format unselected text inside those nodes
-        if ($isTextNode(node)) {
-          // Use a separate variable to ensure TS does not lose the refinement
-          let textNode = node;
-          if (idx === 0 && anchor.offset !== 0) {
-            textNode = textNode.splitText(anchor.offset)[1] || textNode;
+      // Determine which blocks are fully selected before making any
+      // changes, since the mutations below (such as replacing a
+      // HeadingNode with a ParagraphNode) would detach nodes that the
+      // selection's carets may refer to
+      const postExtractSelection = $getSelection();
+      let fullySelectedBlocks: null | Set<NodeKey> = null;
+      if ($isRangeSelection(postExtractSelection)) {
+        fullySelectedBlocks = new Set();
+        for (const node of extractedNodes) {
+          if ($isTextNode(node)) {
+            const block = $getNearestBlockElementAncestorOrThrow(node);
+            if (
+              !fullySelectedBlocks.has(block.getKey()) &&
+              $isBlockFullySelected(block, postExtractSelection)
+            ) {
+              fullySelectedBlocks.add(block.getKey());
+            }
           }
-          if (idx === nodes.length - 1) {
-            textNode = textNode.splitText(focus.offset)[0] || textNode;
-          }
-          /**
-           * If the selected text has one format applied
-           * selecting a portion of the text, could
-           * clear the format to the wrong portion of the text.
-           *
-           * The cleared text is based on the length of the selected text.
-           */
-          // We need this in case the selected text only has one format
-          const extractedTextNode = extractedNodes[0];
-          if (nodes.length === 1 && $isTextNode(extractedTextNode)) {
-            textNode = extractedTextNode;
-          }
+        }
+      }
 
-          if (textNode.__style !== '') {
-            textNode.setStyle('');
+      extractedNodes.forEach(node => {
+        if ($isTextNode(node)) {
+          if (node.getStyle() !== '') {
+            node.setStyle('');
           }
-          if (textNode.__format !== 0) {
-            textNode.setFormat(0);
+          if (node.getFormat() !== 0) {
+            node.setFormat(0);
           }
           const nearestBlockElement =
-            $getNearestBlockElementAncestorOrThrow(textNode);
-          if (nearestBlockElement.__format !== 0) {
-            nearestBlockElement.setFormat('');
+            $getNearestBlockElementAncestorOrThrow(node);
+          if (
+            fullySelectedBlocks === null ||
+            fullySelectedBlocks.has(nearestBlockElement.getKey())
+          ) {
+            $clearBlockFormat(nearestBlockElement);
           }
-          if (nearestBlockElement.__indent !== 0) {
-            nearestBlockElement.setIndent(0);
-          }
-          node = textNode;
         } else if ($isHeadingNode(node) || $isQuoteNode(node)) {
           node.replace($createParagraphNode(), true);
         } else if ($isDecoratorBlockNode(node)) {
@@ -187,6 +327,7 @@ export const clearFormatting = (currentEditor: LexicalEditorRef) => {
     }
   });
 };
+
 
 const onCodeLanguageSelect = (editor: LexicalEditorRef, value: string) => {
   editor.current.update(() => {

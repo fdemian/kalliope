@@ -18,7 +18,7 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import {ErrorBoundary} from 'react-error-boundary';
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 
 import EquationEditor from './EquationEditor';
@@ -129,13 +129,15 @@ export default function EquationComponent({
           inputRef={inputRef}
         />
       ) : (
-        <ErrorBoundary onError={(e) => editor._onError(e)} fallback={null}>
+        <LexicalErrorBoundary
+          onError={(e:Error, _ ) => editor._onError(e)}
+        >
           <KatexRenderer
             equation={equationValue}
             inline={inline}
             onDoubleClick={onDoubleClick}
           />
-        </ErrorBoundary>
+        </LexicalErrorBoundary>
       )}
     </>
   );

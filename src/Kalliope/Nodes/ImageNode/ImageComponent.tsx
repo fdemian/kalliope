@@ -106,7 +106,18 @@ function LazyImage({
 
   // Calculate final dimensions with proper scaling
   const calculateDimensions = () => {
-    if (!isSVGImage) {
+    if (width !== 'inherit' && height !== 'inherit') {
+      return {
+        height,
+        maxWidth,
+        width,
+      };
+    }
+
+    const isActuallySVG = isSVG(src);
+
+    // For standard images, Lexical expects 'inherit'
+    if (!isActuallySVG) {
       return {
         height,
         maxWidth,
@@ -118,8 +129,9 @@ function LazyImage({
     const naturalWidth = dimensions?.width || 200;
     const naturalHeight = dimensions?.height || 200;
 
-    let finalWidth = naturalWidth;
-    let finalHeight = naturalHeight;
+    //  If SVG has no intrinsic dimensions (0), fallback to a sensible default (maxWidth)
+    let finalWidth = naturalWidth || maxWidth;
+    let finalHeight = naturalHeight || finalWidth;
 
     // Scale down if width exceeds maxWidth while maintaining aspect ratio
     if (finalWidth > maxWidth) {
@@ -182,7 +194,11 @@ function BrokenImage(): ReactElement {
 }
 
 function isSVG(src: string): boolean {
-  return src.toLowerCase().endsWith('.svg');
+  const lowerCaseSrc = src.toLowerCase();
+  return (
+    lowerCaseSrc.endsWith('.svg') ||
+    lowerCaseSrc.startsWith('data:image/svg+xml')
+  );
 }
 
 export default function ImageComponent({

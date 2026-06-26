@@ -9,15 +9,18 @@ import './index.css';
 import {
   $isCodeNode,
   CodeNode,
-  getLanguageFriendlyName,
-  normalizeCodeLang,
 } from '@lexical/code';
+import {
+  getLanguageFriendlyName,
+  normalizeCodeLanguage,
+} from '@lexical/code-prism';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {$getNearestNodeFromDOMNode, isHTMLElement} from 'lexical';
 import {ReactPortal, ReactElement, useEffect, useRef, useState} from 'react';
 import { createPortal } from 'react-dom';
 import { CopyButton } from './components/CopyButton';
-import { canBePrettier, PrettierButton } from './components/PrettierButton';
+import {PrettierButton} from './components/PrettierButton';
+import {canBePrettier} from './formatCodeWithPrettier';
 import { useDebounce } from './utils';
 
 const CODE_PADDING = 8;
@@ -128,7 +131,7 @@ function CodeActionMenuContainer({ anchorElem }: { anchorElem: HTMLElement; }): 
     );
   }, [editor]);
 
-  const normalizedLang = normalizeCodeLang(lang);
+  const normalizedLang = normalizeCodeLanguage(lang);
   const codeFriendlyName = getLanguageFriendlyName(lang);
 
   return (

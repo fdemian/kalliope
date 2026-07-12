@@ -28,11 +28,11 @@ import { LayoutItemNode } from "./Layout/LayoutItemNode";
 import { VideoNode } from './VideoNode/VideoNode';
 import { ExcalidrawNode } from './ExcalidrawNode';
 import { CiteNode } from './CiteNode/CiteNode';
-import { CollapsibleContainerNode } from '../Plugins/CollapsiblePlugin/CollapsibleContainerNode';
-import { CollapsibleContentNode } from '../Plugins/CollapsiblePlugin/CollapsibleContentNode';
-import { CollapsibleTitleNode } from '../Plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { CollapsibleContainerNode } from '../Plugins/CollapsibleExtension/CollapsibleContainerNode';
+import { CollapsibleContentNode } from '../Plugins/CollapsibleExtension/CollapsibleContentNode';
+import { CollapsibleTitleNode } from '../Plugins/CollapsibleExtension/CollapsibleTitleNode';
 import { FigmaNode } from "./FigmaNode/FigmaNode";
-import { PageBreakNode } from "./PageBreak";
+import { PageBreakNode } from "./PageBreakNode";
 
 const Nodes: Klass<LexicalNode>[] = [
   ListNode,

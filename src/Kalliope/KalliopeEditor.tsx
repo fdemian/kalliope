@@ -25,6 +25,8 @@ import type {
 import { buildHTMLConfig } from './buildHTMLConfig';
 import { CalliopeContext } from './context';
 import theme from './editorTheme';
+import buildExtensions from './Plugins/Extensions';
+
 import './KalliopeEditor.css';
 
 const INITIAL_FORMATS: CalliopeFormatTypes = {
@@ -161,6 +163,9 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     };
   });
 
+
+  const extensions = buildExtensions();
+
   const app = useMemo(
     () =>
       defineExtension({
@@ -169,9 +174,10 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
         name: 'Kalliope',
         namespace: 'Kalliope',
         nodes: EditorNodes,
-        theme: theme,
+        theme,
         onError: config.onError,
-        editable: !config.readOnly
+        editable: !config.readOnly,
+        dependencies: extensions
       }),
     [],
   );

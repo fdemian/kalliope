@@ -13,7 +13,7 @@ import {
     COMMAND_PRIORITY_EDITOR
 } from 'lexical';
 import {ReactElement, useEffect} from 'react';
-import {$createPageBreakNode, PageBreakNode} from '../../Nodes/PageBreak';
+import {$createPageBreakNode, PageBreakNode} from '../../Nodes/PageBreakNode';
 import { INSERT_PAGE_BREAK } from "./PageBreakCommand";
 
 export default function PageBreakPlugin(): ReactElement | null {

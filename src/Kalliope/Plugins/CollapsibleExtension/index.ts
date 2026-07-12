@@ -56,7 +56,7 @@ export default function CollapsiblePlugin(): null {
       ])
     ) {
       throw new Error(
-        'CollapsiblePlugin: CollapsibleContainerNode, CollapsibleTitleNode, or CollapsibleContentNode not registered on editor',
+        'CollapsibleExtension: CollapsibleContainerNode, CollapsibleTitleNode, or CollapsibleContentNode not registered on editor',
       );
     }
 

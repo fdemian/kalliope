@@ -27,6 +27,12 @@
     height: 16px;
 }
 
+@media print {
+  [type='page-break'] {
+    visibility: hidden;
+  }
+}
+
 [type='page-break']::after {
     position: absolute;
     top: 50%;

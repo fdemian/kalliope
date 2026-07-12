@@ -18,7 +18,7 @@ import FloatingLinkEditorPlugin from './FloatingLinkEditorPlugin/index';
 import TableCellActionMenuPlugin from './TableActionMenuPlugin';
 import CodeActionMenuPlugin from './CodeActionMenuPlugin/index';
 import DraggableBlockPlugin from './DraggableBlockPlugin';
-import CollapsiblePlugin from './CollapsiblePlugin';
+import CollapsiblePlugin from './CollapsibleExtension';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 //import TableHoverActionsPlugin from './TableHoverActionsPlugin';

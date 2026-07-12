@@ -8,6 +8,8 @@ import URLToolbar from './URLToolbar';
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import type { MouseEventHandler } from 'react';
 import { EntryComponentType } from '../Kalliope/Plugins/Mentions/MentionsTypeaheadMenuItem';
+// import { ExtensionComponent } from '@lexical/react/ExtensionComponent';
+// import {PagesReactExtension} from '../Kalliope/Plugins/PagesReactExtension';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 type CalliopeContainerType = HTMLDivElement & {
@@ -76,7 +78,7 @@ const getEntryComponentElement: EntryComponentType = ({option: { name }}) => (
      />
      &nbsp; &nbsp; <strong>{name}</strong>
   </>
- );
+);
 
 export const EditorComposer = () => {
   const containerRef = useRef<null | CalliopeContainerType>(null);
@@ -89,6 +91,10 @@ export const EditorComposer = () => {
 
   // TOOLBARS
   const [layoutFormat, setLayoutFormat] = useState("1");
+  const [pageSize, setPageSize] = useState<string | null>(null);
+  const [pageOrientation, setPageOrientation] = useState<string | null>(null);
+  const [pageMargin, setPageMargin] = useState<string | null>(null);
+
   const [isLayoutToolbar, setLayoutToolbar] = useState(false);
   const [isTweetToolbar, setTweetToolbar] = useState<boolean | null>(false);
   const [isInstagramToolbar, setInstagramToolbar] = useState<boolean | null>(false);
@@ -115,6 +121,21 @@ export const EditorComposer = () => {
 
   const layoutFormatChangeFn = (val: string) => {
     setLayoutFormat(val);
+  }
+
+  const pageSizeChangeFn = (val: string) => {
+    setPageSize(val);
+    changePageSize(val);
+  }
+
+  const pageOrientationChangeFn = (val: string) => {
+    setPageOrientation(val);
+    changePageSize(val);
+  }
+
+  const pageMarginsChangeFn = (val: string) => {
+    setPageMargin(val);
+    changePageSize(val);
   }
 
   const codeLanguageChange = (val: string) => {
@@ -176,6 +197,13 @@ export const EditorComposer = () => {
     containerRef.current.executeCommand("INSERT_IMAGE", props);
     setUrl(null);
     setImageToolbar(false);
+  }
+
+  const changePageSize = (val:string)=> {
+    //
+    if(!containerRef.current)
+      return;
+    containerRef.current.executeCommand("SET_PAGE_SETUP", val);
   }
 
   const insertVideo = () => {
@@ -256,7 +284,7 @@ export const EditorComposer = () => {
       },
       onRemoveMention: (arg: MentionFnProps) => {
         console.clear();
-        console.log(arg);        
+        console.log(arg);
       },
       entryComponent: (o:any) => getEntryComponentElement(o),
       mentionsData: suggestions
@@ -398,6 +426,59 @@ export const EditorComposer = () => {
     code: "CODE_BLOCK"
   };
 
+  const PAGE_ORIENTATIONS = [
+    {
+      key: "Portrait",
+      name: "Portrait"
+    },
+    {
+      key: "Landscape",
+      name: "Landscape"
+    },
+  ];
+
+  const PAGE_SIZE_ORDER /*: PageSize[]*/ = [
+    { key: 'null', name: 'Pageless' },
+    { key: 'a4', name: 'A4' },
+    { key: 'letter', name: 'Letter' },
+    { key: 'legal', name: 'Legal' },
+    { key: 'tabloid', name: 'Tabloid' },
+    { key: 'a3', name: 'A3' },
+    { key: 'a5', name: 'A5' },
+    { key: 'b4', name: 'B4' },
+    { key: 'b5', name: 'B5' },
+    { key: 'statement', name: 'Statement' },
+    { key: 'executive', name: 'Executive' },
+    { key: 'folio', name: 'Folio' }
+  ];
+
+  const MARGIN_PRESETS/*: ReadonlyArray<{
+    label: string;
+    margins /*: PageSetup['margins'];
+  }>*/ = [
+    {
+      key: "narrow",
+      name: 'Narrow (0.25")',
+      margins: {bottom: 0.25, left: 0.25, right: 0.25, top: 0.25},
+    },
+    {
+      key: "normal",
+      name: 'Normal (0.4")',
+      margins: {bottom: 0.25, left: 0.25, right: 0.25, top: 0.25}, //structuredClone(DEFAULT_PAGE_SETUP.margins),
+    },
+    {
+      key: "moderate",
+      name: 'Moderate (0.75")',
+      margins: {bottom: 0.75, left: 0.75, right: 0.75, top: 0.75},
+    },
+    {
+      key: "wide",
+      name: 'Wide (1")',
+      margins: {bottom: 1, left: 1, right: 1, top: 1},
+    },
+  ];
+
+
   const BLOCK_FORMATS = [
     {
       name: "Normal",
@@ -472,7 +553,7 @@ export const EditorComposer = () => {
     if(!containerRef.current)
       return;
 
-    const lf:any = LAYOUT_FORMATS.find(l => l.key == layoutFormat);
+    const lf:any = LAYOUT_FORMATS.find(l => l.key === layoutFormat);
 
     if(lf === undefined)
       return;
@@ -703,6 +784,42 @@ export const EditorComposer = () => {
       </div>
       )
     }
+      {
+        <select
+          name="page-size-format"
+          id="page-size-select"
+          value={pageSize ?? "null"}
+          onChange={(e) => pageSizeChangeFn(e.target.value)}
+        >
+          {PAGE_SIZE_ORDER.map(fmt => (
+            <option key={fmt.key} value={fmt.key}>{fmt.name}</option>
+          ))}
+        </select>
+      }
+      {
+        <select
+          name="page-orientations-format"
+          id="page-orientations-select"
+          value={pageOrientation ?? ""}
+          onChange={(e) => pageOrientationChangeFn(e.target.value)}
+        >
+          {PAGE_ORIENTATIONS.map(fmt => (
+            <option key={fmt.key} value={fmt.key}>{fmt.name}</option>
+          ))}
+        </select>
+      }
+      {
+        <select
+          name="page-margins-format"
+          id="page-margins-select"
+          value={pageMargin ?? ""}
+          onChange={(e) => pageMarginsChangeFn(e.target.value)}
+        >
+          {MARGIN_PRESETS.map(fmt => (
+            <option key={fmt.key} value={fmt.key}>{fmt.name}</option>
+          ))}
+        </select>
+      }
     </div>
     <div>
       {SUPPORT_SPEECH_RECOGNITION ? (

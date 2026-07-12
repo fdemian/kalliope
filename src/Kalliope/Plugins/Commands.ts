@@ -65,7 +65,7 @@ import { INSERT_VIDEO_COMMAND } from './Video/VideoCommand';
 import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToText/SpeechToTextCommand';
 import { INSERT_CITE_QUOTE } from './Cite/CiteCommand';
-import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsiblePlugin/ColllapsibleCommand';
+import { INSERT_COLLAPSIBLE_COMMAND } from './CollapsibleExtension/ColllapsibleCommand';
 import { INSERT_PAGE_BREAK } from './PageBreak/PageBreakCommand';
 import { INSERT_LAYOUT_COMMAND } from './Layout/LayoutCommand';
 import { INSERT_FIGMA_COMMAND } from './Figma/FigmaCommand';
@@ -73,6 +73,7 @@ import { INSERT_FIGMA_COMMAND } from './Figma/FigmaCommand';
 import { EditorCommands } from '../KalliopeEditorTypes';
 import type { LexicalEditor } from 'lexical';
 import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
+import {$setPageSetup, DEFAULT_PAGE_SETUP, type PageSetup} from "./PagesExtension";
 
 type LexicalEditorRef = {
   current: LexicalEditor;
@@ -257,6 +258,14 @@ function $clearBlockFormat(block: ElementNode): void {
   if (block.getIndent() !== 0) {
     block.setIndent(0);
   }
+}
+
+export const setPageSize = (editor: { current: LexicalEditor }, v: null | Partial<PageSetup>) => {
+  editor.current.update(() => {
+    $setPageSetup(
+      v ? (prev) => ({...(prev || DEFAULT_PAGE_SETUP), ...v}) : v,
+    );
+  });
 }
 
 export const clearFormatting = (
@@ -579,6 +588,11 @@ const EDITOR_COMMANDS: EditorCommands = [
   {
     name: "CLEAR_FORMATTING",
     command: clearFormatting,
+    directCommand: false,
+  },
+  {
+    name: "SET_PAGE_SETUP",
+    command: setPageSize,
     directCommand: false,
   },
   {

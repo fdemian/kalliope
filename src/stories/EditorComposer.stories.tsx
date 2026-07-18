@@ -125,17 +125,28 @@ export const EditorComposer = () => {
 
   const pageSizeChangeFn = (val: string) => {
     setPageSize(val);
-    changePageSize(val);
+
+    //
+    if(!containerRef.current)
+      return;
+    containerRef.current.executeCommand("SET_PAGE_SETUP", val !== 'null' ? {pageSize: val} : null);
   }
 
   const pageOrientationChangeFn = (val: string) => {
     setPageOrientation(val);
-    changePageSize(val);
+
+    if(!containerRef.current)
+      return;
+    containerRef.current.executeCommand("SET_PAGE_SETUP", {orientation: val});
   }
 
   const pageMarginsChangeFn = (val: string) => {
     setPageMargin(val);
-    changePageSize(val);
+
+    //
+    if(!containerRef.current)
+      return;
+    containerRef.current.executeCommand("SET_PAGE_SETUP", {margins: val});
   }
 
   const codeLanguageChange = (val: string) => {

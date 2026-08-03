@@ -11,7 +11,7 @@ import { CAN_USE_DOM } from './shared/canUseDOM';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {CLEAR_EDITOR_COMMAND, EditorState, defineExtension } from 'lexical';
 import {LexicalExtensionComposer} from '@lexical/react/LexicalExtensionComposer';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+//import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import ContentEditable from "./Nodes/UIPath/ContentEditable";
 
 import EditorNodes from './Nodes/Nodes';
@@ -163,8 +163,7 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     };
   });
 
-
-  const extensions = buildExtensions();
+  const extensions = buildExtensions(EditorNodes, theme);
 
   const app = useMemo(
     () =>
@@ -189,23 +188,18 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
         className={config.readOnly ? 'editor-container-readonly' : 'editor-container'}
       >
         <LexicalExtensionComposer extension={app} contentEditable={null}>
-          <RichTextPlugin
-            contentEditable={
-              <div className="editor-scroller">
-                <div className="editor" ref={onRef}>
-                  <ContentEditable
-                    className={`editor-content-editable-root editor-${
-                      config.readOnly ? 'readonly' : 'editable'
-                    }`}
-                    placeholderClassName='editor-placeholder'
-                    aria-placeholder={config.placeholderText}
-                    placeholder={config.placeholderText}
-                  />
-                </div>
-              </div>
-             }
-             ErrorBoundary={LexicalErrorBoundary}
-          />
+          <div className="editor-scroller">
+            <div className="editor" ref={onRef}>
+              <ContentEditable
+                className={`editor-content-editable-root editor-${
+                  config.readOnly ? 'readonly' : 'editable'
+                }`}
+                placeholderClassName='editor-placeholder'
+                aria-placeholder={config.placeholderText}
+                placeholder={config.placeholderText}
+              />
+            </div>
+          </div>
           <EditorPlugins
              readOnly={config.readOnly}
              setFormats={setFormats}

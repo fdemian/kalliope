@@ -38,17 +38,13 @@ const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
 const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
 const KeyboardPlugin = lazy(() => import('./Keyboard/KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./Spoiler/SpoilerPlugin'));
-const ClickableLinkPlugin = lazy(() => import('./ClickableLinkPlugin'));
 const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
-const TwitterPlugin = lazy(() => import('./Twitter/TwitterPlugin'));
 const InstagramPlugin = lazy(() => import('./Instagram/InstagramPlugins'));
 const TableCellResizer = lazy(() => import('./TableCellResizer/index'));
-const VideoPlugin = lazy(() => import('./Video/VideoPlugin'));
 const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
 const SpeechToTextPlugin = lazy(() => import('./SpeechToText/SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./Cite/CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
-const FigmaPlugin = lazy(() => import('./Figma/FigmaPlugin'));
 
 export type PluginComponentProps = {
   setFormats: (formats: CalliopeFormatTypes) => void;
@@ -136,15 +132,11 @@ function EditorPlugins({
       <AutoFocusPlugin />
       <KeyboardPlugin />
       <SpoilerPlugin />
-      <ClickableLinkPlugin />
       <CollapsiblePlugin />
       <MarkdownShortcutPlugin />
-      <TwitterPlugin />
       <InstagramPlugin />
       <ExcalidrawPlugin />
-      <VideoPlugin />
       <CitePlugin />
-      <FigmaPlugin />
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       <PageBreakPlugin />

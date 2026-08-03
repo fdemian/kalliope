@@ -109,6 +109,8 @@ function FloatingLinkEditor({
       }),
       shift({
         boundary: scrollerElem || undefined,
+        crossAxis: true,
+        mainAxis: true,
         padding: 10,
       }),
     ],

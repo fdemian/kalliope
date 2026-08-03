@@ -8,13 +8,14 @@
  */
  .ContentEditable__root {
     border: 0;
-    font-size: 15px;
+    font-size: 16px;
     display: block;
     position: relative;
     outline: 0;
     padding: 8px 28px 40px;
     min-height: 150px;
   }
+
   @media (max-width: 1025px) {
     .ContentEditable__root {
       padding-left: 8px;
@@ -23,7 +24,7 @@
   }
   
   .ContentEditable__placeholder {
-    font-size: 15px;
+    font-size: 16px;
     color: #999;
     overflow: hidden;
     position: absolute;

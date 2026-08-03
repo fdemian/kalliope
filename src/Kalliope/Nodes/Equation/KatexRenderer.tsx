@@ -5,18 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import katex from 'katex';
-import {ReactElement, useEffect, useRef} from 'react';
 
-export default function KatexRenderer({
-  equation,
-  inline,
-  onDoubleClick,
-}: Readonly<{
+import katex from 'katex';
+import {type JSX, useEffect, useRef} from 'react';
+
+export default function KatexRenderer({ equation, inline, onDoubleClick }: Readonly<{
   equation: string;
   inline: boolean;
   onDoubleClick: () => void;
-}>): ReactElement {
+}>): JSX.Element {
   const katexElementRef = useRef(null);
 
   useEffect(() => {
@@ -39,18 +36,13 @@ export default function KatexRenderer({
     // inner text from Katex. There didn't seem to be any other way of making this work,
     // without having a physical space.
     <>
-        <img
+      <img
         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
         width="0"
         height="0"
         alt=""
       />
-      <span
-        role="button"
-        tabIndex={-1}
-        onDoubleClick={onDoubleClick}
-        ref={katexElementRef}
-      />
+      <span onDoubleClick={onDoubleClick} ref={katexElementRef} />
       <img
         src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
         width="0"

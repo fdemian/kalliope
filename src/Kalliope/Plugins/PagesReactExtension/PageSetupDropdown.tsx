@@ -7,13 +7,11 @@
  */
 import type {PageSetup, PageSize} from '../PagesExtension';
 import type {JSX} from 'react';
-import {useExtensionSignalValue} from '@lexical/react/useExtensionSignalValue';
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 
 import DropDown, {DropDownItem} from '../../UI/Dropdown';
 import {DEFAULT_PAGE_SETUP, PAGE_SIZES} from '../PagesExtension';
 import {marginsIsEqual} from '../PagesExtension/pageSetup';
-import {PagesExtension} from '../PagesExtension';
 
 function dropDownActiveClass(active: boolean): string {
   return active ? 'active dropdown-item-active' : '';

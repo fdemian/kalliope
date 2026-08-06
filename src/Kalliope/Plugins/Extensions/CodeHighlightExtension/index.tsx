@@ -14,6 +14,7 @@ import {
   namedSignals,
 } from '@lexical/extension';
 import {configExtension, defineExtension, safeCast} from 'lexical';
+import type { LexicalEditor } from "lexical";
 
 export type CodeHighlightMode = 'off' | 'prism' | 'shiki';
 
@@ -28,14 +29,16 @@ export interface CodeHighlightConfig {
  * their `disabled` signals to route highlighting to the selected engine.
  */
 export const CodeHighlightExtension = defineExtension({
-  build: (editor, config) => namedSignals(config),
+  // @ts-ignore
+  build: (editor:LexicalEditor, config:CodeHighlightConfig) => namedSignals(config),
   config: safeCast<CodeHighlightConfig>({mode: 'off'}),
   dependencies: [
     configExtension(CodePrismExtension, {disabled: true}),
     configExtension(CodeShikiExtension, {disabled: true}),
   ],
   name: '@lexical/playground/CodeHighlight',
-  register: (editor, config, state) => {
+  // @ts-ignore
+  register: (editor:LexicalEditor, config:CodeHighlightConfig, state) => {
     const prismOutput = getExtensionDependencyFromEditor(
       editor,
       CodePrismExtension,

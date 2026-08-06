@@ -8,8 +8,6 @@ import URLToolbar from './URLToolbar';
 import ExcalidrawModal from './ExcalidrawModal/ExcalidrawModal';
 import type { MouseEventHandler } from 'react';
 import { EntryComponentType } from '../Kalliope/Plugins/Mentions/MentionsTypeaheadMenuItem';
-// import { ExtensionComponent } from '@lexical/react/ExtensionComponent';
-// import {PagesReactExtension} from '../Kalliope/Plugins/PagesReactExtension';
 
 const QUOTE_STATE = "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"These violent delights have violent ends\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"And in their triump die, like fire and powder\",\"type\":\"text\",\"version\":1},{\"type\":\"linebreak\",\"version\":1},{\"detail\":0,\"format\":2,\"mode\":\"normal\",\"style\":\"color: rgb(24, 24, 24);background-color: rgb(255, 255, 255);\",\"text\":\"Which, as they kiss, consume\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}";
 type CalliopeContainerType = HTMLDivElement & {

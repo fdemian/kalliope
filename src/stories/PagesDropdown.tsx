@@ -5,15 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type {PageSetup, PageSize} from '../PagesExtension';
-import type {JSX} from 'react';
-import {useExtensionSignalValue} from '@lexical/react/useExtensionSignalValue';
-import {useEffect, useState} from 'react';
-
-import DropDown, {DropDownItem} from '../../UI/Dropdown';
-import {DEFAULT_PAGE_SETUP, PAGE_SIZES} from '../PagesExtension';
-import {marginsIsEqual} from '../PagesExtension/pageSetup';
-import {PagesExtension} from '../PagesExtension';
+import type {
+  PageSetup,
+  PageSize,
+  DEFAULT_PAGE_SETUP,
+  PAGE_SIZES,
+} from '../Kalliope/Plugins/PagesExtension';
+import { marginsIsEqual } from '../Kalliope/Plugins/PagesExtension/pageSetup';
+import type {JSX } from 'react';
+import { useState } from 'react';
+import DropDown, {DropDownItem} from './UI/Dropdown';
 
 function dropDownActiveClass(active: boolean): string {
   return active ? 'active dropdown-item-active' : '';
@@ -67,7 +68,7 @@ export type PageSetupDropdownProps = {
 export function PageSetupDropdownComponent({
                                              disabled = false,
                                            }: PageSetupDropdownProps): JSX.Element {
-  //const pageSetup = useExtensionSignalValue(PagesExtension, 'pageSetup');
+
   const pageSetup = {
     orientation: 'portrait',
     margins: DEFAULT_PAGE_SETUP.margins,
@@ -101,7 +102,7 @@ export function PageSetupDropdownComponent({
       buttonAriaLabel="Page setup: size, orientation, and layout">
       <DropDownItem
         className={`item wide dropdown-submenu-trigger ${pageSizeMenuOpen ? 'expanded' : ''}`}
-        onClick={(event) => {
+        onClick={(event:any) => {
           event.stopPropagation();
           setPageSizeMenuOpen((open) => !open);
         }}>
@@ -112,7 +113,7 @@ export function PageSetupDropdownComponent({
         <>
           <DropDownItem
             className={`item wide dropdown-submenu-item ${dropDownActiveClass(pageSetup === null)}`}
-            onClick={(event) => {
+            onClick={(event:any) => {
               event.stopPropagation();
               applyUpdate(null);
             }}>
@@ -124,7 +125,7 @@ export function PageSetupDropdownComponent({
               className={`item wide dropdown-submenu-item ${dropDownActiveClass(
                 pageSetup?.pageSize === size,
               )}`}
-              onClick={(event) => {
+              onClick={(event:any) => {
                 event.stopPropagation();
                 applyUpdate({pageSize: size});
               }}>
@@ -137,7 +138,7 @@ export function PageSetupDropdownComponent({
         className={`item wide dropdown-submenu-trigger ${
           orientationMenuOpen ? 'expanded' : ''
         }`}
-        onClick={(event) => {
+        onClick={(event:any) => {
           event.stopPropagation();
           setOrientationMenuOpen((open) => !open);
         }}>
@@ -150,7 +151,7 @@ export function PageSetupDropdownComponent({
             className={`item wide dropdown-submenu-item ${dropDownActiveClass(
               pageSetup?.orientation === 'portrait',
             )}`}
-            onClick={(event) => {
+            onClick={(event:any) => {
               event.stopPropagation();
               applyUpdate({orientation: 'portrait'});
             }}>
@@ -160,7 +161,7 @@ export function PageSetupDropdownComponent({
             className={`item wide dropdown-submenu-item ${dropDownActiveClass(
               pageSetup?.orientation === 'landscape',
             )}`}
-            onClick={(event) => {
+            onClick={(event:any) => {
               event.stopPropagation();
               applyUpdate({orientation: 'landscape'});
             }}>
@@ -172,7 +173,7 @@ export function PageSetupDropdownComponent({
         className={`item wide dropdown-submenu-trigger ${
           marginsMenuOpen ? 'expanded' : ''
         }`}
-        onClick={(event) => {
+        onClick={(event:any) => {
           event.stopPropagation();
           setMarginsMenuOpen((open) => !open);
         }}
@@ -190,7 +191,7 @@ export function PageSetupDropdownComponent({
                 preset.margins,
               ),
             )}`}
-            onClick={(event) => {
+            onClick={(event:any) => {
               event.stopPropagation();
               applyUpdate({margins: preset.margins});
             }}>

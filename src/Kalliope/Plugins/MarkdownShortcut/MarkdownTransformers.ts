@@ -14,6 +14,7 @@ import {
   MULTILINE_ELEMENT_TRANSFORMERS,
   TEXT_FORMAT_TRANSFORMERS,
   TEXT_MATCH_TRANSFORMERS,
+  isTableRowDivider,
   TextMatchTransformer,
   Transformer,
 } from '@lexical/markdown';
@@ -133,7 +134,6 @@ export const TWEET: ElementTransformer = {
 
 // Very primitive table setup
 const TABLE_ROW_REG_EXP = /^(?:\|)(.+)(?:\|)\s?$/;
-const TABLE_ROW_DIVIDER_REG_EXP = /^(\| ?:?-*:? ?)+\|\s?$/;
 
 export const TABLE: ElementTransformer = {
   dependencies: [TableNode, TableRowNode, TableCellNode],
@@ -176,7 +176,7 @@ export const TABLE: ElementTransformer = {
   regExp: TABLE_ROW_REG_EXP,
   replace: (parentNode, _1, match) => {
     // Header row
-    if (TABLE_ROW_DIVIDER_REG_EXP.test(match[0])) {
+    if (isTableRowDivider(match[0])) {
       const table = parentNode.getPreviousSibling();
       if (!table || !$isTableNode(table)) {
         return;

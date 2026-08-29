@@ -18,7 +18,7 @@ import FloatingLinkEditorPlugin from './FloatingLinkEditorPlugin/index';
 import TableCellActionMenuPlugin from './TableActionMenuPlugin';
 import CodeActionMenuPlugin from './CodeActionMenuPlugin/index';
 import DraggableBlockPlugin from './DraggableBlockPlugin';
-import CollapsiblePlugin from './CollapsibleExtension';
+//import CollapsiblePlugin from './CollapsibleExtension';
 import MentionsPlugin from './Mentions/MentionsPlugin';
 import DragDropPastePlugin from './DragDropPastePlugin/index';
 //import TableHoverActionsPlugin from './TableHoverActionsPlugin';
@@ -31,11 +31,11 @@ import TableScrollShadowPlugin from './TableScrollShadowPlugin';
 import { CalliopeConfigProps } from '../KalliopeEditorTypes';
 
 //
-const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
+//const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
 const EquationsPlugin = lazy(() => import('./Equations/EquationsPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
-const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
+//const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
 const KeyboardPlugin = lazy(() => import('./Keyboard/KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./Spoiler/SpoilerPlugin'));
 const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
@@ -132,15 +132,15 @@ function EditorPlugins({
       <AutoFocusPlugin />
       <KeyboardPlugin />
       <SpoilerPlugin />
-      <CollapsiblePlugin />
+      {/*<CollapsiblePlugin />*/}
       <MarkdownShortcutPlugin />
       <InstagramPlugin />
       <ExcalidrawPlugin />
       <CitePlugin />
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
-      <PageBreakPlugin />
-      <LayoutPlugin />
+      {/*<PageBreakPlugin />*/}
+      {/*<LayoutPlugin />*/}
       <MentionsPlugin config={config.mentions} />
       {!isNestedPlugin && <EditorRefPlugin editorRef={editorRef} />}
   </>

@@ -6,21 +6,30 @@
  *
  */
 
-import {CodePrismExtension} from '@lexical/code-prism';
-import {CodeShikiExtension} from '@lexical/code-shiki';
+import {CodeIndentExtension} from '@lexical/code-core';
+import {CodePrismExtension, PrismTokenizer} from '@lexical/code-prism';
+import {CodeShikiExtension, ShikiTokenizer} from '@lexical/code-shiki';
 import {
   effect,
   getExtensionDependencyFromEditor,
   namedSignals,
 } from '@lexical/extension';
 import {configExtension, defineExtension, safeCast} from 'lexical';
-import type { LexicalEditor } from "lexical";
 
 export type CodeHighlightMode = 'off' | 'prism' | 'shiki';
 
 export interface CodeHighlightConfig {
   mode: CodeHighlightMode;
 }
+
+const NULL_LANG_PRISM_TOKENIZER = {
+  ...PrismTokenizer,
+  defaultLanguage: null,
+};
+const NULL_LANG_SHIKI_TOKENIZER = {
+  ...ShikiTokenizer,
+  defaultLanguage: null,
+};
 
 /**
  * Playground aggregator that switches between {@link CodePrismExtension}
@@ -29,16 +38,24 @@ export interface CodeHighlightConfig {
  * their `disabled` signals to route highlighting to the selected engine.
  */
 export const CodeHighlightExtension = defineExtension({
-  // @ts-ignore
-  build: (editor:LexicalEditor, config:CodeHighlightConfig) => namedSignals(config),
+  build: (editor, config) => namedSignals(config),
   config: safeCast<CodeHighlightConfig>({mode: 'off'}),
   dependencies: [
-    configExtension(CodePrismExtension, {disabled: true}),
-    configExtension(CodeShikiExtension, {disabled: true}),
+    configExtension(CodePrismExtension, {
+      disabled: true,
+      tokenizer: NULL_LANG_PRISM_TOKENIZER,
+    }),
+    configExtension(CodeShikiExtension, {
+      disabled: true,
+      tokenizer: NULL_LANG_SHIKI_TOKENIZER,
+    }),
+    configExtension(CodeIndentExtension, {
+      escapeWithArrows: true,
+      tabSize: 2,
+    }),
   ],
   name: '@lexical/playground/CodeHighlight',
-  // @ts-ignore
-  register: (editor:LexicalEditor, config:CodeHighlightConfig, state) => {
+  register: (editor, config, state) => {
     const prismOutput = getExtensionDependencyFromEditor(
       editor,
       CodePrismExtension,

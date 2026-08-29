@@ -16,6 +16,7 @@ import {
   TEXT_MATCH_TRANSFORMERS,
   isTableRowDivider,
   TextMatchTransformer,
+  MultilineElementTransformer,
   Transformer,
 } from '@lexical/markdown';
 import {
@@ -48,6 +49,39 @@ import {
 } from '../../Nodes/Equation/EquationNode';
 import {$createImageNode, $isImageNode, ImageNode} from '../../Nodes/ImageNode/ImageNode';
 import {$createTweetNode, $isTweetNode, TweetNode} from '../../Nodes/TweetNode/TweetNode';
+
+
+function escapeInlineEquation(equation: string): string {
+  return equation.replace(/([\\$])/g, '\\$1');
+}
+
+function unescapeInlineEquation(equation: string): string {
+  return equation.replace(/\\([\\$])/g, '$1');
+}
+
+export const BLOCK_EQUATION: MultilineElementTransformer = {
+  dependencies: [EquationNode],
+  export: node => {
+    if (!$isEquationNode(node) || node.isInline()) {
+      return null;
+    }
+
+    return `$$\n${node.getEquation()}\n$$`;
+  },
+  regExpEnd: /^\$\$\s*$/,
+  regExpStart: /^\$\$\s*$/,
+  replace: (rootNode, _children, _startMatch, _endMatch, linesInBetween) => {
+    const equationLines = linesInBetween ?? [];
+    if (equationLines[0] === '') {
+      equationLines.shift();
+    }
+    if (equationLines[equationLines.length - 1] === '') {
+      equationLines.pop();
+    }
+    rootNode.append($createEquationNode(equationLines.join('\n'), false));
+  },
+  type: 'multiline-element',
+};
 
 export const HR: ElementTransformer = {
   dependencies: [HorizontalRuleNode],
@@ -101,14 +135,30 @@ export const EQUATION: TextMatchTransformer = {
       return null;
     }
 
-    return `$${node.getEquation()}$`;
+    const equation = node.getEquation();
+    return node.isInline() ? `$${escapeInlineEquation(equation)}$` : null;
   },
-  importRegExp: /\$([^$]+?)\$/,
-  regExp: /\$([^$]+?)\$$/,
+  importRegExp: /\$((?:\\.|[^$\\\n])+?)\$/,
+  regExp: /^\$\$([^$]+?)\$\$$|(?:^|[^$])\$((?:\\.|[^$\\\n])+?)\$$/,
   replace: (textNode, match) => {
-    const [, equation] = match;
-    const equationNode = $createEquationNode(equation, true);
-    textNode.replace(equationNode);
+    const [, firstEquation, secondEquation] = match;
+    const isInline = !match[0].startsWith('$$');
+    const equation = firstEquation ?? secondEquation;
+    const equationNode = isInline
+      ? $createEquationNode(unescapeInlineEquation(equation), true)
+      : new EquationNode(equation, false);
+    if (isInline) {
+      const prefix =
+        match[0][0] === '$' || match[0][0] === '\\' ? '' : match[0][0];
+      if (prefix === '') {
+        textNode.replace(equationNode);
+      } else {
+        textNode.setTextContent(prefix);
+        textNode.insertAfter(equationNode);
+      }
+    } else {
+      textNode.getParentOrThrow().replace(equationNode);
+    }
   },
   trigger: '$',
   type: 'text-match',
@@ -296,6 +346,7 @@ export const PLAYGROUND_TRANSFORMERS: Array<Transformer> = [
   EQUATION,
   TWEET,
   CHECK_LIST,
+  BLOCK_EQUATION,
   ...ELEMENT_TRANSFORMERS,
   ...MULTILINE_ELEMENT_TRANSFORMERS,
   ...TEXT_FORMAT_TRANSFORMERS,

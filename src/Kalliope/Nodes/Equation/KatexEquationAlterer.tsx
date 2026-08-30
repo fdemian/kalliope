@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {ReactElement,useCallback, useState} from 'react';
 import KatexRenderer from './KatexRenderer';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import './KatexEquationAlterer.css';
 
 type Props = {
@@ -18,6 +20,7 @@ export default function KatexEquationAlterer({
 }: Props): ReactElement {
   const [equation, setEquation] = useState<string>(initialEquation);
   const [inline, setInline] = useState<boolean>(true);
+  const [editor] = useLexicalComposerContext();
 
   const onCheckboxChange = useCallback(() => {
     setInline(!inline);
@@ -51,11 +54,13 @@ export default function KatexEquationAlterer({
       </div>
       <div className="KatexEquationAlterer_defaultRow">Visualization </div>
       <div className="KatexEquationAlterer_centerRow">
-        <KatexRenderer
-          equation={equation}
-          inline={false}
-          onDoubleClick={() => null}
-        />
+        <LexicalErrorBoundary onError={e => editor._onError(e)} fallback={null}>
+          <KatexRenderer
+            equation={equation}
+            inline={false}
+            onDoubleClick={() => null}
+          />
+        </LexicalErrorBoundary>
       </div>
     </>
   );

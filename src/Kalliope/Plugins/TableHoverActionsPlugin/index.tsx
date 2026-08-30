@@ -195,8 +195,7 @@ function TableHoverActionsContainer({
       editor.registerMutationListener(
         TableNode,
         (mutations) => {
-          editor.getEditorState().read(
-            () => {
+          editor.read('latest', () => {
               let resetObserver = false;
               for (const [key, type] of mutations) {
                 switch (type) {
@@ -223,8 +222,7 @@ function TableHoverActionsContainer({
                 }
                 setShouldListenMouseMove(tableSetRef.current.size > 0);
               }
-            },
-            {editor},
+            }
           );
         },
         {skipInitialization: false},

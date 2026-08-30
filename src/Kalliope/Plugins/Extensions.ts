@@ -1,10 +1,13 @@
 import {PagesReactExtension} from './PagesReactExtension';
 import {KalliopeAutoLinkExtension} from './Extensions/AutoLinkExtension';
 import {CodeHighlightExtension} from './Extensions/CodeHighlightExtension';
-/*import { CollapsibleExtension } from "./Extensions/CollapsibleExtension/index";*/
+import CollapsibleExtension from "./Extensions/CollapsibleExtension"
 import { FigmaExtension } from "./Extensions/FigmaExtension";
 import { TwitterExtension } from "./Extensions/TwitterExtension";
 import {VideoExtension} from "./Extensions/VideoExtension";
+import { KalliopeDomRenderExtension } from "./Extensions/DomRenderExtension";
+import { LayoutExtension } from './Extensions/LayoutExtension';
+import { PageBreakExtension } from './Extensions/PageBreakExtension';
 import {
   $defaultShouldInsertAfter,
   AutoFocusExtension,
@@ -13,6 +16,8 @@ import {
   DecoratorTextExtension,
   HorizontalRuleExtension,
   SelectionAlwaysOnDisplayExtension,
+  SelectBlockExtension,
+  TabIndentationExtension,
 } from '@lexical/extension';
 import {
   configExtension,
@@ -48,10 +53,10 @@ const buildExtensions = (nodes:any, theme:any) => {
       HorizontalRuleExtension,
       TwitterExtension,
       VideoExtension,
-      /*PageBreakExtension,
+      PageBreakExtension,/*
       YouTubeExtension,
-      TabFocusExtension,
-      CollapsibleExtension,*/
+      TabFocusExtension,*/
+      CollapsibleExtension,
       FigmaExtension,
       CodeHighlightExtension,
       /* @__PURE__  configExtension(ListExtension, {
@@ -59,11 +64,13 @@ const buildExtensions = (nodes:any, theme:any) => {
       }),*/
       /*CheckListExtension,
       PlaygroundMarkdownShortcutsExtension,
-      PageBreakExtension,*/
+      */
       PagesReactExtension,
       /*PollExtension,
       EquationsExtension,
+      */
       LayoutExtension,
+      /*
       ExcalidrawExtension,
       CardExtension,
       ReactReviewExtension,
@@ -112,6 +119,8 @@ const buildExtensions = (nodes:any, theme:any) => {
         $shouldInsertAfter: node =>
           $defaultShouldInsertAfter(node) || $isCodeNode(node),
       }),
+      SelectBlockExtension,
+      TabIndentationExtension,
       /* @__PURE__  configExtension(VisibleNonPrintingExtension, {
         disabled: true,
       }),*/
@@ -121,7 +130,9 @@ const buildExtensions = (nodes:any, theme:any) => {
       // handler. Per-node import rules ride along with each node extension.
       /*PlaygroundImportExtension,
       // Replaces the legacy `buildHTMLConfig().export` overrides.
-      PlaygroundDOMRenderExtension,
+      */
+      KalliopeDomRenderExtension,
+      /*
       FocusTrapExtension,
       RovingTabIndexExtension,
       FocusManagerExtension,*/

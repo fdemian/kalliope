@@ -22,7 +22,6 @@ import type {
   CalliopeFormatTypes,
   EditorCommand
 } from './KalliopeEditorTypes';
-import { buildHTMLConfig } from './buildHTMLConfig';
 import { CalliopeContext } from './context';
 import theme from './editorTheme';
 import buildExtensions from './Plugins/Extensions';
@@ -169,7 +168,6 @@ const Editor = ({ config, containerRef, setFormats, setCanUndo, setCanRedo }: Ca
     () =>
       defineExtension({
         $initialEditorState: config.initialState,
-        html: buildHTMLConfig(),
         name: 'Kalliope',
         namespace: 'Kalliope',
         nodes: EditorNodes,

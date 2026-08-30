@@ -18,6 +18,7 @@ import {
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
+  createCommand,
   COMMAND_PRIORITY_LOW,
   INSERT_PARAGRAPH_COMMAND,
   KEY_ARROW_DOWN_COMMAND,
@@ -42,7 +43,10 @@ import {
   $isCollapsibleTitleNode,
   CollapsibleTitleNode,
 } from './CollapsibleTitleNode';
-import { INSERT_COLLAPSIBLE_COMMAND } from './ColllapsibleCommand';
+
+export const INSERT_COLLAPSIBLE_COMMAND = createCommand<void>(
+  'INSERT_COLLAPSIBLE_COMMAND',
+);
 
 export default function CollapsiblePlugin(): null {
   const [editor] = useLexicalComposerContext();
@@ -108,7 +112,8 @@ export default function CollapsiblePlugin(): null {
                   contentParagraph.getTextContentSize()) ||
               (titleParagraph !== null &&
                 selection.anchor.key === titleParagraph.getKey() &&
-                selection.anchor.offset === titleParagraph.getTextContentSize())
+                selection.anchor.offset === titleParagraph.getTextContentSize() &&
+                !container.getOpen())
             ) {
               container.insertAfter($createParagraphNode());
             }

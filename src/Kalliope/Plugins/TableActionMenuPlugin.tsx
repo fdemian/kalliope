@@ -111,7 +111,7 @@ function TableActionMenu({
           nodeMutations.get(tableCellNode.getKey()) === 'updated';
 
         if (nodeUpdated) {
-          editor.getEditorState().read(() => {
+          editor.read('latest', () => {
             updateTableCellNode(tableCellNode.getLatest());
           });
         }
@@ -121,7 +121,7 @@ function TableActionMenu({
   }, [editor, tableCellNode]);
 
   useEffect(() => {
-    editor.getEditorState().read(() => {
+      editor.read('latest', () => {
       const selection = $getSelection();
       // Merge cells
       if ($isTableSelection(selection)) {
@@ -662,9 +662,7 @@ function TableCellActionMenuContainer({
 
   useEffect(() => {
     return editor.registerUpdateListener(() => {
-      editor.getEditorState().read(() => {
-        $moveMenu();
-      });
+      editor.read('latest', $moveMenu);
     });
   });
 

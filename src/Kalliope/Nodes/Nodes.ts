@@ -28,9 +28,9 @@ import { LayoutItemNode } from "./Layout/LayoutItemNode";
 import { VideoNode } from './VideoNode/VideoNode';
 import { ExcalidrawNode } from './ExcalidrawNode';
 import { CiteNode } from './CiteNode/CiteNode';
-import { CollapsibleContainerNode } from '../Plugins/CollapsibleExtension/CollapsibleContainerNode';
-import { CollapsibleContentNode } from '../Plugins/CollapsibleExtension/CollapsibleContentNode';
-import { CollapsibleTitleNode } from '../Plugins/CollapsibleExtension/CollapsibleTitleNode';
+import { CollapsibleContainerNode } from '../Plugins/Extensions/CollapsibleExtension/CollapsibleContainerNode';
+import { CollapsibleContentNode } from '../Plugins/Extensions/CollapsibleExtension/CollapsibleContentNode';
+import { CollapsibleTitleNode } from '../Plugins/Extensions/CollapsibleExtension/CollapsibleTitleNode';
 import { FigmaNode } from "./FigmaNode/FigmaNode";
 import { PageBreakNode } from "./PageBreakNode";
 

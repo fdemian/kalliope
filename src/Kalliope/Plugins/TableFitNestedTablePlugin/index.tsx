@@ -126,20 +126,20 @@ export default function TableFitNestedTablePlugin(): null {
 
   useEffect(() => {
     return editor.registerMutationListener(TableNode, (nodeMutations) => {
-      editor.getEditorState().read(() => {
-        const modifiedTables = new Set<TableNode>();
-        for (const [nodeKey, mutation] of nodeMutations) {
-          if (mutation === 'created' || mutation === 'updated') {
-            const tableNode = $getNodeByKey<TableNode>(nodeKey);
-            if (tableNode) {
-              modifiedTables.add(tableNode);
+        editor.read('latest', () => {
+          const modifiedTables = new Set<TableNode>();
+          for (const [nodeKey, mutation] of nodeMutations) {
+            if (mutation === 'created' || mutation === 'updated') {
+              const tableNode = $getNodeByKey<TableNode>(nodeKey);
+              if (tableNode) {
+                modifiedTables.add(tableNode);
+              }
             }
           }
-        }
-        const resizeRoots = $calculateResizeRootTables(modifiedTables);
-        resizeRoots.forEach((root) => {
-          $resizeDOMColWidthsToFit(editor, root);
-        });
+          const resizeRoots = $calculateResizeRootTables(modifiedTables);
+          resizeRoots.forEach((root) => {
+            $resizeDOMColWidthsToFit(editor, root);
+          });
       });
     });
   }, [editor]);

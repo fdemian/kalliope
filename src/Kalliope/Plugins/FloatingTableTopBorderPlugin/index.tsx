@@ -382,12 +382,10 @@ function TableHoverActionsV2({
       setCanReorder(false);
       return;
     }
-    editor.getEditorState().read(
-      () => {
+    editor.read('latest', () => {
         const tableNode = $getNearestNodeFromDOMNode(hoveredTable);
         setCanReorder($isTableNode(tableNode) && $isSimpleTable(tableNode));
-      },
-      {editor},
+      }
     );
   }, [editor, hoveredTable]);
 

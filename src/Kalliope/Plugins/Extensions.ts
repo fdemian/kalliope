@@ -27,6 +27,7 @@ import {
   RichTextExtension
 } from '@lexical/rich-text';
 import {$isCodeNode} from '@lexical/code';
+import {VisibleNonPrintingExtension} from './VisibleNonPrintingExtension';
 
 const buildExtensions = (nodes:any, theme:any) => {
 
@@ -121,9 +122,9 @@ const buildExtensions = (nodes:any, theme:any) => {
       }),
       SelectBlockExtension,
       TabIndentationExtension,
-      /* @__PURE__  configExtension(VisibleNonPrintingExtension, {
+      /* @__PURE__ */ configExtension(VisibleNonPrintingExtension, {
         disabled: true,
-      }),*/
+      }),
       // DOMImportExtension pipeline — `PlaygroundImportExtension` bundles
       // the shared `CoreImportExtension` baseline, the playground-specific
       // inline-style overlay and the `ClipboardDOMImportExtension` paste

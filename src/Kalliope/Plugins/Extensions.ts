@@ -1,7 +1,7 @@
 import {PagesReactExtension} from './PagesReactExtension';
 import {KalliopeAutoLinkExtension} from './Extensions/AutoLinkExtension';
 import {CodeHighlightExtension} from './Extensions/CodeHighlightExtension';
-import CollapsibleExtension from "./Extensions/CollapsibleExtension"
+import {CollapsibleExtension} from "./Extensions/CollapsibleExtension"
 import { FigmaExtension } from "./Extensions/FigmaExtension";
 import { TwitterExtension } from "./Extensions/TwitterExtension";
 import {VideoExtension} from "./Extensions/VideoExtension";

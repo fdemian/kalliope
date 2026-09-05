@@ -5,46 +5,53 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// @ts-nocheck
+
 import {
   $createParagraphNode,
+  $getDocument,
   $isElementNode,
-  DOMConversionMap,
-  DOMConversionOutput,
-  EditorConfig,
+  type EditorConfig,
   ElementNode,
-  LexicalEditor,
-  LexicalNode,
-  RangeSelection,
-  SerializedElementNode,
+  IS_CHROME,
+  IS_FIREFOX,
+  type LexicalEditor,
+  type LexicalNode,
+  type RangeSelection,
 } from 'lexical';
 
 import {$isCollapsibleContainerNode} from './CollapsibleContainerNode';
 import {$isCollapsibleContentNode} from './CollapsibleContentNode';
 
-type SerializedCollapsibleTitleNode = SerializedElementNode;
-
-export function convertSummaryElement(
-  domNode: HTMLElement,
-): DOMConversionOutput | null {
-  const node = $createCollapsibleTitleNode();
-  return {
-    node,
-  };
-}
-
+/** @noInheritDoc */
 export class CollapsibleTitleNode extends ElementNode {
-  static getType(): string {
-    return 'collapsible-title';
-  }
-
-  static clone(node: CollapsibleTitleNode): CollapsibleTitleNode {
-    return new CollapsibleTitleNode(node.__key);
+  /** @internal */
+  $config() {
+    return this.config('collapsible-title', {
+      $transform(node: CollapsibleTitleNode) {
+        if (node.isEmpty()) {
+          node.remove();
+        }
+      },
+      extends: ElementNode,
+    });
   }
 
   createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
-    const dom = document.createElement('summary');
+    const dom = $getDocument().createElement('summary');
     dom.classList.add('Collapsible__title');
+    if (IS_CHROME || IS_FIREFOX) {
+      dom.addEventListener('click', () => {
+        editor.update(() => {
+          const collapsibleContainer = this.getLatest().getParentOrThrow();
+          if (!$isCollapsibleContainerNode(collapsibleContainer)) {
+            throw new Error(
+              'Expected parent node to be a CollapsibleContainerNode',
+            );
+          }
+          collapsibleContainer.toggleOpen();
+        });
+      });
+    }
     return dom;
   }
 
@@ -52,31 +59,6 @@ export class CollapsibleTitleNode extends ElementNode {
     return false;
   }
 
-  static importDOM(): DOMConversionMap | null {
-    return {
-      summary: (domNode: HTMLElement) => {
-        return {
-          conversion: convertSummaryElement,
-          priority: 1,
-        };
-      },
-    };
-  }
-
-  static importJSON(
-    serializedNode: SerializedCollapsibleTitleNode,
-  ): CollapsibleTitleNode {
-    return $createCollapsibleTitleNode();
-  }
-
-  exportJSON(): SerializedCollapsibleTitleNode {
-    return {
-      ...super.exportJSON(),
-      type: 'collapsible-title',
-      version: 1,
-    };
-  }
-  
   insertNewAfter(_: RangeSelection, restoreSelection = true): ElementNode {
     const containerNode = this.getParentOrThrow();
 

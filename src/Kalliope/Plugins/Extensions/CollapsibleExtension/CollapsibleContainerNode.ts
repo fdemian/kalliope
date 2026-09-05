@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -6,23 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// @ts-nocheck
+
 import {
+  $getDocument,
   $getSiblingCaret,
   $isElementNode,
   $rewindSiblingCaret,
-  DOMConversionMap,
-  DOMConversionOutput,
-  DOMExportOutput,
-  EditorConfig,
+  type DOMExportOutput,
+  type EditorConfig,
   ElementNode,
-  LexicalEditor,
-  LexicalNode,
-  NodeKey,
-  RangeSelection,
-  SerializedElementNode,
-  Spread,
+  IS_CHROME,
+  IS_FIREFOX,
+  isHTMLElement,
+  type LexicalEditor,
+  type LexicalNode,
+  type NodeKey,
+  type RangeSelection,
+  type SerializedElementNode,
+  type Spread,
 } from 'lexical';
+
+import {setDomHiddenUntilFound} from './CollapsibleUtils';
 
 type SerializedCollapsibleContainerNode = Spread<
   {
@@ -30,16 +33,6 @@ type SerializedCollapsibleContainerNode = Spread<
   },
   SerializedElementNode
 >;
-
-export function convertDetailsElement(
-  domNode: HTMLDetailsElement,
-): DOMConversionOutput | null {
-  const isOpen = domNode.open !== undefined ? domNode.open : true;
-  const node = $createCollapsibleContainerNode(isOpen);
-  return {
-    node,
-  };
-}
 
 export class CollapsibleContainerNode extends ElementNode {
   __open: boolean;
@@ -49,8 +42,8 @@ export class CollapsibleContainerNode extends ElementNode {
     this.__open = open;
   }
 
-  static getType(): string {
-    return 'collapsible-container';
+  $config() {
+    return this.config('collapsible-container', {extends: ElementNode});
   }
 
   static clone(node: CollapsibleContainerNode): CollapsibleContainerNode {
@@ -82,51 +75,75 @@ export class CollapsibleContainerNode extends ElementNode {
   }
 
   createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
-    const dom = document.createElement('details');
+    // details is not well supported in Chrome #5582 and Firefox #8348
+    let dom: HTMLElement;
+    if (IS_CHROME || IS_FIREFOX) {
+      dom = $getDocument().createElement('div');
+      dom.setAttribute('open', '');
+    } else {
+      const detailsDom = $getDocument().createElement('details');
+      detailsDom.open = this.__open;
+      detailsDom.addEventListener('toggle', () => {
+        const open = editor.read('latest', () => this.getOpen());
+        if (open !== detailsDom.open) {
+          editor.update(() => this.toggleOpen());
+        }
+      });
+      dom = detailsDom;
+    }
     dom.classList.add('Collapsible__container');
-    dom.open = this.__open;
-    dom.addEventListener('toggle', () => {
-      const open = editor.read('latest', () => this.getOpen());
-      if (open !== dom.open) {
-        editor.update(() => this.toggleOpen());
-      }
-    });
+
     return dom;
   }
 
-  updateDOM(
-    prevNode: this,
-    dom: HTMLDetailsElement,
-  ): boolean {
-    if (prevNode.__open !== this.__open) {
-      dom.open = this.__open;
+  updateDOM(prevNode: this, dom: HTMLDetailsElement): boolean {
+    const currentOpen = this.__open;
+    if (prevNode.__open !== currentOpen) {
+      // details is not well supported in Chrome #5582 and Firefox #8348
+      if (IS_CHROME || IS_FIREFOX) {
+        // Look up the content element by class rather than positional index.
+        // The shape `Title + Content` is invariant per the structure-enforcing
+        // transformer; if a slot-aware extension prepends a leading
+        // decoration (via `slot.after`) the content child would no longer sit
+        // at `children[1]`. Scoped `:scope >` avoids matching content of a
+        // nested CollapsibleContainer.
+        const contentDom = dom.querySelector(':scope > .Collapsible__content');
+        if (!isHTMLElement(contentDom)) {
+          throw new Error('Expected contentDom to be an HTMLElement');
+        }
+        if (currentOpen) {
+          dom.setAttribute('open', '');
+          contentDom.hidden = false;
+        } else {
+          dom.removeAttribute('open');
+          setDomHiddenUntilFound(contentDom);
+        }
+      } else {
+        dom.open = this.__open;
+      }
     }
 
     return false;
   }
 
-  static importDOM(): DOMConversionMap<HTMLDetailsElement> | null {
-    return {
-      details: (domNode: HTMLDetailsElement) => {
-        return {
-          conversion: convertDetailsElement,
-          priority: 1,
-        };
-      },
-    };
-  }
-
   static importJSON(
     serializedNode: SerializedCollapsibleContainerNode,
   ): CollapsibleContainerNode {
-    const node = $createCollapsibleContainerNode(serializedNode.open);
-    return node;
+    return $createCollapsibleContainerNode(serializedNode.open).updateFromJSON(
+      serializedNode,
+    );
   }
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('details');
+    const element = $getDocument().createElement('details');
     element.classList.add('Collapsible__container');
-    element.setAttribute('open', this.__open.toString());
+    // `open` is an HTML boolean attribute — its presence is what makes the
+    // <details> open, whatever its value. Writing `open="false"` on a closed
+    // container reads back (and renders) as open, so omit it instead. This
+    // matches createDOM/updateDOM, which already set '' / removeAttribute.
+    if (this.__open) {
+      element.setAttribute('open', '');
+    }
     return {element};
   }
 
@@ -134,22 +151,21 @@ export class CollapsibleContainerNode extends ElementNode {
     return {
       ...super.exportJSON(),
       open: this.__open,
-      type: 'collapsible-container',
-      version: 1,
     };
   }
 
-  setOpen(open: boolean): void {
+  setOpen(open: boolean): this {
     const writable = this.getWritable();
     writable.__open = open;
+    return writable;
   }
 
   getOpen(): boolean {
     return this.getLatest().__open;
   }
 
-  toggleOpen(): void {
-    this.setOpen(!this.getOpen());
+  toggleOpen(): this {
+    return this.setOpen(!this.getOpen());
   }
 }
 

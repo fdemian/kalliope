@@ -5,40 +5,55 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// @ts-nocheck
+
 import {
-  DOMConversionMap,
-  DOMConversionOutput,
-  DOMExportOutput,
-  EditorConfig,
+  $getDocument,
+  type DOMExportOutput,
+  type EditorConfig,
   ElementNode,
-  LexicalNode,
-  SerializedElementNode,
+  IS_CHROME,
+  IS_FIREFOX,
+  type LexicalEditor,
+  type LexicalNode,
 } from 'lexical';
 
-type SerializedCollapsibleContentNode = SerializedElementNode;
-
-export function convertCollapsibleContentElement(
-  domNode: HTMLElement,
-): DOMConversionOutput | null {
-  const node = $createCollapsibleContentNode();
-  return {
-    node,
-  };
-}
+import {$isCollapsibleContainerNode} from './CollapsibleContainerNode';
+import {domOnBeforeMatch, setDomHiddenUntilFound} from './CollapsibleUtils';
 
 export class CollapsibleContentNode extends ElementNode {
-  static getType(): string {
-    return 'collapsible-content';
+  $config() {
+    return this.config('collapsible-content', {extends: ElementNode});
   }
 
-  static clone(node: CollapsibleContentNode): CollapsibleContentNode {
-    return new CollapsibleContentNode(node.__key);
-  }
-
-  createDOM(config: EditorConfig): HTMLElement {
-    const dom = document.createElement('div');
+  createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
+    const dom = $getDocument().createElement('div');
     dom.classList.add('Collapsible__content');
+    if (IS_CHROME || IS_FIREFOX) {
+      editor.read('latest', () => {
+        const containerNode = this.getParentOrThrow();
+        if (!$isCollapsibleContainerNode(containerNode)) {
+          throw new Error(
+            'Expected parent node to be a CollapsibleContainerNode',
+          );
+        }
+        if (!containerNode.getOpen()) {
+          setDomHiddenUntilFound(dom);
+        }
+      });
+      domOnBeforeMatch(dom, () => {
+        editor.update(() => {
+          const containerNode = this.getParentOrThrow().getLatest();
+          if (!$isCollapsibleContainerNode(containerNode)) {
+            throw new Error(
+              'Expected parent node to be a CollapsibleContainerNode',
+            );
+          }
+          if (!containerNode.getOpen()) {
+            containerNode.toggleOpen();
+          }
+        });
+      });
+    }
     return dom;
   }
 
@@ -46,43 +61,15 @@ export class CollapsibleContentNode extends ElementNode {
     return false;
   }
 
-  static importDOM(): DOMConversionMap | null {
-    return {
-      div: (domNode: HTMLElement) => {
-        if (!domNode.hasAttribute('data-lexical-collapsible-content')) {
-          return null;
-        }
-        return {
-          conversion: convertCollapsibleContentElement,
-          priority: 2,
-        };
-      },
-    };
-  }
-
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('div');
+    const element = $getDocument().createElement('div');
     element.classList.add('Collapsible__content');
     element.setAttribute('data-lexical-collapsible-content', 'true');
     return {element};
   }
 
-  static importJSON(
-    serializedNode: SerializedCollapsibleContentNode,
-  ): CollapsibleContentNode {
-    return $createCollapsibleContentNode();
-  }
-
   isShadowRoot(): boolean {
     return true;
-  }
-
-  exportJSON(): SerializedCollapsibleContentNode {
-    return {
-      ...super.exportJSON(),
-      type: 'collapsible-content',
-      version: 1,
-    };
   }
 }
 

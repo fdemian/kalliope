@@ -8,6 +8,7 @@ import {VideoExtension} from "./Extensions/VideoExtension";
 import { KalliopeDomRenderExtension } from "./Extensions/DomRenderExtension";
 import { LayoutExtension } from './Extensions/LayoutExtension';
 import { PageBreakExtension } from './Extensions/PageBreakExtension';
+import { EquationsExtension} from "./Extensions/EquationsExtension";
 import {
   $defaultShouldInsertAfter,
   AutoFocusExtension,
@@ -67,9 +68,7 @@ const buildExtensions = (nodes:any, theme:any) => {
       PlaygroundMarkdownShortcutsExtension,
       */
       PagesReactExtension,
-      /*PollExtension,
       EquationsExtension,
-      */
       LayoutExtension,
       /*
       ExcalidrawExtension,

@@ -5,22 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {ReactElement,useCallback, useState} from 'react';
-import KatexRenderer from './KatexRenderer';
-import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+
 import './KatexEquationAlterer.css';
+
+import * as React from 'react';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {type JSX, useCallback, useState} from 'react';
+import KatexRenderer from './KatexRenderer';
 
 type Props = {
   initialEquation?: string;
+  onConfirm: (equation: string, inline: boolean) => void;
 };
 
 export default function KatexEquationAlterer({
-  initialEquation = '',
-}: Props): ReactElement {
+                                               onConfirm,
+                                               initialEquation = '',
+                                             }: Props): JSX.Element {
+  const [editor] = useLexicalComposerContext();
   const [equation, setEquation] = useState<string>(initialEquation);
   const [inline, setInline] = useState<boolean>(true);
-  const [editor] = useLexicalComposerContext();
+
+  const onClick = useCallback(() => {
+    onConfirm(equation, inline);
+  }, [onConfirm, equation, inline]);
 
   const onCheckboxChange = useCallback(() => {
     setInline(!inline);
@@ -30,25 +39,34 @@ export default function KatexEquationAlterer({
     <>
       <div className="KatexEquationAlterer_defaultRow">
         Inline
-        <input type="checkbox" checked={inline} onChange={onCheckboxChange} />
+        <input
+          type="checkbox"
+          checked={inline}
+          onChange={onCheckboxChange}
+          data-test-id="equation-inline-checkbox"
+        />
       </div>
       <div className="KatexEquationAlterer_defaultRow">Equation </div>
       <div className="KatexEquationAlterer_centerRow">
         {inline ? (
           <input
-            onChange={(event) => {
+            onChange={event => {
               setEquation(event.target.value);
             }}
             value={equation}
+            autoFocus={true}
             className="KatexEquationAlterer_textArea"
+            data-test-id="equation-input"
           />
         ) : (
           <textarea
-            onChange={(event) => {
+            onChange={event => {
               setEquation(event.target.value);
             }}
             value={equation}
+            autoFocus={true}
             className="KatexEquationAlterer_textArea"
+            data-test-id="equation-input"
           />
         )}
       </div>
@@ -61,6 +79,11 @@ export default function KatexEquationAlterer({
             onDoubleClick={() => null}
           />
         </LexicalErrorBoundary>
+      </div>
+      <div className="KatexEquationAlterer_dialogActions">
+        <button onClick={onClick} data-test-id="equation-submit-btn">
+          Confirm
+        </button>
       </div>
     </>
   );

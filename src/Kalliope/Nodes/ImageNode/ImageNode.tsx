@@ -7,8 +7,6 @@
  */
 
 import type {
-  DOMConversionMap,
-  DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
   LexicalEditor,
@@ -27,39 +25,25 @@ import {
   $createRangeSelection,
   $extendCaretToRange,
   $getChildCaret,
-  $getEditor,
   $getRoot,
   $isElementNode,
   $isParagraphNode,
-  $selectAll,
-  $setSelection,
   createEditor,
   DecoratorNode,
   LineBreakNode,
   ParagraphNode,
   RootNode,
-  SKIP_DOM_SELECTION_TAG,
   TextNode,
 } from 'lexical';
 import * as React from 'react';
 import { ReactElement } from 'react';
-import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
-import {$insertGeneratedNodes} from '@lexical/clipboard';
+import {$generateHtmlFromNodes} from '@lexical/html';
 
 const ImageComponent = React.lazy(
   // @ts-ignore
   () => import('./ImageComponent')
 );
 
-
-function isGoogleDocCheckboxImg(img: HTMLImageElement): boolean {
-  return (
-    img.parentElement != null &&
-    img.parentElement.tagName === 'LI' &&
-    img.previousSibling === null &&
-    img.getAttribute('aria-roledescription') === 'checkbox'
-  );
-}
 
 export interface ImagePayload {
   altText: string;
@@ -84,18 +68,6 @@ export function $isCaptionEditorEmpty(): boolean {
     }
   }
   return true;
-}
-
-function $convertImageElement(domNode: Node): null | DOMConversionOutput {
-  const img = domNode as HTMLImageElement;
-  const src = img.getAttribute('src');
-
-  if (!src || src.startsWith('file:///') || isGoogleDocCheckboxImg(img)) {
-    return null;
-  }
-  const {alt: altText, width, height} = img;
-  const node = $createImageNode({altText, height, src, width});
-  return {node};
 }
 
 export type SerializedImageNode = Spread<
@@ -217,49 +189,6 @@ export class ImageNode extends DecoratorNode<ReactElement> {
     }
 
     return {element: imgElement};
-  }
-
-  static importDOM(): DOMConversionMap | null {
-    return {
-      figcaption: () => ({
-        conversion: () => ({node: null}),
-        priority: 0,
-      }),
-      figure: () => ({
-        conversion: (node) => {
-          return {
-            after: (childNodes) => {
-              const imageNodes = childNodes.filter($isImageNode);
-              const figcaption = node.querySelector('figcaption');
-              if (figcaption) {
-                for (const imgNode of imageNodes) {
-                  imgNode.setShowCaption(true);
-                  imgNode.__caption.update(
-                    () => {
-                      const editor = $getEditor();
-                      $insertGeneratedNodes(
-                        editor,
-                        $generateNodesFromDOM(editor, figcaption),
-                        $selectAll(),
-                      );
-                      $setSelection(null);
-                    },
-                    {tag: SKIP_DOM_SELECTION_TAG},
-                  );
-                }
-              }
-              return imageNodes;
-            },
-            node: null,
-          };
-        },
-        priority: 0,
-      }),
-      img: () => ({
-        conversion: $convertImageElement,
-        priority: 0,
-      }),
-    };
   }
 
   constructor(

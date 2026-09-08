@@ -7,8 +7,6 @@
  */
 
 import type {
-  DOMConversionMap,
-  DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
   ElementFormatType,
@@ -45,15 +43,6 @@ type LoadingTweetProps = {
   tweetId: string;
 };
 type LoadingTweetElementProps = ({ tweetId }: LoadingTweetProps) => ReactElement;
-
-function convertTweetElement(domNode: HTMLDivElement): DOMConversionOutput | null {
-  const id = domNode.getAttribute('data-lexical-tweet-id');
-  if (id) {
-    const node = $createTweetNode(id);
-    return { node };
-  }
-  return null;
-}
 
 let isTwitterScriptLoading = true;
 
@@ -164,20 +153,6 @@ export class TweetNode extends DecoratorBlockNode {
       id: this.getId(),
       type: 'tweet',
       version: 1,
-    };
-  }
-
-  static importDOM(): DOMConversionMap<HTMLDivElement> | null {
-    return {
-      div: (domNode: HTMLDivElement) => {
-        if (!domNode.hasAttribute('data-lexical-tweet-id')) {
-          return null;
-        }
-        return {
-          conversion: convertTweetElement,
-          priority: 2,
-        };
-      },
     };
   }
 

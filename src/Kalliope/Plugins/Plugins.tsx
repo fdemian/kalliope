@@ -32,10 +32,9 @@ import { CalliopeConfigProps } from '../KalliopeEditorTypes';
 
 //
 //const PageBreakPlugin = lazy(() => import( './PageBreak/PageBreakPlugin'));
-const EquationsPlugin = lazy(() => import('./Equations/EquationsPlugin'));
+//const EquationsPlugin = lazy(() => import('./Equations/EquationsPlugin'));
 const EmojisPlugin = lazy(() => import('./Emoji/EmojiPickerPlugin'));
 const SetFormatPlugin = lazy(() => import('./SetFormatPlugin'));
-//const LayoutPlugin = lazy(() => import('./Layout/LayoutPlugin'));
 const KeyboardPlugin = lazy(() => import('./Keyboard/KeyboardPlugin'));
 const SpoilerPlugin = lazy(() => import('./Spoiler/SpoilerPlugin'));
 const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
@@ -107,7 +106,7 @@ function EditorPlugins({
       {config.useShiki ? <CodeHighlightShikiPlugin /> : <CodeHighlightPrismPlugin />}
       <ListPlugin hasStrictIndent={false} />
       <CheckListPlugin disableTakeFocusOnClick={false} />
-      <EquationsPlugin />
+      {/*<EquationsPlugin />*/}
       <TablePlugin
         hasCellMerge={true}
         hasCellBackgroundColor={true}
@@ -140,7 +139,6 @@ function EditorPlugins({
       <ClearEditorPlugin />
       <SpeechToTextPlugin />
       {/*<PageBreakPlugin />*/}
-      {/*<LayoutPlugin />*/}
       <MentionsPlugin config={config.mentions} />
       {!isNestedPlugin && <EditorRefPlugin editorRef={editorRef} />}
   </>

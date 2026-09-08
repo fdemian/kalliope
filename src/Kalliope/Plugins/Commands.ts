@@ -60,13 +60,13 @@ import { INSERT_SPOILER_COMMAND } from './Spoiler/SpoilerCommand';
 import { INSERT_IMAGE_COMMAND } from './ImagesPlugin/ImagesCommand';
 import { INSERT_TWEET_COMMAND } from './Extensions/TwitterExtension';
 import { INSERT_INSTAGRAM_COMMAND } from './Instagram/InstagramCommands';
-import { INSERT_EQUATION_COMMAND } from './Equations/EquationsCommand';
+import { INSERT_EQUATION_COMMAND } from './Extensions/EquationsExtension';
 import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
 import { SPEECH_TO_TEXT_COMMAND } from './SpeechToText/SpeechToTextCommand';
 import { INSERT_CITE_QUOTE } from './Cite/CiteCommand';
 import { INSERT_COLLAPSIBLE_COMMAND } from './Extensions/CollapsibleExtension';
 import { INSERT_PAGE_BREAK } from  './Extensions/PageBreakExtension';
-import { INSERT_LAYOUT_COMMAND } from './Layout/LayoutCommand';
+//import { INSERT_LAYOUT_COMMAND } from './Layout/LayoutCommand';
 import { INSERT_FIGMA_COMMAND } from './Extensions/FigmaExtension';
 import { INSERT_VIDEO_COMMAND } from './Extensions/VideoExtension';
 
@@ -656,11 +656,11 @@ const EDITOR_COMMANDS: EditorCommands = [
     command: INSERT_PAGE_BREAK,
     directCommand: true,
   },
-  {
+  /*{
     name: 'INSERT_LAYOUT_COMMAND',
     command: INSERT_LAYOUT_COMMAND,
     directCommand: true
-  },
+  },*/
   {
     name: "INSERT_FIGMA_COMMAND",
     command: INSERT_FIGMA_COMMAND,

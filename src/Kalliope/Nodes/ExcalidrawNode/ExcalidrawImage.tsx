@@ -11,11 +11,10 @@ import type {
   NonDeleted,
 } from '@excalidraw/excalidraw/element/types';
 import type {AppState, BinaryFiles} from '@excalidraw/excalidraw/types';
-import type {ReactElement} from 'react';
 
 import {exportToSvg} from '@excalidraw/excalidraw';
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {type JSX, useEffect, useMemo, useState} from 'react';
 
 type ImageType = 'svg' | 'canvas';
 
@@ -45,7 +44,7 @@ type Props = {
   /**
    * The ref object to be used to render the image
    */
-  imageContainerRef: React.MutableRefObject<HTMLDivElement | null>;
+  imageContainerRef: React.RefObject<HTMLDivElement | null>;
   /**
    * The type of image to be rendered
    */
@@ -84,14 +83,14 @@ const removeStyleFromSvg_HACK = (svg: SVGElement) => {
  * A component for rendering Excalidraw elements as a static image
  */
 export default function ExcalidrawImage({
-  elements,
-  files,
-  imageContainerRef,
-  appState,
-  rootClassName = null,
-  width = 'inherit',
-  height = 'inherit',
-}: Props): ReactElement {
+                                          elements,
+                                          files,
+                                          imageContainerRef,
+                                          appState,
+                                          rootClassName = null,
+                                          width = 'inherit',
+                                          height = 'inherit',
+                                        }: Props): JSX.Element {
   const [Svg, setSvg] = useState<SVGElement | null>(null);
 
   useEffect(() => {
@@ -102,15 +101,27 @@ export default function ExcalidrawImage({
         files,
       });
       removeStyleFromSvg_HACK(svg);
-
-      svg.setAttribute('width', '100%');
-      svg.setAttribute('height', '100%');
       svg.setAttribute('display', 'block');
 
       setSvg(svg);
     };
-    setContent();
+    setContent().catch(console.error);
   }, [elements, files, appState]);
+
+  const svgHtml = useMemo(() => {
+    if (Svg == null) {
+      return '';
+    }
+    const clone = Svg.cloneNode(true) as SVGElement;
+    if (width === 'inherit' && height === 'inherit') {
+      clone.style.maxWidth = '100%';
+      clone.style.height = 'auto';
+    } else {
+      clone.setAttribute('width', '100%');
+      clone.setAttribute('height', '100%');
+    }
+    return clone.outerHTML;
+  }, [Svg, width, height]);
 
   const containerStyle: React.CSSProperties = {};
   if (width !== 'inherit') {
@@ -122,7 +133,7 @@ export default function ExcalidrawImage({
 
   return (
     <div
-      ref={(node) => {
+      ref={node => {
         if (node) {
           if (imageContainerRef) {
             imageContainerRef.current = node;
@@ -131,7 +142,7 @@ export default function ExcalidrawImage({
       }}
       className={rootClassName ?? ''}
       style={containerStyle}
-      dangerouslySetInnerHTML={{__html: Svg?.outerHTML ?? ''}}
+      dangerouslySetInnerHTML={{__html: svgHtml}}
     />
   );
 }

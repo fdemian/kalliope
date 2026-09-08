@@ -12,11 +12,8 @@ import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {mergeRegister} from '@lexical/utils';
 import {
   CLICK_COMMAND,
-  COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
   DecoratorNode,
-  DOMConversionMap,
-  DOMConversionOutput,
   LexicalNode,
   NodeKey,
   SerializedLexicalNode,
@@ -75,22 +72,6 @@ export class PageBreakNode extends DecoratorNode<ReactElement> {
     return $createPageBreakNode().updateFromJSON(serializedNode);
   }
 
-  static importDOM(): DOMConversionMap | null {
-    return {
-      figure: (domNode: HTMLElement) => {
-        const tp = domNode.getAttribute('type');
-        if (tp !== this.getType()) {
-          return null;
-        }
-
-        return {
-          conversion: $convertPageBreakElement,
-          priority: COMMAND_PRIORITY_HIGH,
-        };
-      },
-    };
-  }
-
   createDOM(): HTMLElement {
     const el = document.createElement('figure');
     el.style.pageBreakAfter = 'always';
@@ -113,10 +94,6 @@ export class PageBreakNode extends DecoratorNode<ReactElement> {
   decorate(): ReactElement {
     return <PageBreakComponent nodeKey={this.__key} />;
   }
-}
-
-function $convertPageBreakElement(): DOMConversionOutput {
-  return {node: $createPageBreakNode()};
 }
 
 export function $createPageBreakNode(): PageBreakNode {

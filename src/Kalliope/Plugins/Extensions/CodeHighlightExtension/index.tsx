@@ -38,7 +38,7 @@ const NULL_LANG_SHIKI_TOKENIZER = {
  * their `disabled` signals to route highlighting to the selected engine.
  */
 export const CodeHighlightExtension = defineExtension({
-  build: (editor, config) => namedSignals(config),
+  build: (_editor, config) => namedSignals(config),
   config: safeCast<CodeHighlightConfig>({mode: 'off'}),
   dependencies: [
     configExtension(CodePrismExtension, {
@@ -55,7 +55,7 @@ export const CodeHighlightExtension = defineExtension({
     }),
   ],
   name: '@lexical/playground/CodeHighlight',
-  register: (editor, config, state) => {
+  register: (editor, _config, state) => {
     const prismOutput = getExtensionDependencyFromEditor(
       editor,
       CodePrismExtension,

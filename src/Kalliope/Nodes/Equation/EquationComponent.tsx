@@ -7,6 +7,9 @@
  */
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
+import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
 import {
   $createParagraphNode,
   $getNodeByKey,
@@ -18,16 +21,15 @@ import {
   CLICK_COMMAND,
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
+  getActiveElement,
   KEY_ENTER_COMMAND,
   KEY_ESCAPE_COMMAND,
   mergeRegister,
   type NodeKey,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
-import {useLexicalNodeSelection} from '@lexical/react/useLexicalNodeSelection';
+import {type JSX, useCallback, useEffect, useRef, useState} from 'react';
+
 import EquationEditor from './EquationEditor';
 import KatexRenderer from './KatexRenderer';
 import {$isEquationNode} from './EquationNode';
@@ -39,17 +41,17 @@ type EquationComponentProps = {
 };
 
 export default function EquationComponent({
-  equation,
-  inline,
-  nodeKey,
-}: EquationComponentProps): ReactElement {
+                                            equation,
+                                            inline,
+                                            nodeKey,
+                                          }: EquationComponentProps): JSX.Element {
   const [editor] = useLexicalComposerContext();
   const isEditable = useLexicalEditable();
-  const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
+  const [isSelected, setSelected, clearSelection] =
+    useLexicalNodeSelection(nodeKey);
   const [equationValue, setEquationValue] = useState(equation);
   const [showEquationEditor, setShowEquationEditor] = useState<boolean>(false);
   const inputRef = useRef<HTMLTextAreaElement | HTMLInputElement>(null);
-
 
   // Promote a click on the rendered KaTeX into a NodeSelection on this
   // EquationNode. Without this, an EquationNode that is the only root
@@ -92,7 +94,7 @@ export default function EquationComponent({
   // root-level element point that swallows further keystrokes — the
   // user sees an editor that won't accept text after a fresh equation.
   const $onEnter = useCallback(
-    (event: KeyboardEvent) => {
+    (event: null | KeyboardEvent) => {
       const latestSelection = $getSelection();
       if (
         !(
@@ -126,7 +128,7 @@ export default function EquationComponent({
         node.insertAfter(paragraph);
         paragraph.select();
       }
-      event.preventDefault();
+      event?.preventDefault();
       return true;
     },
     [nodeKey],
@@ -215,22 +217,27 @@ export default function EquationComponent({
   );
 
   useEffect(() => {
+    if (!showEquationEditor && equationValue !== equation) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setEquationValue(equation);
+    }
+  }, [showEquationEditor, equation, equationValue]);
+
+  useEffect(() => {
     if (!isEditable) {
       return;
     }
-    if (!showEquationEditor && equationValue !== equation) {
-      setEquationValue(equation);
-    }
-  }, [showEquationEditor, equation, equationValue, isEditable]);
-
-  useEffect(() => {
     if (showEquationEditor) {
       return mergeRegister(
         editor.registerCommand(
           SELECTION_CHANGE_COMMAND,
-          () => {
-            const activeElement = document.activeElement;
+          _ => {
             const inputElem = inputRef.current;
+            // getActiveElement rather than document.activeElement, which
+            // reports the shadow host when the editor is in a shadow root.
+            const activeElement = inputElem
+              ? getActiveElement(inputElem)
+              : null;
             if (inputElem !== activeElement) {
               onHide();
             }
@@ -240,9 +247,11 @@ export default function EquationComponent({
         ),
         editor.registerCommand(
           KEY_ESCAPE_COMMAND,
-          () => {
-            const activeElement = document.activeElement;
+          _ => {
             const inputElem = inputRef.current;
+            const activeElement = inputElem
+              ? getActiveElement(inputElem)
+              : null;
             if (inputElem === activeElement) {
               onHide(true);
               return true;
@@ -253,7 +262,6 @@ export default function EquationComponent({
         ),
       );
     }
-
     // Previously this branch promoted any NodeSelection on this
     // equation into the EquationEditor input automatically. That
     // collides with the new single-click → NodeSelection flow (a click
@@ -261,13 +269,7 @@ export default function EquationComponent({
     // gesture (`KatexRenderer.onDoubleClick`) is now the only path into
     // edit mode.
     return undefined;
-  }, [editor, nodeKey, onHide, showEquationEditor]);
-
-  const onDoubleClick = () => {
-    if(editor.isEditable()){
-      setShowEquationEditor(true);
-    }
-  }
+  }, [editor, nodeKey, onHide, showEquationEditor, isEditable]);
 
   return (
     <>
@@ -280,13 +282,15 @@ export default function EquationComponent({
           inputRef={inputRef}
         />
       ) : (
-        <LexicalErrorBoundary
-          onError={(e:Error, _ ) => editor._onError(e)}
-        >
+        <LexicalErrorBoundary onError={e => editor._onError(e)} fallback={null}>
           <KatexRenderer
             equation={equationValue}
             inline={inline}
-            onDoubleClick={onDoubleClick}
+            onDoubleClick={() => {
+              if (isEditable) {
+                setShowEquationEditor(true);
+              }
+            }}
           />
         </LexicalErrorBoundary>
       )}

@@ -36,7 +36,7 @@ export class CollapsibleTitleNode extends ElementNode {
     });
   }
 
-  createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
+  createDOM(_config: EditorConfig, editor: LexicalEditor): HTMLElement {
     const dom = $getDocument().createElement('summary');
     dom.classList.add('Collapsible__title');
     if (IS_CHROME || IS_FIREFOX) {
@@ -55,7 +55,7 @@ export class CollapsibleTitleNode extends ElementNode {
     return dom;
   }
 
-  updateDOM(prevNode: this, dom: HTMLElement): boolean {
+  updateDOM(_prevNode: this, _dom: HTMLElement): boolean {
     return false;
   }
 

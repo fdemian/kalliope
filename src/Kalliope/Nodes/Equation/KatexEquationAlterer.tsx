@@ -7,8 +7,6 @@
  */
 
 import './KatexEquationAlterer.css';
-
-import * as React from 'react';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {type JSX, useCallback, useState} from 'react';

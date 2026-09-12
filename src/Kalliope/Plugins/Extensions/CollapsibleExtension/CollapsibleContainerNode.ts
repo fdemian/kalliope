@@ -54,7 +54,7 @@ export class CollapsibleContainerNode extends ElementNode {
     return true;
   }
 
-  collapseAtStart(selection: RangeSelection): boolean {
+  collapseAtStart(_selection: RangeSelection): boolean {
     // Unwrap the CollapsibleContainerNode by replacing it with the children
     // of its children (CollapsibleTitleNode, CollapsibleContentNode)
     const nodesToInsert: LexicalNode[] = [];
@@ -74,7 +74,7 @@ export class CollapsibleContainerNode extends ElementNode {
     return true;
   }
 
-  createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
+  createDOM(_config: EditorConfig, editor: LexicalEditor): HTMLElement {
     // details is not well supported in Chrome #5582 and Firefox #8348
     let dom: HTMLElement;
     if (IS_CHROME || IS_FIREFOX) {

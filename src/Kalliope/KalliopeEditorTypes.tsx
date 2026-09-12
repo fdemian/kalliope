@@ -7,7 +7,7 @@ import {
 import { ReactElement } from "react";
 import type {EntryComponentType} from './Plugins/Mentions/MentionsTypeaheadMenuItem';
 
-type DispatcherFn = () => void;
+//type DispatcherFn = () => void;
 
 type LoadingTweetProps = {
   tweetId: string;
@@ -73,7 +73,7 @@ type LexicalEditorRef = {
   current: LexicalEditor;
 };
 
-export type DirectCommand = LexicalCommand;
+export type DirectCommand = LexicalCommand<any>;
 export type IndirectCommand = ((editor: LexicalEditorRef, _: any, _2: string) => void);
 
 export type EditorCommand = {

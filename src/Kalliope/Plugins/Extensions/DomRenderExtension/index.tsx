@@ -27,7 +27,7 @@ export const KalliopeDomRenderExtension = defineExtension({
     configExtension(DOMRenderExtension, {
       overrides: [
         domOverride([ParagraphNode], {
-          $exportDOM: (node, $next, editor) => {
+          $exportDOM: (_node, $next, _editor) => {
             const output = $next();
             if (
               !isHTMLElement(output.element) ||

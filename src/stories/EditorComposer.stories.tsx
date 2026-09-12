@@ -208,12 +208,13 @@ export const EditorComposer = () => {
     setImageToolbar(false);
   }
 
+  /*
   const changePageSize = (val:string)=> {
     //
     if(!containerRef.current)
       return;
     containerRef.current.executeCommand("SET_PAGE_SETUP", val);
-  }
+  }*/
 
   const insertVideo = () => {
     if(!containerRef.current || url === null)

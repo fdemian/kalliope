@@ -25,7 +25,7 @@ export class CollapsibleContentNode extends ElementNode {
     return this.config('collapsible-content', {extends: ElementNode});
   }
 
-  createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
+  createDOM(_config: EditorConfig, editor: LexicalEditor): HTMLElement {
     const dom = $getDocument().createElement('div');
     dom.classList.add('Collapsible__content');
     if (IS_CHROME || IS_FIREFOX) {
@@ -57,7 +57,7 @@ export class CollapsibleContentNode extends ElementNode {
     return dom;
   }
 
-  updateDOM(prevNode: this, dom: HTMLElement): boolean {
+  updateDOM(_prevNode: this, _dom: HTMLElement): boolean {
     return false;
   }
 

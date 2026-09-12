@@ -235,7 +235,7 @@ export default function ImageComponent({
   const isEditable = useLexicalEditable();
 
   const onEnter = useCallback(
-    (event: KeyboardEvent) => {
+    (event: KeyboardEvent | null) => {
       const latestSelection = $getSelection();
       const buttonElem = buttonRef.current;
       if (
@@ -246,11 +246,11 @@ export default function ImageComponent({
         if (showCaption) {
           // Move focus into nested editor
           $setSelection(null);
-          event.preventDefault();
+          event?.preventDefault();
           caption.focus();
           return true;
         } else if (buttonElem !== null && buttonElem !== document.activeElement) {
-          event.preventDefault();
+          event?.preventDefault();
           buttonElem.focus();
           return true;
         }

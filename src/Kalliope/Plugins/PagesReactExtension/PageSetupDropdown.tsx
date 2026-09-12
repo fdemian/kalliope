@@ -120,7 +120,7 @@ export function PageSetupDropdownComponent({
       <DropDownItem
         key={size}
       className={`item wide dropdown-submenu-item ${dropDownActiveClass(
-        pageSetup?.pageSize === size,
+        pageSetup?.pageSize.label === size,
       )}`}
       onClick={(event) => {
       event.stopPropagation();

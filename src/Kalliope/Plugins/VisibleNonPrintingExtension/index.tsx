@@ -28,7 +28,7 @@ import {
   isHTMLElement,
   LineBreakNode,
   ParagraphNode,
-  safeCast,
+  safeCast, StateConfig,
   TabNode,
   TextNode,
 } from 'lexical';
@@ -93,7 +93,7 @@ export interface VisibleNonPrintingConfig {
 /**
  * Editor render context state mirroring the extension's `disabled` signal.
  */
-export const VisibleNonPrintingDisabled = createRenderState(
+export const VisibleNonPrintingDisabled: StateConfig<symbol, boolean> & {} = createRenderState(
   'visibleNonPrintingDisabled',
   () => false,
 );
@@ -118,7 +118,7 @@ const disabledForEditor = {
 } satisfies DOMOverrideOptions;
 
 export const VisibleNonPrintingExtension = defineExtension({
-  build: (editor, config) => namedSignals(config),
+  build: (_editor, config) => namedSignals(config),
   config: safeCast<VisibleNonPrintingConfig>({disabled: false}),
   dependencies: [
     configExtension(DOMRenderExtension, {

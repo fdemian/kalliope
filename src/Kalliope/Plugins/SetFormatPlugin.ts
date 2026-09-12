@@ -242,7 +242,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
   }, [editor, internalFormat]);
 
   useEffect(() => {
-    editor.registerCommand<boolean>(
+    editor.registerCommand<void>(
       SELECTION_CHANGE_COMMAND,
       () => {
         const _formats = getEditorFormats();

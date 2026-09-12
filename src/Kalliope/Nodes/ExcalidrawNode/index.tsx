@@ -145,7 +145,7 @@ export class ExcalidrawNode extends DecoratorNode<JSX.Element> {
     return self;
   }
 
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(_editor: LexicalEditor, _config: EditorConfig): JSX.Element {
     return (
       <ExcalidrawComponent
         nodeKey={this.getKey()}

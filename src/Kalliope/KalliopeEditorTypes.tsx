@@ -73,7 +73,7 @@ type LexicalEditorRef = {
   current: LexicalEditor;
 };
 
-export type DirectCommand = LexicalCommand<string | DispatcherFn>;
+export type DirectCommand = LexicalCommand;
 export type IndirectCommand = ((editor: LexicalEditorRef, _: any, _2: string) => void);
 
 export type EditorCommand = {

@@ -3,6 +3,27 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.19.0  (2026-09-12)
+- Fix build.
+- Fix some build issues (type of command type).
+- Refactor: Migrate playground HTML import/export to the DOMImportExtension pipeline.
+- Make collapsible extension work.
+- Feature: Non-printing marks.
+- Migrate editor.getEditorState().read(...) to editor.read(latest, ...).
+- Feature Create paragraph around the code node when navigating with the arrow keys.
+- Position FloatingLinkEditor below the entire link for multi-line and decorator-only links.
+- Prevent FloatingLinkEditor toolbar from being clipped near the editor's bottom edge.
+- Prevent auto-zoom when focusing in the editor in iOS Safari.
+- Allow null Tokenizer.defaultLanguage to preserve markdown round-trip.
+- Add extensions. Remove unused code/plugins.
+- Fix page size setup.
+- Initial changes to add page size functionality.
+- Add Collapsible Section Animations.
+- Bug Fix: Show floating link editor for single-character links.
+- Bug fix: make clear formatting work on multiple paragraphs.
+- Add fallback for dimensionless images to prevent collapse
+- Fix nested tables plugin. Remove unused horizontal rules plugin.
+
 # v0.18.1  (2026-03-10)
 - Fix build issues with previous version. 
 

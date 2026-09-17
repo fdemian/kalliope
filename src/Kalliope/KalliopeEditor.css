@@ -437,8 +437,19 @@ figcaption {
   margin-left: 0.01em;
 }
 
+.calliope-list-item-checked[dir='rtl']:before,
+.calliope-list-item-unchecked[dir='rtl']:before {
+  left: auto;
+  right: 0;
+}
+
 .calliope-list-item-checked {
   text-decoration: line-through;
+}
+
+.calliope-list-item-checked[dir='rtl']:after {
+  left: auto;
+  right: 0.35em;
 }
 
 .calliope-list-item-checked:before,

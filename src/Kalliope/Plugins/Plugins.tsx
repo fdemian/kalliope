@@ -27,6 +27,7 @@ import TableHoverActionsV2Plugin from './FloatingTableTopBorderPlugin';
 import CodeHighlightPrismPlugin from './CodeHighlightPrismPlugin';
 import CodeHighlightShikiPlugin from './CodeHighlightShikiPlugin';
 import TableScrollShadowPlugin from './TableScrollShadowPlugin';
+import SpeechToTextPlugin from './SpeechToTextPlugin';
 
 import { CalliopeConfigProps } from '../KalliopeEditorTypes';
 
@@ -41,7 +42,7 @@ const ImagesPlugin = lazy(() => import('./ImagesPlugin/ImagesPlugin'));
 const InstagramPlugin = lazy(() => import('./Instagram/InstagramPlugins'));
 const TableCellResizer = lazy(() => import('./TableCellResizer/index'));
 const ExcalidrawPlugin = lazy(() => import('./Excalidraw/ExcalidrawPlugin'));
-const SpeechToTextPlugin = lazy(() => import('./SpeechToText/SpeechToTextPlugin'));
+//const SpeechToTextPlugin = lazy(() => import('./SpeechToTextPlugin'));
 const CitePlugin = lazy(() => import('./Cite/CitePlugin'));
 const MarkdownShortcutPlugin = lazy(() => import('./MarkdownShortcut'));
 

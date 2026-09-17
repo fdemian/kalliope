@@ -62,7 +62,7 @@ import { INSERT_TWEET_COMMAND } from './Extensions/TwitterExtension';
 import { INSERT_INSTAGRAM_COMMAND } from './Instagram/InstagramCommands';
 import { INSERT_EQUATION_COMMAND } from './Extensions/EquationsExtension';
 import { INSERT_EXCALIDRAW_COMMAND } from './Excalidraw/ExcalidrawCommand';
-import { SPEECH_TO_TEXT_COMMAND } from './SpeechToText/SpeechToTextCommand';
+import { SPEECH_TO_TEXT_COMMAND } from './SpeechToTextPlugin';
 import { INSERT_CITE_QUOTE } from './Cite/CiteCommand';
 import { INSERT_COLLAPSIBLE_COMMAND } from './Extensions/CollapsibleExtension';
 import { INSERT_PAGE_BREAK } from  './Extensions/PageBreakExtension';

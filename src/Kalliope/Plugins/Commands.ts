@@ -376,6 +376,7 @@ const formatHeading = (editor: LexicalEditorRef, internalFormat: CalliopeFormatT
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         $setBlocksType(selection, () => $createHeadingNode(headingSize));
+
       }
     });
   }

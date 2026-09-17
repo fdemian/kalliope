@@ -8,7 +8,8 @@ import {VideoExtension} from "./Extensions/VideoExtension";
 import { KalliopeDomRenderExtension } from "./Extensions/DomRenderExtension";
 import { LayoutExtension } from './Extensions/LayoutExtension';
 import { PageBreakExtension } from './Extensions/PageBreakExtension';
-import { EquationsExtension} from "./Extensions/EquationsExtension";
+import { EquationsExtension } from "./Extensions/EquationsExtension";
+import { ReactFindReplaceExtension } from './Extensions/FindReplaceExtension';
 import {
   $defaultShouldInsertAfter,
   AutoFocusExtension,
@@ -74,10 +75,10 @@ const buildExtensions = (nodes:any, theme:any) => {
       ExcalidrawExtension,
       CardExtension,
       ReactReviewExtension,
-      ReactFindReplaceExtension,
       PullQuoteExtension,
       RubyExtension,*/
       HorizontalRuleExtension,
+      ReactFindReplaceExtension,
       /* @__PURE__ configExtension(ListExtension, {
         shouldPreserveNumbering: false,
       }),*/

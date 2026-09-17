@@ -30,6 +30,11 @@ import {
 } from '@lexical/rich-text';
 import {$isCodeNode} from '@lexical/code';
 import {VisibleNonPrintingExtension} from './VisibleNonPrintingExtension';
+import {
+  ClickableLinkExtension,
+  LinkExtension,
+} from '@lexical/link';
+import {validateUrl} from '../utils/url';
 
 const buildExtensions = (nodes:any, theme:any) => {
 
@@ -108,10 +113,10 @@ const buildExtensions = (nodes:any, theme:any) => {
       DragDropPasteExtension,
       EmojisExtension,
       MentionsExtension,*/
-      /* @__PURE__ configExtension(LinkExtension, {validateUrl}),
-      KallioopeAutoLinkExtension,
-      /* @__PURE__ configExtension(ClickableLinkExtension, {newTab: true}),
-      SelectionAlwaysOnDisplayExtension,
+      /* @__PURE__ */ configExtension(LinkExtension, {validateUrl}),
+      /*KallioopeAutoLinkExtension,*/
+      /* @__PURE__ */configExtension(ClickableLinkExtension, {newTab: true}),
+      /* SelectionAlwaysOnDisplayExtension, */
       /* @__PURE__ configExtension(SelectBlockExtension, {
         cascadeSelection: true,
       }), */

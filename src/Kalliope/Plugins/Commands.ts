@@ -333,6 +333,16 @@ export const clearFormatting = (
           node.setFormat('');
         }
       });
+
+      // hasFormat() reads the format cached on the RangeSelection rather than
+      // the nodes, so the toolbars would keep showing the cleared formats as
+      // active (#8881)
+      const clearedSelection = $getSelection();
+      if ($isRangeSelection(clearedSelection)) {
+        clearedSelection.setFormat(0);
+        clearedSelection.setStyle('');
+      }
+
     }
   });
 };

@@ -11,6 +11,7 @@ import { ReactElement } from 'react';
 import type { SerializedLexicalNode, NodeKey, LexicalNode, Spread } from 'lexical';
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import './MentionNode.css';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedMentionNode = Spread<
   {
@@ -26,8 +27,8 @@ export class MentionNode extends DecoratorNode<ReactElement> {
   __mentionName: string;
   __link: string;
 
-  static getType(): string {
-    return 'mention';
+  $config() {
+    return this.config('mention', {extends: DecoratorBlockNode});
   }
 
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {

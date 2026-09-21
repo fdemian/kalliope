@@ -17,6 +17,7 @@ import type {
   
   import {addClassNamesToElement} from '@lexical/utils';
   import {ElementNode} from 'lexical';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
   
   export type SerializedLayoutContainerNode = Spread<
     {
@@ -32,9 +33,9 @@ import type {
       super(key);
       this.__templateColumns = templateColumns;
     }
-  
-    static getType(): string {
-      return 'layout-container';
+
+    $config() {
+      return this.config('layout-container', {extends: DecoratorBlockNode});
     }
   
     static clone(node: LayoutContainerNode): LayoutContainerNode {

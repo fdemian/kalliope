@@ -2,6 +2,7 @@ import type { NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexica
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import EmojiImage from './EmojiImage';
 import { ReactElement } from 'react';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedEmojiNode = Spread<
   {
@@ -15,8 +16,8 @@ export type SerializedEmojiNode = Spread<
 export class EmojiNode extends DecoratorNode<ReactElement> {
   __emoji: string;
 
-  static getType() {
-    return 'emoji';
+  $config() {
+    return this.config('emoji', {extends: DecoratorBlockNode});
   }
 
   static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {

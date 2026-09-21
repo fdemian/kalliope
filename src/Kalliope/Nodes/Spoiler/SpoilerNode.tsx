@@ -3,6 +3,7 @@ import type { SerializedLexicalNode, NodeKey, Spread, LexicalNode } from 'lexica
 import { DecoratorNode } from 'lexical';
 import { ReactElement } from 'react';
 import Spoiler from './Spoiler';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedSpoilerNode = Spread<
   {
@@ -16,8 +17,8 @@ export type SerializedSpoilerNode = Spread<
 export class SpoilerNode extends DecoratorNode<ReactElement> {
   __text: string;
 
-  static getType():string {
-    return 'spoiler';
+  $config() {
+    return this.config('spoiler', {extends: DecoratorBlockNode});
   }
 
   static clone(node: SpoilerNode): SpoilerNode {

@@ -246,7 +246,9 @@ export default function ImageComponent({
         if (showCaption) {
           // Move focus into nested editor
           $setSelection(null);
-          event?.preventDefault();
+          if (event !== null) {
+            event.preventDefault();
+          }
           caption.focus();
           return true;
         } else if (buttonElem !== null && buttonElem !== document.activeElement) {

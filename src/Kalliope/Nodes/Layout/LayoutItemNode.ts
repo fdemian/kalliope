@@ -15,6 +15,7 @@ import type {
   
   import {addClassNamesToElement} from '@lexical/utils';
   import {$isParagraphNode, ElementNode} from 'lexical';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
   export type SerializedLayoutItemNode = SerializedElementNode;
   
@@ -27,10 +28,11 @@ import type {
   }  
 
   export class LayoutItemNode extends ElementNode {
-    static getType(): string {
-      return 'layout-item';
+
+    $config() {
+      return this.config('layout-item', {extends: DecoratorBlockNode});
     }
-  
+
     static clone(node: LayoutItemNode): LayoutItemNode {
       return new LayoutItemNode(node.__key);
     }

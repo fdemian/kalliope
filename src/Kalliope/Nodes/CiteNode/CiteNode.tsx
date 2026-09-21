@@ -4,6 +4,7 @@ import CiteQuote from './CiteQuote';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
 import {createEditor, SerializedEditorState, DecoratorNode, SerializedLexicalNode} from "lexical";
 import { ReactElement } from 'react';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedCiteNode = Spread<
     {
@@ -50,8 +51,8 @@ export class CiteNode extends DecoratorNode<ReactElement> {
         return new CiteNode(author, source, node.__key);
     }
 
-    static getType(): string {
-        return 'cite-node';
+    $config() {
+      return this.config('cite-node', {extends: DecoratorBlockNode});
     }
 
     constructor(author: Author, source: Source, key?: NodeKey) {

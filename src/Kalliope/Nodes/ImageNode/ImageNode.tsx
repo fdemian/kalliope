@@ -38,6 +38,7 @@ import {
 import * as React from 'react';
 import { ReactElement } from 'react';
 import {$generateHtmlFromNodes} from '@lexical/html';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 const ImageComponent = React.lazy(
   // @ts-ignore
@@ -96,8 +97,8 @@ export class ImageNode extends DecoratorNode<ReactElement> {
   // Captions cannot yet be used within editor cells
   __captionsEnabled: boolean;
 
-  static getType(): string {
-    return 'image';
+  $config() {
+    return this.config('image', {extends: DecoratorBlockNode});
   }
 
   static clone(node: ImageNode): ImageNode {

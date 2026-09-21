@@ -3,6 +3,7 @@ import {ReactElement, ReactNode } from 'react';
 import type { LexicalNode, NodeKey } from 'lexical';
 import { DecoratorNode, SerializedLexicalNode, Spread } from 'lexical';
 import './Keyboard.css';
+import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedKeyboardNode = Spread<
   {
@@ -16,8 +17,8 @@ export type SerializedKeyboardNode = Spread<
 export class KeyboardNode extends DecoratorNode<ReactNode> {
   __text: string;
 
-  static getType(): string {
-    return 'kbdnode';
+  $config() {
+    return this.config('kbdnode', {extends: DecoratorBlockNode});
   }
 
   static clone(node: KeyboardNode): KeyboardNode {

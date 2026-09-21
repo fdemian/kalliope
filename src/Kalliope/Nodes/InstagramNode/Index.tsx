@@ -46,8 +46,8 @@ export type SerializedInstagramNode = Spread<
 export class InstagramNode extends DecoratorBlockNode {
   __url: string;
 
-  static getType(): string {
-    return 'instagram';
+  $config() {
+    return this.config('instagram', {extends: DecoratorBlockNode});
   }
 
   static clone(node: InstagramNode): InstagramNode {

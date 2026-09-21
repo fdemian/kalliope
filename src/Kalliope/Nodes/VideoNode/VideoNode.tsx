@@ -68,8 +68,8 @@ function VideoComponent({ format, nodeKey, videoURL, className }: VideoPropsNode
 export class VideoNode extends DecoratorBlockNode {
   __url: string;
 
-  static getType(): string {
-    return 'video';
+  $config() {
+    return this.config('video', {extends: DecoratorBlockNode});
   }
 
   static clone(node: VideoNode): VideoNode {

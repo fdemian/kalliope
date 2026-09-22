@@ -21,7 +21,7 @@ import {
   SerializedDecoratorBlockNode,
 } from '@lexical/react/LexicalDecoratorBlockNode';
 import { ReactElement } from 'react';
-
+import { $getDocument } from 'lexical';
 import ReactPlayer from 'react-player';
 import './VideoNode.css';
 
@@ -99,8 +99,7 @@ export class VideoNode extends DecoratorBlockNode {
   }
 
   createDOM(): HTMLElement {
-    const span = document.createElement('span');
-    return span;
+    return $getDocument().createElement('span');
   }
 
   // @ts-ignore

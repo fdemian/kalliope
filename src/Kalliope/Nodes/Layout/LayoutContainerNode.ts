@@ -6,14 +6,15 @@
  *
  */
 
-import type {
-    DOMConversionMap,
-    EditorConfig,
-    LexicalNode,
-    NodeKey,
-    SerializedElementNode,
-    Spread,
-  } from 'lexical';
+import {
+  $getDocument,
+  DOMConversionMap,
+  EditorConfig,
+  LexicalNode,
+  NodeKey,
+  SerializedElementNode,
+  Spread,
+} from 'lexical';
   
   import {addClassNamesToElement} from '@lexical/utils';
   import {ElementNode} from 'lexical';
@@ -43,7 +44,7 @@ import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
     }
   
     createDOM(config: EditorConfig): HTMLElement {
-      const dom = document.createElement('div');
+      const dom = $getDocument().createElement('div');
       dom.style.gridTemplateColumns = this.__templateColumns;
       if (typeof config.theme.layoutContainer === 'string') {
         addClassNamesToElement(dom, config.theme.layoutContainer);

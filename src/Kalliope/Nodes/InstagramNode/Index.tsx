@@ -6,7 +6,8 @@
  *
  */
 
-import type {
+import {
+  $getDocument,
   DOMConversionMap,
   DOMConversionOutput,
   DOMExportOutput,
@@ -84,9 +85,10 @@ export class InstagramNode extends DecoratorBlockNode {
   }
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('div');
+    const _document = $getDocument();
+    const element = _document.createElement('div');
     element.setAttribute('data-lexical-instagram-id', this.__url);
-    const text = document.createTextNode(this.getTextContent());
+    const text = _document.createTextNode(this.getTextContent());
     element.append(text);
     return { element };
   }

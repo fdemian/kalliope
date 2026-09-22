@@ -30,6 +30,7 @@ import {
   COMMAND_PRIORITY_LOW,
   configExtension,
   createCommand,
+  CONTROL_OR_META,
   defineExtension,
   IS_APPLE,
   isExactShortcutMatch,
@@ -65,12 +66,6 @@ export interface MatchPoints {
   focusOffset: number;
   format: number;
 }
-
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
-
-const CONTROL_OR_META = {ctrlKey: !IS_APPLE, metaKey: IS_APPLE};
 
 // ---------------------------------------------------------------------------
 // Pure functions

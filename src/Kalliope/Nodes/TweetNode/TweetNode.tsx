@@ -6,7 +6,8 @@
  *
  */
 
-import type {
+import {
+  $getDocument,
   DOMExportOutput,
   EditorConfig,
   ElementFormatType,
@@ -82,10 +83,11 @@ function TweetComponent({
       setIsTweetLoading(true);
 
       if (isTwitterScriptLoading) {
-        const script = document.createElement('script');
+        const doc = containerRef.current?.ownerDocument ?? document;
+        const script = doc.createElement('script');
         script.src = WIDGET_SCRIPT_URL;
         script.async = true;
-        document.body?.appendChild(script);
+        doc.body?.appendChild(script);
         script.onload = createTweet;
         if (onError) {
           script.onerror = onError as OnErrorEventHandler;

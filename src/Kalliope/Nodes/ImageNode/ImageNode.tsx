@@ -6,49 +6,90 @@
  *
  */
 
-import type {
-  DOMExportOutput,
-  EditorConfig,
-  LexicalEditor,
-  LexicalNode,
-  NodeKey,
-  SerializedEditor,
-  SerializedLexicalNode,
-  LexicalUpdateJSON,
-  Spread,
-} from 'lexical';
-import {HashtagNode} from '@lexical/hashtag';
-import {LinkNode} from '@lexical/link';
+import type {JSX} from 'react';
+
 import {
-  RangeSelection,
+  buildEditorFromExtensions,
+  NestedEditorExtension,
+} from '@lexical/extension';
+import {HashtagExtension} from '@lexical/hashtag';
+import {HistoryExtension} from '@lexical/history';
+import {$generateHtmlFromNodes} from '@lexical/html';
+import {LinkExtension} from '@lexical/link';
+import {ReactExtension} from '@lexical/react/ReactExtension';
+import {ReactProviderExtension} from '@lexical/react/ReactProviderExtension';
+import {RichTextExtension} from '@lexical/rich-text';
+import {
   $applyNodeReplacement,
   $createRangeSelection,
   $extendCaretToRange,
   $getChildCaret,
+  $getDocument,
   $getRoot,
   $isElementNode,
   $isParagraphNode,
-  createEditor,
+  booleanValue,
+  configExtension,
   DecoratorNode,
-  LineBreakNode,
-  ParagraphNode,
-  RootNode,
-  TextNode,
+  defineExtension,
+  type DOMExportOutput,
+  type EditorConfig,
+  type LexicalEditorWithDispose,
+  type LexicalNode,
+  type NodeKey,
+  nodeSchema,
+  numberValue,
+  optional,
+  type RangeSelection,
+  rawValue,
+  type SerializedEditor,
+  type SerializedLexicalNode,
+  type Spread,
+  stringValue,
+  withAccessors,
+  withField,
 } from 'lexical';
 import * as React from 'react';
-import { ReactElement } from 'react';
-import {$generateHtmlFromNodes} from '@lexical/html';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
+import ContentEditable from '../UIPath/ContentEditable';
 
-const ImageComponent = React.lazy(
-  // @ts-ignore
-  () => import('./ImageComponent')
-);
+const ImageComponent = React.lazy(() => import('./ImageComponent'));
 
+const CaptionEditorExtension = defineExtension({
+  // Skip the default empty-paragraph initializer. In collab mode
+  // CollaborationPlugin's bootstrap only runs `initializeEditor` when
+  // the Lexical root is empty, so a pre-seeded paragraph would prevent
+  // the caption editor from ever exporting its state to Yjs. In
+  // non-collab mode RichText's normalization adds a paragraph as soon
+  // as the editor mounts.
+  $initialEditorState: null,
+  dependencies: [
+    // FIXME - The current playground has tests that assume that image captions don't have shared history
+    // SharedHistoryExtension,
+    HistoryExtension,
+    NestedEditorExtension,
+    ReactProviderExtension,
+    RichTextExtension,
+    HashtagExtension,
+    LinkExtension,
+    configExtension(ReactExtension, {
+      contentEditable: (
+        <ContentEditable
+          placeholder="Enter a caption..."
+          placeholderClassName="ImageNode__placeholder"
+          className="ImageNode__contentEditable"
+        />
+      ),
+      decorators: [],
+    }),
+  ],
+  name: '@lexical/Kalliope/ImageNodeCaption',
+  namespace: 'Kalliope/ImageNodeCaption',
+  nodes: [],
+});
 
 export interface ImagePayload {
   altText: string;
-  caption?: LexicalEditor;
+  caption?: LexicalEditorWithDispose;
   height?: number;
   key?: NodeKey;
   maxWidth?: number;
@@ -80,25 +121,47 @@ export type SerializedImageNode = Spread<
     showCaption: boolean;
     src: string;
     width?: number;
-    type: string;
-    version: number;
   },
   SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<ReactElement> {
+const imageNodeSchema = nodeSchema<ImageNode>()({
+  altText: stringValue(),
+  caption: withAccessors(rawValue<SerializedEditor>(), {
+    getter: 'getSerializedCaption',
+  }),
+  // An unsized dimension is the 'inherit' sentinel, which has always
+  // serialized as 0 (and parses back through `|| 'inherit'`).
+  height: withAccessors(optional(numberValue()), {
+    getter: 'getSerializedHeight',
+  }),
+  // Read straight from the field, but applied through setMaxWidth: an absent
+  // `maxWidth` parses to `undefined`, and the setter reads that as "keep the
+  // constructor's default" rather than as a value to store.
+  maxWidth: withAccessors(optional(numberValue()), {
+    getter: {field: '__maxWidth'},
+  }),
+  showCaption: withField(booleanValue(), {field: '__showCaption'}),
+  src: stringValue(),
+  width: withAccessors(optional(numberValue()), {getter: 'getSerializedWidth'}),
+});
+
+export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
   __width: 'inherit' | number;
   __height: 'inherit' | number;
   __maxWidth: number;
   __showCaption: boolean;
-  __caption: LexicalEditor;
+  __caption: LexicalEditorWithDispose;
   // Captions cannot yet be used within editor cells
   __captionsEnabled: boolean;
 
   $config() {
-    return this.config('image', {extends: DecoratorBlockNode});
+    return this.config('image', {
+      extends: DecoratorNode,
+      json: imageNodeSchema,
+    });
   }
 
   static clone(node: ImageNode): ImageNode {
@@ -111,44 +174,48 @@ export class ImageNode extends DecoratorNode<ReactElement> {
       node.__showCaption,
       node.__caption,
       node.__captionsEnabled,
-      node.__key
+      node.__key,
     );
   }
 
-  static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const { altText, height, width, maxWidth, caption, src, showCaption } =
-      serializedNode;
-    const node = $createImageNode({
-      altText,
-      height,
-      maxWidth,
-      showCaption,
-      src,
-      width,
-    }).updateFromJSON(serializedNode);;
-    const nestedEditor = node.__caption;
-    const editorState = nestedEditor.parseEditorState(caption.editorState);
-    if (!editorState.isEmpty()) {
-      nestedEditor.setEditorState(editorState);
-    }
-    return node;
+  /** @internal The nested caption editor's own serialized state. */
+  getSerializedCaption(): SerializedEditor {
+    return this.getLatest().__caption.toJSON();
   }
 
-  updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedImageNode>): this {
-    const node = super.updateFromJSON(serializedNode);
-    const {caption} = serializedNode;
-
-    const nestedEditor = node.__caption;
-    const editorState = nestedEditor.parseEditorState(caption.editorState);
-    if (!editorState.isEmpty()) {
-      nestedEditor.setEditorState(editorState);
-    }
-    return node;
+  /** @internal 'inherit' has always serialized as 0. */
+  getSerializedWidth(): number {
+    const width = this.getLatest().__width;
+    return width === 'inherit' ? 0 : width;
   }
- 
+
+  /** @internal */
+  getSerializedHeight(): number {
+    const height = this.getLatest().__height;
+    return height === 'inherit' ? 0 : height;
+  }
+
+  /**
+   * Apply a serialized nested caption editor. The nested editor's own
+   * `parseEditorState` owns validation of the payload, which is why the `json`
+   * schema declares the property with {@link rawValue} rather than describing
+   * its shape. An empty parsed state is ignored so it does not clobber the
+   * caption the node was created with.
+   */
+  setCaption(caption: SerializedEditor | undefined): this {
+    const self = this.getWritable();
+    if (caption) {
+      const nestedEditor = self.__caption;
+      const editorState = nestedEditor.parseEditorState(caption.editorState);
+      if (!editorState.isEmpty()) {
+        nestedEditor.setEditorState(editorState);
+      }
+    }
+    return self;
+  }
 
   exportDOM(): DOMExportOutput {
-    const imgElement = document.createElement('img');
+    const imgElement = $getDocument().createElement('img');
     imgElement.setAttribute('src', this.__src);
     imgElement.setAttribute('alt', this.__altText);
     imgElement.setAttribute('width', this.__width.toString());
@@ -178,8 +245,8 @@ export class ImageNode extends DecoratorNode<ReactElement> {
         return $generateHtmlFromNodes(captionEditor, selection);
       });
       if (captionHtml) {
-        const figureElement = document.createElement('figure');
-        const figcaptionElement = document.createElement('figcaption');
+        const figureElement = $getDocument().createElement('figure');
+        const figcaptionElement = $getDocument().createElement('figcaption');
         figcaptionElement.innerHTML = captionHtml;
 
         figureElement.appendChild(imgElement);
@@ -192,16 +259,51 @@ export class ImageNode extends DecoratorNode<ReactElement> {
     return {element: imgElement};
   }
 
+  setSrc(src: string): this {
+    const self = this.getWritable();
+    self.__src = src;
+    return self;
+  }
+
+  setAltText(altText: string): this {
+    const self = this.getWritable();
+    self.__altText = altText;
+    return self;
+  }
+
+  setMaxWidth(maxWidth: number | undefined): this {
+    const self = this.getWritable();
+    self.__maxWidth = maxWidth === undefined ? self.__maxWidth : maxWidth;
+    return self;
+  }
+
+  // `width`/`height` are absent from the JSON when the image is unsized, which
+  // is stored as the sentinel 'inherit'.
+  // An unsized image serializes as 0 (and older documents may omit the
+  // property), both of which restore the 'inherit' sentinel — the same
+  // mapping the constructor's `width || 'inherit'` has always applied.
+  setWidth(width: number | undefined): this {
+    const self = this.getWritable();
+    self.__width = width || 'inherit';
+    return self;
+  }
+
+  setHeight(height: number | undefined): this {
+    const self = this.getWritable();
+    self.__height = height || 'inherit';
+    return self;
+  }
+
   constructor(
-    src: string,
-    altText: string,
-    maxWidth: number,
+    src: string = '',
+    altText: string = '',
+    maxWidth: number = 500,
     width?: 'inherit' | number,
     height?: 'inherit' | number,
     showCaption?: boolean,
-    caption?: LexicalEditor,
+    caption?: LexicalEditorWithDispose,
     captionsEnabled?: boolean,
-    key?: NodeKey
+    key?: NodeKey,
   ) {
     super(key);
     this.__src = src;
@@ -210,49 +312,31 @@ export class ImageNode extends DecoratorNode<ReactElement> {
     this.__width = width || 'inherit';
     this.__height = height || 'inherit';
     this.__showCaption = showCaption || false;
-    this.__caption = caption || createEditor({
-      namespace: 'kalliope/ImageNodeCaption',
-      nodes: [
-        RootNode,
-        TextNode,
-        LineBreakNode,
-        ParagraphNode,
-        LinkNode,
-        HashtagNode
-      ],
-    });
-    this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
+    this.__caption =
+      caption || buildEditorFromExtensions(CaptionEditorExtension);
+    this.__captionsEnabled = captionsEnabled !== false;
   }
 
-  exportJSON(): SerializedImageNode {
-    return {
-      altText: this.getAltText(),
-      caption: this.__caption.toJSON(),
-      height: this.__height === 'inherit' ? 0 : this.__height,
-      maxWidth: this.__maxWidth,
-      showCaption: this.__showCaption,
-      src: this.getSrc(),
-      width: this.__width === 'inherit' ? 0 : this.__width,
-      type: "image",
-      version: 1
-    };
-  }
-
-  setWidthAndHeight(width: 'inherit' | number, height: 'inherit' | number): void {
+  setWidthAndHeight(
+    width: 'inherit' | number,
+    height: 'inherit' | number,
+  ): this {
     const writable = this.getWritable();
     writable.__width = width;
     writable.__height = height;
+    return writable;
   }
 
-  setShowCaption(showCaption: boolean): void {
+  setShowCaption(showCaption: boolean): this {
     const writable = this.getWritable();
     writable.__showCaption = showCaption;
+    return writable;
   }
 
   // View
 
   createDOM(config: EditorConfig): HTMLElement {
-    const span = document.createElement('span');
+    const span = $getDocument().createElement('span');
     const theme = config.theme;
     const className = theme.image;
     if (className !== undefined) {
@@ -266,42 +350,42 @@ export class ImageNode extends DecoratorNode<ReactElement> {
   }
 
   getSrc(): string {
-    return this.__src;
+    return this.getLatest().__src;
   }
 
   getAltText(): string {
-    return this.__altText;
+    return this.getLatest().__altText;
   }
 
-  decorate(): ReactElement {
+  decorate(): JSX.Element {
     return (
-    <ImageComponent
-      src={this.__src}
-      altText={this.__altText}
-      width={this.__width}
-      height={this.__height}
-      maxWidth={this.__maxWidth}
-      nodeKey={this.getKey()}
-      showCaption={this.__showCaption}
-      caption={this.__caption}
-      captionsEnabled={this.__captionsEnabled}
-      resizable={true}
-    />
+      <ImageComponent
+        src={this.__src}
+        altText={this.__altText}
+        width={this.__width}
+        height={this.__height}
+        maxWidth={this.__maxWidth}
+        nodeKey={this.getKey()}
+        showCaption={this.__showCaption}
+        caption={this.__caption}
+        captionsEnabled={this.__captionsEnabled}
+        resizable={true}
+      />
     );
   }
 }
 
 export function $createImageNode({
-  altText,
-  height,
-  maxWidth = 500,
-  captionsEnabled,
-  src,
-  width,
-  showCaption,
-  caption,
-  key,
-}: ImagePayload): ImageNode {
+                                   altText,
+                                   height,
+                                   maxWidth = 500,
+                                   captionsEnabled,
+                                   src,
+                                   width,
+                                   showCaption,
+                                   caption,
+                                   key,
+                                 }: ImagePayload): ImageNode {
   return $applyNodeReplacement(
     new ImageNode(
       src,
@@ -312,11 +396,13 @@ export function $createImageNode({
       showCaption,
       caption,
       captionsEnabled,
-      key
-    )
+      key,
+    ),
   );
 }
 
-export function $isImageNode(node: LexicalNode | null | undefined): node is ImageNode {
+export function $isImageNode(
+  node: LexicalNode | null | undefined,
+): node is ImageNode {
   return node instanceof ImageNode;
 }

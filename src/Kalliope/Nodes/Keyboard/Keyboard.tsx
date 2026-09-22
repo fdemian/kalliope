@@ -1,9 +1,7 @@
- 
-import {ReactElement, ReactNode } from 'react';
-import type { LexicalNode, NodeKey } from 'lexical';
-import { DecoratorNode, SerializedLexicalNode, Spread } from 'lexical';
+import {ReactElement } from 'react';
+import {ElementFormatType, LexicalNode, NodeKey, Spread, $getDocument} from 'lexical';
+import {DecoratorBlockNode, SerializedDecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 import './Keyboard.css';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedKeyboardNode = Spread<
   {
@@ -11,10 +9,10 @@ export type SerializedKeyboardNode = Spread<
     type: 'keyboard';
     version: 1;
   },
-  SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
-export class KeyboardNode extends DecoratorNode<ReactNode> {
+export class KeyboardNode extends DecoratorBlockNode{
   __text: string;
 
   $config() {
@@ -22,32 +20,31 @@ export class KeyboardNode extends DecoratorNode<ReactNode> {
   }
 
   static clone(node: KeyboardNode): KeyboardNode {
-    return new KeyboardNode(node.__text, node.__key);
+    return new KeyboardNode(node.__text, node.__format, node.__key);
   }
 
   static importJSON(serializedNode: SerializedKeyboardNode) {
-    return $createKeyboardNode(serializedNode.text).updateFromJSON(serializedNode);
+    const node = $createKeyboardNode(serializedNode.text);
+    node.setFormat(serializedNode.format);
+    return node;
   }
 
   exportJSON(): SerializedKeyboardNode {
     return {
+      ...super.exportJSON(),
       text: this.__text,
       type: 'keyboard',
       version: 1
     };
   }
 
-  constructor(text: string, key?: NodeKey) {
-    super(key);
+  constructor(text: string, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__text = text;
   }
 
   createDOM(): HTMLElement {
-    return document.createElement('span');
-  }
-
-  updateDOM(): true {
-    return true;
+    return $getDocument().createElement('span');
   }
 
   decorate(): ReactElement {

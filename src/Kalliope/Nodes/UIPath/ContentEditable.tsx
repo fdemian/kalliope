@@ -5,11 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
-import './ContentEditable.css';
-
+import type {JSX} from 'react';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import { ReactElement } from 'react';
+import './ContentEditable.css';
 
 type Props = {
   className?: string;
@@ -18,10 +16,10 @@ type Props = {
 };
 
 export default function LexicalContentEditable({
-  className,
-  placeholder,
-  placeholderClassName,
-}: Props): ReactElement {
+                                                 className,
+                                                 placeholder,
+                                                 placeholderClassName,
+                                               }: Props): JSX.Element {
   return (
     <ContentEditable
       className={className ?? 'ContentEditable__root'}

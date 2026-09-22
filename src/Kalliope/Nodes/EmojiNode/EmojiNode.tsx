@@ -1,8 +1,7 @@
-import type { NodeKey, SerializedLexicalNode, Spread, LexicalNode } from 'lexical';
-import { $applyNodeReplacement, DecoratorNode } from 'lexical';
+import {NodeKey, Spread, LexicalNode, ElementFormatType, $applyNodeReplacement, $getDocument} from 'lexical';
 import EmojiImage from './EmojiImage';
 import { ReactElement } from 'react';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
+import {DecoratorBlockNode, SerializedDecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedEmojiNode = Spread<
   {
@@ -10,10 +9,10 @@ export type SerializedEmojiNode = Spread<
     type: string;
     version: number;
   },
-  SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
-export class EmojiNode extends DecoratorNode<ReactElement> {
+export class EmojiNode extends DecoratorBlockNode {
   __emoji: string;
 
   $config() {
@@ -21,11 +20,14 @@ export class EmojiNode extends DecoratorNode<ReactElement> {
   }
 
   static importJSON(serializedNode: SerializedEmojiNode): EmojiNode {
-    return $createEmojiNode(serializedNode.emoji).updateFromJSON(serializedNode);
+    const node = $createEmojiNode(serializedNode.emoji);
+    node.setFormat(serializedNode.format);
+    return node;
   }
 
   exportJSON(): SerializedEmojiNode {
     return {
+      ...super.exportJSON(),
       emoji: this.__emoji,
       type: 'emoji',
       version: 1,
@@ -33,20 +35,16 @@ export class EmojiNode extends DecoratorNode<ReactElement> {
   }
 
   static clone(node: EmojiNode) {
-    return new EmojiNode(node.__emoji, node.__key);
+    return new EmojiNode(node.__emoji, node.__format, node.__key);
   }
 
-  constructor(emoji: string, key?: NodeKey) {
-    super(key);
+  constructor(emoji: string, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__emoji = emoji;
   }
 
   createDOM(): HTMLElement {
-    return document.createElement('span');
-  }
-
-  updateDOM(prevNode: EmojiNode) {
-    return this.__emoji !== prevNode.__emoji;
+    return $getDocument().createElement('span');
   }
 
   decorate(): ReactElement {

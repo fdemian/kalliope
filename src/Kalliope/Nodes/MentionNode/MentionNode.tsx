@@ -8,11 +8,13 @@
  */
 
 import { ReactElement } from 'react';
-import type { SerializedLexicalNode, NodeKey, LexicalNode, Spread } from 'lexical';
-import { $applyNodeReplacement, DecoratorNode } from 'lexical';
+import type {NodeKey, LexicalNode, Spread, ElementFormatType} from 'lexical';
+import { $applyNodeReplacement, $getDocument } from 'lexical';
+import {
+  DecoratorBlockNode,
+  SerializedDecoratorBlockNode,
+} from '@lexical/react/LexicalDecoratorBlockNode';
 import './MentionNode.css';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
-
 export type SerializedMentionNode = Spread<
   {
     mention: string;
@@ -20,10 +22,11 @@ export type SerializedMentionNode = Spread<
     type: string;
     version: number;
   },
-  SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
-export class MentionNode extends DecoratorNode<ReactElement> {
+
+export class MentionNode extends DecoratorBlockNode {
   __mentionName: string;
   __link: string;
 
@@ -32,13 +35,14 @@ export class MentionNode extends DecoratorNode<ReactElement> {
   }
 
   static importJSON(serializedNode: SerializedMentionNode): MentionNode {
-    return $createMentionNode(serializedNode.mention, serializedNode.link).updateFromJSON(
-      serializedNode
-    );
+    const node = $createMentionNode(serializedNode.mention, serializedNode.link);
+    node.setFormat(serializedNode.format);
+    return node;
   }
 
   exportJSON(): SerializedMentionNode {
     return {
+      ...super.exportJSON(),
       mention: this.__mentionName,
       link: this.__link,
       type: "mention",
@@ -47,21 +51,17 @@ export class MentionNode extends DecoratorNode<ReactElement> {
   }
 
   static clone(node: MentionNode): MentionNode {
-    return new MentionNode(node.__mentionName, node.__link, node.__key);
+    return new MentionNode(node.__mentionName, node.__link, node.__format,  node.__key);
   }
 
-  constructor(mentionName: string, link: string, key?: NodeKey) {
-    super(key);
+  constructor(mentionName: string, link: string, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__mentionName = mentionName;
     this.__link = link;
   }
 
   createDOM(): HTMLElement {
-    return document.createElement('span');
-  }
-
-  updateDOM(): false {
-    return false;
+    return $getDocument().createElement('span');
   }
 
   canInsertTextBefore(): boolean {

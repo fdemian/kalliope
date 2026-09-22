@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { registerCodeHighlighting } from '@lexical/code';
+import { registerCodeHighlighting } from '@lexical/code-prism';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ReactElement, useEffect } from 'react';
 

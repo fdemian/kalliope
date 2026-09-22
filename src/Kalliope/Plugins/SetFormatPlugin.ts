@@ -19,7 +19,7 @@ import { CalliopeFormatTypes } from '../KalliopeEditorTypes';
 import {sanitizeUrl} from '../utils/url';
 import { $getNearestNodeOfType, $findMatchingParent } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
-import { $isCodeNode, CODE_LANGUAGE_MAP } from '@lexical/code';
+import { $isCodeNode } from '@lexical/code';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
@@ -28,6 +28,16 @@ import {
   $isParentElementRTL,
 } from '@lexical/selection';
 import { $isTableSelection } from '@lexical/table';
+import {
+  /*getCodeLanguageOptions as getCodeLanguageOptionsPrism,*/
+  normalizeCodeLanguage as normalizeCodeLanguagePrism,
+} from '@lexical/code-prism';
+import {
+ /* getCodeLanguageOptions as getCodeLanguageOptionsShiki,
+  getCodeThemeOptions as getCodeThemeOptionsShiki,*/
+  normalizeCodeLanguage as normalizeCodeLanguageShiki,
+} from '@lexical/code-shiki';
+
 
 type SetFormatPluginProps = {
   internalFormat: CalliopeFormatTypes,
@@ -98,15 +108,20 @@ const $handleHeadingNode = (selectedElement: LexicalNode):string | number  => {
     return '';
   };
 
-const $handleCodeNode = (element: LexicalNode): string => {
+  const $handleCodeNode =  (element: LexicalNode): string => {
+    let useShiki = false;
     if ($isCodeNode(element)) {
-      const language =
-        element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
-        return language ? CODE_LANGUAGE_MAP[language] || language : '';
+      const language = element.getLanguage();
+      return language
+          ?
+            (useShiki
+              ? normalizeCodeLanguageShiki(language)
+              : normalizeCodeLanguagePrism(language)) ||
+          language : '';
     }
 
     return '';
-};
+  }
 
 
 const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCanUndo, setCanRedo }: SetFormatPluginProps) => {
@@ -270,7 +285,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
     COMMAND_PRIORITY_NORMAL,
   );
 
-  editor.registerCommand<boolean>(
+  editor.registerCommand(
     CAN_UNDO_COMMAND,
     (payload) => {
       setCanUndo(payload);
@@ -278,8 +293,7 @@ const SetFormatPlugin = ({ internalFormat, setInternalFormat, setFormats, setCan
     },
     COMMAND_PRIORITY_CRITICAL
   );
-
-  editor.registerCommand<boolean>(
+  editor.registerCommand(
     CAN_REDO_COMMAND,
     (payload) => {
       setCanRedo(payload);

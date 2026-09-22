@@ -1,9 +1,8 @@
  
-import type { SerializedLexicalNode, NodeKey, Spread, LexicalNode } from 'lexical';
-import { DecoratorNode } from 'lexical';
+import {NodeKey, Spread, LexicalNode, ElementFormatType, $getDocument } from 'lexical';
 import { ReactElement } from 'react';
 import Spoiler from './Spoiler';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
+import {DecoratorBlockNode, SerializedDecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedSpoilerNode = Spread<
   {
@@ -11,10 +10,10 @@ export type SerializedSpoilerNode = Spread<
     type: 'spoiler';
     version: 1;
   },
-  SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
-export class SpoilerNode extends DecoratorNode<ReactElement> {
+export class SpoilerNode extends DecoratorBlockNode {
   __text: string;
 
   $config() {
@@ -22,30 +21,27 @@ export class SpoilerNode extends DecoratorNode<ReactElement> {
   }
 
   static clone(node: SpoilerNode): SpoilerNode {
-    return new SpoilerNode(node.__text, node.__key);
+    return new SpoilerNode(node.__text, node.__format, node.__key);
   }
 
-  constructor(text: string, key?: NodeKey) {
-    super(key);
+  constructor(text: string, format?: ElementFormatType, key?: NodeKey) {
+    super(format, key);
     this.__text = text;
   }
 
   createDOM(): HTMLElement {
-    return document.createElement('span');
-  }
-
-  updateDOM(prevNode: SpoilerNode): boolean {
-    // If the inline property changes, replace the element
-    return this.__text !== prevNode.__text;
+    return $getDocument().createElement('span');
   }
 
   static importJSON(serializedNode: SerializedSpoilerNode) {
     const node = $createSpoilerNode(serializedNode.text);
+    node.setFormat(serializedNode.format);
     return node;
   }
 
   exportJSON(): SerializedSpoilerNode {
     return {
+      ...super.exportJSON(),
       text: this.__text,
       type: 'spoiler',
       version: 1

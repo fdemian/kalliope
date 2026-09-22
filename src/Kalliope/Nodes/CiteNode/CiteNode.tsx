@@ -1,10 +1,10 @@
 // @ts-nocheck
-import type { LexicalEditor, LexicalNode, NodeKey, Spread } from 'lexical';
+import {ElementFormatType, LexicalEditor, LexicalNode, NodeKey, Spread} from 'lexical';
 import CiteQuote from './CiteQuote';
 import { BlockWithAlignableContents } from '@lexical/react/LexicalBlockWithAlignableContents';
-import {createEditor, SerializedEditorState, DecoratorNode, SerializedLexicalNode} from "lexical";
+import {createEditor, SerializedEditorState } from "lexical";
 import { ReactElement } from 'react';
-import {DecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
+import {DecoratorBlockNode, SerializedDecoratorBlockNode} from "@lexical/react/LexicalDecoratorBlockNode";
 
 export type SerializedCiteNode = Spread<
     {
@@ -14,7 +14,7 @@ export type SerializedCiteNode = Spread<
         sourceContent: string | object;
         sourceLink: string;
     },
-    SerializedLexicalNode
+  SerializedDecoratorBlockNode
 >;
 
 type Author = {
@@ -28,7 +28,7 @@ type Source = {
     link: string;
 };
 
-export class CiteNode extends DecoratorNode<ReactElement> {
+export class CiteNode extends DecoratorBlockNode {
     __id: string = '';
     __authorName: string;
     __authorLink: string;
@@ -55,8 +55,8 @@ export class CiteNode extends DecoratorNode<ReactElement> {
       return this.config('cite-node', {extends: DecoratorBlockNode});
     }
 
-    constructor(author: Author, source: Source, key?: NodeKey) {
-        super(key);
+    constructor(author: Author, source: Source, format?: ElementFormatType, key?: NodeKey) {
+        super(format, key);
         // Initialization.
         this.__authorName = author.name;
         this.__authorLink = author.link;
@@ -72,7 +72,8 @@ export class CiteNode extends DecoratorNode<ReactElement> {
             this.__authorAvatar !== undefined ? this.__authorAvatar : '';
 
         return {
-            authorName: this.__authorName,
+          ...super.exportJSON(),
+          authorName: this.__authorName,
             authorLink: this.__authorLink,
             authorAvatar: serializedAvatar,
             sourceContent: JSON.stringify(this.__initialEditor.toJSON()),

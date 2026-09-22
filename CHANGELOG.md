@@ -3,6 +3,19 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.20.0 (2026-09-22)
+- Fix floating link plugin.
+- Fix table grid indices, cell state and boundary selection.
+- Bug Fix: overlays, hit targets and shared state at the editor boundary.
+- Use $getDocument for dom safety.
+- Migrate Nodes to the new  standard.
+- Bug Fix: Reset the cached selection format on clear formatting.
+- Update lexical to v0.50.1
+- Refactor Port node classes to the config() protocol.
+- Open playground links in a new tab.
+- restore RTL checkbox position in checklist.
+- Add find/replace extension.
+
 # v0.19.0  (2026-09-12)
 - Fix build.
 - Fix some build issues (type of command type).

@@ -159,9 +159,10 @@ export class TweetNode extends DecoratorBlockNode {
   }
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('div');
+    const _document = $getDocument();
+    const element = _document.createElement('div');
     element.setAttribute('data-lexical-tweet-id', this.__id);
-    const text = document.createTextNode(this.getTextContent());
+    const text = _document.createTextNode(this.getTextContent());
     element.append(text);
     return { element };
   }

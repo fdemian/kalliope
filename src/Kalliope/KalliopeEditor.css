@@ -662,7 +662,14 @@ figcaption {
 
 /* embed block */
 
-.calliope-embed-block {
+/*
+  Keep the embed's contents unselectable, but leave the decorator host and this
+  wrapper itself selectable: a browser will not extend a triple click past an
+  unselectable block, so an unselectable wrapper collapses the selection when
+  the paragraph before the embed is triple clicked (#7618). `user-select` is
+  inherited, so scoping it to the children still covers the whole embed.
+*/
+.calliope-embed-block > * {
   user-select: none;
 }
 

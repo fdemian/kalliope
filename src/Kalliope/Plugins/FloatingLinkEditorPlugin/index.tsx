@@ -9,38 +9,6 @@
 import './index.css';
 
 import {
-  $createLinkNode,
-  $isAutoLinkNode,
-  $isLinkNode,
-  LinkNode,
-  TOGGLE_LINK_COMMAND,
-} from '@lexical/link';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$findMatchingParent, mergeRegister} from '@lexical/utils';
-import {
-  $getSelection,
-  $isLineBreakNode,
-  $isNodeSelection,
-  $isRangeSelection,
-  $isDecoratorNode,
-  BaseSelection,
-  CLICK_COMMAND,
-  COMMAND_PRIORITY_CRITICAL,
-  COMMAND_PRIORITY_HIGH,
-  COMMAND_PRIORITY_LOW,
-  getDOMSelection,
-  KEY_ESCAPE_COMMAND,
-  LexicalEditor,
-  SELECTION_CHANGE_COMMAND,
-  RangeSelection,
-} from 'lexical';
-import {ReactElement, Dispatch, useCallback, useEffect, useRef, useState} from 'react';
-import * as React from 'react';
-import {createPortal} from 'react-dom';
-
-import {getSelectedNode} from '../../utils/getSelectedNode';
-import {sanitizeUrl} from './utils';
-import {
   autoUpdate,
   flip,
   inline,
@@ -48,6 +16,52 @@ import {
   shift,
   useFloating,
 } from '@floating-ui/react';
+import {
+  $createLinkNode,
+  $isAutoLinkNode,
+  $isLinkNode,
+  type LinkNode,
+  TOGGLE_LINK_COMMAND,
+} from '@lexical/link';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {
+  $findMatchingParent,
+  $getSelection,
+  $isDecoratorNode,
+  $isLineBreakNode,
+  $isNodeSelection,
+  $isRangeSelection,
+  type BaseSelection,
+  CLICK_COMMAND,
+  COMMAND_PRIORITY_CRITICAL,
+  COMMAND_PRIORITY_HIGH,
+  COMMAND_PRIORITY_LOW,
+  getActiveElementDeep,
+  getDOMSelection,
+  getDOMSelectionPoints,
+  getDOMSelectionRangeAndPoints,
+  getParentElement,
+  getRootOwnerDocument,
+  KEY_ESCAPE_COMMAND,
+  type LexicalEditor,
+  mergeRegister,
+  type RangeSelection,
+  registerEventListener,
+  SELECTION_CHANGE_COMMAND,
+} from 'lexical';
+import * as React from 'react';
+import {
+  type Dispatch,
+  type JSX,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import {createPortal} from 'react-dom';
+
+import {getSelectedNode} from '../../utils/getSelectedNode';
+import {sanitizeUrl} from '../../utils/url';
 
 function $getSelectedLinkNode(selection: RangeSelection): LinkNode | null {
   const node = getSelectedNode(selection);
@@ -76,7 +90,6 @@ function $getSelectedLinkNode(selection: RangeSelection): LinkNode | null {
   return null;
 }
 
-
 function preventDefault(
   event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>,
 ): void {
@@ -84,20 +97,20 @@ function preventDefault(
 }
 
 function FloatingLinkEditor({
-  editor,
-  isLink,
-  setIsLink,
-  anchorElem,
-  isLinkEditMode,
-  setIsLinkEditMode,
-}: {
+                              editor,
+                              isLink,
+                              setIsLink,
+                              anchorElem,
+                              isLinkEditMode,
+                              setIsLinkEditMode,
+                            }: {
   editor: LexicalEditor;
   isLink: boolean;
   setIsLink: Dispatch<boolean>;
   anchorElem: HTMLElement;
   isLinkEditMode: boolean;
   setIsLinkEditMode: Dispatch<boolean>;
-}): ReactElement {
+}): JSX.Element {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [linkUrl, setLinkUrl] = useState('');
@@ -106,7 +119,7 @@ function FloatingLinkEditor({
     null,
   );
 
-  const scrollerElem = anchorElem.parentElement;
+  const scrollerElem = getParentElement(anchorElem);
 
   const {refs, floatingStyles} = useFloating({
     middleware: [
@@ -160,9 +173,13 @@ function FloatingLinkEditor({
     }
 
     const nativeSelection = getDOMSelection(editor._window);
-    const activeElement = document.activeElement;
 
     const rootElement = editor.getRootElement();
+    // getActiveElementDeep rather than document.activeElement, which reports
+    // the shadow host when the editor (or the link input) is in a shadow root.
+    const activeElement = getActiveElementDeep(
+      getRootOwnerDocument(rootElement),
+    );
 
     if (selection !== null && rootElement !== null && editor.isEditable()) {
       let referenceElement: Element | null = null;
@@ -176,7 +193,9 @@ function FloatingLinkEditor({
         $isRangeSelection(selection) &&
         nativeSelection !== null &&
         nativeSelection.rangeCount > 0 &&
-        rootElement.contains(nativeSelection.anchorNode)
+        rootElement.contains(
+          getDOMSelectionPoints(nativeSelection, rootElement).anchorNode,
+        )
       ) {
         const linkNode = $getSelectedLinkNode(selection);
         if (linkNode) {
@@ -200,13 +219,19 @@ function FloatingLinkEditor({
           getBoundingClientRect: () => refEl.getBoundingClientRect(),
           getClientRects: () => refEl.getClientRects(),
         });
-      } else if (
-        nativeSelection !== null &&
-        nativeSelection.rangeCount > 0 &&
-        rootElement.contains(nativeSelection.anchorNode)
-      ) {
-        refs.setPositionReference(nativeSelection.getRangeAt(0));
+      } else if (nativeSelection !== null && nativeSelection.rangeCount > 0) {
+        const {points, range: selectionRange} = getDOMSelectionRangeAndPoints(
+          nativeSelection,
+          rootElement,
+        );
+        if (
+          rootElement.contains(points.anchorNode) &&
+          selectionRange !== null
+        ) {
+          refs.setPositionReference(selectionRange);
+        }
       }
+      setLastSelection(selection);
     } else if (!activeElement || activeElement.className !== 'link-input') {
       setLastSelection(null);
       setIsLinkEditMode(false);
@@ -269,10 +294,7 @@ function FloatingLinkEditor({
         setIsLinkEditMode(false);
       }
     };
-    editorElement.addEventListener('focusout', handleBlur);
-    return () => {
-      editorElement.removeEventListener('focusout', handleBlur);
-    };
+    return registerEventListener(editorElement, 'focusout', handleBlur);
   }, [editorRef, setIsLink, setIsLinkEditMode, isLink]);
 
   const monitorInputInteraction = (
@@ -320,7 +342,7 @@ function FloatingLinkEditor({
 
   return (
     <div
-      ref={(el) => {
+      ref={el => {
         editorRef.current = el;
         refs.setFloating(el);
       }}
@@ -329,18 +351,17 @@ function FloatingLinkEditor({
         ...floatingStyles,
         opacity: isLink ? 1 : 0,
         pointerEvents: isLink ? 'auto' : 'none',
-      }}
-    >
+      }}>
       {!isLink ? null : isLinkEditMode ? (
         <>
           <input
             ref={inputRef}
             className="link-input"
             value={editedLinkUrl}
-            onChange={(event) => {
+            onChange={event => {
               setEditedLinkUrl(event.target.value);
             }}
-            onKeyDown={(event) => {
+            onKeyDown={event => {
               monitorInputInteraction(event);
             }}
           />
@@ -377,7 +398,7 @@ function FloatingLinkEditor({
             role="button"
             tabIndex={0}
             onMouseDown={preventDefault}
-            onClick={(event) => {
+            onClick={event => {
               event.preventDefault();
               setEditedLinkUrl(linkUrl);
               setIsLinkEditMode(true);
@@ -403,16 +424,24 @@ function useFloatingLinkEditorToolbar(
   anchorElem: HTMLElement,
   isLinkEditMode: boolean,
   setIsLinkEditMode: Dispatch<boolean>,
-): ReactElement | null {
+): JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLink, setIsLink] = useState(false);
 
   useEffect(() => {
     function $updateToolbar() {
+      if (!editor.isEditable()) {
+        // The link editor is an editing affordance (edit / delete the link),
+        // and `$updateLinkEditor` does not even resolve a URL for it while the
+        // editor is read-only. Clicking a link in read-only mode follows it
+        // (ClickableLinkExtension), so there is nothing to pop up.
+        setIsLink(false);
+        return;
+      }
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
-        const focusNode = getSelectedNode(selection);
         const focusLinkNode = $getSelectedLinkNode(selection);
+        const focusNode = getSelectedNode(selection);
         const focusAutoLinkNode = $findMatchingParent(
           focusNode,
           $isAutoLinkNode,
@@ -423,8 +452,8 @@ function useFloatingLinkEditorToolbar(
         }
         const badNode = selection
           .getNodes()
-          .filter((node) => !$isLineBreakNode(node))
-          .find((node) => {
+          .filter(node => !$isLineBreakNode(node))
+          .find(node => {
             const linkNode = $findMatchingParent(node, $isLinkNode);
             const autoLinkNode = $findMatchingParent(node, $isAutoLinkNode);
             return (
@@ -457,13 +486,17 @@ function useFloatingLinkEditorToolbar(
       }
     }
     return mergeRegister(
+      // Close an open link editor the moment the editor becomes read-only,
+      // rather than leaving the last one on screen until the next update.
+      editor.registerEditableListener(editable => {
+        if (!editable) {
+          setIsLink(false);
+        }
+      }),
       editor.registerUpdateListener(({editorState}) => {
-        editorState.read(
-          () => {
-            $updateToolbar();
-          },
-          {editor: activeEditor},
-        );
+        editorState.read(() => {
+          $updateToolbar();
+        });
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
@@ -476,7 +509,7 @@ function useFloatingLinkEditorToolbar(
       ),
       editor.registerCommand(
         CLICK_COMMAND,
-        (payload) => {
+        payload => {
           const selection = $getSelection();
           if ($isRangeSelection(selection)) {
             const node = getSelectedNode(selection);
@@ -507,14 +540,14 @@ function useFloatingLinkEditorToolbar(
 }
 
 export default function FloatingLinkEditorPlugin({
-  anchorElem = document.body,
-  isLinkEditMode,
-  setIsLinkEditMode,
-}: {
+                                                   anchorElem = document.body,
+                                                   isLinkEditMode,
+                                                   setIsLinkEditMode,
+                                                 }: {
   anchorElem?: HTMLElement;
   isLinkEditMode: boolean;
   setIsLinkEditMode: Dispatch<boolean>;
-}): ReactElement | null {
+}): JSX.Element | null {
   const [editor] = useLexicalComposerContext();
   return useFloatingLinkEditorToolbar(
     editor,

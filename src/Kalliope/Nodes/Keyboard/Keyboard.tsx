@@ -12,11 +12,11 @@ export type SerializedKeyboardNode = Spread<
   SerializedDecoratorBlockNode
 >;
 
-export class KeyboardNode extends DecoratorBlockNode{
+export class KeyboardNode extends DecoratorBlockNode {
   __text: string;
 
   $config() {
-    return this.config('kbdnode', {extends: DecoratorBlockNode});
+    return this.config('keyboard', {extends: DecoratorBlockNode});
   }
 
   static clone(node: KeyboardNode): KeyboardNode {

@@ -14,6 +14,7 @@ import {
   $createParagraphNode,
   $getNodeByKey,
   $getSelection,
+  $onUpdate,
   $isElementNode,
   $isNodeSelection,
   $isTextNode,
@@ -232,15 +233,17 @@ export default function EquationComponent({
         editor.registerCommand(
           SELECTION_CHANGE_COMMAND,
           _ => {
-            const inputElem = inputRef.current;
-            // getActiveElement rather than document.activeElement, which
-            // reports the shadow host when the editor is in a shadow root.
-            const activeElement = inputElem
-              ? getActiveElement(inputElem)
-              : null;
-            if (inputElem !== activeElement) {
-              onHide();
-            }
+            $onUpdate(() => {
+              const inputElem = inputRef.current;
+              // getActiveElement rather than document.activeElement, which
+              // reports the shadow host when the editor is in a shadow root.
+              const activeElement = inputElem
+                ? getActiveElement(inputElem)
+                : null;
+              if (inputElem !== activeElement) {
+                onHide();
+              }
+            });
             return false;
           },
           COMMAND_PRIORITY_HIGH,

@@ -7,7 +7,6 @@
  */
 
 import type {DecoratorComponentProps} from '@lexical/react/ReactPluginHostExtension';
-import type {JSX} from 'react';
 
 import './FindReplace.css';
 
@@ -24,13 +23,16 @@ import {$dfsWithSlotsIterator} from '@lexical/utils';
 import {
   $getNodeByKeyOrThrow,
   $getRoot,
+  $isBlockElementNode,
+  $isDecoratorNode,
   $isElementNode,
   $isLineBreakNode,
   $isTextNode,
   COMMAND_PRIORITY_LOW,
   configExtension,
-  createCommand,
   CONTROL_OR_META,
+  createCommand,
+  DecoratorNode,
   defineExtension,
   IS_APPLE,
   isExactShortcutMatch,
@@ -40,7 +42,7 @@ import {
   mergeRegister,
   type NodeKey,
 } from 'lexical';
-import {useRef} from 'react';
+import {type JSX, useRef} from 'react';
 import {createPortal} from 'react-dom';
 
 // ---------------------------------------------------------------------------
@@ -125,19 +127,13 @@ export function expandReplacement(
 export function $buildOffsetMap(): OffsetEntry[] {
   const entries: OffsetEntry[] = [];
   let offset = 0;
-  let prevNonInlineDepth: number | null = null;
 
-  for (const {node, depth} of $dfsWithSlotsIterator()) {
-    if ($isElementNode(node) && !node.isInline() && depth > 0) {
-      if (prevNonInlineDepth !== null && depth <= prevNonInlineDepth) {
-        offset += 2;
-      }
-      prevNonInlineDepth = depth;
+  for (const {node} of $dfsWithSlotsIterator()) {
+    // Handle a preceding non-inline ElementNode's '\n\n'
+    if ($isBlockElementNode(node.getPreviousSibling())) {
+      offset += 2;
     }
-
-    if ($isLineBreakNode(node)) {
-      offset += 1;
-    } else if ($isTextNode(node)) {
+    if ($isTextNode(node)) {
       const len = node.getTextContentSize();
       entries.push({
         globalEnd: offset + len,
@@ -145,9 +141,30 @@ export function $buildOffsetMap(): OffsetEntry[] {
         key: node.__key,
       });
       offset += len;
+    } else if ($isLineBreakNode(node)) {
+      offset += 1;
+    } else if ($isElementNode(node)) {
+      // An override of ElementNode.getTextContent() is ignored here, and would
+      // require a specific handler for the same reasons as DecoratorNode below
+    } else if ($isDecoratorNode(node)) {
+      // The default implementation of DecoratorNode.getTextContent()
+      // only returns the contents of the slots, which are traversed
+      // after this node. We skip calling getTextContentSize for nodes
+      // that use it to avoid double-counting slot text.
+      //
+      // This algorithm would be incorrect for a DecoratorNode that overrides
+      // getTextContentSize and has slots, but the API provides no way for
+      // us to know where the customized text was inserted relative to the
+      // slot text (or if the slot text is represented at all). There are no
+      // DecoratorNodes in the playground that override getTextContent and
+      // have slots, but if you are adapting this to an application that
+      // does you will need to address it accordingly.
+      offset +=
+        node.getTextContent === DecoratorNode.prototype.getTextContent
+          ? 0
+          : node.getTextContentSize();
     }
   }
-
   return entries;
 }
 
@@ -498,41 +515,48 @@ function $updateOverlayHighlights(
 // Commands
 // ---------------------------------------------------------------------------
 
-export const TOGGLE_FIND_REPLACE_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('TOGGLE_FIND_REPLACE_COMMAND');
+export const TOGGLE_FIND_REPLACE_COMMAND: LexicalCommand<void> = createCommand(
+  'TOGGLE_FIND_REPLACE_COMMAND',
+);
 
-export const CLOSE_FIND_REPLACE_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('CLOSE_FIND_REPLACE_COMMAND');
+export const CLOSE_FIND_REPLACE_COMMAND: LexicalCommand<void> = createCommand(
+  'CLOSE_FIND_REPLACE_COMMAND',
+);
 
 export const FIND_NEXT_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('FIND_NEXT_COMMAND');
+  createCommand('FIND_NEXT_COMMAND');
 
 export const FIND_PREV_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('FIND_PREV_COMMAND');
+  createCommand('FIND_PREV_COMMAND');
 
-export const REPLACE_CURRENT_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('REPLACE_CURRENT_COMMAND');
+export const REPLACE_CURRENT_COMMAND: LexicalCommand<void> = createCommand(
+  'REPLACE_CURRENT_COMMAND',
+);
 
-export const REPLACE_ALL_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('REPLACE_ALL_COMMAND');
+export const REPLACE_ALL_COMMAND: LexicalCommand<void> = createCommand(
+  'REPLACE_ALL_COMMAND',
+);
 
-export const SET_SEARCH_TERM_COMMAND: LexicalCommand<string> =
-  /* @__PURE__ */ createCommand('SET_SEARCH_TERM_COMMAND');
+export const SET_SEARCH_TERM_COMMAND: LexicalCommand<string> = createCommand(
+  'SET_SEARCH_TERM_COMMAND',
+);
 
-export const SET_REPLACE_TERM_COMMAND: LexicalCommand<string> =
-  /* @__PURE__ */ createCommand('SET_REPLACE_TERM_COMMAND');
+export const SET_REPLACE_TERM_COMMAND: LexicalCommand<string> = createCommand(
+  'SET_REPLACE_TERM_COMMAND',
+);
 
 export const TOGGLE_CASE_SENSITIVE_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('TOGGLE_CASE_SENSITIVE_COMMAND');
+  createCommand('TOGGLE_CASE_SENSITIVE_COMMAND');
 
-export const TOGGLE_REGEX_COMMAND: LexicalCommand<void> =
-  /* @__PURE__ */ createCommand('TOGGLE_REGEX_COMMAND');
+export const TOGGLE_REGEX_COMMAND: LexicalCommand<void> = createCommand(
+  'TOGGLE_REGEX_COMMAND',
+);
 
 // ---------------------------------------------------------------------------
 // Extension
 // ---------------------------------------------------------------------------
 
-export const FindReplaceExtension = /* @__PURE__ */ defineExtension({
+export const FindReplaceExtension = defineExtension({
   build: editor => {
     const named = namedSignals({
       caseSensitive: false,
@@ -735,7 +759,7 @@ export const FindReplaceExtension = /* @__PURE__ */ defineExtension({
             isExactShortcutMatch(event, 'f', {altKey: true, metaKey: true})
           ) {
             event.preventDefault();
-            editor.dispatchCommand(TOGGLE_FIND_REPLACE_COMMAND, undefined);
+            editor.dispatchCommand(TOGGLE_FIND_REPLACE_COMMAND);
             return true;
           }
           if (output.isOpen.peek()) {
@@ -749,7 +773,6 @@ export const FindReplaceExtension = /* @__PURE__ */ defineExtension({
               event.preventDefault();
               editor.dispatchCommand(
                 event.shiftKey ? FIND_PREV_COMMAND : FIND_NEXT_COMMAND,
-                undefined,
               );
               return true;
             }
@@ -816,7 +839,7 @@ function FindReplacePanel({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       e.preventDefault();
-      editor.dispatchCommand(CLOSE_FIND_REPLACE_COMMAND, undefined);
+      editor.dispatchCommand(CLOSE_FIND_REPLACE_COMMAND);
       editor.focus();
       return;
     }
@@ -846,7 +869,6 @@ function FindReplacePanel({
       e.preventDefault();
       editor.dispatchCommand(
         e.shiftKey ? FIND_PREV_COMMAND : FIND_NEXT_COMMAND,
-        undefined,
       );
       return;
     }
@@ -857,7 +879,6 @@ function FindReplacePanel({
       e.preventDefault();
       editor.dispatchCommand(
         e.shiftKey ? FIND_PREV_COMMAND : FIND_NEXT_COMMAND,
-        undefined,
       );
     } else if (
       isExactShortcutMatch(e, 'f', CONTROL_OR_META) ||
@@ -909,7 +930,7 @@ function FindReplacePanel({
         className="find-replace-toggle"
         style={{gridColumn: 3, gridRow: 1}}
         onClick={() => {
-          editor.dispatchCommand(TOGGLE_CASE_SENSITIVE_COMMAND, undefined);
+          editor.dispatchCommand(TOGGLE_CASE_SENSITIVE_COMMAND);
         }}
         title="Match case"
         aria-label="Match case"
@@ -920,7 +941,7 @@ function FindReplacePanel({
         className="find-replace-toggle"
         style={{gridColumn: 4, gridRow: 1}}
         onClick={() => {
-          editor.dispatchCommand(TOGGLE_REGEX_COMMAND, undefined);
+          editor.dispatchCommand(TOGGLE_REGEX_COMMAND);
         }}
         title="Use regular expression"
         aria-label="Use regular expression"
@@ -930,7 +951,7 @@ function FindReplacePanel({
       <button
         className="find-replace-btn"
         style={{gridColumn: 6, gridRow: 1}}
-        onClick={() => editor.dispatchCommand(FIND_PREV_COMMAND, undefined)}
+        onClick={() => editor.dispatchCommand(FIND_PREV_COMMAND)}
         disabled={matches.length === 0}
         title={
           IS_APPLE ? 'Previous match (⇧⌘G)' : 'Previous match (Ctrl+Shift+G)'
@@ -943,7 +964,7 @@ function FindReplacePanel({
       <button
         className="find-replace-btn"
         style={{gridColumn: 7, gridRow: 1}}
-        onClick={() => editor.dispatchCommand(FIND_NEXT_COMMAND, undefined)}
+        onClick={() => editor.dispatchCommand(FIND_NEXT_COMMAND)}
         disabled={matches.length === 0}
         title={IS_APPLE ? 'Next match (⌘G)' : 'Next match (Ctrl+G)'}
         aria-label="Next match">
@@ -954,16 +975,14 @@ function FindReplacePanel({
       <div className="find-replace-row2-actions">
         <button
           className="find-replace-action"
-          onClick={() =>
-            editor.dispatchCommand(REPLACE_CURRENT_COMMAND, undefined)
-          }
+          onClick={() => editor.dispatchCommand(REPLACE_CURRENT_COMMAND)}
           disabled={matches.length === 0}
           aria-label="Replace current match">
           Replace
         </button>
         <button
           className="find-replace-action"
-          onClick={() => editor.dispatchCommand(REPLACE_ALL_COMMAND, undefined)}
+          onClick={() => editor.dispatchCommand(REPLACE_ALL_COMMAND)}
           disabled={matches.length === 0}
           aria-label="Replace all matches">
           All
@@ -973,7 +992,7 @@ function FindReplacePanel({
         className="find-replace-btn"
         style={{gridColumn: 9, gridRow: 1}}
         onClick={() => {
-          editor.dispatchCommand(CLOSE_FIND_REPLACE_COMMAND, undefined);
+          editor.dispatchCommand(CLOSE_FIND_REPLACE_COMMAND);
           editor.focus();
         }}
         title="Close (Escape)"
@@ -1002,12 +1021,12 @@ function FindReplacePanel({
   );
 }
 
-export const ReactFindReplaceExtension = /* @__PURE__ */ defineExtension({
+export const ReactFindReplaceExtension = defineExtension({
   dependencies: [
     FindReplaceExtension,
-    /* @__PURE__ */ configExtension(ReactExtension, {
+    configExtension(ReactExtension, {
       decorators: [FindReplacePanel],
     }),
   ],
-  name: '@lexical/kalliope/ReactFindReplace',
+  name: '@lexical/playground/ReactFindReplace',
 });

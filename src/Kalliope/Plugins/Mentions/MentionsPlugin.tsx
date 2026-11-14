@@ -63,13 +63,16 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
       for (const [nodeKey, mutation] of nodeMutations) {
         if (mutation === 'created') {
           editor.update(() => {
-            const mentionNode = $getNodeByKey<MentionNode>(nodeKey);
+            const mentionNode = $getNodeByKey(nodeKey);
             if(mentionNode != null){
+              // @ts-expect-error
               mentionNodeList.set(nodeKey, mentionNode);
               if (config.onAddMention) {
                 config.onAddMention({
                   id: 0, // Unused param (for now)
+                  // @ts-expect-error
                   name: mentionNode.__mentionName,
+                  // @ts-expect-error
                   link: mentionNode.__link,
                 });
               }
@@ -79,7 +82,7 @@ export default function NewMentionsPlugin({ config }: MentionPluginProps): React
           const mentionNode = mentionNodeList.get(nodeKey);
           if (mentionNode !== undefined) {
             config.onRemoveMention({
-              id: 0,// Unused param (for now)              
+              id: 0,// Unused param (for now)
               name: mentionNode.__mentionName,
               link: mentionNode.__link,
             });

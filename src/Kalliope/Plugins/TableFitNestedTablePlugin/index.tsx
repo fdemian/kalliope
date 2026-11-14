@@ -130,8 +130,9 @@ export default function TableFitNestedTablePlugin(): null {
           const modifiedTables = new Set<TableNode>();
           for (const [nodeKey, mutation] of nodeMutations) {
             if (mutation === 'created' || mutation === 'updated') {
-              const tableNode = $getNodeByKey<TableNode>(nodeKey);
+              const tableNode = $getNodeByKey(nodeKey);
               if (tableNode) {
+                // @ts-expect-error
                 modifiedTables.add(tableNode);
               }
             }

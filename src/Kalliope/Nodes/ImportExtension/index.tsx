@@ -9,18 +9,18 @@
 import type {LexicalNode} from 'lexical';
 
 import {ClipboardDOMImportExtension} from '@lexical/clipboard';
-import {CodeImportExtension} from '@lexical/code-core';
+import {CodeExtension} from '@lexical/code-core';
 import {
   CoreImportExtension,
   defineImportRule,
   DOMImportExtension,
-  HorizontalRuleImportExtension,
   sel,
 } from '@lexical/html';
-import {LinkImportExtension} from '@lexical/link';
-import {ListImportExtension} from '@lexical/list';
-import {RichTextImportExtension} from '@lexical/rich-text';
-import {TableImportExtension} from '@lexical/table';
+import { HorizontalRuleExtension } from '@lexical/extension';
+import {LinkExtension} from '@lexical/link';
+import {ListExtension} from '@lexical/list';
+import {RichTextExtension} from '@lexical/rich-text';
+import {TableExtension} from '@lexical/table';
 import {
   $isElementNode,
   $isTextNode,
@@ -124,7 +124,7 @@ export const PlaygroundImportRules = [PlaygroundInlineStyleRule];
 export const PlaygroundImportExtension = defineExtension({
   dependencies: [
     CoreImportExtension,
-    LinkImportExtension,
+    LinkExtension,
     ClipboardDOMImportExtension,
     configExtension(DOMImportExtension, {rules: PlaygroundImportRules}),
   ],
@@ -139,11 +139,11 @@ export const PlaygroundImportExtension = defineExtension({
  */
 export const PlaygroundRichTextImportExtension = defineExtension({
   dependencies: [
-    RichTextImportExtension,
-    ListImportExtension,
-    TableImportExtension,
-    CodeImportExtension,
-    HorizontalRuleImportExtension,
+    RichTextExtension,
+    ListExtension,
+    TableExtension,
+    CodeExtension,
+    HorizontalRuleExtension,
   ],
   name: '@lexical/kalliope/RichTextImport',
 });

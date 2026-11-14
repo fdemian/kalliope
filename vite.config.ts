@@ -7,45 +7,38 @@ import typescript from '@rollup/plugin-typescript';
 
 const resolvePath = (str: string) => resolve(__dirname, str)
 
-// https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-    const env = loadEnv(mode, process.cwd(), '');
-    const buildMode = command === "build" ? "production" : "development";
-    return {
-        plugins: [
-            react(),
-            //viteCopyExcalidrawAssets(),
-            cssInjectedByJsPlugin(),
-            typescript(
-                {
-                    'target': 'es2020',
-                    'rootDir': resolvePath('./src/Kalliope'),
-                    'declaration': true,
-                    'declarationDir': resolvePath('./dist'),
-                    exclude: resolvePath('../node_modules/**'),
-                    allowSyntheticDefaultImports: true
-                  }
-            )
-        ],
-        build: {
-            lib: {
-                entry: resolve(__dirname, 'src/Kalliope/kalliope.ts'),
-                name: 'kalliope',
-                fileName: 'kalliope'
-            },
-            rollupOptions: {
-                external: ['react', 'react-dom', 'react-jsx/runtime'],
-                output: {
-                    globals: {
-                        react: 'React'
-                    },
-                    exports: "named"
-                }
-            },
-        },
-        define: {
-            'process.env.NODE_ENV': JSON.stringify(buildMode),
-            'process.env.IS_PREACT': 'false'
-        },
-    }
+  const env = loadEnv(mode, process.cwd(), '');
+  const buildMode = command === "build" ? "production" : "development";
+  return {
+    plugins: [
+      react(),
+      cssInjectedByJsPlugin(),
+      typescript({
+        'target': 'es2020',
+        'rootDir': resolvePath('./src/Kalliope'),
+        'declaration': true,
+        'declarationDir': resolvePath('./dist'),
+        exclude: resolvePath('../node_modules/**'),
+        allowSyntheticDefaultImports: true
+      })
+    ],
+    build: {
+      lib: {
+        entry: resolve(import.meta.dirname, 'src/Kalliope/kalliope.ts'), // ← __dirname → import.meta.dirname
+        fileName: 'kalliope',
+        formats: ['es'],  // ← THIS is the key fix
+      },
+      rollupOptions: {
+        external: ['react', 'react-dom', 'react-jsx/runtime'],
+        output: {
+          exports: "named"
+        }
+      },
+    },
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(buildMode),
+      'process.env.IS_PREACT': 'false'
+    },
+  }
 });

@@ -3,6 +3,12 @@
 Note: this changelog only details lexical changes applied to the main editor.
 To find out what's new in a given lexical version see [Lexical's own changelog](https://github.com/facebook/lexical/blob/main/CHANGELOG.md). 
 
+# v0.21.0 (2026-09-22)
+- Update lexical to v0.53.0
+- Fix the blank ‘Vertical Align’ menu item in Table Actions menu when width is < 1100.
+- Breaking changes: remove deprecated imports and extensions.
+- Change format to ESM from umd.
+
 # v0.20.0 (2026-09-22)
 - Fix floating link plugin.
 - Fix table grid indices, cell state and boundary selection.
